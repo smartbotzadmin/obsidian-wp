@@ -1,0 +1,785 @@
+body {
+  background-color: #121314;
+  margin: 0;
+  padding: 0;
+}
+
+.obsidian-onboarding {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  background-color: transparent;
+  color: white;
+}
+
+.obsidian-onboarding-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.obsidian-onboarding-logo {
+  height: 24px !important;
+  width: auto !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.obsidian-onboarding-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: white;
+}
+
+.obsidian-onboarding-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  position: relative;
+  padding: 0 40px;
+}
+
+.obsidian-onboarding-steps::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 60px;
+  right: 60px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+.obsidian-step {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  flex: 1;
+}
+
+.obsidian-step-number {
+  width: 30px;
+  height: 30px;
+  background: #202225;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  font-weight: 500;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.obsidian-step.active .obsidian-step-number {
+  background: #3b82f6;
+  color: white;
+}
+
+.obsidian-step-name {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.obsidian-step.active .obsidian-step-name {
+  color: white;
+  font-weight: 500;
+}
+
+.obsidian-onboarding-content {
+  background: #202225;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: none;
+}
+
+/* Welcome Step */
+.obsidian-welcome-step {
+  text-align: center;
+}
+
+.obsidian-welcome-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.obsidian-welcome-step h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.obsidian-welcome-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 48px;
+}
+
+.obsidian-welcome-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.obsidian-feature {
+  text-align: center;
+  padding: 32px;
+  background: #121314;
+  border-radius: 8px;
+}
+
+.obsidian-feature-icon {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #ffe629;
+}
+
+.obsidian-feature h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.obsidian-feature p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Template Step */
+.obsidian-templates-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.obsidian-template-card {
+  background: white;
+  border: 2px solid #e6e9ec;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.obsidian-template-card:hover {
+  border-color: #6e3aff;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.obsidian-template-preview {
+  height: 200px;
+  overflow: hidden;
+}
+
+.obsidian-template-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.obsidian-template-info {
+  padding: 20px;
+}
+
+.obsidian-template-icon {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.obsidian-template-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: 8px;
+}
+
+.obsidian-template-info p {
+  font-size: 14px;
+  color: #7a7a7a;
+  margin: 0;
+}
+
+/* Pages Step */
+.obsidian-page-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.obsidian-page-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.obsidian-page-card:hover {
+  background: #f0f2f5;
+}
+
+.obsidian-page-card input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid #e6e9ec;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.obsidian-page-card input[type="checkbox"]:checked {
+  background: #6e3aff;
+  border-color: #6e3aff;
+}
+
+.obsidian-page-card input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.obsidian-page-card input[type="checkbox"]:disabled {
+  background: #e6e9ec;
+  border-color: #e6e9ec;
+  cursor: not-allowed;
+}
+
+.obsidian-page-card label {
+  font-size: 16px;
+  color: #1e1e1e;
+  cursor: pointer;
+}
+
+/* Preview Step */
+.obsidian-preview-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.obsidian-preview-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.obsidian-preview-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: 16px;
+}
+
+.obsidian-preview-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Publish Step */
+.obsidian-publish-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.obsidian-publish-option {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.obsidian-publish-option:hover {
+  background: #f0f2f5;
+}
+
+.obsidian-publish-option input[type="radio"] {
+  display: none;
+}
+
+.obsidian-publish-option input[type="radio"]:checked + label {
+  color: #6e3aff;
+}
+
+.obsidian-publish-option label {
+  display: block;
+  cursor: pointer;
+}
+
+.obsidian-publish-option h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: 8px;
+}
+
+.obsidian-publish-option p {
+  font-size: 14px;
+  color: #7a7a7a;
+  margin: 0;
+}
+
+/* Buttons */
+.obsidian-step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.obsidian-btn {
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.obsidian-btn-primary {
+  background: #6e3aff;
+  color: white;
+}
+
+.obsidian-btn-primary:hover {
+  background: #5a2fd9;
+}
+
+.obsidian-btn-secondary {
+  background: #f0f2f5;
+  color: #1e1e1e;
+}
+
+.obsidian-btn-secondary:hover {
+  background: #e6e9ec;
+}
+
+/* Sign In Step */
+.obsidian-signin-step {
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.obsidian-signin-content {
+  text-align: center;
+}
+
+.obsidian-signin-content h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.obsidian-signin-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 32px;
+}
+
+.obsidian-signin-form {
+  background: #121314;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: left;
+}
+
+.obsidian-form-group {
+  margin-bottom: 16px;
+}
+
+.obsidian-form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.obsidian-form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: white;
+  background: #202225;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+}
+
+.obsidian-form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.obsidian-signin-form .obsidian-button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.obsidian-signup-link {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.obsidian-signup-link a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.obsidian-signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments for sign in */
+@media (max-width: 768px) {
+  .obsidian-signin-form {
+    padding: 20px;
+  }
+
+  .obsidian-form-actions {
+    flex-direction: column;
+  }
+
+  .obsidian-form-actions .obsidian-btn {
+    width: 100%;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .obsidian-welcome-features,
+  .obsidian-templates-grid,
+  .obsidian-publish-options {
+    grid-template-columns: 1fr;
+  }
+
+  .obsidian-onboarding-steps {
+    padding: 0 20px;
+  }
+
+  .obsidian-onboarding-steps::before {
+    left: 40px;
+    right: 40px;
+  }
+
+  .obsidian-step-name {
+    display: none;
+  }
+
+  .obsidian-onboarding-content {
+    padding: 20px;
+  }
+}
+
+/* Form Styles */
+.obsidian-admin-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.obsidian-admin-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: 1rem;
+}
+
+.obsidian-admin-form label {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.obsidian-admin-form input[type="text"],
+.obsidian-admin-form textarea,
+.obsidian-admin-form select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #1e1e1e;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.obsidian-admin-form input[type="text"]:focus,
+.obsidian-admin-form textarea:focus,
+.obsidian-admin-form select:focus {
+  border-color: #6e3aff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(110, 58, 255, 0.1);
+  background: #fff;
+}
+
+.obsidian-admin-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Character Count */
+.char-count {
+  text-align: right;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Example Options */
+.example-options {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.example-chip {
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.example-chip:hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+/* Progress Bar */
+.progress-bar {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.progress-bar::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 30%;
+  background: #6e3aff;
+  animation: progress 2s ease-in-out infinite;
+}
+
+@keyframes progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+/* Download Section */
+#obsidian-download {
+  text-align: center;
+  padding: 2rem;
+  background: #f0fdf4;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+#obsidian-download p {
+  font-size: 1.2rem;
+  color: #166534;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .obsidian-admin-section {
+    padding: 1rem;
+  }
+
+  .example-options {
+    flex-direction: column;
+  }
+
+  .example-chip {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Custom Select Styling */
+.obsidian-admin-form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* Button Styles */
+.obsidian-admin-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #6e3aff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.obsidian-admin-btn:hover {
+  background: #5a2fd9;
+  transform: translateY(-1px);
+}
+
+.obsidian-admin-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Dark Theme Button Styles */
+.obsidian-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.obsidian-button-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.obsidian-button-primary:hover {
+  background: #2563eb;
+}
+
+/* Ideation Step */
+.obsidian-ideation-step {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.obsidian-ideation-content h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.obsidian-ideation-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 32px;
+}
+
+.obsidian-example-chips {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.obsidian-chip {
+  background: #121314;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  color: white;
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.obsidian-chip:hover {
+  background: #1a1b1c;
+}
+
+.obsidian-ideation-step .obsidian-form-group {
+  text-align: left;
+}
+
+.obsidian-ideation-step label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.obsidian-ideation-step textarea {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  background: #121314;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: none;
+  margin-bottom: 12px;
+}
+
+.obsidian-ideation-step textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.obsidian-form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#charCount {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}

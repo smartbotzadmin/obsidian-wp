@@ -1,0 +1,310 @@
+/**
+ * Obsidian Theme Editor Styles
+ * Styles for the WordPress block editor (Gutenberg)
+ *
+ * @package Obsidian
+ * @since 1.0.0
+ */
+
+/* Dynamic styles are loaded separately via PHP */
+/* This file contains editor-specific overrides and enhancements */
+
+/* Editor-specific styles */
+.editor-styles-wrapper {
+	font-family: var(--obsidian-font-primary-family, system-ui, -apple-system, sans-serif);
+	font-size: var(--obsidian-font-base-size, 16px);
+	line-height: var(--obsidian-font-line-height, 1.6);
+	color: var(--obsidian-color-text, #1f2937);
+	background-color: var(--obsidian-color-background, #ffffff);
+}
+
+/* Block Editor Enhancements */
+.editor-styles-wrapper .wp-block {
+	max-width: var(--obsidian-layout-content-width, 800px);
+}
+
+.editor-styles-wrapper .wp-block[data-align="wide"] {
+	max-width: var(--obsidian-layout-container-width, 1200px);
+}
+
+.editor-styles-wrapper .wp-block[data-align="full"] {
+	max-width: none;
+}
+
+/* Typography in Editor */
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6 {
+	font-family: var(--obsidian-font-secondary-family, Georgia, serif);
+	color: var(--obsidian-color-text, #1f2937);
+	line-height: 1.2;
+}
+
+.editor-styles-wrapper h1 { font-size: 2.5rem; }
+.editor-styles-wrapper h2 { font-size: 2rem; }
+.editor-styles-wrapper h3 { font-size: 1.75rem; }
+.editor-styles-wrapper h4 { font-size: 1.5rem; }
+.editor-styles-wrapper h5 { font-size: 1.25rem; }
+.editor-styles-wrapper h6 { font-size: 1.125rem; }
+
+/* Links in Editor */
+.editor-styles-wrapper a {
+	color: var(--obsidian-color-primary, #2563eb);
+	text-decoration: none;
+}
+
+.editor-styles-wrapper a:hover {
+	color: var(--obsidian-color-accent, #f59e0b);
+	text-decoration: underline;
+}
+
+/* Buttons in Editor */
+.editor-styles-wrapper .wp-block-button__link {
+	background-color: var(--obsidian-color-primary, #2563eb);
+	color: var(--obsidian-color-background, #ffffff);
+	border-radius: 0.375rem;
+	padding: 0.75rem 1.5rem;
+	font-weight: 500;
+	text-decoration: none;
+	display: inline-block;
+	transition: all 0.2s ease;
+}
+
+.editor-styles-wrapper .wp-block-button__link:hover {
+	background-color: var(--obsidian-color-accent, #f59e0b);
+	transform: translateY(-1px);
+}
+
+/* Quote Blocks in Editor */
+.editor-styles-wrapper .wp-block-quote {
+	border-left: 4px solid var(--obsidian-color-primary, #2563eb);
+	padding-left: 1.5rem;
+	margin: 2rem 0;
+	font-style: italic;
+}
+
+.editor-styles-wrapper .wp-block-quote cite {
+	color: var(--obsidian-color-muted, #6b7280);
+	font-style: normal;
+	font-size: 0.875rem;
+}
+
+/* Code Blocks in Editor */
+.editor-styles-wrapper .wp-block-code {
+	background-color: var(--obsidian-color-text, #1f2937);
+	color: var(--obsidian-color-background, #ffffff);
+	padding: 1.5rem;
+	border-radius: 0.5rem;
+	overflow-x: auto;
+}
+
+.editor-styles-wrapper code {
+	background-color: rgba(0, 0, 0, 0.05);
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.25rem;
+	font-family: 'Courier New', monospace;
+	font-size: 0.875rem;
+}
+
+/* Tables in Editor */
+.editor-styles-wrapper .wp-block-table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.editor-styles-wrapper .wp-block-table th,
+.editor-styles-wrapper .wp-block-table td {
+	border: 1px solid var(--obsidian-color-secondary, #64748b);
+	padding: 0.75rem;
+	text-align: left;
+}
+
+.editor-styles-wrapper .wp-block-table th {
+	background-color: var(--obsidian-color-primary, #2563eb);
+	color: var(--obsidian-color-background, #ffffff);
+	font-weight: 600;
+}
+
+/* Image Blocks in Editor */
+.editor-styles-wrapper .wp-block-image {
+	margin: 2rem 0;
+}
+
+.editor-styles-wrapper .wp-block-image img {
+	height: auto;
+	max-width: 100%;
+	border-radius: 0.5rem;
+}
+
+.editor-styles-wrapper .wp-block-image figcaption {
+	color: var(--obsidian-color-muted, #6b7280);
+	font-size: 0.875rem;
+	text-align: center;
+	margin-top: 0.5rem;
+}
+
+/* Gallery Blocks in Editor */
+.editor-styles-wrapper .wp-block-gallery {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1rem;
+}
+
+/* Cover Blocks in Editor */
+.editor-styles-wrapper .wp-block-cover {
+	border-radius: 0.5rem;
+	overflow: hidden;
+}
+
+/* Group Blocks in Editor */
+.editor-styles-wrapper .wp-block-group {
+	padding: 2rem;
+}
+
+.editor-styles-wrapper .wp-block-group.is-style-obsidian-card {
+	background-color: var(--obsidian-color-background, #ffffff);
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 0.5rem;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Columns in Editor */
+.editor-styles-wrapper .wp-block-columns {
+	gap: var(--obsidian-layout-gutter, 2rem);
+}
+
+/* Separator in Editor */
+.editor-styles-wrapper .wp-block-separator {
+	border: none;
+	border-top: 1px solid var(--obsidian-color-secondary, #64748b);
+	margin: 3rem auto;
+	max-width: 100px;
+}
+
+.editor-styles-wrapper .wp-block-separator.is-style-wide {
+	max-width: 100%;
+}
+
+/* Spacer in Editor */
+.editor-styles-wrapper .wp-block-spacer {
+	background: repeating-linear-gradient(
+		45deg,
+		transparent,
+		transparent 5px,
+		rgba(0, 0, 0, 0.1) 5px,
+		rgba(0, 0, 0, 0.1) 10px
+	);
+	min-height: 2rem;
+}
+
+/* Media & Text in Editor */
+.editor-styles-wrapper .wp-block-media-text {
+	grid-template-columns: 1fr 1fr;
+	gap: var(--obsidian-layout-gutter, 2rem);
+}
+
+/* Navigation in Editor */
+.editor-styles-wrapper .wp-block-navigation a {
+	color: var(--obsidian-color-text, #1f2937);
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.editor-styles-wrapper .wp-block-navigation a:hover {
+	color: var(--obsidian-color-primary, #2563eb);
+}
+
+/* Site Title in Editor */
+.editor-styles-wrapper .wp-block-site-title a {
+	color: var(--obsidian-color-text, #1f2937);
+	font-family: var(--obsidian-font-secondary-family, Georgia, serif);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+/* Post Title in Editor */
+.editor-styles-wrapper .wp-block-post-title {
+	font-family: var(--obsidian-font-secondary-family, Georgia, serif);
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+/* Custom Block Styles Preview */
+.editor-styles-wrapper .is-style-obsidian-gradient {
+	background: linear-gradient(135deg, var(--obsidian-color-primary, #2563eb), var(--obsidian-color-accent, #f59e0b));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.editor-styles-wrapper .is-style-obsidian-underline {
+	position: relative;
+	padding-bottom: 0.5rem;
+}
+
+.editor-styles-wrapper .is-style-obsidian-underline::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 3rem;
+	height: 3px;
+	background-color: var(--obsidian-color-accent, #f59e0b);
+}
+
+.editor-styles-wrapper .is-style-obsidian-outline .wp-block-button__link {
+	background-color: transparent;
+	color: var(--obsidian-color-primary, #2563eb);
+	border: 2px solid var(--obsidian-color-primary, #2563eb);
+}
+
+.editor-styles-wrapper .is-style-obsidian-ghost .wp-block-button__link {
+	background-color: transparent;
+	color: var(--obsidian-color-primary, #2563eb);
+	border: none;
+}
+
+.editor-styles-wrapper .is-style-obsidian-minimal.wp-block-quote {
+	border: none;
+	padding: 0;
+	text-align: center;
+	font-size: 1.25rem;
+}
+
+.editor-styles-wrapper .is-style-obsidian-bordered.wp-block-quote {
+	border: 2px solid var(--obsidian-color-secondary, #64748b);
+	border-left: 4px solid var(--obsidian-color-primary, #2563eb);
+	padding: 1.5rem;
+	border-radius: 0.5rem;
+}
+
+/* Editor UI Improvements */
+.editor-styles-wrapper .block-editor-block-list__block {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.editor-styles-wrapper .block-editor-block-list__block:first-child {
+	margin-top: 0;
+}
+
+.editor-styles-wrapper .block-editor-block-list__block:last-child {
+	margin-bottom: 0;
+}
+
+/* Responsive adjustments for editor */
+@media (max-width: 768px) {
+	.editor-styles-wrapper {
+		padding: 1rem;
+	}
+	
+	.editor-styles-wrapper h1 { font-size: 2rem; }
+	.editor-styles-wrapper h2 { font-size: 1.75rem; }
+	.editor-styles-wrapper h3 { font-size: 1.5rem; }
+	.editor-styles-wrapper h4 { font-size: 1.25rem; }
+	.editor-styles-wrapper h5 { font-size: 1.125rem; }
+	.editor-styles-wrapper h6 { font-size: 1rem; }
+}

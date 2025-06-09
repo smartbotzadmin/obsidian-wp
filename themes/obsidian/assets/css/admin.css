@@ -1,0 +1,437 @@
+/**
+ * Obsidian Theme Admin Styles
+ * Styles for WordPress admin areas
+ *
+ * @package Obsidian
+ * @since 1.0.0
+ */
+
+/* Customizer Enhancements */
+.customize-control-obsidian-color .customize-control-title {
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.customize-control-obsidian-color .customize-control-description {
+	font-style: italic;
+	color: #666;
+	margin-bottom: 12px;
+}
+
+.obsidian-color-picker-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.obsidian-color-preview {
+	width: 30px;
+	height: 30px;
+	border-radius: 4px;
+	border: 2px solid #ddd;
+	cursor: pointer;
+	transition: border-color 0.2s ease;
+}
+
+.obsidian-color-preview:hover {
+	border-color: #0073aa;
+}
+
+/* Typography Controls */
+.customize-control-obsidian-typography .customize-control-title {
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.obsidian-font-preview {
+	padding: 15px;
+	background: #f9f9f9;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-top: 10px;
+}
+
+.obsidian-font-preview h3 {
+	margin: 0 0 10px 0;
+	font-size: 18px;
+}
+
+.obsidian-font-preview p {
+	margin: 0;
+	line-height: 1.6;
+}
+
+/* Layout Controls */
+.customize-control-obsidian-layout .customize-control-title {
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.obsidian-layout-preview {
+	display: grid;
+	grid-template-columns: 1fr 200px;
+	gap: 10px;
+	padding: 15px;
+	background: #f9f9f9;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-top: 10px;
+}
+
+.obsidian-layout-content {
+	background: #fff;
+	padding: 10px;
+	border-radius: 2px;
+	min-height: 60px;
+}
+
+.obsidian-layout-sidebar {
+	background: #e9e9e9;
+	padding: 10px;
+	border-radius: 2px;
+	min-height: 60px;
+}
+
+/* Theme Options Panel */
+.obsidian-theme-options {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+	margin: 20px 0;
+}
+
+.obsidian-theme-options-header {
+	background: #f1f1f1;
+	padding: 15px 20px;
+	border-bottom: 1px solid #ccd0d4;
+}
+
+.obsidian-theme-options-header h3 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.obsidian-theme-options-content {
+	padding: 20px;
+}
+
+.obsidian-option-group {
+	margin-bottom: 25px;
+}
+
+.obsidian-option-group:last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-option-label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.obsidian-option-description {
+	color: #666;
+	font-size: 13px;
+	margin-bottom: 10px;
+	line-height: 1.4;
+}
+
+.obsidian-option-input {
+	width: 100%;
+	max-width: 400px;
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+.obsidian-option-input:focus {
+	border-color: #0073aa;
+	box-shadow: 0 0 0 1px #0073aa;
+	outline: none;
+}
+
+/* Color Palette Display */
+.obsidian-color-palette {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 15px;
+	margin: 15px 0;
+}
+
+.obsidian-color-item {
+	text-align: center;
+}
+
+.obsidian-color-swatch {
+	width: 60px;
+	height: 60px;
+	border-radius: 8px;
+	border: 2px solid #ddd;
+	margin: 0 auto 8px;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+}
+
+.obsidian-color-swatch:hover {
+	transform: scale(1.05);
+}
+
+.obsidian-color-name {
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.obsidian-color-value {
+	font-size: 11px;
+	color: #666;
+	font-family: monospace;
+}
+
+/* Settings Tabs */
+.obsidian-settings-tabs {
+	border-bottom: 1px solid #ccd0d4;
+	margin-bottom: 20px;
+}
+
+.obsidian-settings-tabs ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+
+.obsidian-settings-tabs li {
+	margin: 0;
+}
+
+.obsidian-settings-tabs a {
+	display: block;
+	padding: 12px 20px;
+	text-decoration: none;
+	color: #666;
+	border-bottom: 2px solid transparent;
+	transition: all 0.2s ease;
+}
+
+.obsidian-settings-tabs a:hover,
+.obsidian-settings-tabs a.active {
+	color: #0073aa;
+	border-bottom-color: #0073aa;
+}
+
+.obsidian-settings-tab-content {
+	display: none;
+}
+
+.obsidian-settings-tab-content.active {
+	display: block;
+}
+
+/* Import/Export Section */
+.obsidian-import-export {
+	background: #f9f9f9;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 20px;
+	margin: 20px 0;
+}
+
+.obsidian-import-export h4 {
+	margin-top: 0;
+	margin-bottom: 15px;
+}
+
+.obsidian-export-button,
+.obsidian-import-button {
+	background: #0073aa;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	margin-right: 10px;
+	transition: background-color 0.2s ease;
+}
+
+.obsidian-export-button:hover,
+.obsidian-import-button:hover {
+	background: #005a87;
+}
+
+.obsidian-import-file {
+	margin: 10px 0;
+}
+
+/* Status Messages */
+.obsidian-message {
+	padding: 12px 15px;
+	border-radius: 4px;
+	margin: 15px 0;
+}
+
+.obsidian-message.success {
+	background: #d4edda;
+	color: #155724;
+	border: 1px solid #c3e6cb;
+}
+
+.obsidian-message.error {
+	background: #f8d7da;
+	color: #721c24;
+	border: 1px solid #f5c6cb;
+}
+
+.obsidian-message.warning {
+	background: #fff3cd;
+	color: #856404;
+	border: 1px solid #ffeaa7;
+}
+
+.obsidian-message.info {
+	background: #d1ecf1;
+	color: #0c5460;
+	border: 1px solid #bee5eb;
+}
+
+/* Loading States */
+.obsidian-loading {
+	position: relative;
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.obsidian-loading::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 20px;
+	height: 20px;
+	margin: -10px 0 0 -10px;
+	border: 2px solid #f3f3f3;
+	border-top: 2px solid #0073aa;
+	border-radius: 50%;
+	animation: obsidian-spin 1s linear infinite;
+}
+
+@keyframes obsidian-spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+/* Responsive Admin Styles */
+@media (max-width: 782px) {
+	.obsidian-color-palette {
+		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+		gap: 10px;
+	}
+	
+	.obsidian-layout-preview {
+		grid-template-columns: 1fr;
+	}
+	
+	.obsidian-settings-tabs ul {
+		flex-direction: column;
+	}
+	
+	.obsidian-settings-tabs a {
+		border-bottom: none;
+		border-left: 2px solid transparent;
+	}
+	
+	.obsidian-settings-tabs a:hover,
+	.obsidian-settings-tabs a.active {
+		border-left-color: #0073aa;
+		border-bottom-color: transparent;
+	}
+}
+
+/* Theme Info Widget */
+.obsidian-theme-info {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+	padding: 20px;
+	margin: 20px 0;
+}
+
+.obsidian-theme-info h3 {
+	margin-top: 0;
+	color: #0073aa;
+}
+
+.obsidian-theme-info-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
+	margin: 15px 0;
+}
+
+.obsidian-info-item {
+	text-align: center;
+	padding: 15px;
+	background: #f9f9f9;
+	border-radius: 4px;
+}
+
+.obsidian-info-value {
+	font-size: 24px;
+	font-weight: 600;
+	color: #0073aa;
+	display: block;
+}
+
+.obsidian-info-label {
+	font-size: 12px;
+	color: #666;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin-top: 5px;
+}
+
+/* Help Section */
+.obsidian-help {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+	margin: 20px 0;
+}
+
+.obsidian-help-header {
+	background: #f1f1f1;
+	padding: 15px 20px;
+	border-bottom: 1px solid #ccd0d4;
+}
+
+.obsidian-help-content {
+	padding: 20px;
+}
+
+.obsidian-help h4 {
+	margin-top: 0;
+	color: #0073aa;
+}
+
+.obsidian-help-links {
+	list-style: none;
+	padding: 0;
+	margin: 15px 0;
+}
+
+.obsidian-help-links li {
+	margin-bottom: 8px;
+}
+
+.obsidian-help-links a {
+	color: #0073aa;
+	text-decoration: none;
+}
+
+.obsidian-help-links a:hover {
+	text-decoration: underline;
+}

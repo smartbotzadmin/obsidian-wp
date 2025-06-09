@@ -1,0 +1,329 @@
+{
+	"version": 2,
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"settings": {
+		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": true,
+		"color": {
+			"custom": true,
+			"customDuotone": true,
+			"customGradient": true,
+			"defaultDuotones": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"palette": [
+				{
+					"slug": "primary",
+					"color": "var(--obsidian-color-primary)",
+					"name": "Primary"
+				},
+				{
+					"slug": "secondary",
+					"color": "var(--obsidian-color-secondary)",
+					"name": "Secondary"
+				},
+				{
+					"slug": "accent",
+					"color": "var(--obsidian-color-accent)",
+					"name": "Accent"
+				},
+				{
+					"slug": "background",
+					"color": "var(--obsidian-color-background)",
+					"name": "Background"
+				},
+				{
+					"slug": "text",
+					"color": "var(--obsidian-color-text)",
+					"name": "Text"
+				},
+				{
+					"slug": "muted",
+					"color": "var(--obsidian-color-muted)",
+					"name": "Muted"
+				}
+			],
+			"gradients": [
+				{
+					"slug": "primary-to-secondary",
+					"gradient": "linear-gradient(135deg, var(--obsidian-color-primary) 0%, var(--obsidian-color-secondary) 100%)",
+					"name": "Primary to Secondary"
+				},
+				{
+					"slug": "accent-fade",
+					"gradient": "linear-gradient(135deg, var(--obsidian-color-accent) 0%, transparent 100%)",
+					"name": "Accent Fade"
+				}
+			]
+		},
+		"typography": {
+			"customFontSize": true,
+			"fontStyle": true,
+			"fontWeight": true,
+			"letterSpacing": true,
+			"lineHeight": true,
+			"textDecoration": true,
+			"textTransform": true,
+			"dropCap": false,
+			"fontSizes": [
+				{
+					"slug": "small",
+					"size": "0.875rem",
+					"name": "Small"
+				},
+				{
+					"slug": "medium",
+					"size": "1rem",
+					"name": "Medium"
+				},
+				{
+					"slug": "large",
+					"size": "1.25rem",
+					"name": "Large"
+				},
+				{
+					"slug": "x-large",
+					"size": "1.5rem",
+					"name": "Extra Large"
+				},
+				{
+					"slug": "xx-large",
+					"size": "2rem",
+					"name": "Extra Extra Large"
+				}
+			],
+			"fontFamilies": [
+				{
+					"slug": "primary",
+					"fontFamily": "var(--obsidian-font-primary-family)",
+					"name": "Primary Font"
+				},
+				{
+					"slug": "secondary",
+					"fontFamily": "var(--obsidian-font-secondary-family)",
+					"name": "Secondary Font"
+				}
+			]
+		},
+		"spacing": {
+			"customSpacingSize": true,
+			"spacingScale": {
+				"operator": "*",
+				"increment": 1.5,
+				"steps": 7,
+				"mediumStep": 1.5,
+				"unit": "rem"
+			},
+			"spacingSizes": [
+				{
+					"slug": "20",
+					"size": "0.5rem",
+					"name": "1"
+				},
+				{
+					"slug": "30",
+					"size": "0.75rem",
+					"name": "2"
+				},
+				{
+					"slug": "40",
+					"size": "1rem",
+					"name": "3"
+				},
+				{
+					"slug": "50",
+					"size": "1.5rem",
+					"name": "4"
+				},
+				{
+					"slug": "60",
+					"size": "2rem",
+					"name": "5"
+				},
+				{
+					"slug": "70",
+					"size": "3rem",
+					"name": "6"
+				},
+				{
+					"slug": "80",
+					"size": "4rem",
+					"name": "7"
+				}
+			],
+			"units": [
+				"%",
+				"px",
+				"em",
+				"rem",
+				"vh",
+				"vw"
+			]
+		},
+		"layout": {
+			"contentSize": "var(--obsidian-layout-content-width)",
+			"wideSize": "var(--obsidian-layout-container-width)"
+		},
+		"border": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+		"shadow": {
+			"presets": [
+				{
+					"slug": "natural",
+					"shadow": "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+					"name": "Natural"
+				},
+				{
+					"slug": "deep",
+					"shadow": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+					"name": "Deep"
+				}
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--obsidian-color-background, #ffffff)",
+			"text": "var(--obsidian-color-text, #1f2937)"
+		},
+		"typography": {
+			"fontFamily": "var(--obsidian-font-primary-family, system-ui, -apple-system, sans-serif)",
+			"fontSize": "var(--obsidian-font-base-size, 1rem)",
+			"lineHeight": "var(--obsidian-font-line-height, 1.6)"
+		},
+		"spacing": {
+			"blockGap": "var(--obsidian-layout-gutter, 2rem)"
+		},
+		"elements": {
+			"link": {
+				"color": {
+					"text": "var(--obsidian-color-primary)"
+				},
+				":hover": {
+					"color": {
+						"text": "var(--obsidian-color-accent)"
+					}
+				}
+			},
+			"heading": {
+				"typography": {
+					"fontFamily": "var(--obsidian-font-secondary-family)",
+					"fontWeight": "600",
+					"lineHeight": "1.2"
+				}
+			},
+			"h1": {
+				"typography": {
+					"fontSize": "2.5rem"
+				}
+			},
+			"h2": {
+				"typography": {
+					"fontSize": "2rem"
+				}
+			},
+			"h3": {
+				"typography": {
+					"fontSize": "1.75rem"
+				}
+			},
+			"h4": {
+				"typography": {
+					"fontSize": "1.5rem"
+				}
+			},
+			"h5": {
+				"typography": {
+					"fontSize": "1.25rem"
+				}
+			},
+			"h6": {
+				"typography": {
+					"fontSize": "1.125rem"
+				}
+			},
+			"button": {
+				"color": {
+					"background": "var(--obsidian-color-primary)",
+					"text": "var(--obsidian-color-background)"
+				},
+				"border": {
+					"radius": "0.375rem"
+				},
+				"spacing": {
+					"padding": {
+						"top": "0.75rem",
+						"right": "1.5rem",
+						"bottom": "0.75rem",
+						"left": "1.5rem"
+					}
+				},
+				"typography": {
+					"fontWeight": "500"
+				},
+				":hover": {
+					"color": {
+						"background": "var(--obsidian-color-accent)"
+					}
+				}
+			}
+		},
+		"blocks": {
+			"core/navigation": {
+				"typography": {
+					"fontSize": "1rem",
+					"fontWeight": "500"
+				}
+			},
+			"core/post-title": {
+				"typography": {
+					"fontFamily": "var(--obsidian-font-secondary-family)",
+					"fontSize": "2.5rem",
+					"fontWeight": "700",
+					"lineHeight": "1.2"
+				}
+			},
+			"core/site-title": {
+				"typography": {
+					"fontFamily": "var(--obsidian-font-secondary-family)",
+					"fontSize": "1.5rem",
+					"fontWeight": "700"
+				}
+			}
+		}
+	},
+	"templateParts": [
+		{
+			"name": "header",
+			"title": "Header",
+			"area": "header"
+		},
+		{
+			"name": "footer",
+			"title": "Footer",
+			"area": "footer"
+		}
+	],
+	"customTemplates": [
+		{
+			"name": "blank",
+			"title": "Blank",
+			"postTypes": [
+				"page",
+				"post"
+			]
+		},
+		{
+			"name": "no-title",
+			"title": "No Title",
+			"postTypes": [
+				"page",
+				"post"
+			]
+		}
+	]
+}

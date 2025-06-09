@@ -1,0 +1,18 @@
+/*
+	Theme Name: Obsidian
+	Theme URI: https://obsidian-theme.com
+	Description: Obsidian is a sophisticated WordPress theme designed as a required companion to the Obsidian plugin. It serves as the single source of truth for theming settings, providing global visual styling, dynamic CSS variables, and REST API endpoints for seamless plugin integration. Features include comprehensive color palettes, typography management, layout scaffolding, real-time style updates through CSS custom properties, modern responsive design, advanced animations, enhanced accessibility, and extensive block editor integration.
+	Author: Obsidian Team
+	Author URI: https://obsidian-theme.com
+	Version: 1.1.0
+	Stable tag: 1.1.0
+	Requires at least: 6.0
+	Tested up to: 6.5
+	Requires PHP: 8.0
+	License: GNU General Public License v3 or later.
+	License URI: https://www.gnu.org/licenses/gpl-3.0.html
+	Text Domain: obsidian
+	Tags: block-themes, custom-colors, custom-logo, custom-menu, editor-style, featured-images, full-site-editing, rtl-language-support, threaded-comments, translation-ready, wide-blocks, accessibility-ready, responsive-design, custom-header, custom-background, flexible-header, footer-widgets, sticky-post, theme-options, one-column, two-columns, three-columns, four-columns, left-sidebar, right-sidebar, grid-layout, custom-layout
+*/
+
+/* Theme styles are loaded dynamically via CSS custom properties */
