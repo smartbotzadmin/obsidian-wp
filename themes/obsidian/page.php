@@ -2,67 +2,56 @@
 /**
  * The template for displaying all pages
  *
+ * This is the template that displays all pages by default.
+ * Please note that this is the WordPress construct of pages
+ * and that other 'pages' on your WordPress site may use a
+ * different template.
+ *
  * @package Obsidian
  * @since 1.0.0
  */
 
-get_header();
-?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-<main id="main" class="obsidian-main" role="main">
-	<div class="obsidian-container">
-		
-		<?php while ( have_posts() ) : the_post(); ?>
-			
-			<article id="post-<?php the_ID(); ?>" <?php post_class( 'obsidian-single-page' ); ?>>
-				
-				<?php if ( has_post_thumbnail() && ! is_front_page() ) : ?>
-					<div class="obsidian-page-featured-image">
-						<?php the_post_thumbnail( 'large', array( 'alt' => the_title_attribute( array( 'echo' => false ) ) ) ); ?>
-					</div>
-				<?php endif; ?>
-				
-				<div class="obsidian-page-content">
-					
-					<header class="obsidian-page-header">
-						<?php the_title( '<h1 class="obsidian-page-title">', '</h1>' ); ?>
-					</header>
-					
-					<div class="obsidian-page-body">
+get_header(); ?>
+
+<main id="content" class="site-main" role="main">
+	<?php if ( apply_filters( 'hello_elementor_page_title', true ) ) : ?>
+		<header class="page-header">
+			<h1 class="entry-title"><?php the_title(); ?></h1>
+		</header>
+	<?php endif; ?>
+	<div class="page-content">
+		<?php
+		while ( have_posts() ) :
+			the_post();
+			?>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<div class="post-content">
+					<div class="entry-content">
 						<?php
 						the_content();
-						
+
 						wp_link_pages( array(
-							'before' => '<div class="obsidian-page-links">' . __( 'Pages:', 'obsidian' ),
+							'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'hello-elementor' ),
 							'after'  => '</div>',
 						) );
 						?>
 					</div>
-					
-					<?php if ( get_edit_post_link() ) : ?>
-						<footer class="obsidian-page-footer">
-							<div class="obsidian-edit-link">
-								<?php edit_post_link( __( 'Edit', 'obsidian' ), '<span class="edit-link">', '</span>' ); ?>
-							</div>
-						</footer>
-					<?php endif; ?>
-					
 				</div>
-				
 			</article>
-			
 			<?php
-			// Comments
+			// If comments are open or we have at least one comment, load up the comment template.
 			if ( comments_open() || get_comments_number() ) :
 				comments_template();
 			endif;
-			?>
-			
-		<?php endwhile; ?>
-		
+
+		endwhile; // End of the loop.
+		?>
 	</div>
 </main>
 
 <?php
-get_sidebar();
 get_footer();

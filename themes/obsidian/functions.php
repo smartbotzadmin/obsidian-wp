@@ -1,6 +1,6 @@
 <?php
 /**
- * Obsidian Theme functions and definitions
+ * Theme functions and definitions
  *
  * @package Obsidian
  * @since 1.0.0
@@ -10,465 +10,609 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// Theme constants
-define( 'OBSIDIAN_VERSION', '1.1.0' );
-define( 'OBSIDIAN_THEME_DIR', get_template_directory() );
-define( 'OBSIDIAN_THEME_URL', get_template_directory_uri() );
-define( 'OBSIDIAN_ASSETS_URL', OBSIDIAN_THEME_URL . '/assets' );
+define( 'HELLO_ELEMENTOR_VERSION', '1.2.0' );
 
-/**
- * Obsidian Theme Setup
- */
-function obsidian_theme_setup() {
-	// Add theme support for various features
-	add_theme_support( 'post-thumbnails' );
-	add_theme_support( 'custom-logo' );
-	add_theme_support( 'custom-header' );
-	add_theme_support( 'custom-background' );
-	add_theme_support( 'html5', array(
-		'search-form',
-		'comment-form',
-		'comment-list',
-		'gallery',
-		'caption',
-		'style',
-		'script'
-	) );
-	
-	// Add support for block editor features
-	add_theme_support( 'wp-block-styles' );
-	add_theme_support( 'align-wide' );
-	add_theme_support( 'editor-styles' );
-	add_theme_support( 'responsive-embeds' );
-	
-	// Add editor stylesheet
-	add_editor_style( 'assets/css/editor-style.css' );
-	
-	// Register navigation menus
-	register_nav_menus( array(
-		'primary' => __( 'Primary Menu', 'obsidian' ),
-		'footer'  => __( 'Footer Menu', 'obsidian' ),
-	) );
-	
-	// Set content width
-	if ( ! isset( $content_width ) ) {
-		$content_width = 1200;
+if ( ! function_exists( 'hello_elementor_setup' ) ) {
+	/**
+	 * Sets up theme defaults and registers support for various WordPress features.
+	 */
+	function hello_elementor_setup() {
+		// Make theme available for translation.
+		load_theme_textdomain( 'hello-elementor', get_template_directory() . '/languages' );
+
+		// Add default posts and comments RSS feed links to head.
+		add_theme_support( 'automatic-feed-links' );
+
+		// Let WordPress manage the document title.
+		add_theme_support( 'title-tag' );
+
+		// Enable support for Post Thumbnails on posts and pages.
+		add_theme_support( 'post-thumbnails' );
+
+		// Add support for responsive embedded content.
+		add_theme_support( 'responsive-embeds' );
+
+		// Add support for HTML5 markup.
+		add_theme_support( 'html5', array(
+			'search-form',
+			'comment-form',
+			'comment-list',
+			'gallery',
+			'caption',
+		) );
+
+		// Add support for custom logo.
+		add_theme_support( 'custom-logo', array(
+			'height'      => 100,
+			'width'       => 350,
+			'flex-height' => true,
+			'flex-width'  => true,
+		) );
+
+		// Add theme support for selective refresh for widgets.
+		add_theme_support( 'customize-selective-refresh-widgets' );
+
+		// Add support for Block Styles.
+		add_theme_support( 'wp-block-styles' );
+
+		// Add support for full and wide align images.
+		add_theme_support( 'align-wide' );
+
+		// Add support for editor styles.
+		add_theme_support( 'editor-styles' );
+
+		// Enqueue editor styles.
+		add_editor_style( 'classic-editor.css' );
+
+		// Add custom editor font sizes.
+		add_theme_support( 'editor-font-sizes', array(
+			array(
+				'name'      => __( 'Small', 'hello-elementor' ),
+				'shortName' => __( 'S', 'hello-elementor' ),
+				'size'      => 13,
+				'slug'      => 'small',
+			),
+			array(
+				'name'      => __( 'Normal', 'hello-elementor' ),
+				'shortName' => __( 'M', 'hello-elementor' ),
+				'size'      => 16,
+				'slug'      => 'normal',
+			),
+			array(
+				'name'      => __( 'Large', 'hello-elementor' ),
+				'shortName' => __( 'L', 'hello-elementor' ),
+				'size'      => 36,
+				'slug'      => 'large',
+			),
+			array(
+				'name'      => __( 'Huge', 'hello-elementor' ),
+				'shortName' => __( 'XL', 'hello-elementor' ),
+				'size'      => 42,
+				'slug'      => 'huge',
+			),
+		) );
+
+		// Register navigation menus.
+		register_nav_menus( array(
+			'menu-1' => __( 'Primary', 'hello-elementor' ),
+		) );
+
+		// Add support for core custom background feature.
+		add_theme_support( 'custom-background', apply_filters( 'hello_elementor_custom_background_args', array(
+			'default-color' => 'ffffff',
+			'default-image' => '',
+		) ) );
+
+		// Add support for custom header.
+		add_theme_support( 'custom-header', apply_filters( 'hello_elementor_custom_header_args', array(
+			'default-image'      => '',
+			'default-text-color' => '000',
+			'width'              => 1000,
+			'height'             => 250,
+			'flex-height'        => true,
+			'wp-head-callback'   => 'hello_elementor_header_style',
+		) ) );
 	}
 }
-add_action( 'after_setup_theme', 'obsidian_theme_setup' );
+add_action( 'after_setup_theme', 'hello_elementor_setup' );
 
 /**
- * Enqueue theme styles and scripts
+ * Set the content width in pixels, based on the theme's design and stylesheet.
  */
-function obsidian_enqueue_assets() {
-	// Main theme stylesheet (WordPress default)
+function hello_elementor_content_width() {
+	$GLOBALS['content_width'] = apply_filters( 'hello_elementor_content_width', 800 );
+}
+add_action( 'after_setup_theme', 'hello_elementor_content_width', 0 );
+
+/**
+ * Enqueue scripts and styles.
+ */
+function hello_elementor_scripts() {
+	$min_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 	wp_enqueue_style(
-		'obsidian-style',
-		get_stylesheet_uri(),
+		'hello-elementor',
+		get_template_directory_uri() . '/style' . $min_suffix . '.css',
 		array(),
-		OBSIDIAN_VERSION
+		HELLO_ELEMENTOR_VERSION
 	);
-	
-	// Main theme styles with WordPress integration
+
 	wp_enqueue_style(
-		'obsidian-main-style',
-		get_template_directory_uri() . '/style-main.css',
-		array( 'obsidian-style' ),
-		OBSIDIAN_VERSION
-	);
-	
-	// Dynamic CSS variables
-	wp_enqueue_style(
-		'obsidian-dynamic-css',
-		OBSIDIAN_ASSETS_URL . '/css/dynamic.css',
-		array( 'obsidian-main-style' ),
-		OBSIDIAN_VERSION
-	);
-	
-	// Theme JavaScript
-	wp_enqueue_script(
-		'obsidian-script',
-		OBSIDIAN_ASSETS_URL . '/js/theme.js',
+		'hello-elementor-theme-style',
+		get_template_directory_uri() . '/theme' . $min_suffix . '.css',
 		array(),
-		OBSIDIAN_VERSION,
-		true
+		HELLO_ELEMENTOR_VERSION
 	);
-	
-	// Localize script for AJAX
-	wp_localize_script( 'obsidian-script', 'obsidian_ajax', array(
-		'ajax_url' => admin_url( 'admin-ajax.php' ),
-		'nonce'    => wp_create_nonce( 'obsidian_nonce' ),
-		'rest_url' => rest_url( 'obsidian/v1/' ),
-	) );
-}
-add_action( 'wp_enqueue_scripts', 'obsidian_enqueue_assets' );
 
-/**
- * Add dynamic CSS variables to head
- */
-function obsidian_add_css_variables() {
-	$settings = obsidian_get_theme_settings();
-	
-	echo '<style id="obsidian-css-variables">';
-	echo ':root {';
-	
-	// Color variables with validation
-	if ( isset( $settings['colors'] ) && is_array( $settings['colors'] ) ) {
-		foreach ( $settings['colors'] as $key => $value ) {
-			// Validate color value
-			if ( ! empty( $value ) && ( strpos( $value, '#' ) === 0 || strpos( $value, 'rgb' ) === 0 || strpos( $value, 'hsl' ) === 0 ) ) {
-				echo '--obsidian-color-' . esc_attr( $key ) . ': ' . esc_attr( $value ) . ';';
-			}
-		}
+	// Enqueue Obsidian Page Builder
+	if ( is_user_logged_in() && current_user_can( 'edit_posts' ) ) {
+		wp_enqueue_style(
+			'obsidian-builder',
+			get_template_directory_uri() . '/assets/css/elementor-builder.css',
+			array(),
+			HELLO_ELEMENTOR_VERSION
+		);
+
+		wp_enqueue_script(
+			'obsidian-builder',
+			get_template_directory_uri() . '/assets/js/elementor-builder.js',
+			array( 'jquery' ),
+			HELLO_ELEMENTOR_VERSION,
+			true
+		);
+
+		// Localize script for AJAX
+		wp_localize_script( 'obsidian-builder', 'obsidian_ajax', array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => wp_create_nonce( 'obsidian_builder_nonce' ),
+		) );
 	}
-	
-	// Typography variables with validation
-	if ( isset( $settings['typography'] ) && is_array( $settings['typography'] ) ) {
-		foreach ( $settings['typography'] as $key => $value ) {
-			if ( ! empty( $value ) ) {
-				echo '--obsidian-font-' . esc_attr( $key ) . ': ' . esc_attr( $value ) . ';';
-			}
-		}
+
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
 	}
-	
-	// Layout variables with validation
-	if ( isset( $settings['layout'] ) && is_array( $settings['layout'] ) ) {
-		foreach ( $settings['layout'] as $key => $value ) {
-			if ( ! empty( $value ) ) {
-				echo '--obsidian-layout-' . esc_attr( $key ) . ': ' . esc_attr( $value ) . ';';
-			}
-		}
-	}
-	
-	echo '}';
-	
-	// Add responsive font scaling
-	echo '@media (max-width: 768px) {';
-	echo ':root {';
-	echo '--obsidian-font-base-size: 14px;';
-	echo '--obsidian-layout-gutter: 1rem;';
-	echo '}';
-	echo '}';
-	
-	echo '</style>';
 }
-add_action( 'wp_head', 'obsidian_add_css_variables' );
+add_action( 'wp_enqueue_scripts', 'hello_elementor_scripts' );
 
 /**
- * Register widget areas
- */
-function obsidian_widgets_init() {
-	register_sidebar( array(
-		'name'          => __( 'Primary Sidebar', 'obsidian' ),
-		'id'            => 'sidebar-primary',
-		'description'   => __( 'Add widgets here to appear in your sidebar.', 'obsidian' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h3 class="widget-title">',
-		'after_title'   => '</h3>',
-	) );
-	
-	register_sidebar( array(
-		'name'          => __( 'Footer Widgets', 'obsidian' ),
-		'id'            => 'sidebar-footer',
-		'description'   => __( 'Add widgets here to appear in your footer.', 'obsidian' ),
-		'before_widget' => '<div id="%1$s" class="footer-widget %2$s">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h4 class="footer-widget-title">',
-		'after_title'   => '</h4>',
-	) );
-}
-add_action( 'widgets_init', 'obsidian_widgets_init' );
-
-/**
- * Get theme settings with defaults
- */
-function obsidian_get_theme_settings() {
-	$defaults = array(
-		'colors' => array(
-			'primary'    => '#2563eb',
-			'secondary'  => '#64748b',
-			'accent'     => '#f59e0b',
-			'background' => '#ffffff',
-			'text'       => '#1f2937',
-			'muted'      => '#6b7280',
-		),
-		'typography' => array(
-			'primary-family'   => 'system-ui, -apple-system, sans-serif',
-			'secondary-family' => 'Georgia, serif',
-			'base-size'        => '16px',
-			'scale-ratio'      => '1.25',
-			'line-height'      => '1.6',
-		),
-		'layout' => array(
-			'container-width' => '1200px',
-			'content-width'   => '800px',
-			'sidebar-width'   => '300px',
-			'gutter'          => '2rem',
-		),
-	);
-	
-	$settings = get_option( 'obsidian_theme_settings', $defaults );
-	return wp_parse_args( $settings, $defaults );
-}
-
-/**
- * Update theme settings
- */
-function obsidian_update_theme_settings( $new_settings ) {
-	$current_settings = obsidian_get_theme_settings();
-	$updated_settings = wp_parse_args( $new_settings, $current_settings );
-	
-	return update_option( 'obsidian_theme_settings', $updated_settings );
-}
-
-// Include REST API endpoints
-require_once OBSIDIAN_THEME_DIR . '/includes/rest-api.php';
-
-// Include customizer settings
-require_once OBSIDIAN_THEME_DIR . '/includes/customizer.php';
-
-// Include block styles
-require_once OBSIDIAN_THEME_DIR . '/includes/block-styles.php';
-
-// Include theme compatibility
-require_once OBSIDIAN_THEME_DIR . '/includes/compatibility.php';
-
-/**
- * Default menu fallback
- */
-function obsidian_default_menu() {
-	echo '<ul class="obsidian-nav-menu">';
-	echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">' . __( 'Home', 'obsidian' ) . '</a></li>';
-	if ( current_user_can( 'manage_options' ) ) {
-		echo '<li><a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '">' . __( 'Add Menu', 'obsidian' ) . '</a></li>';
-	}
-	echo '</ul>';
-}
-
-/**
- * Custom comment callback
- */
-function obsidian_comment_callback( $comment, $args, $depth ) {
-	if ( 'div' === $args['style'] ) {
-		$tag       = 'div';
-		$add_below = 'comment';
-	} else {
-		$tag       = 'li';
-		$add_below = 'div-comment';
-	}
-	?>
-	<<?php echo $tag; ?> <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ); ?> id="comment-<?php comment_ID() ?>">
-	<?php if ( 'div' != $args['style'] ) : ?>
-		<div id="div-comment-<?php comment_ID() ?>" class="obsidian-comment-body">
-	<?php endif; ?>
-	
-	<div class="obsidian-comment-author vcard">
-		<?php if ( $args['avatar_size'] != 0 ) echo get_avatar( $comment, $args['avatar_size'] ); ?>
-		<?php printf( __( '<cite class="fn">%s</cite> <span class="says">says:</span>' ), get_comment_author_link() ); ?>
-	</div>
-	
-	<?php if ( $comment->comment_approved == '0' ) : ?>
-		<em class="obsidian-comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em>
-		<br />
-	<?php endif; ?>
-
-	<div class="obsidian-comment-meta commentmetadata">
-		<a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>">
-			<?php
-			printf( __('%1$s at %2$s'), get_comment_date(),  get_comment_time() ); ?>
-		</a>
-		<?php edit_comment_link( __( '(Edit)' ), '  ', '' );
-		?>
-	</div>
-
-	<?php comment_text(); ?>
-
-	<div class="obsidian-comment-reply">
-		<?php comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-	</div>
-	
-	<?php if ( 'div' != $args['style'] ) : ?>
-		</div>
-	<?php endif; ?>
-	<?php
-}
-
-/**
- * Add editor stylesheet
- */
-function obsidian_add_editor_styles() {
-	add_editor_style( array(
-		'assets/css/dynamic.css',
-		'assets/css/editor-style.css'
-	) );
-}
-add_action( 'admin_init', 'obsidian_add_editor_styles' );
-
-/**
- * Enqueue editor styles with proper dependencies
- */
-function obsidian_enqueue_editor_styles() {
-	// Enqueue dynamic CSS for editor
-	wp_enqueue_style(
-		'obsidian-editor-dynamic',
-		OBSIDIAN_ASSETS_URL . '/css/dynamic.css',
-		array(),
-		OBSIDIAN_VERSION
-	);
-	
-	// Enqueue editor-specific styles
-	wp_enqueue_style(
-		'obsidian-editor-style',
-		OBSIDIAN_ASSETS_URL . '/css/editor-style.css',
-		array( 'obsidian-editor-dynamic' ),
-		OBSIDIAN_VERSION
-	);
-}
-add_action( 'enqueue_block_editor_assets', 'obsidian_enqueue_editor_styles' );
-
-/**
- * Add theme support for custom background
- */
-function obsidian_custom_background_setup() {
-	add_theme_support( 'custom-background', apply_filters( 'obsidian_custom_background_args', array(
-		'default-color' => 'ffffff',
-		'default-image' => '',
-	) ) );
-}
-add_action( 'after_setup_theme', 'obsidian_custom_background_setup' );
-
-/**
- * Enqueue admin styles
+ * Enqueue admin styles for SmartBotz dark theme
  */
 function obsidian_admin_styles() {
-	wp_enqueue_style( 'obsidian-admin', OBSIDIAN_ASSETS_URL . '/css/admin.css', array(), OBSIDIAN_VERSION );
+	// Enqueue admin dark theme
+	wp_enqueue_style(
+		'obsidian-admin-dark-theme',
+		get_template_directory_uri() . '/assets/css/admin-dark-theme.css',
+		array(),
+		HELLO_ELEMENTOR_VERSION
+	);
+	
+	// Enqueue for site editor
+	wp_enqueue_style(
+		'obsidian-site-editor-dark',
+		get_template_directory_uri() . '/assets/css/admin-dark-theme.css',
+		array(),
+		HELLO_ELEMENTOR_VERSION
+	);
+	
+	// Enqueue block editor dark theme
+	wp_enqueue_style(
+		'obsidian-block-editor-dark',
+		get_template_directory_uri() . '/assets/css/block-editor-dark.css',
+		array(),
+		HELLO_ELEMENTOR_VERSION
+	);
 }
 add_action( 'admin_enqueue_scripts', 'obsidian_admin_styles' );
+add_action( 'enqueue_block_editor_assets', 'obsidian_admin_styles' );
 
 /**
- * Add body classes
+ * Add SmartBotz theme to login page
  */
-function obsidian_body_classes( $classes ) {
-	// Add class for when sidebar is active
-	if ( is_active_sidebar( 'sidebar-primary' ) ) {
-		$classes[] = 'has-sidebar';
+function obsidian_login_styles() {
+	?>
+	<style>
+		body.login {
+			background: #0a0a0a !important;
+		}
+		
+		.login h1 a {
+			background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjMDZiNmQ0Ii8+Cjwvc3ZnPgo=') !important;
+			width: 84px !important;
+			height: 84px !important;
+			background-size: contain !important;
+		}
+		
+		.login form {
+			background: rgba(255, 255, 255, 0.05) !important;
+			border: 1px solid rgba(6, 182, 212, 0.2) !important;
+			border-radius: 12px !important;
+			backdrop-filter: blur(10px) !important;
+		}
+		
+		.login label {
+			color: rgba(255, 255, 255, 0.9) !important;
+		}
+		
+		.login input[type="text"],
+		.login input[type="password"] {
+			background: rgba(255, 255, 255, 0.1) !important;
+			border: 1px solid rgba(255, 255, 255, 0.2) !important;
+			color: white !important;
+			border-radius: 6px !important;
+		}
+		
+		.login input[type="text"]:focus,
+		.login input[type="password"]:focus {
+			border-color: #06b6d4 !important;
+			box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2) !important;
+		}
+		
+		.wp-core-ui .button-primary {
+			background: linear-gradient(135deg, #06b6d4, #8b5cf6) !important;
+			border: none !important;
+			text-shadow: none !important;
+			box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3) !important;
+		}
+		
+		.wp-core-ui .button-primary:hover {
+			background: linear-gradient(135deg, #0891b2, #7c3aed) !important;
+			transform: translateY(-1px) !important;
+		}
+		
+		.login #nav a,
+		.login #backtoblog a {
+			color: rgba(255, 255, 255, 0.7) !important;
+		}
+		
+		.login #nav a:hover,
+		.login #backtoblog a:hover {
+			color: #06b6d4 !important;
+		}
+		
+		.login .message {
+			background: rgba(6, 182, 212, 0.1) !important;
+			border-left: 4px solid #06b6d4 !important;
+			color: white !important;
+		}
+	</style>
+	<?php
+}
+add_action( 'login_enqueue_scripts', 'obsidian_login_styles' );
+
+/**
+ * Custom template tags for this theme.
+ */
+
+if ( ! function_exists( 'hello_elementor_page_title' ) ) {
+	/**
+	 * Check if page title is enabled.
+	 *
+	 * @param bool $echo
+	 * @return bool|void
+	 */
+	function hello_elementor_page_title( $echo = true ) {
+		if ( is_singular() ) {
+			$page_title_selector = get_post_meta( get_the_ID(), '_elementor_page_title_display', true );
+
+			if ( 'yes' === $page_title_selector ) {
+				return true;
+			}
+
+			if ( 'no' === $page_title_selector ) {
+				return false;
+			}
+		}
+
+		$page_title_selector = get_theme_mod( 'hello_elementor_page_title_selector' );
+
+		if ( 'no' === $page_title_selector ) {
+			return false;
+		}
+
+		return true;
 	}
-	
-	// Add class for custom header
-	if ( has_header_image() ) {
-		$classes[] = 'has-header-image';
-	}
-	
-	// Add class for custom logo
-	if ( has_custom_logo() ) {
-		$classes[] = 'has-custom-logo';
-	}
-	
-	return $classes;
 }
-add_filter( 'body_class', 'obsidian_body_classes' );
 
 /**
- * Add pingback url auto-discovery header for single posts and pages
+ * Wrapper function to deal with backwards compatibility.
  */
-function obsidian_pingback_header() {
-	if ( is_singular() && pings_open() ) {
-		printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
+if ( ! function_exists( 'hello_elementor_body_open' ) ) {
+	function hello_elementor_body_open() {
+		if ( function_exists( 'wp_body_open' ) ) {
+			wp_body_open();
+		} else {
+			do_action( 'wp_body_open' );
+		}
 	}
 }
-add_action( 'wp_head', 'obsidian_pingback_header' );
 
 /**
- * Customize excerpt length
+ * Add custom CSS for the custom header image.
  */
-function obsidian_excerpt_length( $length ) {
-	return apply_filters( 'obsidian_excerpt_length', 25 );
-}
-add_filter( 'excerpt_length', 'obsidian_excerpt_length', 999 );
+if ( ! function_exists( 'hello_elementor_header_style' ) ) {
+	function hello_elementor_header_style() {
+		$header_text_color = get_header_textcolor();
 
-/**
- * Customize excerpt more
- */
-function obsidian_excerpt_more( $more ) {
-	return apply_filters( 'obsidian_excerpt_more', '&hellip;' );
-}
-add_filter( 'excerpt_more', 'obsidian_excerpt_more' );
+		if ( ! has_header_image() && ( get_theme_support( 'custom-header', 'default-text-color' ) === $header_text_color ) ) {
+			return;
+		}
 
-/**
- * Add preconnect for Google Fonts
- */
-function obsidian_resource_hints( $urls, $relation_type ) {
-	if ( wp_style_is( 'obsidian-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
-		$urls[] = array(
-			'href' => 'https://fonts.gstatic.com',
-			'crossorigin',
-		);
+		$header_styles = array();
+
+		if ( has_header_image() ) {
+			$header_styles[] = 'background-image: url(' . get_header_image() . ');';
+		}
+
+		if ( get_theme_support( 'custom-header', 'default-text-color' ) !== $header_text_color ) {
+			$header_styles[] = 'color: #' . esc_attr( $header_text_color ) . ';';
+		}
+
+		if ( ! empty( $header_styles ) ) {
+			?>
+			<style type="text/css">
+				.site-title a,
+				.site-description {
+					<?php echo implode( '', $header_styles ); ?>
+				}
+			</style>
+			<?php
+		}
 	}
-	return $urls;
 }
-add_filter( 'wp_resource_hints', 'obsidian_resource_hints', 10, 2 );
 
 /**
- * Add theme action hooks
+ * Register widget area.
  */
-function obsidian_add_action_hooks() {
-	// Header hooks
-	add_action( 'obsidian_header_before', function() {
-		do_action( 'obsidian_header_before' );
-	});
-	
-	add_action( 'obsidian_header_after', function() {
-		do_action( 'obsidian_header_after' );
-	});
-	
-	// Footer hooks
-	add_action( 'obsidian_footer_before', function() {
-		do_action( 'obsidian_footer_before' );
-	});
-	
-	add_action( 'obsidian_footer_after', function() {
-		do_action( 'obsidian_footer_after' );
-	});
+function hello_elementor_widgets_init() {
+	register_sidebar( array(
+		'name'          => __( 'Sidebar', 'hello-elementor' ),
+		'id'            => 'sidebar-1',
+		'description'   => __( 'Add widgets here to appear in your sidebar.', 'hello-elementor' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
 }
-add_action( 'init', 'obsidian_add_action_hooks' );
+add_action( 'widgets_init', 'hello_elementor_widgets_init' );
 
 /**
- * Security enhancements
+ * Admin functions
  */
-function obsidian_security_headers() {
-	// Remove WordPress version from head
-	remove_action( 'wp_head', 'wp_generator' );
-	
-	// Remove version from scripts and styles
-	add_filter( 'style_loader_src', 'obsidian_remove_version_strings' );
-	add_filter( 'script_loader_src', 'obsidian_remove_version_strings' );
+if ( is_admin() ) {
+	require get_template_directory() . '/includes/admin-functions.php';
 }
-add_action( 'init', 'obsidian_security_headers' );
 
 /**
- * Remove version strings
+ * Check if Elementor is installed and activated.
  */
-function obsidian_remove_version_strings( $src ) {
-	if ( strpos( $src, 'ver=' ) ) {
-		$src = remove_query_arg( 'ver', $src );
+if ( ! function_exists( 'hello_elementor_check_hide_title' ) ) {
+	/**
+	 * Check hide title.
+	 *
+	 * @param bool $val default value.
+	 *
+	 * @return bool
+	 */
+	function hello_elementor_check_hide_title( $val ) {
+		if ( defined( 'ELEMENTOR_VERSION' ) ) {
+			$current_doc = Elementor\Plugin::instance()->documents->get( get_the_ID() );
+			if ( $current_doc && 'yes' === $current_doc->get_settings( 'hide_title' ) ) {
+				$val = false;
+			}
+		}
+		return $val;
 	}
-	return $src;
 }
+add_filter( 'hello_elementor_page_title', 'hello_elementor_check_hide_title' );
 
 /**
- * Performance optimizations
+ * BC:
+ * In v2.7.0 the theme removed the `hello_elementor_body_open()` from `header.php` replacing it with `wp_body_open()`.
+ * The following code prevents fatal errors in child themes that still use this function.
  */
-function obsidian_performance_optimizations() {
-	// Remove emoji scripts
-	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-	
-	// Remove unnecessary REST API links
-	remove_action( 'wp_head', 'rest_output_link_wp_head' );
-	remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
-	
-	// Remove shortlink
-	remove_action( 'wp_head', 'wp_shortlink_wp_head' );
+if ( ! function_exists( 'hello_elementor_body_open' ) ) {
+	function hello_elementor_body_open() {
+		wp_body_open();
+	}
 }
-add_action( 'init', 'obsidian_performance_optimizations' );
+/**
+ * Obsidian Page Builder AJAX Handlers
+ */
+function obsidian_save_page_data() {
+	// Verify nonce
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'obsidian_builder_nonce' ) ) {
+		wp_die( 'Security check failed' );
+	}
+
+	// Check user permissions
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		wp_die( 'Insufficient permissions' );
+	}
+
+	$page_id = intval( $_POST['page_id'] );
+	$page_data = sanitize_textarea_field( $_POST['page_data'] );
+
+	// Save page data as post meta
+	update_post_meta( $page_id, '_obsidian_page_data', $page_data );
+
+	wp_send_json_success( array( 'message' => 'Page saved successfully' ) );
+}
+add_action( 'wp_ajax_obsidian_save_page', 'obsidian_save_page_data' );
+
+function obsidian_load_page_data() {
+	// Verify nonce
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'obsidian_builder_nonce' ) ) {
+		wp_die( 'Security check failed' );
+	}
+
+	$page_id = intval( $_POST['page_id'] );
+	$page_data = get_post_meta( $page_id, '_obsidian_page_data', true );
+
+	wp_send_json_success( array( 'data' => $page_data ) );
+}
+add_action( 'wp_ajax_obsidian_load_page', 'obsidian_load_page_data' );
+
+/**
+ * Beautiful Pre-designed Templates
+ */
+function obsidian_get_templates() {
+	return array(
+		'smartbotz-hero' => array(
+			'name' => 'SmartBotz Hero',
+			'html' => '
+				<div class="smartbotz-hero-template">
+					<div class="smartbotz-hero" style="min-height: 100vh; position: relative; display: flex; align-items: center; background: #0a0a0a; overflow: hidden;">
+						<div class="smartbotz-container" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; position: relative; z-index: 2;">
+							<div class="smartbotz-hero-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
+								<div class="smartbotz-badge" style="display: inline-block; background: rgba(6, 182, 212, 0.1); color: #06b6d4; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 500; margin-bottom: 2rem; border: 1px solid rgba(6, 182, 212, 0.2);" contenteditable="true">
+									Finally, AI that understands design
+								</div>
+								<h1 class="smartbotz-main-heading" style="font-size: 4rem; font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem; color: white;" contenteditable="true">
+									Build beautiful<br>websites in minutes,<br><span style="color: rgba(255, 255, 255, 0.6); filter: blur(0.5px);">not months</span>
+								</h1>
+								<p class="smartbotz-subtitle" style="font-size: 1.125rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 3rem; line-height: 1.6;" contenteditable="true">
+									From idea to production-ready app in minutes. No design skills required.
+								</p>
+								<div class="smartbotz-cta">
+									<a href="#" class="smartbotz-try-button" style="display: inline-block; background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: white; padding: 1rem 2.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 1rem; letter-spacing: 0.025em; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);" contenteditable="true">TRY IT FREE</a>
+								</div>
+							</div>
+						</div>
+						<div class="smartbotz-bg-pattern" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%); background-size: 100% 100%; pointer-events: none;"></div>
+					</div>
+				</div>
+			'
+		),
+		'smartbotz-features' => array(
+			'name' => 'SmartBotz Features',
+			'html' => '
+				<div class="smartbotz-features-template">
+					<div class="smartbotz-features-section" style="padding: 100px 0; background: #111111;">
+						<div class="smartbotz-container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+							<div class="smartbotz-section-header" style="text-align: center; margin-bottom: 4rem;">
+								<h2 style="font-size: 3rem; margin-bottom: 1rem; color: white; font-weight: 700;" contenteditable="true">Powerful Features</h2>
+								<p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.7); max-width: 600px; margin: 0 auto;" contenteditable="true">Everything you need to create professional websites with AI-powered design.</p>
+							</div>
+							<div class="smartbotz-features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem;">
+								<div class="smartbotz-feature-card" style="text-align: center; padding: 3rem 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease;">
+									<div class="smartbotz-feature-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #06b6d4, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem; color: white;">🤖</div>
+									<h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: white; font-weight: 600;" contenteditable="true">AI-Powered Design</h3>
+									<p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-size: 1rem;" contenteditable="true">Let AI understand your vision and create stunning designs automatically. No design skills required.</p>
+								</div>
+								<div class="smartbotz-feature-card" style="text-align: center; padding: 3rem 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease;">
+									<div class="smartbotz-feature-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5cf6, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem; color: white;">⚡</div>
+									<h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: white; font-weight: 600;" contenteditable="true">Lightning Fast</h3>
+									<p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-size: 1rem;" contenteditable="true">Build and deploy websites in minutes, not months. From concept to production instantly.</p>
+								</div>
+								<div class="smartbotz-feature-card" style="text-align: center; padding: 3rem 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease;">
+									<div class="smartbotz-feature-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #06b6d4, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem; color: white;">📱</div>
+									<h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: white; font-weight: 600;" contenteditable="true">Responsive Design</h3>
+									<p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-size: 1rem;" contenteditable="true">Perfect display on all devices with automatically optimized responsive layouts.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			'
+		),
+		'testimonials-modern' => array(
+			'name' => 'Modern Testimonials',
+			'html' => '
+				<div class="obsidian-template testimonials-modern">
+					<div class="testimonials-section" style="padding: 100px 0; background: #1a1a2e; color: white; position: relative;">
+						<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+							<div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+								<h2 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 700;" contenteditable="true">What Our Clients Say</h2>
+								<p style="font-size: 1.25rem; opacity: 0.8; max-width: 600px; margin: 0 auto;" contenteditable="true">Join thousands of satisfied customers who have transformed their business with our platform.</p>
+							</div>
+							<div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+								<div class="testimonial-card" style="background: rgba(255,255,255,0.1); padding: 2.5rem; border-radius: 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+									<div class="stars" style="color: #ffd700; font-size: 1.2rem; margin-bottom: 1rem;">★★★★★</div>
+									<blockquote style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; font-style: italic;" contenteditable="true">"This platform completely transformed our online presence. The results exceeded our expectations and our revenue increased by 300%."</blockquote>
+									<div class="testimonial-author" style="display: flex; align-items: center; gap: 1rem;">
+										<img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" alt="Sarah Johnson">
+										<div>
+											<div style="font-weight: 600; margin-bottom: 0.25rem;" contenteditable="true">Sarah Johnson</div>
+											<div style="opacity: 0.8; font-size: 0.9rem;" contenteditable="true">CEO, TechCorp</div>
+										</div>
+									</div>
+								</div>
+								<div class="testimonial-card" style="background: rgba(255,255,255,0.1); padding: 2.5rem; border-radius: 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+									<div class="stars" style="color: #ffd700; font-size: 1.2rem; margin-bottom: 1rem;">★★★★★</div>
+									<blockquote style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; font-style: italic;" contenteditable="true">"Amazing support team and incredible features. We launched our website in just 2 days and it looks absolutely professional."</blockquote>
+									<div class="testimonial-author" style="display: flex; align-items: center; gap: 1rem;">
+										<img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" alt="Michael Chen">
+										<div>
+											<div style="font-weight: 600; margin-bottom: 0.25rem;" contenteditable="true">Michael Chen</div>
+											<div style="opacity: 0.8; font-size: 0.9rem;" contenteditable="true">Founder, StartupXYZ</div>
+										</div>
+									</div>
+								</div>
+								<div class="testimonial-card" style="background: rgba(255,255,255,0.1); padding: 2.5rem; border-radius: 15px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+									<div class="stars" style="color: #ffd700; font-size: 1.2rem; margin-bottom: 1rem;">★★★★★</div>
+									<blockquote style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; font-style: italic;" contenteditable="true">"The drag-and-drop builder is intuitive and powerful. I created a stunning website without any coding knowledge."</blockquote>
+									<div class="testimonial-author" style="display: flex; align-items: center; gap: 1rem;">
+										<img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" alt="Emma Rodriguez">
+										<div>
+											<div style="font-weight: 600; margin-bottom: 0.25rem;" contenteditable="true">Emma Rodriguez</div>
+											<div style="opacity: 0.8; font-size: 0.9rem;" contenteditable="true">Designer, Creative Studio</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			'
+		),
+		'cta-premium' => array(
+			'name' => 'Premium CTA',
+			'html' => '
+				<div class="obsidian-template cta-premium">
+					<div class="cta-section" style="padding: 100px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; position: relative; overflow: hidden;">
+						<div class="container" style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+							<h2 style="font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);" contenteditable="true">Ready to Get Started?</h2>
+							<p style="font-size: 1.5rem; margin-bottom: 3rem; opacity: 0.95; max-width: 700px; margin-left: auto; margin-right: auto;" contenteditable="true">Join over 50,000 satisfied customers who have transformed their business with our platform. Start your free trial today!</p>
+							<div class="cta-buttons" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+								<a href="#" class="obsidian-btn cta-primary" style="background: #ff6b6b; color: white; padding: 20px 40px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 600; font-size: 1.2rem; box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4); transition: all 0.3s ease;" contenteditable="true">Start Free Trial</a>
+								<a href="#" class="obsidian-btn cta-secondary" style="background: rgba(255,255,255,0.2); color: white; padding: 20px 40px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 600; font-size: 1.2rem; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); transition: all 0.3s ease;" contenteditable="true">Learn More</a>
+							</div>
+							<div class="cta-features" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; font-size: 0.95rem; opacity: 0.9;">
+								<div style="display: flex; align-items: center; gap: 0.5rem;">
+									<span style="color: #4ade80;">✓</span>
+									<span contenteditable="true">No Credit Card Required</span>
+								</div>
+								<div style="display: flex; align-items: center; gap: 0.5rem;">
+									<span style="color: #4ade80;">✓</span>
+									<span contenteditable="true">14-Day Free Trial</span>
+								</div>
+								<div style="display: flex; align-items: center; gap: 0.5rem;">
+									<span style="color: #4ade80;">✓</span>
+									<span contenteditable="true">Cancel Anytime</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			'
+		)
+	);
+}
+
+function obsidian_get_template_ajax() {
+	// Verify nonce
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'obsidian_builder_nonce' ) ) {
+		wp_die( 'Security check failed' );
+	}
+
+	$template_id = sanitize_text_field( $_POST['template_id'] );
+	$templates = obsidian_get_templates();
+
+	if ( isset( $templates[ $template_id ] ) ) {
+		wp_send_json_success( $templates[ $template_id ] );
+	} else {
+		wp_send_json_error( 'Template not found' );
+	}
+}
+add_action( 'wp_ajax_obsidian_get_template', 'obsidian_get_template_ajax' );
