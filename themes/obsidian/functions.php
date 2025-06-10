@@ -158,6 +158,14 @@ if ( ! function_exists( 'hello_elementor_scripts_styles' ) ) {
 				HELLO_ELEMENTOR_VERSION
 			);
 		}
+
+		// Enqueue Obsidian Dark Theme
+		wp_enqueue_style(
+			'obsidian-dark-theme',
+			HELLO_THEME_STYLE_URL . 'obsidian-dark-theme.css',
+			array('obsidian-theme-style'),
+			HELLO_ELEMENTOR_VERSION
+		);
 	}
 }
 add_action( 'wp_enqueue_scripts', 'hello_elementor_scripts_styles' );
