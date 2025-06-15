@@ -1,19 +1,27 @@
 <?php
 /**
- * The template for displaying the footer - SmartBotz Design
+ * The template for displaying the footer
  *
  * @package Obsidian
- * @since 2.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
 ?>
-
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+        <div class="site-info">
+            <div class="site-copyright">
+                <?php
+                printf(
+                    esc_html__('© %1$s %2$s', 'obsidian-minimal'),
+                    date('Y'),
+                    get_bloginfo('name')
+                );
+                ?>
+            </div>
+        </div>
+    </footer>
 </div><!-- #page -->
 
 <?php wp_footer(); ?>
 
 </body>
-</html>
+</html> 
