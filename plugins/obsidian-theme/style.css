@@ -1,0 +1,125 @@
+/*
+Theme Name: Obsidian Minimal
+Theme URI: https://github.com/yourusername/obsidian-minimal
+Author: Obsidian
+Author URI: https://yourwebsite.com
+Description: A minimal, lightweight WordPress theme optimized for speed and compatibility with page builders.
+Version: 1.0.0
+Requires at least: 5.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: obsidian-minimal
+*/
+
+/* Reset and base styles from Hello Elementor theme */
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222;
+  background: #fff;
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.5em 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+p {
+  margin: 0 0 1.5em 0;
+}
+ul,
+ol {
+  margin: 0 0 1.5em 1.5em;
+  padding: 0;
+}
+a {
+  color: #2271b1;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+  display: block;
+}
+figure {
+  margin: 0;
+}
+pre,
+code {
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 1em;
+}
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 1em;
+  margin: 0;
+}
+button,
+input[type="button"],
+input[type="submit"] {
+  cursor: pointer;
+}
+[tabindex="-1"]:focus {
+  outline: none !important;
+}
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 999;
+  background: #fff;
+  color: #222;
+  padding: 8px 16px;
+}
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+  width: auto;
+  height: auto;
+  outline: 2px solid #2271b1;
+}
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+  }
+}
