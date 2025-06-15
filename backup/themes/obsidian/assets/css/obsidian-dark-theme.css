@@ -1,0 +1,353 @@
+/* Obsidian Dark Theme - Inspired by smartbotz.vercel.app */
+
+/* Root Variables */
+:root {
+    --obsidian-bg-primary: #000000;
+    --obsidian-bg-secondary: #111111;
+    --obsidian-text-primary: #ffffff;
+    --obsidian-text-secondary: #a0a0a0;
+    --obsidian-accent-cyan: #00d4ff;
+    --obsidian-accent-blue: #0066ff;
+    --obsidian-gradient: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+    --obsidian-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Global Dark Theme */
+body {
+    background-color: var(--obsidian-bg-primary) !important;
+    color: var(--obsidian-text-primary) !important;
+    font-family: var(--obsidian-font-primary) !important;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--obsidian-text-primary) !important;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+p {
+    color: var(--obsidian-text-secondary);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+/* Header Styles */
+.site-header {
+    background-color: var(--obsidian-bg-primary) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+}
+
+.site-header .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Logo/Brand */
+.site-title,
+.site-title a {
+    color: var(--obsidian-text-primary) !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none !important;
+    letter-spacing: 0.1em;
+}
+
+.site-title a:hover {
+    color: var(--obsidian-accent-cyan) !important;
+}
+
+/* Navigation */
+.site-navigation ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+}
+
+.site-navigation a {
+    color: var(--obsidian-text-secondary) !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.site-navigation a:hover {
+    color: var(--obsidian-text-primary) !important;
+}
+
+/* Main Content */
+.site-main {
+    background-color: var(--obsidian-bg-primary) !important;
+    min-height: 100vh;
+    padding: 4rem 2rem;
+}
+
+/* Hero Section Styles */
+.hero-section {
+    text-align: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 6rem 0;
+}
+
+.hero-tagline {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid var(--obsidian-accent-cyan);
+    border-radius: 50px;
+    color: var(--obsidian-accent-cyan) !important;
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    color: var(--obsidian-text-primary) !important;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+    color: var(--obsidian-text-secondary) !important;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Buttons */
+.btn-primary,
+.wp-block-button__link,
+button[type="submit"],
+input[type="submit"] {
+    background: var(--obsidian-gradient) !important;
+    border: none !important;
+    border-radius: 50px !important;
+    color: var(--obsidian-text-primary) !important;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    padding: 1rem 2rem !important;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.btn-primary:hover,
+.wp-block-button__link:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+/* Links */
+a {
+    color: var(--obsidian-accent-cyan) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--obsidian-text-primary) !important;
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+    background-color: var(--obsidian-bg-secondary) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+    color: var(--obsidian-text-primary) !important;
+    padding: 0.75rem 1rem !important;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--obsidian-accent-cyan) !important;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+/* Footer */
+.site-footer {
+    background-color: var(--obsidian-bg-secondary) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--obsidian-text-secondary) !important;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.site-footer a {
+    color: var(--obsidian-text-secondary) !important;
+}
+
+.site-footer a:hover {
+    color: var(--obsidian-accent-cyan) !important;
+}
+
+/* WordPress Blocks */
+.wp-block-group,
+.wp-block-columns,
+.wp-block-column {
+    background-color: transparent !important;
+}
+
+.wp-block-heading {
+    color: var(--obsidian-text-primary) !important;
+}
+
+.wp-block-paragraph {
+    color: var(--obsidian-text-secondary) !important;
+}
+
+/* Comments */
+#comments {
+    background-color: var(--obsidian-bg-secondary);
+    border-radius: 12px;
+    margin-top: 3rem;
+    padding: 2rem;
+}
+
+#comments h2,
+#comments h3 {
+    color: var(--obsidian-text-primary) !important;
+}
+
+.comment-body {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.comment-author {
+    color: var(--obsidian-text-primary) !important;
+}
+
+.comment-meta {
+    color: var(--obsidian-text-secondary) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .site-header .header-inner {
+        padding: 0 1rem;
+    }
+    
+    .site-main {
+        padding: 2rem 1rem;
+    }
+    
+    .hero-section {
+        padding: 3rem 0;
+    }
+    
+    .site-navigation ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-gradient {
+    background: var(--obsidian-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--obsidian-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--obsidian-accent-cyan);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--obsidian-accent-blue);
+}
