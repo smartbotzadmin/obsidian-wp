@@ -75,17 +75,65 @@ class App {
             OBSIDIAN_VERSION
         );
         
-        // Enqueue our app JS
+        // Enqueue modular packages in dependency order
         wp_enqueue_script(
-            'obsidian-app',
-            OBSIDIAN_ASSETS_URL . 'js/app.js',
-            [ 'react', 'react-dom', 'wp-api-fetch', 'wp-i18n' ],
+            'obsidian-icons',
+            OBSIDIAN_ASSETS_URL . 'js/packages/icons/index.js',
+            [ 'react' ],
+            OBSIDIAN_VERSION,
+            true
+        );
+        
+        wp_enqueue_script(
+            'obsidian-ui',
+            OBSIDIAN_ASSETS_URL . 'js/packages/ui/index.js',
+            [ 'react', 'obsidian-icons' ],
+            OBSIDIAN_VERSION,
+            true
+        );
+        
+        wp_enqueue_script(
+            'obsidian-components',
+            OBSIDIAN_ASSETS_URL . 'js/packages/components/index.js',
+            [ 'react', 'obsidian-icons', 'obsidian-ui' ],
+            OBSIDIAN_VERSION,
+            true
+        );
+        
+        wp_enqueue_script(
+            'obsidian-preview-frame',
+            OBSIDIAN_ASSETS_URL . 'js/packages/components/preview-frame.js',
+            [ 'react', 'obsidian-components' ],
+            OBSIDIAN_VERSION,
+            true
+        );
+        
+        wp_enqueue_script(
+            'obsidian-modals',
+            OBSIDIAN_ASSETS_URL . 'js/packages/components/modals.js',
+            [ 'react', 'obsidian-ui' ],
+            OBSIDIAN_VERSION,
+            true
+        );
+        
+        wp_enqueue_script(
+            'obsidian-app-component',
+            OBSIDIAN_ASSETS_URL . 'js/packages/components/app.js',
+            [ 'react', 'obsidian-ui', 'obsidian-components', 'obsidian-preview-frame', 'obsidian-modals' ],
+            OBSIDIAN_VERSION,
+            true
+        );
+        
+        wp_enqueue_script(
+            'obsidian-app-loader',
+            OBSIDIAN_ASSETS_URL . 'js/app-loader.js',
+            [ 'react-dom', 'obsidian-app-component' ],
             OBSIDIAN_VERSION,
             true
         );
         
         // Localize script with data
-        wp_localize_script( 'obsidian-app', 'obsidianData', $this->get_app_data() );
+        wp_localize_script( 'obsidian-app-loader', 'obsidianData', $this->get_app_data() );
     }
 
     /**
