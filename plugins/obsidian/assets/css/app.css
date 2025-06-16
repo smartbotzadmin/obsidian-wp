@@ -1,0 +1,156 @@
+/* Obsidian Editor Styles */
+#obsidian-app {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: #f5f5f5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+/* Force hide WordPress admin bar */
+#wpadminbar {
+    display: none !important;
+}
+
+html.wp-toolbar {
+    padding-top: 0 !important;
+}
+
+body.admin-bar {
+    margin-top: 0 !important;
+}
+
+.obsidian-editor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+/* Sidebar */
+.obsidian-sidebar {
+    width: 300px;
+    min-width: 300px;
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.obsidian-sidebar h2 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.obsidian-chat-placeholder {
+    background-color: #f9f9f9;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Preview Area */
+.obsidian-preview-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Top Bar */
+.obsidian-top-bar {
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.obsidian-top-bar h1 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.obsidian-top-bar-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.obsidian-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.obsidian-btn-primary {
+    background-color: #007cba;
+    color: white;
+}
+
+.obsidian-btn-primary:hover {
+    background-color: #005a87;
+}
+
+.obsidian-btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.obsidian-btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+/* Preview Frame */
+.obsidian-preview-frame {
+    flex: 1;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.obsidian-preview-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Loading State */
+.obsidian-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+}
+
+.obsidian-loading-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007cba;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-right: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
