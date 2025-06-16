@@ -358,37 +358,28 @@
             console.log('Publishing...');
         };
 
-        const handleSaveDraft = () => {
-            // TODO: Implement save draft functionality
-            console.log('Saving draft...');
-        };
-
         return e('div', { className: 'obsidian-top-bar' },
             e('div', { className: 'obsidian-top-bar-left' },
                 e('div', { className: 'obsidian-logo' },
                     e('div', { className: 'obsidian-logo-icon' }),
                     e('div', { className: 'obsidian-logo-text' }, 'OBSIDIAN')
                 ),
-                e('div', { className: 'obsidian-page-title' }, 
+                e('div', { className: 'obsidian-page-title' },
                     `Editing: ${editorData?.title || 'Untitled'}`
                 ),
                 e('button', { className: 'obsidian-icon-btn' }, e(SettingsIcon))
             ),
             e('div', { className: 'obsidian-top-bar-right' },
-                e(ResponsiveControls, { 
-                    deviceMode, 
-                    setDeviceMode, 
-                    showResponsiveMenu, 
-                    setShowResponsiveMenu 
-                }),
-                e('button', {
-                    className: 'obsidian-icon-btn',
-                    onClick: handleSaveDraft
-                }, e(SaveIcon)),
                 e('button', {
                     className: 'obsidian-icon-btn',
                     onClick: () => setShowExitModal(true)
                 }, e(ExitIcon)),
+                e(ResponsiveControls, {
+                    deviceMode,
+                    setDeviceMode,
+                    showResponsiveMenu,
+                    setShowResponsiveMenu
+                }),
                 e('button', {
                     className: 'obsidian-publish-btn',
                     onClick: handlePublish
@@ -467,26 +458,47 @@
 
     // Exit Confirmation Modal
     function ExitModal({ setShowExitModal }) {
-        const handleExit = () => {
+        const handleDiscard = () => {
+            // Exit without saving
             if (window.obsidianData && window.obsidianData.adminUrl) {
                 window.location.href = window.obsidianData.adminUrl + 'edit.php?post_type=page';
             }
         };
 
+        const handleSaveAndExit = async () => {
+            try {
+                // TODO: Implement save functionality
+                console.log('Saving draft...');
+                
+                // For now, just exit after a brief delay
+                setTimeout(() => {
+                    if (window.obsidianData && window.obsidianData.adminUrl) {
+                        window.location.href = window.obsidianData.adminUrl + 'edit.php?post_type=page';
+                    }
+                }, 500);
+            } catch (error) {
+                console.error('Save failed:', error);
+            }
+        };
+
         return e('div', { className: 'obsidian-modal-overlay active' },
             e('div', { className: 'obsidian-modal' },
-                e('h3', { className: 'obsidian-modal-title' }, 'Save Draft and Exit?'),
-                e('p', { className: 'obsidian-modal-text' }, 
-                    'Do you want to save your changes as a draft before exiting the editor?'
+                e('h3', { className: 'obsidian-modal-title' }, 'Exit Editor'),
+                e('p', { className: 'obsidian-modal-text' },
+                    'You have unsaved changes. What would you like to do before exiting?'
                 ),
                 e('div', { className: 'obsidian-modal-actions' },
                     e('button', {
-                        className: 'obsidian-btn obsidian-btn-secondary',
+                        className: 'obsidian-modal-btn obsidian-modal-btn-cancel',
                         onClick: () => setShowExitModal(false)
                     }, 'Cancel'),
                     e('button', {
-                        className: 'obsidian-btn obsidian-btn-primary',
-                        onClick: handleExit
+                        className: 'obsidian-modal-btn obsidian-modal-btn-discard',
+                        onClick: handleDiscard
+                    }, 'Discard'),
+                    e('button', {
+                        className: 'obsidian-modal-btn obsidian-modal-btn-save',
+                        onClick: handleSaveAndExit
                     }, 'Save & Exit')
                 )
             )
