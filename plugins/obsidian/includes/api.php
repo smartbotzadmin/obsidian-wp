@@ -45,6 +45,37 @@ class API {
                 ],
             ],
         ] );
+
+        register_rest_route( 'obsidian/v1', '/posts/(?P<id>\d+)/revisions', [
+            'methods' => 'GET',
+            'callback' => [ $this, 'get_post_revisions' ],
+            'permission_callback' => [ $this, 'check_permissions' ],
+            'args' => [
+                'id' => [
+                    'validate_callback' => function( $param ) {
+                        return is_numeric( $param );
+                    }
+                ],
+            ],
+        ] );
+
+        register_rest_route( 'obsidian/v1', '/posts/(?P<id>\d+)/revisions/(?P<revision_id>\d+)/restore', [
+            'methods' => 'POST',
+            'callback' => [ $this, 'restore_revision' ],
+            'permission_callback' => [ $this, 'check_permissions' ],
+            'args' => [
+                'id' => [
+                    'validate_callback' => function( $param ) {
+                        return is_numeric( $param );
+                    }
+                ],
+                'revision_id' => [
+                    'validate_callback' => function( $param ) {
+                        return is_numeric( $param );
+                    }
+                ],
+            ],
+        ] );
     }
 
     /**
@@ -103,6 +134,63 @@ class API {
 
         return rest_ensure_response( [
             'success' => true,
+            'data' => $updated_data,
+        ] );
+    }
+
+    /**
+     * Get post revisions
+     */
+    public function get_post_revisions( $request ) {
+        $post_id = $request->get_param( 'id' );
+        
+        $revisions = wp_get_post_revisions( $post_id, [
+            'numberposts' => 10,
+            'orderby' => 'date',
+            'order' => 'DESC'
+        ] );
+
+        $formatted_revisions = [];
+        foreach ( $revisions as $revision ) {
+            $formatted_revisions[] = [
+                'id' => $revision->ID,
+                'date' => get_the_date( 'M j Y @ H:i', $revision ),
+                'date_relative' => human_time_diff( strtotime( $revision->post_date ), current_time( 'timestamp' ) ) . ' ago',
+                'author' => get_the_author_meta( 'display_name', $revision->post_author ),
+                'title' => $revision->post_title,
+                'content' => $revision->post_content,
+            ];
+        }
+
+        return rest_ensure_response( $formatted_revisions );
+    }
+
+    /**
+     * Restore a revision
+     */
+    public function restore_revision( $request ) {
+        $post_id = $request->get_param( 'id' );
+        $revision_id = $request->get_param( 'revision_id' );
+
+        $revision = wp_get_post_revision( $revision_id );
+        
+        if ( ! $revision || $revision->post_parent != $post_id ) {
+            return new \WP_Error( 'revision_not_found', 'Revision not found', [ 'status' => 404 ] );
+        }
+
+        $restored = wp_restore_post_revision( $revision_id );
+        
+        if ( ! $restored ) {
+            return new \WP_Error( 'restore_failed', 'Failed to restore revision', [ 'status' => 500 ] );
+        }
+
+        // Get updated data
+        $editor = Plugin::instance()->editor;
+        $updated_data = $editor->get_editor_data( $post_id );
+
+        return rest_ensure_response( [
+            'success' => true,
+            'restored_revision_id' => $revision_id,
             'data' => $updated_data,
         ] );
     }

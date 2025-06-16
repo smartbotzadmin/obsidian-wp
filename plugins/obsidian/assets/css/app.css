@@ -1,13 +1,6 @@
-/* Obsidian Editor Styles */
-#obsidian-app {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    background-color: #f5f5f5;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
+/* Obsidian Editor Styles - Professional Design */
+* {
+    box-sizing: border-box;
 }
 
 /* Force hide WordPress admin bar */
@@ -23,6 +16,19 @@ body.admin-bar {
     margin-top: 0 !important;
 }
 
+/* Main App Container */
+#obsidian-app {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
 .obsidian-editor {
     width: 100%;
     height: 100%;
@@ -30,99 +36,618 @@ body.admin-bar {
     flex-direction: row;
 }
 
-/* Sidebar */
+/* Sidebar Container */
 .obsidian-sidebar {
-    width: 300px;
-    min-width: 300px;
-    background-color: #ffffff;
-    border-right: 1px solid #e0e0e0;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    width: 350px;
+    min-width: 350px;
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 1);
+    border-right: 2px solid transparent;
+    background-image: linear-gradient(rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.1)),
+                      linear-gradient(180deg, rgba(59, 130, 246, 0.6) 0%, rgba(139, 92, 246, 0.4) 50%, rgba(59, 130, 246, 0.6) 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    display: flex;
+    flex-direction: column;
     height: 100vh;
+    position: relative;
+}
+
+.obsidian-sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -4px;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg,
+        rgba(59, 130, 246, 0.3) 0%,
+        rgba(139, 92, 246, 0.2) 25%,
+        rgba(236, 72, 153, 0.2) 50%,
+        rgba(139, 92, 246, 0.2) 75%,
+        rgba(59, 130, 246, 0.3) 100%);
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+    border-radius: 0 2px 2px 0;
+}
+
+/* Sidebar Tabs */
+.obsidian-sidebar-tabs {
+    height: 48px;
+    background: #121314;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    background-image: linear-gradient(#121314, #121314),
+                      linear-gradient(90deg, rgba(59, 130, 246, 0.6) 0%, rgba(139, 92, 246, 0.4) 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.obsidian-sidebar-tabs::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+        rgba(59, 130, 246, 0.4) 0%,
+        rgba(139, 92, 246, 0.3) 25%,
+        rgba(236, 72, 153, 0.3) 50%,
+        rgba(139, 92, 246, 0.3) 75%,
+        rgba(59, 130, 246, 0.4) 100%);
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+}
+
+.obsidian-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.obsidian-tab-inner {
+    width: 100%;
+    height: 32px;
+    padding: 0 4px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.obsidian-tab-text {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    transition: color 0.2s ease;
+}
+
+/* Tab States */
+.obsidian-tab[data-active="true"] .obsidian-tab-inner {
+    border-bottom: 2px solid rgba(59, 130, 246, 0.5);
+}
+
+.obsidian-tab[data-active="true"] .obsidian-tab-text {
+    color: #3B82F6;
+    font-weight: 700;
+}
+
+.obsidian-tab[data-active="false"] .obsidian-tab-text {
+    color: #717680;
+}
+
+.obsidian-tab[data-active="false"]:hover .obsidian-tab-text {
+    color: #9CA3AF;
+}
+
+/* Sidebar Content */
+.obsidian-sidebar-content {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    overflow: hidden;
+    background: #161C24;
+}
+
+/* Chat Container */
+.obsidian-chat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 32px;
+    overflow: hidden;
+}
+
+.obsidian-chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+    padding: 16px 0;
+}
+
+/* Chat Message Groups */
+.obsidian-message-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* User Message */
+.obsidian-message-user {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.obsidian-message-user-bubble {
+    max-width: 300px;
+    padding: 8px;
+    background: #4E06AC;
+    border-radius: 6px;
+}
+
+.obsidian-message-user-text {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.obsidian-message-time {
+    padding: 0 8px;
+    color: #717680;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* Assistant Messages */
+.obsidian-message-assistant {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.obsidian-message-assistant-bubble {
+    padding: 8px;
+    background: #F9FAFB;
+    border-radius: 6px;
+}
+
+.obsidian-message-assistant-text {
+    color: black;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* Post Modified Notification */
+.obsidian-post-modified {
+    padding: 16px;
+    background: #F9FAFB;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.obsidian-post-modified-icon {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+.obsidian-post-modified-icon::before {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #181D27;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.obsidian-post-modified-text {
+    color: #414651;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+/* Chat Input */
+.obsidian-chat-input-container {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.obsidian-chat-input-container:focus-within {
+    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.obsidian-chat-input-wrapper {
+    flex: 1;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+}
+
+.obsidian-chat-input {
+    width: 100%;
+    min-height: 40px;
+    max-height: 200px;
+    padding: 10px 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    line-height: 20px;
+    resize: none;
     overflow-y: auto;
 }
 
-.obsidian-sidebar h2 {
-    margin: 0 0 20px 0;
-    font-size: 18px;
-    color: #333;
+.obsidian-chat-input::placeholder {
+    color: #9CA3AF;
 }
 
-.obsidian-chat-placeholder {
-    background-color: #f9f9f9;
-    border: 2px dashed #ddd;
+.obsidian-chat-input:focus {
+    outline: none;
+}
+
+.obsidian-chat-send {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.obsidian-chat-send:hover {
+    background: rgba(213, 214, 217, 0.1);
+}
+
+.obsidian-chat-send svg {
+    width: 24px;
+    height: 24px;
+    color: #6B7280;
+}
+
+/* History Tab Content */
+.obsidian-history-container {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+}
+
+.obsidian-history-container.active {
+    display: flex;
+}
+
+.obsidian-history-list {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+}
+
+.obsidian-history-item {
+    padding: 16px;
     border-radius: 8px;
-    padding: 40px 20px;
-    text-align: center;
-    color: #666;
-    font-size: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-/* Preview Area */
+.obsidian-history-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.obsidian-history-item.selected {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.obsidian-history-version {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    margin-bottom: 4px;
+}
+
+.obsidian-history-date {
+    color: #9CA3AF;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 16px;
+}
+
+.obsidian-history-actions {
+    padding: 0 16px 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.obsidian-btn {
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.obsidian-btn-secondary {
+    background: transparent;
+    color: #6B7280;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.obsidian-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.obsidian-btn-primary {
+    background: #3B82F6;
+    color: white;
+}
+
+.obsidian-btn-primary:hover {
+    background: #2563EB;
+}
+
+/* Main Content Area */
 .obsidian-preview-container {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    height: 100vh;
 }
 
 /* Top Bar */
 .obsidian-top-bar {
-    height: 60px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
+    height: 48px;
+    padding: 9px;
+    background: #121314;
+    border-bottom: 2px solid transparent;
+    background-image: linear-gradient(#121314, #121314),
+                      linear-gradient(90deg, rgba(59, 130, 246, 0.6) 0%, rgba(139, 92, 246, 0.4) 50%, rgba(236, 72, 153, 0.4) 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    gap: 8px;
+    position: relative;
 }
 
-.obsidian-top-bar h1 {
-    margin: 0;
-    font-size: 20px;
-    color: #333;
+.obsidian-top-bar::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+        rgba(59, 130, 246, 0.4) 0%,
+        rgba(139, 92, 246, 0.3) 25%,
+        rgba(236, 72, 153, 0.3) 50%,
+        rgba(139, 92, 246, 0.3) 75%,
+        rgba(59, 130, 246, 0.4) 100%);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    border-radius: 0 0 2px 2px;
 }
 
-.obsidian-top-bar-actions {
+.obsidian-top-bar-left {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 16px;
 }
 
-.obsidian-btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+/* Logo */
+.obsidian-logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
 }
 
-.obsidian-btn-primary {
-    background-color: #007cba;
+.obsidian-logo-icon {
+    width: 30px;
+    height: 30px;
+    background: #3B82F6;
+    border-radius: 50%;
+}
+
+.obsidian-logo-text {
     color: white;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 28px;
 }
 
-.obsidian-btn-primary:hover {
-    background-color: #005a87;
+.obsidian-page-title {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    font-weight: 500;
 }
 
-.obsidian-btn-secondary {
-    background-color: #f0f0f0;
-    color: #333;
+.obsidian-top-bar-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
 }
 
-.obsidian-btn-secondary:hover {
-    background-color: #e0e0e0;
+/* Top Bar Icons */
+.obsidian-icon-btn {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease;
+}
+
+.obsidian-icon-btn:hover {
+    opacity: 0.8;
+}
+
+.obsidian-icon-btn svg {
+    width: 20px;
+    height: 20px;
+    color: rgba(215, 215, 215, 0.5);
+}
+
+/* Responsive Controls */
+.obsidian-responsive-controls {
+    position: relative;
+}
+
+.obsidian-responsive-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: #1F2937;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: 8px;
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.obsidian-responsive-menu.active {
+    display: flex;
+}
+
+.obsidian-responsive-option {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.obsidian-responsive-option:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.obsidian-responsive-option.active {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+/* Publish Button */
+.obsidian-publish-btn {
+    height: 48px;
+    padding: 0 24px;
+    background: #47BD8F;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.obsidian-publish-btn:hover {
+    background: #3BA77E;
+}
+
+.obsidian-publish-text {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.obsidian-publish-btn svg {
+    width: 20px;
+    height: 20px;
+    color: white;
 }
 
 /* Preview Frame */
 .obsidian-preview-frame {
     flex: 1;
-    background-color: #ffffff;
+    background: #F5F5F5;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.obsidian-preview-wrapper {
+    width: 100%;
+    height: 100%;
+    background: white;
+    box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Responsive Preview Sizes */
+.obsidian-preview-wrapper[data-device="tablet"] {
+    width: 768px;
+    max-width: 90%;
+}
+
+.obsidian-preview-wrapper[data-device="mobile"] {
+    width: 375px;
+    max-width: 90%;
 }
 
 .obsidian-preview-frame iframe {
@@ -131,18 +656,98 @@ body.admin-bar {
     border: none;
 }
 
+/* Resize Handles for Tablet/Mobile */
+.obsidian-resize-handle {
+    position: absolute;
+    background: rgba(59, 130, 246, 0.5);
+    cursor: ew-resize;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.obsidian-preview-wrapper[data-device="tablet"] .obsidian-resize-handle,
+.obsidian-preview-wrapper[data-device="mobile"] .obsidian-resize-handle {
+    opacity: 1;
+}
+
+.obsidian-resize-handle:hover {
+    opacity: 1;
+    background: rgba(59, 130, 246, 0.8);
+}
+
+.obsidian-resize-handle-left {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+}
+
+.obsidian-resize-handle-right {
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+}
+
+/* Exit Confirmation Modal */
+.obsidian-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.obsidian-modal-overlay.active {
+    display: flex;
+}
+
+.obsidian-modal {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.obsidian-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.obsidian-modal-text {
+    font-size: 14px;
+    color: #6B7280;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.obsidian-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
 /* Loading State */
 .obsidian-loading {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: #666;
+    color: #6B7280;
 }
 
 .obsidian-loading-spinner {
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #007cba;
+    border: 3px solid #F3F4F6;
+    border-top: 3px solid #3B82F6;
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -153,4 +758,27 @@ body.admin-bar {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Scrollbar Styling */
+.obsidian-chat-messages::-webkit-scrollbar,
+.obsidian-history-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.obsidian-chat-messages::-webkit-scrollbar-track,
+.obsidian-history-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.obsidian-chat-messages::-webkit-scrollbar-thumb,
+.obsidian-history-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.obsidian-chat-messages::-webkit-scrollbar-thumb:hover,
+.obsidian-history-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
 }
