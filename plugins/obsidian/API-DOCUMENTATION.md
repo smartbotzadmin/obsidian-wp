@@ -2,90 +2,142 @@
 
 This document provides detailed information about the Obsidian Plugin REST API endpoints designed for AI agent integration.
 
-## Base URL
+## Base URLs
 
-```
-https://your-wordpress-site.com/wp-json/obsidian/v1
-```
+**Plugin API (AI Agent):** `https://your-site.com/wp-json/obsidian-plugin/v1`  
+**Theme API (Styling):** `https://your-site.com/wp-json/obsidian/v1`
+
+> **Important:** Plugin and theme APIs are completely separate. The AI agent uses the plugin API for content management, while theme API handles styling and design tokens.
 
 ## Authentication
 
 Most endpoints require WordPress authentication with appropriate permissions:
-- **Post editing**: `edit_post` capability for specific post
-- **Site management**: `manage_options` capability
+- **Page editing**: `edit_posts` capability
+- **Site management**: `manage_options` capability  
 - **Menu management**: `edit_theme_options` capability
 
-## Core Philosophy: Dynamic Component Generation
+## Core Philosophy: Draft-First Workflow
 
-Unlike traditional page builders that rely on pre-built components, Obsidian empowers the AI agent to **generate custom components on-demand**. When a user requests a specific functionality (e.g., "add a team carousel"), the AI agent should:
+The AI agent **always works with drafts**. When a user requests changes:
 
-1. **Generate the HTML structure** tailored to the user's needs
-2. **Create custom JavaScript** for the specific functionality
-3. **Generate accompanying CSS** for styling
-4. **Inject the component** into the page at the desired location
+1. **AI creates/modifies drafts only** - never published content
+2. **User controls publishing** via the Obsidian editor interface
+3. **History is preserved** through WordPress revisions
+4. **No hallucination risk** from publish/save operations
 
-This approach provides unlimited flexibility and ensures each component is perfectly suited to the user's requirements.
+This approach ensures the user maintains full control over what goes live.
 
 ---
 
 ## Endpoints
 
-### 1. Post Management
+### 1. Page Management (High-Level Operations)
 
-#### Get Post Data
-**Endpoint:** `GET /posts/{id}`
+#### Read Page with Full Context
+**Endpoint:** `GET /pages/{id}`
 
-**Description:** Retrieves post data including content, custom scripts, and metadata.
+**Description:** Gets complete page information including content, blocks, metadata, and scripts.
 
 **Response Example:**
 ```json
 {
   "id": 123,
-  "title": "Sample Page",
+  "title": "About Us",
   "content": "<!-- wp:paragraph -->...",
   "status": "draft",
   "type": "page",
-  "permalink": "https://site.com/sample-page",
-  "preview_url": "https://site.com/sample-page?preview=true",
-  "custom_scripts": {
-    "carousel-component-abc123": {
-      "handle": "carousel-component-abc123",
-      "src": "/wp-content/plugins/obsidian/assets/js/dynamic/carousel-component-abc123.js",
-      "component_type": "carousel"
+  "slug": "about-us",
+  "permalink": "https://site.com/about-us",
+  "preview_url": "https://site.com/about-us?preview=true&obsidian_preview=1",
+  "modified": "2025-01-15T10:30:00+00:00",
+  "author": "John Doe",
+  "featured_image": "https://site.com/wp-content/uploads/hero.jpg",
+  "excerpt": "Learn about our company...",
+  "meta": {
+    "seo_title": "About Our Company",
+    "seo_description": "Discover our story...",
+    "custom_scripts": {
+      "team-carousel-abc123": {
+        "handle": "team-carousel-abc123",
+        "src": "/wp-content/plugins/obsidian/assets/js/dynamic/team-carousel-abc123.js"
+      }
     }
-  }
+  },
+  "blocks": [
+    {
+      "blockName": "core/paragraph",
+      "attrs": {},
+      "innerBlocks": [],
+      "innerHTML": "<p>Welcome to our company...</p>"
+    }
+  ]
 }
 ```
 
-#### Update Post Content
-**Endpoint:** `POST /posts/{id}`
+#### Create New Page
+**Endpoint:** `POST /pages`
+
+**Description:** Creates a new page (always as draft).
 
 **Parameters:**
-- `title` (optional): New post title
-- `content` (optional): New post content (Gutenberg blocks)
-
----
-
-### 2. Dynamic Component Generation
-
-#### Generate Dynamic Script
-**Endpoint:** `POST /generate-script`
-
-**Description:** Creates a new dynamic component with custom JavaScript and CSS.
-
-**Parameters:**
-- `component_type` (required): Type identifier (e.g., "carousel", "slider", "contact-form")
-- `script_content` (required): JavaScript code for the component
-- `css_content` (optional): CSS styles for the component
-- `requirements` (optional): Description of component requirements
+- `title` (optional): Page title (default: "Untitled Page")
+- `content` (optional): Page content as Gutenberg blocks
+- `type` (optional): Post type ("page" or "post", default: "page")
 
 **Example Request:**
 ```json
 {
-  "component_type": "team-carousel",
-  "requirements": "Responsive carousel showing team members with auto-play and navigation dots",
-  "script_content": "(function($) {\n  class TeamCarousel {\n    constructor(element) {\n      this.element = element;\n      this.init();\n    }\n    \n    init() {\n      // Custom carousel logic here\n      const items = this.element.querySelectorAll('.team-member');\n      // Implementation...\n    }\n  }\n  \n  $(document).ready(() => {\n    $('.team-carousel').each(function() {\n      new TeamCarousel(this);\n    });\n  });\n})(jQuery);",
-  "css_content": ".team-carousel {\n  position: relative;\n  overflow: hidden;\n}\n\n.team-member {\n  display: none;\n  text-align: center;\n}\n\n.team-member.active {\n  display: block;\n}"
+  "title": "New Landing Page",
+  "content": "<!-- wp:paragraph --><p>Welcome to our new page!</p><!-- /wp:paragraph -->",
+  "type": "page"
+}
+```
+
+#### Update Page
+**Endpoint:** `PUT /pages/{id}`
+
+**Description:** Updates page content. If page is published, creates a new draft version.
+
+**Parameters:**
+- `title` (optional): New page title
+- `content` (optional): New page content
+- `excerpt` (optional): Page excerpt
+- `custom_scripts` (optional): Array of custom scripts
+
+**Smart Draft Handling:**
+- If page is **published**: Creates new draft version, leaves published version untouched
+- If page is **draft**: Updates the existing draft
+- User decides when to publish via the Obsidian editor
+
+#### Delete Page
+**Endpoint:** `DELETE /pages/{id}`
+
+**Description:** Permanently deletes a page.
+
+---
+
+### 2. Dynamic Component Creation
+
+#### Create Component
+**Endpoint:** `POST /components`
+
+**Description:** Creates a dynamic component with custom HTML, CSS, and JavaScript.
+
+**Parameters:**
+- `type` (required): Component type identifier (e.g., "team-carousel", "contact-form")
+- `html` (required): HTML structure for the component
+- `css` (optional): CSS styles for the component
+- `javascript` (optional): JavaScript functionality for the component
+- `page_id` (optional): If provided, adds component to this page immediately
+
+**Example Request:**
+```json
+{
+  "type": "team-carousel",
+  "html": "<div class=\"team-carousel\">\n  <div class=\"team-member\">\n    <img src=\"/images/john.jpg\" alt=\"John Doe\">\n    <h3>John Doe</h3>\n    <p>CEO & Founder</p>\n  </div>\n  <div class=\"team-member\">\n    <img src=\"/images/jane.jpg\" alt=\"Jane Smith\">\n    <h3>Jane Smith</h3>\n    <p>CTO</p>\n  </div>\n</div>",
+  "css": ".team-carousel { position: relative; overflow: hidden; }\n.team-member { display: none; text-align: center; }\n.team-member.active { display: block; }",
+  "javascript": "(function($) {\n  class TeamCarousel {\n    constructor(element) {\n      this.element = element;\n      this.init();\n    }\n    init() {\n      // Carousel logic here\n    }\n  }\n  $(document).ready(() => {\n    $('.team-carousel').each(function() {\n      new TeamCarousel(this);\n    });\n  });\n})(jQuery);",
+  "page_id": 123
 }
 ```
 
@@ -96,81 +148,64 @@ This approach provides unlimited flexibility and ensures each component is perfe
   "component": {
     "handle": "obsidian-team-carousel-abc123",
     "type": "team-carousel",
+    "html": "...",
     "script_url": "/wp-content/plugins/obsidian/assets/js/dynamic/obsidian-team-carousel-abc123.js",
     "css_url": "/wp-content/plugins/obsidian/assets/css/dynamic/obsidian-team-carousel-abc123.css",
     "version": "unique-version-id",
     "created": "2025-01-15 10:30:00"
-  }
-}
-```
-
-#### Add Dynamic Component to Post
-**Endpoint:** `POST /posts/{id}/add-dynamic-component`
-
-**Description:** Adds a generated dynamic component to a specific post.
-
-**Parameters:**
-- `component_handle` (required): Handle returned from generate-script
-- `html_content` (required): HTML structure for the component
-- `position` (optional): Where to insert ("start", "end", or block index)
-- `config` (optional): Component-specific configuration
-
-**Example Request:**
-```json
-{
-  "component_handle": "obsidian-team-carousel-abc123",
-  "html_content": "<div class=\"team-carousel\">\n  <div class=\"team-member active\">\n    <img src=\"/images/john.jpg\" alt=\"John Doe\">\n    <h3>John Doe</h3>\n    <p>CEO & Founder</p>\n  </div>\n  <div class=\"team-member\">\n    <img src=\"/images/jane.jpg\" alt=\"Jane Smith\">\n    <h3>Jane Smith</h3>\n    <p>CTO</p>\n  </div>\n</div>",
-  "position": "end",
-  "config": {
-    "autoplay": true,
-    "speed": 3000,
-    "showDots": true
-  }
+  },
+  "message": "Component created successfully"
 }
 ```
 
 ---
 
-### 3. Block Management
+### 3. Site Management
 
-#### Add Block to Post
-**Endpoint:** `POST /posts/{id}/blocks`
+#### Get Site Information
+**Endpoint:** `GET /site`
 
-**Description:** Adds standard Gutenberg blocks to a post.
+**Description:** Gets comprehensive site information including pages, menus, and settings.
 
-**Parameters:**
-- `block_type` (required): Type of block ("html", "paragraph", "heading", etc.)
-- `content` (required): Block content
-- `position` (optional): Where to insert the block
-
-**Example for HTML Block:**
-```json
-{
-  "block_type": "html",
-  "content": "<div class=\"custom-section\">\n  <h2>Custom HTML Section</h2>\n  <p>This is custom HTML content.</p>\n</div>",
-  "position": "end"
-}
-```
-
----
-
-### 4. Site Identity Management
-
-#### Get Site Settings
-**Endpoint:** `GET /site/settings`
-
-**Response:**
+**Response Example:**
 ```json
 {
   "title": "My Website",
-  "tagline": "Just another WordPress site",
-  "icon_url": "https://site.com/wp-content/uploads/2025/01/favicon.png",
-  "icon_id": 123
+  "tagline": "Building amazing experiences",
+  "url": "https://mysite.com",
+  "admin_email": "admin@mysite.com",
+  "language": "en_US",
+  "timezone": "America/New_York",
+  "icon": {
+    "url": "https://mysite.com/wp-content/uploads/favicon.png",
+    "id": 123
+  },
+  "theme": {
+    "name": "Obsidian Theme Hello Child",
+    "version": "1.0.0"
+  },
+  "pages": [
+    {
+      "id": 1,
+      "title": "Home",
+      "slug": "home",
+      "status": "publish",
+      "url": "https://mysite.com/",
+      "modified": "2025-01-15T10:30:00+00:00"
+    }
+  ],
+  "menus": [
+    {
+      "id": 2,
+      "name": "Main Navigation",
+      "locations": ["primary"]
+    }
+  ]
 }
 ```
 
-#### Update Site Settings
-**Endpoint:** `POST /site/settings`
+#### Update Site Information
+**Endpoint:** `PUT /site`
 
 **Parameters:**
 - `title` (optional): Site title
@@ -179,25 +214,48 @@ This approach provides unlimited flexibility and ensures each component is perfe
 
 ---
 
-### 5. Menu Management
+### 4. Menu Management
 
 #### Get All Menus
 **Endpoint:** `GET /menus`
 
-#### Get Specific Menu
-**Endpoint:** `GET /menus/{id}`
+**Response Example:**
+```json
+[
+  {
+    "id": 2,
+    "name": "Main Navigation",
+    "slug": "main-navigation",
+    "locations": ["primary"],
+    "items": [
+      {
+        "id": 10,
+        "title": "Home",
+        "url": "/",
+        "parent": 0,
+        "order": 1
+      },
+      {
+        "id": 11,
+        "title": "About",
+        "url": "/about",
+        "parent": 0,
+        "order": 2
+      }
+    ]
+  }
+]
+```
 
 #### Update Menu
-**Endpoint:** `POST /menus/{id}`
+**Endpoint:** `PUT /menus/{id}`
 
 **Parameters:**
-- `name` (optional): Menu name
-- `items` (optional): Array of menu items
+- `items` (required): Array of menu items
 
-**Example Menu Items:**
+**Example Request:**
 ```json
 {
-  "name": "Main Navigation",
   "items": [
     {
       "title": "Home",
@@ -212,7 +270,7 @@ This approach provides unlimited flexibility and ensures each component is perfe
     {
       "title": "Our Team",
       "url": "/about/team",
-      "parent": 2
+      "parent": 11
     }
   ]
 }
@@ -220,145 +278,162 @@ This approach provides unlimited flexibility and ensures each component is perfe
 
 ---
 
-### 6. Draft Management
+### 5. Theme Integration
 
-#### Create Draft
-**Endpoint:** `POST /drafts`
+#### Get Theme Settings
+**Endpoint:** `GET /theme`
 
-**Parameters:**
-- `title` (optional): Draft title
-- `content` (optional): Initial content
-- `type` (optional): Post type ("page" or "post")
+**Description:** Proxy to theme API for getting design tokens (colors, typography, spacing).
 
-#### Get Drafts
-**Endpoint:** `GET /drafts`
-
-**Description:** Returns list of user's draft posts.
+**Response:** Same as theme API `/theme/settings` endpoint.
 
 ---
 
 ## AI Agent Workflow Examples
 
-### Example 1: Creating a Team Carousel
+### Example 1: Creating a Complete Landing Page
 
-When user says: *"Add a team carousel showing our 4 team members with their photos and titles"*
+When user says: *"Create a landing page for our new product with a hero section, features list, and contact form"*
 
-1. **Generate the component:**
 ```javascript
-POST /generate-script
-{
-  "component_type": "team-carousel",
-  "requirements": "Display 4 team members with photos, names, titles, auto-rotation",
-  "script_content": "/* Custom carousel JavaScript */",
-  "css_content": "/* Responsive carousel styles */"
-}
+// 1. Create the page
+const pageResponse = await fetch('/wp-json/obsidian-plugin/v1/pages', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    title: 'New Product Landing Page',
+    content: '<!-- wp:paragraph --><p>Landing page content will be added...</p><!-- /wp:paragraph -->'
+  })
+});
+
+const page = await pageResponse.json();
+
+// 2. Create hero component
+const heroComponent = await fetch('/wp-json/obsidian-plugin/v1/components', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    type: 'hero-section',
+    html: '<section class="hero">...</section>',
+    css: '.hero { background: linear-gradient(...); }',
+    javascript: '// Hero animations',
+    page_id: page.data.id
+  })
+});
+
+// 3. Create contact form component
+const formComponent = await fetch('/wp-json/obsidian-plugin/v1/components', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    type: 'contact-form',
+    html: '<form class="contact-form">...</form>',
+    css: '.contact-form { ... }',
+    javascript: '// Form validation and submission',
+    page_id: page.data.id
+  })
+});
 ```
 
-2. **Add to the page:**
+### Example 2: Updating Site Navigation
+
+When user says: *"Update the main menu to include our new services page"*
+
 ```javascript
-POST /posts/123/add-dynamic-component
-{
-  "component_handle": "returned-handle-from-step-1",
-  "html_content": "<div class=\"team-carousel\">/* Team member HTML */</div>",
-  "position": "end"
-}
-```
+// 1. Get current site info
+const siteInfo = await fetch('/wp-json/obsidian-plugin/v1/site');
+const site = await siteInfo.json();
 
-### Example 2: Creating a Contact Form
+// 2. Find main menu
+const mainMenu = site.menus.find(menu => menu.locations.includes('primary'));
 
-When user says: *"Add a contact form with name, email, message fields and validation"*
-
-1. **Generate form component with validation:**
-```javascript
-POST /generate-script
-{
-  "component_type": "contact-form",
-  "script_content": "/* Form validation and AJAX submission */",
-  "css_content": "/* Form styling with error states */"
-}
-```
-
-2. **Add form to page:**
-```javascript
-POST /posts/123/add-dynamic-component
-{
-  "html_content": "<form class=\"contact-form\">/* Form fields */</form>",
-  "config": {
-    "ajax_submit": true,
-    "validation_rules": {
-      "email": "required|email",
-      "name": "required|min:2"
-    }
-  }
-}
+// 3. Update menu with new item
+const updatedMenu = await fetch(`/wp-json/obsidian-plugin/v1/menus/${mainMenu.id}`, {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    items: [
+      { title: 'Home', url: '/', parent: 0 },
+      { title: 'About', url: '/about', parent: 0 },
+      { title: 'Services', url: '/services', parent: 0 }, // New item
+      { title: 'Contact', url: '/contact', parent: 0 }
+    ]
+  })
+});
 ```
 
 ---
 
 ## Best Practices for AI Agents
 
-### 1. Component Generation
-- **Always generate unique, tailored code** rather than using templates
-- **Include proper error handling** in JavaScript components
+### 1. Always Work with Full Context
+- Use `GET /pages/{id}` to get complete page information before making changes
+- Consider existing content, blocks, and scripts when adding new components
+- Respect the current page structure and flow
+
+### 2. Component Generation
+- **Generate unique, tailored components** for each specific use case
+- **Include proper accessibility** (ARIA labels, keyboard navigation, semantic HTML)
 - **Make components responsive** by default
-- **Follow accessibility guidelines** (ARIA labels, keyboard navigation)
+- **Handle edge cases** in JavaScript (empty states, loading states, errors)
 
-### 2. HTML Structure
-- Use **semantic HTML** elements
-- Include **proper class names** for styling hooks
-- Add **data attributes** for JavaScript targeting
-- Ensure **valid HTML structure**
+### 3. Draft-First Approach
+- **Never modify published content directly**
+- **Always create drafts** for AI-generated changes
+- **Let users control publishing** through the editor interface
+- **Preserve content history** through WordPress revisions
 
-### 3. CSS Generation
-- Use **CSS custom properties** for easy theming
-- Include **responsive breakpoints**
-- Follow **BEM methodology** for class naming
-- Ensure **cross-browser compatibility**
+### 4. Integration with Theme
+- **Fetch theme settings** via `/theme` endpoint before generating components
+- **Use theme colors, fonts, and spacing** in generated CSS
+- **Maintain visual consistency** with existing site design
+- **Respect theme breakpoints** and layout constraints
 
-### 4. JavaScript Best Practices
-- Use **modern ES6+ syntax** when appropriate
-- Include **proper event cleanup**
-- Handle **edge cases and errors gracefully**
-- Make components **configurable through data attributes**
-
-### 5. Integration
-- Always **test component functionality** after creation
-- **Respect existing theme styles** and integrate smoothly
-- **Provide fallbacks** for when JavaScript is disabled
-- **Consider performance impact** of generated code
+### 5. Error Handling
+- **Always validate responses** before proceeding with dependent operations
+- **Provide meaningful error messages** to users
+- **Handle network failures gracefully**
+- **Don't make assumptions** about API success
 
 ---
 
-## Error Handling
+## Error Responses
 
 All endpoints return standard HTTP status codes:
 - `200`: Success
-- `400`: Bad Request (missing parameters)
+- `400`: Bad Request (missing/invalid parameters)
 - `401`: Unauthorized
 - `403`: Forbidden (insufficient permissions)
 - `404`: Not Found
 - `500`: Internal Server Error
 
-Error responses include details:
+Error response format:
 ```json
 {
   "code": "missing_params",
-  "message": "Component type and script content are required",
+  "message": "Component type and HTML content are required",
   "data": {
     "status": 400,
-    "params": ["component_type", "script_content"]
+    "params": ["type", "html"]
   }
 }
 ```
 
 ---
 
-## Theme Integration
+## Separation from Theme API
 
-The plugin automatically integrates with the Obsidian theme by:
-- **Fetching theme settings** via `/theme/settings` proxy endpoint
-- **Respecting theme colors and typography** in generated components
-- **Using theme-defined spacing and layout** systems
-- **Maintaining visual consistency** across all generated components
+The plugin API (`/obsidian-plugin/v1`) is completely separate from the theme API (`/obsidian/v1`):
 
-The AI agent should always consider the current theme settings when generating components to ensure visual harmony.
+**Plugin API handles:**
+- Page/post content management
+- Dynamic component creation
+- Site structure (menus, pages)
+- Draft workflow management
+
+**Theme API handles:**
+- Design tokens (colors, typography, spacing)
+- Theme settings and customization
+- Visual styling configuration
+
+This separation ensures clean responsibilities and prevents conflicts between content management and styling operations.
