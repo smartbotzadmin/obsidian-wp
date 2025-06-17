@@ -61,6 +61,7 @@ class Plugin {
     private function load_dependencies() {
         require_once OBSIDIAN_PATH . 'includes/editor.php';
         require_once OBSIDIAN_PATH . 'includes/api.php';
+        require_once OBSIDIAN_PATH . 'includes/script-enqueuer.php';
         require_once OBSIDIAN_PATH . 'app/app.php';
     }
 
@@ -70,6 +71,7 @@ class Plugin {
     private function init_components() {
         $this->editor = new Editor();
         $this->api = new API();
+        $this->script_enqueuer = new Script_Enqueuer();
         $this->app = new \Obsidian\App\App();
     }
 

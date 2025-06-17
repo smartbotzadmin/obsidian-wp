@@ -101,7 +101,7 @@
         );
     }
 
-    function HistoryContent({ editorData }) {
+    function HistoryContent({ editorData, currentVersion, setCurrentVersion, setHasChanges }) {
         const [selectedVersion, setSelectedVersion] = useState(null);
         const [historyItems, setHistoryItems] = useState([]);
         const [loading, setLoading] = useState(true);
@@ -135,7 +135,7 @@
         };
 
         const handleRollback = async () => {
-            if (selectedVersion) {
+            if (selectedVersion && selectedVersion !== currentVersion) {
                 try {
                     const response = await fetch(
                         `${window.obsidianData.apiUrl}posts/${editorData.id}/revisions/${selectedVersion}/restore`,
@@ -151,6 +151,10 @@
                     if (response.ok) {
                         const result = await response.json();
                         console.log('Rollback successful:', result);
+                        setCurrentVersion(selectedVersion);
+                        setHasChanges(true);
+                        setSelectedVersion(null);
+                        // Refresh the preview
                         window.location.reload();
                     } else {
                         console.error('Rollback failed');
@@ -171,25 +175,32 @@
             e('div', { className: 'obsidian-history-list' },
                 historyItems.length === 0 ?
                     e('div', { className: 'obsidian-history-empty' }, 'No revisions found') :
-                    historyItems.map(item =>
-                        e(HistoryItem, {
+                    historyItems.map(item => {
+                        const isCurrentVersion = item.id === currentVersion;
+                        const isSelected = selectedVersion === item.id;
+                        
+                        return e('div', {
                             key: item.id,
-                            version: item.id,
-                            date: `${item.date_relative} (${item.date})`,
-                            isSelected: selectedVersion === item.id,
-                            onClick: () => setSelectedVersion(item.id)
-                        })
-                    )
+                            className: `obsidian-history-item ${isSelected ? 'selected' : ''} ${isCurrentVersion ? 'current' : ''}`,
+                            onClick: () => !isCurrentVersion && setSelectedVersion(item.id)
+                        },
+                            e('div', { className: 'obsidian-history-version' },
+                                `Version #${item.id}`,
+                                isCurrentVersion && e('span', { className: 'obsidian-current-indicator' }, ' ✓')
+                            ),
+                            e('div', { className: 'obsidian-history-date' }, `${item.date_relative} (${item.date})`)
+                        );
+                    })
             ),
             e('div', { className: 'obsidian-history-actions' },
-                e(Button, { 
+                e(Button, {
                     variant: 'secondary',
                     onClick: () => setSelectedVersion(null)
                 }, 'Discard'),
-                e(Button, { 
+                e(Button, {
                     onClick: handleRollback,
-                    disabled: !selectedVersion
-                }, 
+                    disabled: !selectedVersion || selectedVersion === currentVersion
+                },
                     e(RotateCcwIcon),
                     'Rollback'
                 )
@@ -197,11 +208,18 @@
         );
     }
 
-    function Sidebar({ activeTab, setActiveTab, editorData }) {
+    function Sidebar({ activeTab, setActiveTab, editorData, currentVersion, setCurrentVersion, setHasChanges }) {
         return e('div', { className: 'obsidian-sidebar' },
             e(SidebarTabs, { activeTab, setActiveTab }),
             e('div', { className: 'obsidian-sidebar-content' },
-                activeTab === 'chat' ? e(ChatContent) : e(HistoryContent, { editorData })
+                activeTab === 'chat' ?
+                    e(ChatContent) :
+                    e(HistoryContent, {
+                        editorData,
+                        currentVersion,
+                        setCurrentVersion,
+                        setHasChanges
+                    })
             )
         );
     }
@@ -270,9 +288,33 @@
         );
     }
 
-    function TopBar({ editorData, deviceMode, setDeviceMode, showResponsiveMenu, setShowResponsiveMenu, setShowExitModal }) {
-        const handlePublish = () => {
-            console.log('Publishing...');
+    function TopBar({ editorData, deviceMode, setDeviceMode, showResponsiveMenu, setShowResponsiveMenu, setShowExitModal, hasChanges, setHasChanges }) {
+        const handlePublish = async () => {
+            if (!hasChanges || !editorData?.id) return;
+            
+            try {
+                const response = await fetch(
+                    `${window.obsidianData.apiUrl}posts/${editorData.id}/publish`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'X-WP-Nonce': window.obsidianData.nonce,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Published successfully:', result);
+                    setHasChanges(false);
+                    // Optionally show success message
+                } else {
+                    console.error('Publish failed');
+                }
+            } catch (error) {
+                console.error('Publish error:', error);
+            }
         };
 
         return e('div', { className: 'obsidian-top-bar' },
@@ -281,7 +323,7 @@
                     e('div', { className: 'obsidian-logo-icon' }),
                     e('div', { className: 'obsidian-logo-text' }, 'OBSIDIAN')
                 ),
-                e('div', { className: 'obsidian-page-title' }, 
+                e('div', { className: 'obsidian-page-title' },
                     `Editing: ${editorData?.title || 'Untitled'}`
                 ),
                 e(IconButton, { icon: SettingsIcon })
@@ -291,15 +333,16 @@
                     icon: ExitIcon,
                     onClick: () => setShowExitModal(true)
                 }),
-                e(ResponsiveControls, { 
-                    deviceMode, 
-                    setDeviceMode, 
-                    showResponsiveMenu, 
-                    setShowResponsiveMenu 
+                e(ResponsiveControls, {
+                    deviceMode,
+                    setDeviceMode,
+                    showResponsiveMenu,
+                    setShowResponsiveMenu
                 }),
                 e('button', {
-                    className: 'obsidian-publish-btn',
-                    onClick: handlePublish
+                    className: `obsidian-publish-btn ${!hasChanges ? 'disabled' : ''}`,
+                    onClick: handlePublish,
+                    disabled: !hasChanges
                 },
                     e('div', { className: 'obsidian-publish-text' }, 'Publish'),
                     e(CloudIcon)

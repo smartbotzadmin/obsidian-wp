@@ -5,7 +5,7 @@
     const { createElement: e } = React;
 
     // Exit Confirmation Modal
-    function ExitModal({ setShowExitModal }) {
+    function ExitModal({ setShowExitModal, hasChanges, editorData }) {
         const handleDiscard = () => {
             // Exit without saving
             if (window.obsidianData && window.obsidianData.adminUrl) {
@@ -14,17 +14,39 @@
         };
 
         const handleSaveAndExit = async () => {
+            if (!editorData?.id) {
+                handleDiscard();
+                return;
+            }
+
             try {
-                console.log('Saving draft...');
-                
-                // For now, just exit after a brief delay
-                setTimeout(() => {
-                    if (window.obsidianData && window.obsidianData.adminUrl) {
-                        window.location.href = window.obsidianData.adminUrl + 'edit.php?post_type=page';
+                const response = await fetch(
+                    `${window.obsidianData.apiUrl}posts/${editorData.id}/save`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'X-WP-Nonce': window.obsidianData.nonce,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            status: 'draft'
+                        })
                     }
-                }, 500);
+                );
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Draft saved successfully:', result);
+                } else {
+                    console.error('Save failed');
+                }
             } catch (error) {
-                console.error('Save failed:', error);
+                console.error('Save error:', error);
+            } finally {
+                // Exit regardless of save success/failure
+                if (window.obsidianData && window.obsidianData.adminUrl) {
+                    window.location.href = window.obsidianData.adminUrl + 'edit.php?post_type=page';
+                }
             }
         };
 

@@ -380,12 +380,32 @@ body.admin-bar {
     border-color: rgba(59, 130, 246, 0.3);
 }
 
+.obsidian-history-item.current {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    cursor: default;
+}
+
+.obsidian-history-item.current:hover {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
 .obsidian-history-version {
     color: #FFFFFF;
     font-size: 20px;
     font-weight: 700;
     line-height: 28px;
     margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.obsidian-current-indicator {
+    color: #22C55E;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .obsidian-history-date {
@@ -721,6 +741,26 @@ body.admin-bar {
 
 .obsidian-publish-btn:hover {
     background: #3BA77E;
+}
+
+.obsidian-publish-btn.disabled {
+    background: #6B7280;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.obsidian-publish-btn.disabled:hover {
+    background: #6B7280;
+}
+
+.obsidian-publish-btn:disabled {
+    background: #6B7280;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.obsidian-publish-btn:disabled:hover {
+    background: #6B7280;
 }
 
 .obsidian-publish-text {

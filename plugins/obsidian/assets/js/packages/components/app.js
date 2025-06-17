@@ -4,23 +4,37 @@
 
     const { createElement: e, useState, useEffect } = React;
     const { LoadingSpinner } = window.ObsidianUI;
-    const { 
-        Sidebar, 
-        TopBar, 
-        PreviewFrame, 
-        ExitModal 
+    const {
+        Sidebar,
+        TopBar,
+        PreviewFrame,
+        ExitModal
     } = window.ObsidianComponents;
 
     // Main Content Component
-    function MainContent({ editorData, deviceMode, setDeviceMode, showResponsiveMenu, setShowResponsiveMenu, showExitModal, setShowExitModal }) {
+    function MainContent({
+        editorData,
+        deviceMode,
+        setDeviceMode,
+        showResponsiveMenu,
+        setShowResponsiveMenu,
+        showExitModal,
+        setShowExitModal,
+        hasChanges,
+        setHasChanges,
+        currentVersion,
+        setCurrentVersion
+    }) {
         return e('div', { className: 'obsidian-preview-container' },
-            e(TopBar, { 
-                editorData, 
-                deviceMode, 
-                setDeviceMode, 
-                showResponsiveMenu, 
+            e(TopBar, {
+                editorData,
+                deviceMode,
+                setDeviceMode,
+                showResponsiveMenu,
                 setShowResponsiveMenu,
-                setShowExitModal
+                setShowExitModal,
+                hasChanges,
+                setHasChanges
             }),
             e(PreviewFrame, { editorData, deviceMode })
         );
@@ -34,10 +48,13 @@
         const [deviceMode, setDeviceMode] = useState('desktop');
         const [showResponsiveMenu, setShowResponsiveMenu] = useState(false);
         const [showExitModal, setShowExitModal] = useState(false);
+        const [hasChanges, setHasChanges] = useState(false);
+        const [currentVersion, setCurrentVersion] = useState(null);
 
         useEffect(() => {
             if (window.obsidianData) {
                 setEditorData(window.obsidianData.editorData);
+                setCurrentVersion(window.obsidianData.editorData?.id);
                 setIsLoading(false);
             }
         }, []);
@@ -47,17 +64,32 @@
         }
 
         return e('div', { className: 'obsidian-editor' },
-            e(Sidebar, { activeTab, setActiveTab, editorData }),
-            e(MainContent, { 
-                editorData, 
-                deviceMode, 
-                setDeviceMode, 
-                showResponsiveMenu, 
+            e(Sidebar, {
+                activeTab,
+                setActiveTab,
+                editorData,
+                currentVersion,
+                setCurrentVersion,
+                setHasChanges
+            }),
+            e(MainContent, {
+                editorData,
+                deviceMode,
+                setDeviceMode,
+                showResponsiveMenu,
                 setShowResponsiveMenu,
                 showExitModal,
-                setShowExitModal
+                setShowExitModal,
+                hasChanges,
+                setHasChanges,
+                currentVersion,
+                setCurrentVersion
             }),
-            showExitModal && e(ExitModal, { setShowExitModal })
+            showExitModal && e(ExitModal, {
+                setShowExitModal,
+                hasChanges,
+                editorData
+            })
         );
     }
 
