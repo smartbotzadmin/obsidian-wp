@@ -30,6 +30,10 @@
         DropdownOption
     } = window.ObsidianUI;
 
+    // Helper to generate a unique ID for messages
+    let messageIdCounter = 0;
+    const generateMessageId = () => `msg_${messageIdCounter++}`;
+
     // Sidebar Components
     function SidebarTabs({ activeTab, setActiveTab }) {
         return e(TabContainer, null,
@@ -44,17 +48,130 @@
         );
     }
 
-    function ChatContent() {
+    function ChatContent({ sessionId, userId }) {
         const [message, setMessage] = useState('');
+        const [chatMessages, setChatMessages] = useState([]);
+        const chatMessagesEndRef = useRef(null);
+
+        // Scroll to bottom of messages
+        useEffect(() => {
+            chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }, [chatMessages]);
 
         const handleInputChange = (e) => {
             setMessage(e.target.value);
         };
 
-        const handleSend = () => {
-            if (message.trim()) {
-                console.log('Sending message:', message);
-                setMessage('');
+        const handleSend = async () => {
+            const userMessage = message.trim();
+            if (!userMessage) return;
+
+            // Add user message to chat
+            setChatMessages(prevMessages => [...prevMessages, { id: generateMessageId(), role: 'user', text: userMessage, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }]);
+            setMessage('');
+
+            const agentMessageId = generateMessageId();
+            let agentResponseText = '';
+
+            // Add initial agent message placeholder
+            setChatMessages(prevMessages => [...prevMessages, { id: agentMessageId, role: 'agent', text: '', time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), isComplete: false }]);
+
+            try {
+                const response = await fetch('https://obsidian-agent-service-313065021854.us-east1.run.app/run_sse', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        app_name: 'obsidian_agent',
+                        user_id: userId,
+                        session_id: sessionId,
+                        new_message: {
+                            role: 'user',
+                            parts: [{ text: userMessage }]
+                        },
+                        streaming: true
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    const lines = chunk.split('\n').filter(line => line.startsWith('data:'));
+
+                    for (const line of lines) {
+                        const data = line.substring(5).trim();
+                        if (data) {
+                            try {
+                                const json = JSON.parse(data);
+                                if (json.content && json.content.parts && json.content.parts[0]) {
+                                    const part = json.content.parts[0];
+
+                                    if (part.text) {
+                                        const newContent = part.text;
+                                        if (json.partial === true) {
+                                            agentResponseText += newContent;
+                                            setChatMessages(prevMessages =>
+                                                prevMessages.map(msg =>
+                                                    msg.id === agentMessageId ? { ...msg, text: agentResponseText } : msg
+                                                )
+                                            );
+                                        } else {
+                                            agentResponseText = newContent;
+                                            setChatMessages(prevMessages =>
+                                                prevMessages.map(msg =>
+                                                    msg.id === agentMessageId ? { ...msg, text: agentResponseText, isComplete: true } : msg
+                                                )
+                                            );
+                                        }
+                                    } else if (part.functionCall) {
+                                        const functionCall = part.functionCall;
+                                        const functionCallText = `Function Call: ${functionCall.name}\nArgs: ${JSON.stringify(functionCall.args, null, 2)}`;
+                                        setChatMessages(prevMessages => [...prevMessages, {
+                                            id: generateMessageId(),
+                                            role: 'agent',
+                                            text: functionCallText,
+                                            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                                            isComplete: true,
+                                            type: 'functionCall', // Custom type for styling
+                                            subtitle: 'functionCall'
+                                        }]);
+                                    } else if (part.functionResponse) {
+                                        const functionResponse = part.functionResponse;
+                                        const functionResponseText = `Function Response: ${functionResponse.name}\nResult: ${JSON.stringify(functionResponse.response.result || functionResponse.response, null, 2)}`;
+                                        setChatMessages(prevMessages => [...prevMessages, {
+                                            id: generateMessageId(),
+                                            role: 'user', // Function responses are from the 'user' perspective (tool output)
+                                            text: functionResponseText,
+                                            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                                            isComplete: true,
+                                            type: 'functionResponse', // Custom type for styling
+                                            subtitle: 'functionResponse'
+                                        }]);
+                                    }
+                                }
+                            } catch (e) {
+                                console.error('Error parsing SSE data:', e, data);
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error sending message or receiving SSE:', error);
+                setChatMessages(prevMessages =>
+                    prevMessages.map(msg =>
+                        msg.id === agentMessageId ? { ...msg, text: 'Error: Could not get a response from the AI agent.', isComplete: true } : msg
+                    )
+                );
             }
         };
 
@@ -67,21 +184,12 @@
 
         return e('div', { className: 'obsidian-chat-container' },
             e('div', { className: 'obsidian-chat-messages' },
-                // Demo messages
-                e('div', { className: 'obsidian-message-group' },
-                    e(MessageBubble, { type: 'user', time: '2:38 PM' },
-                        'I would like my homepage to display a black friday sale section, i think it should have a classic and a sweet matcha cards. You can make up the third one. Put it above the why us section.'
+                chatMessages.map((msg) =>
+                    e('div', { key: msg.id, className: 'obsidian-message-group' },
+                        e(MessageBubble, { type: msg.role, time: msg.time, subtitle: msg.subtitle }, msg.text)
                     )
                 ),
-                e('div', { className: 'obsidian-message-group' },
-                    e(MessageBubble, { type: 'assistant', time: '2:39 PM' },
-                        'Of course! Allow me to take a look at your page and I will modify it for you.'
-                    ),
-                    e(PostModifiedNotification),
-                    e(MessageBubble, { type: 'assistant', time: '2:41 PM' },
-                        'Does this seem in line with what you are looking for? I have created a section that makes sense for your brand.\n\nI have also added 3 types of products for the homepage demo.'
-                    )
-                )
+                e('div', { ref: chatMessagesEndRef }) // Scroll anchor
             ),
             e('div', { className: 'obsidian-chat-input-container' },
                 e('div', { className: 'obsidian-chat-input-wrapper' },
@@ -208,12 +316,12 @@
         );
     }
 
-    function Sidebar({ activeTab, setActiveTab, editorData, currentVersion, setCurrentVersion, setHasChanges }) {
+    function Sidebar({ activeTab, setActiveTab, editorData, currentVersion, setCurrentVersion, setHasChanges, sessionId, userId }) {
         return e('div', { className: 'obsidian-sidebar' },
             e(SidebarTabs, { activeTab, setActiveTab }),
             e('div', { className: 'obsidian-sidebar-content' },
                 activeTab === 'chat' ?
-                    e(ChatContent) :
+                    e(ChatContent, { sessionId, userId }) :
                     e(HistoryContent, {
                         editorData,
                         currentVersion,

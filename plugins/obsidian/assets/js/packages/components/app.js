@@ -50,6 +50,8 @@
         const [showExitModal, setShowExitModal] = useState(false);
         const [hasChanges, setHasChanges] = useState(false);
         const [currentVersion, setCurrentVersion] = useState(null);
+        const [sessionId, setSessionId] = useState(null);
+        const [userId, setUserId] = useState('u_obsidian_user'); // Placeholder for now
 
         useEffect(() => {
             if (window.obsidianData) {
@@ -57,6 +59,35 @@
                 setCurrentVersion(window.obsidianData.editorData?.id);
                 setIsLoading(false);
             }
+
+            // Create session with AI agent
+            const createSession = async () => {
+                const newSessionId = `s_${Date.now()}`; // Simple unique ID for session
+                setSessionId(newSessionId);
+
+                try {
+                    const response = await fetch(
+                        `https://obsidian-agent-service-313065021854.us-east1.run.app/apps/obsidian_agent/users/${userId}/sessions/${newSessionId}`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            // No data needed for this POST request as per instructions
+                        }
+                    );
+
+                    if (response.ok) {
+                        console.log('AI Agent session created successfully:', newSessionId);
+                    } else {
+                        console.error('Failed to create AI Agent session:', response.status, response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Error creating AI Agent session:', error);
+                }
+            };
+
+            createSession();
         }, []);
 
         if (isLoading) {
@@ -70,7 +101,9 @@
                 editorData,
                 currentVersion,
                 setCurrentVersion,
-                setHasChanges
+                setHasChanges,
+                sessionId,
+                userId
             }),
             e(MainContent, {
                 editorData,
