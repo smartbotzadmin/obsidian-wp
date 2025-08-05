@@ -1,0 +1,13 @@
+/* Styles for the OWP Design Page */
+#owp-design-app {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+owp-design-component {
+    display: block;
+    border: 1px dashed #ccc;
+    padding: 15px;
+    text-align: center;
+    color: #666;
+}
