@@ -152,12 +152,20 @@ function owp_render_page_content( $page_slug ) {
     $css_file = plugins_url( 'pages/' . $page_slug . '/' . $page_slug . '.css', __FILE__ );
     $js_file = plugins_url( 'pages/' . $page_slug . '/' . $page_slug . '.js', __FILE__ );
 
+    // Define the slugs for pages where admin bars should be hidden
+    $hide_admin_bar_pages = array( 'description', 'pictures', 'contact', 'design' );
+
+    // Conditionally hide admin bar and sidebar for specific pages
+    if ( in_array( $page_slug, $hide_admin_bar_pages ) ) {
+        add_filter( 'show_admin_bar', '__return_false' );
+        wp_enqueue_style( 'owp-hide-admin-bars', plugins_url( 'assets/css/hide-admin-bars.css', __FILE__ ) );
+    }
+
     echo '<div class="wrap">';
     echo '<h1>' . esc_html( ucfirst( $page_slug ) ) . ' Page</h1>';
 
     // Enqueue page-specific CSS
     wp_enqueue_style( 'owp-' . $page_slug . '-style', $css_file );
-    wp_enqueue_style( 'owp-admin-page-styles', plugins_url( 'assets/css/admin-page-styles.css', __FILE__ ) );
 
     // Enqueue page-specific JavaScript
     wp_enqueue_script( 'owp-' . $page_slug . '-script', $js_file, array(), null, true );
