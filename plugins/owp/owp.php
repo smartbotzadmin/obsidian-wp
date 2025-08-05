@@ -3,7 +3,7 @@
  * Plugin Name: Obsidian WP
  * Description: A plugin to empower WordPress to create pages rapidly from pre-made templates/themes and fill them with AI-generated text content.
  * Version: 1.0.0
- * Author: Your Name
+ * Author: Connor, Phillip, Skyking, Mjesbar
  * Text Domain: owp
  */
 
@@ -185,26 +185,6 @@ function owp_render_page_content( $page_slug ) {
  * @return void
  */
 function owp_enqueue_gutenberg_assets() {
-    wp_enqueue_script(
-        'owp-sidebar-component',
-        plugins_url( 'assets/js/components/owp-sidebar.js', __FILE__ ),
-        array(),
-        null,
-        true
-    );
-    wp_enqueue_script(
-        'owp-gutenberg-button',
-        plugins_url( 'assets/js/gutenberg-button.js', __FILE__ ),
-        array( 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'owp-sidebar-component' ), // Ensure sidebar component is loaded first and Gutenberg dependencies are met
-        null,
-        true
-    );
-    wp_enqueue_style(
-        'owp-sidebar-styles',
-        plugins_url( 'assets/css/owp-sidebar.css', __FILE__ ),
-        array(),
-        null
-    );
 }
 add_action( 'enqueue_block_editor_assets', 'owp_enqueue_gutenberg_assets' );
 
