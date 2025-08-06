@@ -1,6 +1,7 @@
 /* This file is the input for TailwindCSS CLI to generate output.css */
 @import "tailwindcss";
 
+
 /* Styles from gutenberg/sidebar.css */
 .owp-custom-sidebar-panel {
     width: 25%; /* Slightly wider */
