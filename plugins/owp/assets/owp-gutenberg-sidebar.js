@@ -1,19 +1,22 @@
-(function(wp) {
+(function (wp) {
     var createElement = wp.element.createElement;
-    var PluginSidebarMoreMenuItem = wp.editor.PluginSidebarMoreMenuItem; // Updated import
-    var Button = wp.components.Button;
+    var PluginSidebarMoreMenuItem = wp.editor.PluginSidebarMoreMenuItem;
+    var PluginSidebar = wp.editor.PluginSidebar;
+    var __ = wp.i18n.__;
 
+
+    // --- Your existing sidebar logic ---
     var sidebarContainer = document.createElement('div');
     sidebarContainer.id = 'owp-custom-sidebar-container';
     sidebarContainer.classList.add('owp-custom-sidebar-panel');
     document.body.appendChild(sidebarContainer);
+    const settings = document.getElementsByClassName('editor-header__settings');
+    console.log(settings, settings[0]);
 
-    // Function to toggle sidebar visibility
     function toggleSidebar() {
         sidebarContainer.classList.toggle('is-open');
     }
 
-    // Render the sidebar content
     wp.element.render(
         createElement(
             'div',
@@ -21,7 +24,7 @@
             createElement('h2', null, 'Custom Sidebar Content'),
             createElement('p', null, 'This is a dummy HTML content for the custom sidebar.'),
             createElement('button', {
-                onClick: function() {
+                onClick: function () {
                     alert('Button clicked!');
                 }
             }, 'Click Me'),
@@ -33,18 +36,31 @@
         sidebarContainer
     );
 
-    // Register a plugin to add the toggle button to the "More tools & options" menu
     wp.plugins.registerPlugin('owp-sidebar-toggle-button', {
-        render: function() {
+        render: function () {
             return createElement(
-                PluginSidebarMoreMenuItem, // Use PluginSidebarMoreMenuItem
+                PluginSidebarMoreMenuItem,
                 {
-                    target: 'owp-custom-sidebar', // Target for the sidebar (not strictly needed for custom DOM)
+                    target: 'owp-custom-sidebar',
                     icon: 'admin-page',
                     onClick: toggleSidebar
                 },
                 'Toggle OWP Sidebar'
             );
+        }
+    });
+
+    wp.plugins.registerPlugin('block-settings-menu-group-test', {
+        render: function () {
+            return createElement(
+                PluginSidebar,
+                {
+                    name: 'z',
+                    title: 'z',
+                    icon: 'lightbulb',
+                    onClick: toggleSidebar
+                }
+            )
         }
     });
 
