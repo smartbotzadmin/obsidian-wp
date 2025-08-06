@@ -14,6 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Main plugin class or functions will go here
 
 /**
+ * Enqueues TailwindCSS output.css for admin pages and Gutenberg editor.
+ *
+ * @return void
+ */
+function owp_enqueue_tailwind_styles() {
+    wp_enqueue_style(
+        'owp-tailwind-output',
+        plugins_url( 'assets/css/output.css', __FILE__ ),
+        array(),
+        null
+    );
+}
+add_action( 'admin_enqueue_scripts', 'owp_enqueue_tailwind_styles' );
+add_action( 'enqueue_block_editor_assets', 'owp_enqueue_tailwind_styles' );
+
+/**
  * Adds custom admin pages for Obsidian WP.
  *
  * @return void
@@ -164,8 +180,6 @@ function owp_render_page_content( $page_slug ) {
     echo '<div class="wrap">';
     echo '<h1>' . esc_html( ucfirst( $page_slug ) ) . ' Page</h1>';
 
-    // Enqueue page-specific CSS
-    wp_enqueue_style( 'owp-' . $page_slug . '-style', $css_file );
 
     // Enqueue page-specific JavaScript
     wp_enqueue_script( 'owp-' . $page_slug . '-script', $js_file, array(), null, true );
@@ -193,12 +207,6 @@ function owp_enqueue_gutenberg_assets() {
         true
     );
 
-    wp_enqueue_style(
-        'owp-gutenberg-sidebar-style',
-        plugins_url( 'gutenberg/sidebar.css', __FILE__ ),
-        array(),
-        null
-    );
 }
 add_action( 'enqueue_block_editor_assets', 'owp_enqueue_gutenberg_assets' );
 

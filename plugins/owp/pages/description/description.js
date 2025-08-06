@@ -25,7 +25,7 @@ class OwpDescriptionComponent extends HTMLElement {
                     font-size: 1.1em;
                 }
             </style>
-            <p>This is the OWP Description Component (placeholder).</p>
+            <p class="bg-blue-500">This is the OWP Description Component (placeholder).</p>
         `;
     }
 }
