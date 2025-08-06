@@ -36,18 +36,8 @@ add_action( 'enqueue_block_editor_assets', 'owp_enqueue_tailwind_styles' );
  * @return void
  */
 function owp_add_admin_pages() {
-    add_menu_page(
-        __( 'Obsidian WP', 'owp' ),
-        __( 'Obsidian WP', 'owp' ),
-        'manage_options',
-        'owp-dashboard',
-        'owp_render_dashboard_page',
-        plugins_url( 'assets/icons/owp-logo.svg', __FILE__ ),
-        80
-    );
-
     add_submenu_page(
-        'owp-dashboard',
+        null,
         __( 'Description', 'owp' ),
         __( 'Description', 'owp' ),
         'manage_options',
@@ -56,7 +46,7 @@ function owp_add_admin_pages() {
     );
 
     add_submenu_page(
-        'owp-dashboard',
+        null,
         __( 'Pictures', 'owp' ),
         __( 'Pictures', 'owp' ),
         'manage_options',
@@ -65,7 +55,7 @@ function owp_add_admin_pages() {
     );
 
     add_submenu_page(
-        'owp-dashboard',
+        null,
         __( 'Contact', 'owp' ),
         __( 'Contact', 'owp' ),
         'manage_options',
@@ -74,7 +64,7 @@ function owp_add_admin_pages() {
     );
 
     add_submenu_page(
-        'owp-dashboard',
+        null,
         __( 'Design', 'owp' ),
         __( 'Design', 'owp' ),
         'manage_options',
