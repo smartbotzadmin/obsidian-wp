@@ -12,6 +12,10 @@
 
 /* Adjust content area to take full width when admin bars are hidden */
 #wpcontent,
-#wpfooter {
-    margin-left: 0 !important;
+#wpfooter,
+#wpbody-content,
+.wp-toolbar {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
 }

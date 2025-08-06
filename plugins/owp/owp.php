@@ -107,16 +107,6 @@ add_action( 'admin_init', 'owp_handle_pages_menu_redirect' );
 
 
 /**
- * Renders the dashboard page content.
- *
- * @return void
- */
-function owp_render_dashboard_page() {
-    echo '<div class="wrap"><h1>Obsidian WP Dashboard</h1><p>Welcome to the Obsidian WP Dashboard!</p></div>';
-}
-
-
-/**
  * Renders the description page content.
  *
  * @return void
