@@ -185,6 +185,20 @@ function owp_render_page_content( $page_slug ) {
  * @return void
  */
 function owp_enqueue_gutenberg_assets() {
+    wp_enqueue_script(
+        'owp-gutenberg-sidebar',
+        plugins_url( 'assets/owp-gutenberg-sidebar.js', __FILE__ ),
+        array( 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data' ),
+        null,
+        true
+    );
+
+    wp_enqueue_style(
+        'owp-gutenberg-sidebar-style',
+        plugins_url( 'assets/owp-gutenberg-sidebar.css', __FILE__ ),
+        array(),
+        null
+    );
 }
 add_action( 'enqueue_block_editor_assets', 'owp_enqueue_gutenberg_assets' );
 

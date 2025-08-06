@@ -1,0 +1,23 @@
+.owp-custom-sidebar-panel {
+    width: 350px; /* Slightly wider */
+    background-color: #f0f0f0;
+    border-left: 1px solid #ddd;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0; /* Occupy whole screen height */
+    right: -350px; /* Start off-screen for animation */
+    height: 100vh; /* Occupy whole screen height */
+    overflow-y: auto;
+    z-index: 100000; /* Ensure it's on top */
+    transition: right 0.3s ease-in-out; /* Animation for sliding */
+}
+
+.owp-custom-sidebar-panel.is-open {
+    right: 0; /* Slide in */
+}
+
+.owp-sidebar-content {
+    padding: 10px;
+}
