@@ -10,8 +10,8 @@
     right: -25%; /* Start off-screen for animation */
     height: 100vh; /* Occupy whole screen height */
     overflow-y: auto;
-    z-index: 100000; /* Ensure it's on top */
-    transition: right 0.3s ease-in-out; /* Animation for sliding */
+    z-index: 99999; /* Ensure it's on top */
+    transition: right 0.2s ease-out; /* Animation for sliding */
 }
 
 .owp-custom-sidebar-panel.is-open {
