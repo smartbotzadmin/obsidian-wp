@@ -10,22 +10,8 @@ class OwpDescriptionComponent extends HTMLElement {
      */
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                    border: 1px solid #eee;
-                    padding: 20px;
-                    background-color: #f9f9f9;
-                    text-align: center;
-                }
-                p {
-                    color: #333;
-                    font-size: 1.1em;
-                }
-            </style>
-            <p class="bg-blue-500">This is the OWP Description Component (placeholder).</p>
+        this.innerHTML = `
+            <p class="bg-blue-500">Description Page.</p>
         `;
     }
 }

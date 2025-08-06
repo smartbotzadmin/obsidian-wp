@@ -165,7 +165,6 @@ function owp_render_design_page() {
 function owp_render_page_content( $page_slug ) {
     $plugin_path = plugin_dir_path( __FILE__ );
     $html_file = $plugin_path . 'pages/' . $page_slug . '/' . $page_slug . '.html';
-    $css_file = plugins_url( 'pages/' . $page_slug . '/' . $page_slug . '.css', __FILE__ );
     $js_file = plugins_url( 'pages/' . $page_slug . '/' . $page_slug . '.js', __FILE__ );
 
     // Define the slugs for pages where admin bars should be hidden
@@ -177,19 +176,15 @@ function owp_render_page_content( $page_slug ) {
         wp_enqueue_style( 'owp-hide-admin-bars', plugins_url( 'assets/css/hide-admin-bars.css', __FILE__ ) );
     }
 
-    echo '<div class="wrap">';
-    echo '<h1>' . esc_html( ucfirst( $page_slug ) ) . ' Page</h1>';
-
-
     // Enqueue page-specific JavaScript
     wp_enqueue_script( 'owp-' . $page_slug . '-script', $js_file, array(), null, true );
+
 
     if ( file_exists( $html_file ) ) {
         include $html_file;
     } else {
         echo '<p>Content for ' . esc_html( $page_slug ) . ' page not found.</p>';
     }
-    echo '</div>';
 }
 
 
