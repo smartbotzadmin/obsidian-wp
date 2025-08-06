@@ -29,6 +29,7 @@ function owp_enqueue_tailwind_styles() {
 add_action( 'admin_enqueue_scripts', 'owp_enqueue_tailwind_styles' );
 add_action( 'enqueue_block_editor_assets', 'owp_enqueue_tailwind_styles' );
 
+
 /**
  * Adds custom admin pages for Obsidian WP.
  *
@@ -149,7 +150,7 @@ function owp_render_design_page() {
 /**
  * Renders the content for a given OWP admin page.
  *
- * @param string $page_slug The slug of the page to render (e.g., 'description').
+ * @param string $page_slug The slug of the page to render (e.g., 'description', 'pictures').
  * @return void
  */
 function owp_render_page_content( $page_slug ) {
@@ -194,6 +195,32 @@ function owp_enqueue_gutenberg_assets() {
 
 }
 add_action( 'enqueue_block_editor_assets', 'owp_enqueue_gutenberg_assets' );
+
+
+/**
+ * Enqueues all custom components as modules.
+ *
+ * @return void
+ */
+function owp_enqueue_components() {
+    $component_dir = plugin_dir_path( __FILE__ ) . 'components/';
+    $component_files = glob( $component_dir . '*.js' );
+
+    foreach ( $component_files as $file ) {
+        $handle = 'owp-component-' . sanitize_title( basename( $file, '.js' ) );
+        $src = plugins_url( 'components/' . basename( $file ), __FILE__ );
+        wp_enqueue_script(
+            $handle,
+            $src,
+            array(),
+            null,
+            array( 'in_footer' => true, 'type' => 'module' )
+        );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'owp_enqueue_components' );
+add_action( 'admin_enqueue_scripts', 'owp_enqueue_components' );
+add_action( 'enqueue_block_editor_assets', 'owp_enqueue_components' );
 
 
 /**
