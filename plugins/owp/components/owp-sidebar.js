@@ -19,8 +19,8 @@ class OwpSidebar extends HTMLElement {
         `;
 
         this.sidebarContainer = shadowRoot.getElementById('owp-custom-sidebar-container');
-        shadowRoot.getElementById('toggleButton').addEventListener('click', () => this.toggleSidebar());
-        shadowRoot.getElementById('alertButton').addEventListener('click', () => alert('Button clicked!'));
+        shadowRoot.getElementById('toggleButton').onclick = () => this.toggleSidebar();
+        shadowRoot.getElementById('alertButton').onclick = () => alert('Button clicked!');
     }
 
     toggleSidebar() {
