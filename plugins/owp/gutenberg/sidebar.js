@@ -1,7 +1,5 @@
 (function (wp) {
     var createElement = wp.element.createElement;
-    var PluginSidebarMoreMenuItem = wp.editor.PluginSidebarMoreMenuItem;
-    var PluginSidebar = wp.editor.PluginSidebar;
     var __ = wp.i18n.__;
 
 
@@ -22,7 +20,7 @@
         const newElement = document.createElement('div');
         newElement.classList.add('owp-settings-icon-container');
         const iconElement = document.createElement('img');
-        iconElement.src = '/wp-content/plugins/owp/assets/owp-icon.svg';
+        iconElement.src = '/wp-content/plugins/owp/assets/icons/owp-logo.svg';
         iconElement.classList.add('owp-settings-icon');
         newElement.appendChild(iconElement);
 

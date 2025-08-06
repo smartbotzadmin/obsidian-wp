@@ -25,7 +25,7 @@ function owp_add_admin_pages() {
         'manage_options',
         'owp-dashboard',
         'owp_render_dashboard_page',
-        'dashicons-admin-page',
+        plugins_url( 'assets/icons/owp-logo.svg', __FILE__ ),
         80
     );
 
@@ -187,7 +187,7 @@ function owp_render_page_content( $page_slug ) {
 function owp_enqueue_gutenberg_assets() {
     wp_enqueue_script(
         'owp-gutenberg-sidebar',
-        plugins_url( 'assets/owp-gutenberg-sidebar.js', __FILE__ ),
+        plugins_url( 'gutenberg/sidebar.js', __FILE__ ),
         array( 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data' ),
         null,
         true
@@ -195,7 +195,7 @@ function owp_enqueue_gutenberg_assets() {
 
     wp_enqueue_style(
         'owp-gutenberg-sidebar-style',
-        plugins_url( 'assets/owp-gutenberg-sidebar.css', __FILE__ ),
+        plugins_url( 'gutenberg/sidebar.css', __FILE__ ),
         array(),
         null
     );
