@@ -1,7 +1,3 @@
-/**
- * Custom Web Component for the OWP Description Page.
- * This is a dummy component to be developed deeper later.
- */
 class OwpDescription extends HTMLElement {
     /**
      * Constructs the OwpDescription instance.
@@ -17,6 +13,7 @@ class OwpDescription extends HTMLElement {
             <p class="bg-blue-100 m-0 flex text-xl justify-center items-center p-2">
                 Description Page.
             </p>
+            <dummy-component my-attribute="Hello from parent!"></dummy-component>
         `;
     }
 }
