@@ -10,12 +10,41 @@
     sidebarContainer.id = 'owp-custom-sidebar-container';
     sidebarContainer.classList.add('owp-custom-sidebar-panel');
     document.body.appendChild(sidebarContainer);
-    const settings = document.getElementsByClassName('editor-header__settings');
-    console.log(settings, settings[0]);
-
     function toggleSidebar() {
         sidebarContainer.classList.toggle('is-open');
     }
+
+    // Use wp.domReady to ensure the DOM is fully loaded before trying to access elements
+    function onSettingsElementReady() {
+        const settings = document.querySelector('.editor-header__settings');
+        console.log(settings);
+
+        const newElement = document.createElement('div');
+        newElement.classList.add('owp-settings-icon-container');
+        const iconElement = document.createElement('img');
+        iconElement.src = '/wp-content/plugins/owp/assets/owp-icon.svg';
+        iconElement.classList.add('owp-settings-icon');
+        newElement.appendChild(iconElement);
+
+        if (settings) {
+            settings.classList.add('owp-editor-header-settings');
+            if (settings.children.length >= 2) {
+                settings.insertBefore(newElement, settings.children[settings.children.length - 2]);
+            } else {
+                settings.appendChild(newElement);
+            }
+            newElement.addEventListener('click', toggleSidebar);
+        }
+    }
+
+    const observer = new MutationObserver((mutationsList, observer) => {
+        if (document.querySelector('.editor-header__settings')) {
+            onSettingsElementReady();
+            observer.disconnect();
+        }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
 
     wp.element.render(
         createElement(
@@ -35,33 +64,5 @@
         ),
         sidebarContainer
     );
-
-    wp.plugins.registerPlugin('owp-sidebar-toggle-button', {
-        render: function () {
-            return createElement(
-                PluginSidebarMoreMenuItem,
-                {
-                    target: 'owp-custom-sidebar',
-                    icon: 'admin-page',
-                    onClick: toggleSidebar
-                },
-                'Toggle OWP Sidebar'
-            );
-        }
-    });
-
-    wp.plugins.registerPlugin('block-settings-menu-group-test', {
-        render: function () {
-            return createElement(
-                PluginSidebar,
-                {
-                    name: 'z',
-                    title: 'z',
-                    icon: 'lightbulb',
-                    onClick: toggleSidebar
-                }
-            )
-        }
-    });
 
 })(window.wp);

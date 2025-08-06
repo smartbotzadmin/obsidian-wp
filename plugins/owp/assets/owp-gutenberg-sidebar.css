@@ -1,13 +1,13 @@
 .owp-custom-sidebar-panel {
-    width: 350px; /* Slightly wider */
-    background-color: #f0f0f0;
+    width: 25%; /* Slightly wider */
+    background-color: #ffffff;
     border-left: 1px solid #ddd;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0.1);
     padding: 20px;
     box-sizing: border-box;
     position: fixed;
     top: 0; /* Occupy whole screen height */
-    right: -350px; /* Start off-screen for animation */
+    right: -25%; /* Start off-screen for animation */
     height: 100vh; /* Occupy whole screen height */
     overflow-y: auto;
     z-index: 100000; /* Ensure it's on top */
@@ -20,4 +20,33 @@
 
 .owp-sidebar-content {
     padding: 10px;
+}
+
+.owp-settings-icon-container {
+    background-color: black;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.owp-settings-icon-container:hover {
+    background-color: #27276f; /* Very dark blue */
+}
+
+.owp-settings-icon {
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: auto;
+}
+
+.owp-editor-header-settings {
+    display: flex;
+    align-items: center;
 }
