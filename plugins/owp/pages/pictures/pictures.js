@@ -2,11 +2,11 @@
  * @desc Custom Web Component for the OWP Pictures Page.
  * This is a dummy component to be developed deeper later.
  */
-class OwpPicturesComponent extends HTMLElement {
+class OwpPictures extends HTMLElement {
 
 
     /**
-     * @desc Constructs the OwpPicturesComponent instance.
+     * @desc Constructs the OwpPictures instance.
      * @return {void}
      */
     constructor() {
@@ -23,4 +23,4 @@ class OwpPicturesComponent extends HTMLElement {
 }
 
 
-customElements.define('owp-pictures-component', OwpPicturesComponent);
+customElements.define('owp-pictures', OwpPictures);

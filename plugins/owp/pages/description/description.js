@@ -13,7 +13,6 @@ class OwpDescription extends HTMLElement {
             <p class="bg-blue-100 m-0 flex text-xl justify-center items-center p-2">
                 Description Page.
             </p>
-            <dummy-component my-attribute="Hello from parent!"></dummy-component>
         `;
     }
 }

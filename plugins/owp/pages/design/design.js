@@ -2,11 +2,11 @@
  * @desc Custom Web Component for the OWP Design Page.
  * This is a dummy component to be developed deeper later.
  */
-class OwpDesignComponent extends HTMLElement {
+class OwpDesign extends HTMLElement {
 
 
     /**
-     * @desc Constructs the OwpDesignComponent instance.
+     * @desc Constructs the OwpDesign instance.
      * @return {void}
      */
     constructor() {
@@ -23,4 +23,4 @@ class OwpDesignComponent extends HTMLElement {
 }
 
 
-customElements.define('owp-design-component', OwpDesignComponent);
+customElements.define('owp-design', OwpDesign);

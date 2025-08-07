@@ -2,11 +2,11 @@
  * @desc Custom Web Component for the OWP Contact Page.
  * This is a dummy component to be developed deeper later.
  */
-class OwpContactComponent extends HTMLElement {
+class OwpContact extends HTMLElement {
 
 
     /**
-     * @desc Constructs the OwpContactComponent instance.
+     * @desc Constructs the OwpContact instance.
      * @return {void}
      */
     constructor() {
@@ -23,4 +23,4 @@ class OwpContactComponent extends HTMLElement {
 }
 
 
-customElements.define('owp-contact-component', OwpContactComponent);
+customElements.define('owp-contact', OwpContact);
