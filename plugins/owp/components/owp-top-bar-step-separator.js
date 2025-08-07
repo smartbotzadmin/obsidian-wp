@@ -10,7 +10,19 @@ class OwpTopBarStepSeparator extends HTMLElement {
      */
     constructor() {
         super();
-        this.innerHTML = this.getTemplate();
+    }
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        if (!this.hasChildNodes()) {
+            const separatorLineDiv = document.createElement('div');
+            separatorLineDiv.className = 'separator-line';
+            this.appendChild(separatorLineDiv);
+        }
+        this.updateLineClass();
     }
 
     /**
@@ -29,24 +41,28 @@ class OwpTopBarStepSeparator extends HTMLElement {
      * @returns {void}
      */
     attributeChangedCallback(name, oldVal, newVal) {
-        this.innerHTML = this.getTemplate();
+        this.updateLineClass();
     }
 
     /**
-     * @description Generates the HTML template for the separator.
-     * @returns {string} The HTML string for the component.
+     * @description Updates the class of the separator line.
+     * @returns {void}
      */
-    getTemplate() {
+    updateLineClass() {
         const isActive = this.hasAttribute('is-active');
         const isCompleted = this.hasAttribute('is-completed');
+        const lineElement = this.querySelector('.separator-line');
 
-        const lineClass = (isActive || isCompleted) ? 'bg-purple-500' : 'bg-gray-300';
-
-        return `
-            <div class="h-0.5 w-6 mx-2 ${lineClass}"></div>
-        `;
+        if (lineElement) {
+            let classList = ['h-0.5', 'w-6', 'mx-2'];
+            if (isActive || isCompleted) {
+                classList.push('bg-purple-500');
+            } else {
+                classList.push('bg-gray-300');
+            }
+            lineElement.className = classList.join(' ');
+        }
     }
-
 }
 
 customElements.define('owp-top-bar-step-separator', OwpTopBarStepSeparator);

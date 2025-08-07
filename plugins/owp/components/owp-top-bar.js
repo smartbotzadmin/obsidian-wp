@@ -21,55 +21,87 @@ class OwpTopBar extends HTMLElement {
     }
 
     /**
+     * @description Observes changes to the 'current-page' attribute.
+     * @returns {Array<string>} The observed attributes.
+     */
+    static get observedAttributes() {
+        return ['current-page'];
+    }
+
+    /**
+     * @description Handles changes to observed attributes.
+     * @param {string} name - The name of the attribute.
+     * @param {string} oldVal - The old value of the attribute.
+     * @param {string} newVal - The new value of the attribute.
+     * @returns {void}
+     */
+    attributeChangedCallback(name, oldVal, newVal) {
+        if (name === 'current-page' && oldVal !== newVal) {
+            this.updateStepsHighlighting(newVal);
+            this.addStepEventListeners(); // Re-add listeners if steps are re-rendered
+        }
+    }
+
+    /**
      * @description Called when the element is added to the document's DOM.
      * @returns {void}
      */
     connectedCallback() {
-        this.updateStepsHighlighting();
-        this.addStepEventListeners();
+        // Set initial current-page if not already set
+        if (!this.hasAttribute('current-page')) {
+            const currentPath = window.location.search;
+            const currentPage = currentPath.split('page=')[1];
+            if (currentPage) {
+                this.setAttribute('current-page', currentPage);
+            } else {
+                // Default to the first step if no page is specified in the URL
+                this.setAttribute('current-page', this.steps[0].page);
+            }
+        }
+        this.updateStepsHighlighting(this.getAttribute('current-page'));
+        this.addStepEventListeners(); // Ensure listeners are added after initial render
     }
+
 
     /**
      * @description Adds click event listeners to each step item for navigation.
      * @returns {void}
      */
     addStepEventListeners() {
+        // Remove existing listeners to prevent duplicates
         this.querySelectorAll('owp-top-bar-step').forEach(stepElement => {
-            stepElement.addEventListener('click', (event) => {
-                const page = event.currentTarget.dataset.page;
-                if (page) {
-                    window.location.href = `${window.location.origin}/wp-admin/admin.php?page=${page}`;
-                }
-            });
+            stepElement.removeEventListener('click', this.handleStepClick);
+        });
+
+        this.querySelectorAll('owp-top-bar-step').forEach(stepElement => {
+            stepElement.addEventListener('click', this.handleStepClick);
         });
     }
 
     /**
-     * @description Generates the HTML template for the top bar, including dynamic step highlighting.
+     * @description Handles click event for a step item.
+     * @param {Event} event - The click event.
+     * @returns {void}
+     */
+    handleStepClick(event) {
+        const page = event.currentTarget.dataset.page;
+        if (page) {
+            window.location.href = `${window.location.origin}/wp-admin/admin.php?page=${page}`;
+        }
+    }
+
+
+    /**
+     * @description Generates the static HTML template for the top bar.
      * @returns {string} The HTML string for the component.
      */
     getTemplate() {
-        const currentPath = window.location.search;
-        const currentPage = currentPath.split('page=')[1];
-        const currentPageIndex = this.steps.findIndex(step => step.page === currentPage);
-
-        const stepHtml = this.steps.map((step, index) => {
-            const isActive = index === currentPageIndex;
-            const isCompleted = index < currentPageIndex;
-
-            return `
-                <owp-top-bar-step name="${step.name}" page="${step.page}" ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''}></owp-top-bar-step>
-                ${index < this.steps.length - 1 ? `<owp-top-bar-step-separator ${isActive || isCompleted ? 'is-active is-completed' : ''}></owp-top-bar-step-separator>` : ''}
-            `;
-        }).join('');
-
         return `
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             <div class="flex items-center justify-between p-4 bg-white shadow-md h-18">
                 <owp-top-bar-logo class="ml-2"></owp-top-bar-logo>
                 <div class="flex items-center flex-grow justify-center">
-                    <nav class="flex items-center text-gray-600 font-bold">
-                        ${stepHtml}
+                    <nav class="flex items-center text-gray-600 font-bold" id="step-navigation">
                     </nav>
                 </div>
                 <owp-top-bar-close-button></owp-top-bar-close-button>
@@ -77,14 +109,57 @@ class OwpTopBar extends HTMLElement {
         `;
     }
 
+
     /**
      * @description Updates the highlighting of the steps based on the current URL.
+     * @param {string} currentPage - The current page slug.
      * @returns {void}
      */
-    updateStepsHighlighting() {
-        this.innerHTML = this.getTemplate();
-    }
+    updateStepsHighlighting(currentPage) {
+        const navElement = this.querySelector('#step-navigation');
+        if (!navElement) {
+            return;
+        }
 
+        const currentPageIndex = this.steps.findIndex(step => step.page === currentPage);
+
+        // Clear existing steps to prevent duplicates on re-render
+        navElement.innerHTML = '';
+
+        this.steps.forEach((step, index) => {
+            const isActive = index === currentPageIndex;
+            const isCompleted = index < currentPageIndex;
+
+            const stepElement = document.createElement('owp-top-bar-step');
+            stepElement.setAttribute('name', step.name);
+            stepElement.setAttribute('page', step.page);
+
+            if (isActive) {
+                stepElement.setAttribute('is-active', '');
+            } else {
+                stepElement.removeAttribute('is-active');
+            }
+
+            if (isCompleted) {
+                stepElement.setAttribute('is-completed', '');
+            } else {
+                stepElement.removeAttribute('is-completed');
+            }
+            navElement.appendChild(stepElement);
+
+            if (index < this.steps.length - 1) {
+                const separatorElement = document.createElement('owp-top-bar-step-separator');
+                if (isActive || isCompleted) {
+                    separatorElement.setAttribute('is-active', '');
+                    separatorElement.setAttribute('is-completed', '');
+                } else {
+                    separatorElement.removeAttribute('is-active');
+                    separatorElement.removeAttribute('is-completed');
+                }
+                navElement.appendChild(separatorElement);
+            }
+        });
+    }
 }
 
 customElements.define('owp-top-bar', OwpTopBar);

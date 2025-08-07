@@ -10,7 +10,6 @@ class OwpTopBarStep extends HTMLElement {
      */
     constructor() {
         super();
-        this.innerHTML = this.getTemplate();
     }
 
     /**
@@ -18,10 +17,17 @@ class OwpTopBarStep extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        const page = this.getAttribute('page');
-        if (page) {
-            this.dataset.page = page;
+        if (!this.hasChildNodes()) {
+            const stepItemDiv = document.createElement('div');
+            stepItemDiv.className = 'step-item cursor-pointer';
+
+            const stepTextDiv = document.createElement('div');
+            stepTextDiv.className = 'step-text';
+
+            stepItemDiv.appendChild(stepTextDiv);
+            this.appendChild(stepItemDiv);
         }
+        this.updateContent();
     }
 
     /**
@@ -40,35 +46,35 @@ class OwpTopBarStep extends HTMLElement {
      * @returns {void}
      */
     attributeChangedCallback(name, oldVal, newVal) {
-        this.innerHTML = this.getTemplate();
+        this.updateContent();
     }
 
     /**
-     * @description Generates the HTML template for the step.
-     * @returns {string} The HTML string for the component.
+     * @description Updates the content and classes of the step element.
+     * @returns {void}
      */
-    getTemplate() {
+    updateContent() {
         const name = this.getAttribute('name') || '';
-        const page = this.getAttribute('page') || '';
+        const page = this.getAttribute('page');
         const isActive = this.hasAttribute('is-active');
         const isCompleted = this.hasAttribute('is-completed');
 
-        const stepTextClass = isActive ? 'text-purple-500 text-lg' : (isCompleted ? 'text-purple-500 text-lg' : 'text-gray-600 font-normal text-lg');
+        const stepTextElement = this.querySelector('.step-text');
+        if (stepTextElement) {
+            stepTextElement.textContent = name;
+            let classList = ['step-text'];
+            if (isActive || isCompleted) {
+                classList.push('text-purple-500', 'text-lg');
+            } else {
+                classList.push('text-gray-600', 'font-normal', 'text-lg');
+            }
+            stepTextElement.className = classList.join(' ');
+        }
 
-        return `
-            <style>
-                .step-item {
-                    display: flex;
-                    align-items: center;
-                    cursor: pointer;
-                }
-            </style>
-            <div class="step-item">
-                <div class="${stepTextClass}">${name}</div>
-            </div>
-        `;
+        if (page) {
+            this.dataset.page = page;
+        }
     }
-
 }
 
 customElements.define('owp-top-bar-step', OwpTopBarStep);
