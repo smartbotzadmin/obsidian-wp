@@ -1,9 +1,9 @@
 /**
- * @class OwpTopBarCloseButton
+ * @class OwpTopbarCloseButton
  * @augments HTMLElement
  * @description Web component for the close button and dropdown menu in the top bar.
  */
-class OwpTopBarCloseButton extends HTMLElement {
+class OwpTopbarCloseButton extends HTMLElement {
     /**
      * @description Constructs the OwpTopBarCloseButton instance.
      * @returns {void}
@@ -88,4 +88,4 @@ class OwpTopBarCloseButton extends HTMLElement {
     }
 }
 
-customElements.define('owp-top-bar-close-button', OwpTopBarCloseButton);
+customElements.define('owp-topbar-close-button', OwpTopbarCloseButton);

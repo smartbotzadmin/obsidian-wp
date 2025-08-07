@@ -1,9 +1,9 @@
 /**
- * @class OwpTopBar
+ * @class OwpTopbar
  * @augments HTMLElement
  * @description Web component for the top navigation bar, including the logo, step indicator, and exit options.
  */
-class OwpTopBar extends HTMLElement {
+class OwpTopbar extends HTMLElement {
     /**
      * @description Constructs the OwpTopBar instance.
      * @returns {void}
@@ -69,11 +69,11 @@ class OwpTopBar extends HTMLElement {
      */
     addStepEventListeners() {
         // Remove existing listeners to prevent duplicates
-        this.querySelectorAll('owp-top-bar-step').forEach(stepElement => {
+        this.querySelectorAll('owp-topbar-step').forEach(stepElement => {
             stepElement.removeEventListener('click', this.handleStepClick);
         });
 
-        this.querySelectorAll('owp-top-bar-step').forEach(stepElement => {
+        this.querySelectorAll('owp-topbar-step').forEach(stepElement => {
             stepElement.addEventListener('click', this.handleStepClick);
         });
     }
@@ -99,12 +99,12 @@ class OwpTopBar extends HTMLElement {
         return `
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             <div class="flex items-center justify-between p-4 bg-white shadow-md h-18">
-                <owp-top-bar-logo class="ml-2"></owp-top-bar-logo>
+                <owp-topbar-logo class="ml-2"></owp-topbar-logo>
                 <div class="flex items-center flex-grow justify-center">
                     <nav class="flex items-center text-gray-600 font-bold" id="step-navigation">
                     </nav>
                 </div>
-                <owp-top-bar-close-button></owp-top-bar-close-button>
+                <owp-topbar-close-button></owp-topbar-close-button>
             </div>
         `;
     }
@@ -130,7 +130,7 @@ class OwpTopBar extends HTMLElement {
             const isActive = index === currentPageIndex;
             const isCompleted = index < currentPageIndex;
 
-            const stepElement = document.createElement('owp-top-bar-step');
+            const stepElement = document.createElement('owp-topbar-step');
             stepElement.setAttribute('name', step.name);
             stepElement.setAttribute('page', step.page);
 
@@ -148,7 +148,7 @@ class OwpTopBar extends HTMLElement {
             navElement.appendChild(stepElement);
 
             if (index < this.steps.length - 1) {
-                const separatorElement = document.createElement('owp-top-bar-step-separator');
+                const separatorElement = document.createElement('owp-topbar-step-separator');
                 if (isActive || isCompleted) {
                     separatorElement.setAttribute('is-active', '');
                     separatorElement.setAttribute('is-completed', '');
@@ -162,4 +162,4 @@ class OwpTopBar extends HTMLElement {
     }
 }
 
-customElements.define('owp-top-bar', OwpTopBar);
+customElements.define('owp-topbar', OwpTopbar);

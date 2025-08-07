@@ -15,7 +15,7 @@ class OwpStart extends HTMLElement {
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             
             <div class="h-screen bg-purple-50">
-                <owp-top-bar></owp-top-bar>
+                <owp-topbar></owp-topbar>
     
                 <div class="bg-white p-12 rounded-lg shadow-md max-w-3xl mx-auto mt-20">
                     <h2 class="text-2xl font-bold mb-4">

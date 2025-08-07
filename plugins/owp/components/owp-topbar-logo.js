@@ -1,9 +1,9 @@
 /**
- * @class OwpTopBarLogo
+ * @class OwpTopbarLogo
  * @augments HTMLElement
  * @description Web component for the OWP logo in the top bar.
  */
-class OwpTopBarLogo extends HTMLElement {
+class OwpTopbarLogo extends HTMLElement {
     /**
      * @description Constructs the OwpTopBarLogo instance.
      * @returns {void}
@@ -24,4 +24,4 @@ class OwpTopBarLogo extends HTMLElement {
     }
 }
 
-customElements.define('owp-top-bar-logo', OwpTopBarLogo);
+customElements.define('owp-topbar-logo', OwpTopbarLogo);

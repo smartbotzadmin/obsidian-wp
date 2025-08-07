@@ -1,9 +1,9 @@
 /**
- * @class OwpTopBarStepSeparator
+ * @class OwpTopbarStepSeparator
  * @augments HTMLElement
  * @description Web component for the separator between steps in the top navigation bar.
  */
-class OwpTopBarStepSeparator extends HTMLElement {
+class OwpTopbarStepSeparator extends HTMLElement {
     /**
      * @description Constructs the OwpTopBarStepSeparator instance.
      * @returns {void}
@@ -65,4 +65,4 @@ class OwpTopBarStepSeparator extends HTMLElement {
     }
 }
 
-customElements.define('owp-top-bar-step-separator', OwpTopBarStepSeparator);
+customElements.define('owp-topbar-step-separator', OwpTopbarStepSeparator);

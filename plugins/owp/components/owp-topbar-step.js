@@ -1,9 +1,9 @@
 /**
- * @class OwpTopBarStep
+ * @class OwpTopbarStep
  * @augments HTMLElement
  * @description Web component for a single step in the top navigation bar.
  */
-class OwpTopBarStep extends HTMLElement {
+class OwpTopbarStep extends HTMLElement {
     /**
      * @description Constructs the OwpTopBarStep instance.
      * @returns {void}
@@ -77,4 +77,4 @@ class OwpTopBarStep extends HTMLElement {
     }
 }
 
-customElements.define('owp-top-bar-step', OwpTopBarStep);
+customElements.define('owp-topbar-step', OwpTopbarStep);
