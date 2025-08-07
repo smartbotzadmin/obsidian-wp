@@ -66,8 +66,8 @@ class OwpTopBar extends HTMLElement {
         return `
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             <div class="flex items-center justify-between p-4 bg-white shadow-md h-18">
+                <owp-top-bar-logo class="ml-2"></owp-top-bar-logo>
                 <div class="flex items-center flex-grow justify-center">
-                    <owp-top-bar-logo></owp-top-bar-logo>
                     <nav class="flex items-center text-gray-600 font-bold">
                         ${stepHtml}
                     </nav>
