@@ -16,6 +16,7 @@ class OwpTopbar extends HTMLElement {
             { name: "Contact", page: "owp-contact" },
             { name: "Pictures", page: "owp-pictures" },
             { name: "Design", page: "owp-design" },
+            { name: "Design", page: "owp-design" },
         ];
         this.innerHTML = this.getTemplate();
     }

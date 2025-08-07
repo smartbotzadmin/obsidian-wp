@@ -1,26 +1,48 @@
 /**
- * @desc Custom Web Component for the OWP Contact Page.
- * This is a dummy component to be developed deeper later.
+ * @class OwpContact
+ * @augments HTMLElement
+ * @description Web component for the "Contact" page, integrating top bar and contact form components.
  */
 class OwpContact extends HTMLElement {
-
-
     /**
-     * @desc Constructs the OwpContact instance.
-     * @return {void}
+     * @description Constructs the OwpContact instance.
+     * @returns {void}
      */
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.innerHTML = `
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
-            <owp-topbar></owp-topbar>
-            <p class="bg-blue-100 m-0 flex text-xl justify-center items-center p-2">
-                Contact Page.
-            </p>
+            
+            <div class="h-screen bg-purple-50">
+                <owp-topbar current-page="owp-contact"></owp-topbar>
+    
+                <div class="bg-white p-12 rounded-lg shadow-md max-w-3xl mx-auto mt-20">
+                    <h2 class="text-2xl font-bold mb-4">
+                        How can people get in touch with asd
+                    </h2>
+                    <p class="text-md text-gray-600 my-6">
+                        Please provide the contact information below. These will be used on the website.
+                    </p>
+    
+                    <div class="flex flex-col md:flex-row justify-between gap-6 my-6">
+                        <owp-contact-email-field></owp-contact-email-field>
+                        <owp-contact-phone-field></owp-contact-phone-field>
+                    </div>
+    
+                    <owp-contact-address-field></owp-contact-address-field>
+
+                    <owp-contact-social-media></owp-contact-social-media>
+    
+                    <div class="flex flex-row justify-end items-center mt-6 gap-4">
+                        <owp-skip-step-button redirect-to="/wp-admin/admin.php?page=owp-pictures"></owp-skip-step-button>
+                        <owp-back-button redirect-to="/wp-admin/admin.php?page=owp-describe">Back</owp-back-button>
+                        <owp-next-button redirect-to="/wp-admin/admin.php?page=owp-pictures">Next</owp-next-button>
+                    </div>
+                </div>
+            </div>
         `;
     }
 }
-
 
 customElements.define('owp-contact', OwpContact);
