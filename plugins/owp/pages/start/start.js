@@ -1,6 +1,6 @@
-class OwpDescription extends HTMLElement {
+class OwpStart extends HTMLElement {
     /**
-     * Constructs the OwpDescription instance.
+     * Constructs the OwpStart instance.
      *
      * @return {void}
      */
@@ -11,11 +11,11 @@ class OwpDescription extends HTMLElement {
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
 
             <p class="bg-blue-100 m-0 flex text-xl justify-center items-center p-2">
-                Description Page.
+                Start Page.
             </p>
         `;
     }
 }
 
 
-customElements.define('owp-description', OwpDescription);
+customElements.define('owp-start', OwpStart);

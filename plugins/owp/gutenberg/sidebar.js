@@ -4,7 +4,7 @@
         const settings = document.querySelector('.editor-header__settings');
         const newElement = document.createElement('div');
         newElement.innerHTML = `
-            <img src="/wp-content/plugins/owp/assets/icons/owp-logo.svg" class="w-6 h-6 block mx-auto" />
+            <img src="/wp-content/plugins/owp/assets/icons/owp-logo-dark.svg" class="w-6 h-6 block mx-auto" />
         `;
         newElement.classList.add('bg-black', 'border-none', 'rounded-md', 'cursor-pointer', 'w-8', 'h-8', 'flex', 'justify-center', 'items-center', 'transition-colors', 'duration-200', 'hover:bg-[#27276f]');
 

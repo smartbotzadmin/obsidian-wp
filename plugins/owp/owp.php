@@ -38,11 +38,19 @@ add_action( 'enqueue_block_editor_assets', 'owp_enqueue_tailwind_styles' );
 function owp_add_admin_pages() {
     add_submenu_page(
         null,
-        __( 'Description', 'owp' ),
-        __( 'Description', 'owp' ),
+        __( 'Start', 'owp' ),
+        __( 'Start', 'owp' ),
         'manage_options',
-        'owp-description',
-        'owp_render_description_page'
+        'owp-start',
+        'owp_render_start_page'
+    );
+    add_submenu_page(
+        null,
+        __( 'Describe', 'owp' ),
+        __( 'Describe', 'owp' ),
+        'manage_options',
+        'owp-describe',
+        'owp_render_describe_page'
     );
 
     add_submenu_page(
@@ -76,8 +84,8 @@ function owp_add_admin_pages() {
         __( 'New AI ObsidianWP', 'owp' ),
         __( 'New AI ObsidianWP', 'owp' ),
         'manage_options',
-        'owp-description-redirect', // Use a unique slug for the redirect page
-        'owp_render_description_page' // Temporarily set to render, redirect will handle it
+        'owp-start-redirect', // Use a unique slug for the redirect page
+        'owp_render_start_page' // Temporarily set to render, redirect will handle it
     );
 }
 add_action( 'admin_menu', 'owp_add_admin_pages' );
@@ -89,21 +97,30 @@ add_action( 'admin_menu', 'owp_add_admin_pages' );
  * @return void
  */
 function owp_handle_pages_menu_redirect() {
-    if ( is_admin() && isset( $_GET['page'] ) && 'owp-description-redirect' === $_GET['page'] ) {
-        wp_redirect( admin_url( 'admin.php?page=owp-description' ) );
+    if ( is_admin() && isset( $_GET['page'] ) && 'owp-start-redirect' === $_GET['page'] ) {
+        wp_redirect( admin_url( 'admin.php?page=owp-start' ) );
         exit;
     }
 }
 add_action( 'admin_init', 'owp_handle_pages_menu_redirect' );
 
-
 /**
- * Renders the description page content.
+ * Renders the start page content.
  *
  * @return void
  */
-function owp_render_description_page() {
-    owp_render_page_content( 'description' );
+function owp_render_start_page() {
+    owp_render_page_content( 'start' );
+}
+
+
+/**
+ * Renders the describe page content.
+ *
+ * @return void
+ */
+function owp_render_describe_page() {
+    owp_render_page_content( 'describe' );
 }
 
 
@@ -140,7 +157,7 @@ function owp_render_design_page() {
 /**
  * Renders the content for a given OWP admin page.
  *
- * @param string $page_slug The slug of the page to render (e.g., 'description', 'pictures').
+ * @param string $page_slug The slug of the page to render (e.g., 'describe', 'pictures').
  * @return void
  */
 function owp_render_page_content( $page_slug ) {
@@ -149,7 +166,7 @@ function owp_render_page_content( $page_slug ) {
     $js_file = plugins_url( 'pages/' . $page_slug . '/' . $page_slug . '.js', __FILE__ );
 
     // Define the slugs for pages where admin bars should be hidden
-    $hide_admin_bar_pages = array( 'description', 'pictures', 'contact', 'design' );
+    $hide_admin_bar_pages = array( 'start', 'describe', 'pictures', 'contact', 'design' );
 
     // Conditionally hide admin bar and sidebar for specific pages
     if ( in_array( $page_slug, $hide_admin_bar_pages ) ) {
@@ -223,7 +240,7 @@ function owp_add_admin_bar_button( $admin_bar ) {
     $admin_bar->add_node( array(
         'id'    => 'owp-create-with-ai',
         'title' => 'Create with AI ObsidianWP',
-        'href'  => admin_url( 'admin.php?page=owp-description' ),
+        'href'  => admin_url( 'admin.php?page=owp-start' ),
         'meta'  => array(
             'target' => '_self',
             'class'  => 'owp-admin-bar-button',
