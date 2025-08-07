@@ -1,3 +1,55 @@
 /* This file is the input for TailwindCSS CLI to generate output.css */
 @import "tailwindcss";
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  --font-sans: "Open Sans";
+  --font-serif: "Noto Serif";
+  --font-mono: "Google Sans Code";
+}
+
+@font-face {
+  font-family: 'Google Sans Code';
+  src: url('../fonts/Google_Sans_Code/GoogleSansCode-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* Variable font range */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Google Sans Code';
+  src: url('../fonts/Google_Sans_Code/GoogleSansCode-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* Variable font range */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 300 800; /* Variable font range */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fonts/Open_Sans/OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 300 800; /* Variable font range */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Serif';
+  src: url('../fonts/Noto_Serif/NotoSerif-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900; /* Variable font range */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Noto Serif';
+  src: url('../fonts/Noto_Serif/NotoSerif-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900; /* Variable font range */
+  font-style: italic;
+}
