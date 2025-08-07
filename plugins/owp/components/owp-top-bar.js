@@ -10,8 +10,7 @@ class OwpTopBar extends HTMLElement {
      */
     constructor() {
         super();
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML = `
+        this.innerHTML = `
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             <style>
                 .dropdown-content {
@@ -61,9 +60,9 @@ class OwpTopBar extends HTMLElement {
             </div>
         `;
 
-        this.crossButton = shadowRoot.getElementById('crossButton');
-        this.dropdownContent = shadowRoot.getElementById('dropdownContent');
-        this.cancelButton = shadowRoot.getElementById('cancelButton');
+        this.crossButton = this.querySelector('#crossButton');
+        this.dropdownContent = this.querySelector('#dropdownContent');
+        this.cancelButton = this.querySelector('#cancelButton');
 
         this.crossButton.addEventListener('click', this.toggleDropdown.bind(this));
         this.cancelButton.addEventListener('click', this.toggleDropdown.bind(this));

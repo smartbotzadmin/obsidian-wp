@@ -10,14 +10,10 @@ class OwpNextButton extends HTMLElement {
      */
     constructor() {
         super();
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
-            <button id="nextButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 my-6 rounded-md flex items-center">
-                <slot></slot>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+        this.innerHTML = `
+            <button id="nextButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-6 h-11 rounded-md flex items-center">
+                ${this.innerHTML}
+                <img class="pl-2" src="/wp-content/plugins/owp/assets/icons/arrow-right.svg"/>
             </button>
         `;
     }
@@ -39,7 +35,7 @@ class OwpNextButton extends HTMLElement {
      */
     attributeChangedCallback(name, oldVal, newVal) {
         if (name === 'redirect-to' && newVal) {
-            this.shadowRoot.getElementById('nextButton').addEventListener('click', () => {
+            this.querySelector('#nextButton').addEventListener('click', () => {
                 window.location.href = newVal;
             });
         }

@@ -17,7 +17,7 @@ class OwpStart extends HTMLElement {
             <div class="h-screen bg-purple-50">
                 <owp-top-bar></owp-top-bar>
     
-                <div class="bg-white p-12 rounded-lg shadow-md max-w-3xl mx-auto mt-10">
+                <div class="bg-white p-12 rounded-lg shadow-md max-w-3xl mx-auto mt-20">
                     <h2 class="text-2xl font-bold mb-4">
                         Let's build your website!
                     </h2>
@@ -32,8 +32,8 @@ class OwpStart extends HTMLElement {
                         <owp-start-language-selector></owp-start-language-selector>
                     </div>
     
-                    <div class="flex justify-between my-6">
-                        <owp-back-button redirect-to="/wp-admin/"></owp-back-button>
+                    <div class="flex flex-row justify-between">
+                        <owp-back-button redirect-to="/wp-admin/">Back</owp-back-button>
                         <owp-next-button redirect-to="/wp-admin/admin.php?page=owp-describe">Next</owp-next-button>
                     </div>
                 </div>

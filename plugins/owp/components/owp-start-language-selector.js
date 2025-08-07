@@ -11,10 +11,10 @@ class OwpStartLanguageSelector extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <div>
+            <div class="min-w-64">
                 <label for="websiteLanguage" class="block text-gray-700 text-sm font-bold mb-2">This website will be in</label>
                 <div class="relative">
-                    <input type="text" id="websiteLanguageSearch" class="shadow appearance-none border border-gray-300 rounded-lg w-full h-9 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10" value="EN English (Default)">
+                    <input type="text" id="websiteLanguageSearch" class="shadow appearance-none border border-gray-300 rounded-lg w-full h-11 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10" value="EN English (Default)">
                     <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     <div id="websiteLanguageDropdown" class="absolute w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 z-10 hidden">
                         <div class="py-1">

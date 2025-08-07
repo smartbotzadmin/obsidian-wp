@@ -10,14 +10,10 @@ class OwpBackButton extends HTMLElement {
      */
     constructor() {
         super();
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
-            <button id="backButton" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 my-6 rounded-md flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                </svg>
-                <slot></slot>
+        this.innerHTML = `
+            <button id="backButton" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 mt-6 h-11 rounded-md flex items-center">
+                <img class="pr-2" src="/wp-content/plugins/owp/assets/icons/arrow-left.svg"/>
+                ${this.innerHTML}
             </button>
         `;
     }
@@ -39,7 +35,7 @@ class OwpBackButton extends HTMLElement {
      */
     attributeChangedCallback(name, oldVal, newVal) {
         if (name === 'redirect-to' && newVal) {
-            this.shadowRoot.getElementById('backButton').addEventListener('click', () => {
+            this.querySelector('#backButton').addEventListener('click', () => {
                 window.location.href = newVal;
             });
         }
