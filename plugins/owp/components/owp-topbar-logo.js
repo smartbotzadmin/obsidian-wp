@@ -19,7 +19,7 @@ class OwpTopbarLogo extends HTMLElement {
      */
     getTemplate() {
         return `
-            <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/owp-logo-light.svg" alt="OWP Logo" class="h-8 w-auto">
+            <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/obsidian-logo.png" alt="OWP Logo" class="h-8 w-auto">
         `;
     }
 }

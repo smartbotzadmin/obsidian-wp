@@ -13,7 +13,7 @@ class OwpPicturesGrid extends HTMLElement {
         this.innerHTML = `
             <div class="overflow-y-auto max-h-screen pr-2">
                 <div class="flex flex-wrap gap-6 justify-center">
-                    ${this.getPlaceholderImages(12)}
+                    ${this.getPlaceholderImages(8)}
                 </div>
             </div>
         `;
