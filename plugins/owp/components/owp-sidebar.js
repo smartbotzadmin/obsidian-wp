@@ -5,16 +5,8 @@ class OwpSidebar extends HTMLElement {
         shadowRoot.innerHTML = `
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             
-            <div id="owp-custom-sidebar-container" class="w-1/4 bg-white border-l border-gray-300 shadow-lg p-5 box-border fixed top-0 h-screen overflow-y-auto z-[99999] -right-1/4 transition-all duration-200 ease-out">
-                <div class="p-2.5">
-                    <h2 class="text-lg font-semibold mb-2">Custom Sidebar Content</h2>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="alertButton">
-                        Click Me
-                    </button>
-                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded ml-2" id="toggleButton">
-                        Toggle Sidebar
-                    </button>
-                </div>
+            <div id="owp-custom-sidebar-container" class="fixed w-1/4 h-screen top-0 -right-1/4 z-[99999] overflow-y-auto bg-white border-l border-gray-200 shadow-lg transition-all duration-200 ease-out">
+                <!-- Sidebar content here -->
             </div>
         `;
 
