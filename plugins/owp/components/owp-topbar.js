@@ -101,7 +101,7 @@ class OwpTopbar extends HTMLElement {
             <div class="flex items-center justify-between p-4 bg-white shadow-md h-18">
                 <owp-topbar-logo class="ml-2"></owp-topbar-logo>
                 <div class="flex items-center flex-grow justify-center">
-                    <nav class="flex items-center text-gray-600 font-bold" id="step-navigation">
+                    <nav class="flex items-center text-gray-600 font-semibold" id="step-navigation">
                     </nav>
                 </div>
                 <owp-topbar-close-button></owp-topbar-close-button>

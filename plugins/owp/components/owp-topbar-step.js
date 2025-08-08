@@ -64,9 +64,9 @@ class OwpTopbarStep extends HTMLElement {
             stepTextElement.textContent = name;
             let classList = ['step-text'];
             if (isActive || isCompleted) {
-                classList.push('text-purple-500', 'text-lg');
+                classList.push('text-purple-400');
             } else {
-                classList.push('text-gray-600', 'font-normal', 'text-lg');
+                classList.push('text-gray-400');
             }
             stepTextElement.className = classList.join(' ');
         }

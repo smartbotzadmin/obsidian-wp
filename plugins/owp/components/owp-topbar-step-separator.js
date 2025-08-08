@@ -54,7 +54,7 @@ class OwpTopbarStepSeparator extends HTMLElement {
         const lineElement = this.querySelector('.separator-line');
 
         if (lineElement) {
-            let classList = ['h-0.5', 'w-6', 'mx-2'];
+            let classList = ['h-[1px]', 'w-6', 'mx-2'];
             if (isActive || isCompleted) {
                 classList.push('bg-purple-500');
             } else {

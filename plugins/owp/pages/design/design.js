@@ -17,7 +17,7 @@ class OwpDesign extends HTMLElement {
             <div class="h-screen bg-purple-50">
                 <owp-topbar current-page="owp-design"></owp-topbar>
     
-                <div class="p-12 rounded-lg max-w-7xl mx-auto mt-10">
+                <div class="w-full p-6 rounded-lg mt-10">
                     <h2 class="text-2xl font-bold mb-4 text-center">
                         Choose the Design
                     </h2>
@@ -27,7 +27,7 @@ class OwpDesign extends HTMLElement {
                     
                     <owp-design-search-bar></owp-design-search-bar>
 
-                    <owp-design-grid></owp-design-grid>
+                    <owp-design-grid class="w-full"></owp-design-grid>
 
                     <div class="flex flex-row justify-between mt-10">
                         <owp-back-button redirect-to="/wp-admin/admin.php?page=owp-pictures">Back</owp-back-button>

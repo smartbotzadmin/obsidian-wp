@@ -11,9 +11,11 @@ class OwpNextButton extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <button id="nextButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-6 h-11 rounded-md flex items-center">
-                ${this.innerHTML}
-                <img class="pl-2" src="/wp-content/plugins/owp/assets/icons/arrow-right.svg"/>
+            <button id="nextButton" class="flex flex-row justify-center items-center gap-2 bg-purple-500 hover:bg-purple-600 p-4 mt-6 h-11 rounded-md flex items-center">
+                <span class="text-gray-50 font-semibold">
+                    ${this.innerHTML}
+                </span>
+                <img src="/wp-content/plugins/owp/assets/icons/arrow-right.svg"/>
             </button>
         `;
     }

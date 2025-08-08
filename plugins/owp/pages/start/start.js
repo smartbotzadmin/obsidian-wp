@@ -18,7 +18,7 @@ class OwpStart extends HTMLElement {
                 <owp-topbar></owp-topbar>
     
                 <div class="bg-white p-12 rounded-lg shadow-md max-w-3xl mx-auto mt-20">
-                    <h2 class="text-2xl font-bold mb-4">
+                    <h2 class="text-3xl font-bold mb-12">
                         Let's build your website!
                     </h2>
                     <p class="text-md text-gray-600 my-6">
