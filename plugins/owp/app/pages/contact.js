@@ -35,9 +35,9 @@ class OwpContact extends HTMLElement {
                     <owp-contact-social-media></owp-contact-social-media>
     
                     <div class="flex flex-row justify-end items-center mt-6 gap-4">
-                        <owp-skip-step-button redirect-to="/wp-admin/admin.php?page=owp-pictures"></owp-skip-step-button>
-                        <owp-back-button redirect-to="/wp-admin/admin.php?page=owp-describe">Back</owp-back-button>
-                        <owp-next-button redirect-to="/wp-admin/admin.php?page=owp-pictures">Next</owp-next-button>
+                        <owp-skip-step-button data-owp-navigate="pictures"></owp-skip-step-button>
+                        <owp-back-button data-owp-navigate="describe">Back</owp-back-button>
+                        <owp-next-button data-owp-navigate="pictures">Next</owp-next-button>
                     </div>
                 </div>
             </div>

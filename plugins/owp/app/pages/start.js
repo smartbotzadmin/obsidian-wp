@@ -33,8 +33,8 @@ class OwpStart extends HTMLElement {
                     </div>
     
                     <div class="flex flex-row justify-between">
-                        <owp-back-button redirect-to="/wp-admin/">Back</owp-back-button>
-                        <owp-next-button redirect-to="/wp-admin/admin.php?page=owp-describe">Next</owp-next-button>
+                        <owp-back-button data-owp-navigate="">Back</owp-back-button>
+                        <owp-next-button data-owp-navigate="describe">Next</owp-next-button>
                     </div>
                 </div>
 

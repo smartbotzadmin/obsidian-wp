@@ -38,46 +38,11 @@ add_action( 'enqueue_block_editor_assets', 'owp_enqueue_tailwind_styles' );
 function owp_add_admin_pages() {
     add_submenu_page(
         null,
-        __( 'Start', 'owp' ),
-        __( 'Start', 'owp' ),
+        __( 'Obsidian WP App', 'owp' ),
+        __( 'Obsidian WP App', 'owp' ),
         'manage_options',
-        'owp-start',
-        'owp_render_start_page'
-    );
-    add_submenu_page(
-        null,
-        __( 'Describe', 'owp' ),
-        __( 'Describe', 'owp' ),
-        'manage_options',
-        'owp-describe',
-        'owp_render_describe_page'
-    );
-
-    add_submenu_page(
-        null,
-        __( 'Pictures', 'owp' ),
-        __( 'Pictures', 'owp' ),
-        'manage_options',
-        'owp-pictures',
-        'owp_render_pictures_page'
-    );
-
-    add_submenu_page(
-        null,
-        __( 'Contact', 'owp' ),
-        __( 'Contact', 'owp' ),
-        'manage_options',
-        'owp-contact',
-        'owp_render_contact_page'
-    );
-
-    add_submenu_page(
-        null,
-        __( 'Design', 'owp' ),
-        __( 'Design', 'owp' ),
-        'manage_options',
-        'owp-design',
-        'owp_render_design_page'
+        'owp-app',
+        'owp_render_app_page'
     );
 
     add_pages_page(
@@ -85,7 +50,7 @@ function owp_add_admin_pages() {
         __( 'New AI ObsidianWP', 'owp' ),
         'manage_options',
         'owp-start-redirect', // Use a unique slug for the redirect page
-        'owp_render_start_page' // Temporarily set to render, redirect will handle it
+        'owp_render_app_page' // Temporarily set to render, redirect will handle it
     );
 }
 add_action( 'admin_menu', 'owp_add_admin_pages' );
@@ -98,91 +63,22 @@ add_action( 'admin_menu', 'owp_add_admin_pages' );
  */
 function owp_handle_pages_menu_redirect() {
     if ( is_admin() && isset( $_GET['page'] ) && 'owp-start-redirect' === $_GET['page'] ) {
-        wp_redirect( admin_url( 'admin.php?page=owp-start' ) );
+        wp_redirect( admin_url( 'admin.php?page=owp-app' ) );
         exit;
     }
 }
 add_action( 'admin_init', 'owp_handle_pages_menu_redirect' );
 
 /**
- * Renders the start page content.
+ * Renders the main SPA application page.
  *
  * @return void
  */
-function owp_render_start_page() {
-    owp_render_page_content( 'start' );
-}
-
-
-/**
- * Renders the describe page content.
- *
- * @return void
- */
-function owp_render_describe_page() {
-    owp_render_page_content( 'describe' );
-}
-
-
-/**
- * Renders the pictures page content.
- *
- * @return void
- */
-function owp_render_pictures_page() {
-    owp_render_page_content( 'pictures' );
-}
-
-
-/**
- * Renders the contact page content.
- *
- * @return void
- */
-function owp_render_contact_page() {
-    owp_render_page_content( 'contact' );
-}
-
-
-/**
- * Renders the design page content.
- *
- * @return void
- */
-function owp_render_design_page() {
-    owp_render_page_content( 'design' );
-}
-
-
-/**
- * Renders the content for a given OWP admin page.
- *
- * @param string $page_slug The slug of the page to render (e.g., 'describe', 'pictures').
- * @return void
- */
-function owp_render_page_content( $page_slug ) {
-    $plugin_path = plugin_dir_path( __FILE__ );
-    $html_file = $plugin_path . 'pages/' . $page_slug . '/' . $page_slug . '.html';
-    $js_file = plugins_url( 'pages/' . $page_slug . '/' . $page_slug . '.js', __FILE__ );
-
-    // Define the slugs for pages where admin bars should be hidden
-    $hide_admin_bar_pages = array( 'start', 'describe', 'pictures', 'contact', 'design' );
-
-    // Conditionally hide admin bar and sidebar for specific pages
-    if ( in_array( $page_slug, $hide_admin_bar_pages ) ) {
-        add_filter( 'show_admin_bar', '__return_false' );
-        wp_enqueue_style( 'owp-hide-admin-bars', plugins_url( 'assets/css/hide-admin-bars.css', __FILE__ ) );
-    }
-
-    // Enqueue page-specific JavaScript
-    wp_enqueue_script( 'owp-' . $page_slug . '-script', $js_file, array(), null, true );
-
-
-    if ( file_exists( $html_file ) ) {
-        include $html_file;
-    } else {
-        echo '<p>Content for ' . esc_html( $page_slug ) . ' page not found.</p>';
-    }
+function owp_render_app_page() {
+    add_filter( 'show_admin_bar', '__return_false' );
+    wp_enqueue_style( 'owp-hide-admin-bars', plugins_url( 'assets/css/hide-admin-bars.css', __FILE__ ) );
+    wp_enqueue_script( 'owp-app-script', plugins_url( 'app/app.js', __FILE__ ), array(), null, true );
+    echo '<div id="owp-spa-container"></div>';
 }
 
 
@@ -224,6 +120,22 @@ function owp_enqueue_components() {
             array( 'in_footer' => true, 'type' => 'module' )
         );
     }
+
+    // Enqueue SPA page components
+    $page_dir = plugin_dir_path( __FILE__ ) . 'app/pages/';
+    $page_files = glob( $page_dir . '*.js' );
+
+    foreach ( $page_files as $file ) {
+        $handle = 'owp-page-' . sanitize_title( basename( $file, '.js' ) );
+        $src = plugins_url( 'app/pages/' . basename( $file ), __FILE__ );
+        wp_enqueue_script(
+            $handle,
+            $src,
+            array(),
+            null,
+            array( 'in_footer' => true, 'type' => 'module' )
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'owp_enqueue_components' );
 add_action( 'admin_enqueue_scripts', 'owp_enqueue_components' );
@@ -240,7 +152,7 @@ function owp_add_admin_bar_button( $admin_bar ) {
     $admin_bar->add_node( array(
         'id'    => 'owp-create-with-ai',
         'title' => 'Create with AI ObsidianWP',
-        'href'  => admin_url( 'admin.php?page=owp-start' ),
+        'href'  => admin_url( 'admin.php?page=owp-app' ),
         'meta'  => array(
             'target' => '_self',
             'class'  => 'owp-admin-bar-button',

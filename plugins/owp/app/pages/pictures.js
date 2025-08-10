@@ -29,9 +29,9 @@ class OwpPictures extends HTMLElement {
                     <owp-pictures-grid></owp-pictures-grid>
     
                     <div class="flex flex-row justify-end mt-6 gap-4">
-                        <owp-skip-step-button redirect-to="/wp-admin/admin.php?page=owp-design"></owp-skip-step-button>
-                        <owp-back-button redirect-to="/wp-admin/admin.php?page=owp-contact">Back</owp-back-button>
-                        <owp-next-button redirect-to="/wp-admin/admin.php?page=owp-design">Next</owp-next-button>
+                        <owp-skip-step-button data-owp-navigate="design"></owp-skip-step-button>
+                        <owp-back-button data-owp-navigate="contact">Back</owp-back-button>
+                        <owp-next-button data-owp-navigate="design">Next</owp-next-button>
                     </div>
                 </div>
             </div>

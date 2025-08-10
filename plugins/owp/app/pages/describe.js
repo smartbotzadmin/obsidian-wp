@@ -28,8 +28,8 @@ class OwpDescribe extends HTMLElement {
                     <owp-describe-text-area></owp-describe-text-area>
 
                     <div class="flex flex-row justify-between mt-6">
-                        <owp-back-button redirect-to="/wp-admin/admin.php?page=owp-start">Back</owp-back-button>
-                        <owp-next-button redirect-to="/wp-admin/admin.php?page=owp-contact">Next</owp-next-button>
+                        <owp-back-button data-owp-navigate="start">Back</owp-back-button>
+                        <owp-next-button data-owp-navigate="contact">Next</owp-next-button>
                     </div>
                 </div>
 

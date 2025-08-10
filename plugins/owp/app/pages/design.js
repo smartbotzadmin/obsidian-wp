@@ -30,8 +30,8 @@ class OwpDesign extends HTMLElement {
                     <owp-design-grid class="w-full"></owp-design-grid>
 
                     <div class="flex flex-row justify-between mt-10">
-                        <owp-back-button redirect-to="/wp-admin/admin.php?page=owp-pictures">Back</owp-back-button>
-                        <owp-next-button redirect-to="/wp-admin/admin.php?page=owp-publish">Next</owp-next-button>
+                        <owp-back-button data-owp-navigate="pictures">Back</owp-back-button>
+                        <owp-next-button data-owp-navigate="publish">Next</owp-next-button>
                     </div>
                 </div>
             </div>
