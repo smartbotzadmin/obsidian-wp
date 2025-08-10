@@ -49,14 +49,9 @@ class OwpTopbar extends HTMLElement {
     connectedCallback() {
         // Set initial current-page if not already set
         if (!this.hasAttribute('current-page')) {
-            const currentPath = window.location.search;
-            const currentPage = currentPath.split('page=')[1];
-            if (currentPage) {
-                this.setAttribute('current-page', currentPage);
-            } else {
-                // Default to the first step if no page is specified in the URL
-                this.setAttribute('current-page', this.steps[0].page);
-            }
+            const currentHash = window.location.hash.substring(1); // Remove '#'
+            const currentPage = this.steps.find(step => step.name.toLowerCase().replace(/\s/g, '-') === currentHash)?.page || this.steps[0].page;
+            this.setAttribute('current-page', currentPage);
         }
         this.updateStepsHighlighting(this.getAttribute('current-page'));
         this.addStepEventListeners(); // Ensure listeners are added after initial render
@@ -85,8 +80,11 @@ class OwpTopbar extends HTMLElement {
      */
     handleStepClick(event) {
         const page = event.currentTarget.dataset.page;
-        if (page) {
-            window.location.href = `${window.location.origin}/wp-admin/admin.php?page=${page}`;
+        const stepName = event.currentTarget.getAttribute('name');
+        if (page && stepName) {
+            const hash = stepName.toLowerCase().replace(/\s/g, '-');
+            window.location.hash = hash;
+            this.setAttribute('current-page', page);
         }
     }
 
@@ -98,7 +96,7 @@ class OwpTopbar extends HTMLElement {
     getTemplate() {
         return `
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
-            <div class="flex items-center justify-between p-4 bg-white shadow-md h-18">
+            <div class="flex items-center justify-between p-4 bg-white shadow-md max-h-18">
                 <owp-topbar-logo class="ml-2"></owp-topbar-logo>
                 <div class="flex items-center flex-grow justify-center">
                     <nav class="flex items-center text-gray-600 font-semibold" id="step-navigation">

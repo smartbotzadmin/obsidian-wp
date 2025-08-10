@@ -15,7 +15,6 @@ class OwpContact extends HTMLElement {
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             
             <div class="h-screen bg-purple-50">
-                <owp-topbar current-page="owp-contact"></owp-topbar>
     
                 <div class="bg-white p-12 rounded-lg shadow-md max-w-3xl mx-auto mt-20">
                     <h2 class="text-2xl font-bold mb-4">
@@ -35,9 +34,9 @@ class OwpContact extends HTMLElement {
                     <owp-contact-social-media></owp-contact-social-media>
     
                     <div class="flex flex-row justify-end items-center mt-6 gap-4">
-                        <owp-skip-step-button data-owp-navigate="pictures"></owp-skip-step-button>
-                        <owp-back-button data-owp-navigate="describe">Back</owp-back-button>
-                        <owp-next-button data-owp-navigate="pictures">Next</owp-next-button>
+                        <owp-skip-step-button data-owp-navigate="#pictures"></owp-skip-step-button>
+                        <owp-back-button data-owp-navigate="#describe">Back</owp-back-button>
+                        <owp-next-button data-owp-navigate="#pictures">Next</owp-next-button>
                     </div>
                 </div>
             </div>

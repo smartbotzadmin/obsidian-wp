@@ -26,7 +26,7 @@ function handleRouting() {
 
         const tagName = routes[path] || routes['']; // Default to 'start' if path is not found
         if (tagName) {
-            container.innerHTML = `<${tagName}></${tagName}>`;
+            container.innerHTML = `<owp-topbar></owp-topbar><${tagName}></${tagName}>`;
         } else {
             container.innerHTML = '<p>Page not found.</p>';
         }

@@ -15,7 +15,6 @@ class OwpStart extends HTMLElement {
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             
             <div class="h-screen bg-purple-50">
-                <owp-topbar></owp-topbar>
     
                 <div class="bg-white p-12 rounded-lg shadow-md max-w-3xl mx-auto mt-20">
                     <h2 class="text-3xl font-bold mb-12">
@@ -33,8 +32,8 @@ class OwpStart extends HTMLElement {
                     </div>
     
                     <div class="flex flex-row justify-between">
-                        <owp-back-button data-owp-navigate="">Back</owp-back-button>
-                        <owp-next-button data-owp-navigate="describe">Next</owp-next-button>
+                        <!-- <owp-back-button data-owp-navigate="#start">Back</owp-back-button> -->
+                        <owp-next-button data-owp-navigate="#describe">Next</owp-next-button>
                     </div>
                 </div>
 

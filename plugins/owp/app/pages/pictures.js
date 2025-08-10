@@ -15,7 +15,6 @@ class OwpPictures extends HTMLElement {
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             
             <div class="flex flex-col h-screen bg-purple-50">
-                <owp-topbar current-page="owp-pictures"></owp-topbar>
     
                 <div class="bg-white p-6 rounded-lg shadow-md w-[98%] flex-1 mx-auto mt-20 mb-6">
                     <h2 class="text-2xl font-bold mb-4 text-center">
@@ -29,9 +28,9 @@ class OwpPictures extends HTMLElement {
                     <owp-pictures-grid></owp-pictures-grid>
     
                     <div class="flex flex-row justify-end mt-6 gap-4">
-                        <owp-skip-step-button data-owp-navigate="design"></owp-skip-step-button>
-                        <owp-back-button data-owp-navigate="contact">Back</owp-back-button>
-                        <owp-next-button data-owp-navigate="design">Next</owp-next-button>
+                        <owp-skip-step-button data-owp-navigate="#design"></owp-skip-step-button>
+                        <owp-back-button data-owp-navigate="#contact">Back</owp-back-button>
+                        <owp-next-button data-owp-navigate="#design">Next</owp-next-button>
                     </div>
                 </div>
             </div>

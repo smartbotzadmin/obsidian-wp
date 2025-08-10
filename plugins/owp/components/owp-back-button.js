@@ -25,7 +25,7 @@ class OwpBackButton extends HTMLElement {
      * @returns {Array<string>} The observed attributes.
      */
     static get observedAttributes() {
-        return ['redirect-to'];
+        return ['data-owp-navigate'];
     }
 
     /**
@@ -36,9 +36,9 @@ class OwpBackButton extends HTMLElement {
      * @returns {void}
      */
     attributeChangedCallback(name, oldVal, newVal) {
-        if (name === 'redirect-to' && newVal) {
+        if (name === 'data-owp-navigate' && newVal) {
             this.querySelector('#backButton').addEventListener('click', () => {
-                window.location.href = newVal;
+                window.location.hash = newVal;
             });
         }
     }
