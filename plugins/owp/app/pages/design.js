@@ -10,10 +10,7 @@ class OwpDesign extends HTMLElement {
      */
     constructor() {
         super();
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
-            
+        this.innerHTML = `
             <div class="h-screen bg-purple-50">
     
                 <div class="w-full p-6 rounded-lg mt-10">

@@ -10,10 +10,7 @@ class OwpPictures extends HTMLElement {
      */
     constructor() {
         super();
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
-            
+        this.innerHTML = `
             <div class="flex flex-col h-screen bg-purple-50">
     
                 <div class="bg-white p-6 rounded-lg shadow-md w-[98%] flex-1 mx-auto mt-20 mb-6">

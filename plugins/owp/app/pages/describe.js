@@ -10,10 +10,7 @@ class OwpDescribe extends HTMLElement {
      */
     constructor() {
         super();
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
-            
+        this.innerHTML = `
             <div class="h-screen bg-purple-50">
     
                 <div class="bg-white p-12 rounded-lg shadow-md max-w-3xl mx-auto mt-20">

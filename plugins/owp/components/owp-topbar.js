@@ -95,7 +95,6 @@ class OwpTopbar extends HTMLElement {
      */
     getTemplate() {
         return `
-            <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
             <div class="flex items-center justify-between p-4 bg-white shadow-md max-h-18">
                 <owp-topbar-logo class="ml-2"></owp-topbar-logo>
                 <div class="flex items-center flex-grow justify-center">

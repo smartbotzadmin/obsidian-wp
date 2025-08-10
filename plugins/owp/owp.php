@@ -14,23 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Main plugin class or functions will go here
 
 /**
- * Enqueues TailwindCSS output.css for admin pages and Gutenberg editor.
- *
- * @return void
- */
-function owp_enqueue_tailwind_styles() {
-    wp_enqueue_style(
-        'owp-tailwind-output',
-        plugins_url( 'assets/css/output.css', __FILE__ ),
-        array(),
-        null
-    );
-}
-add_action( 'admin_enqueue_scripts', 'owp_enqueue_tailwind_styles' );
-add_action( 'enqueue_block_editor_assets', 'owp_enqueue_tailwind_styles' );
-
-
-/**
  * Adds custom admin pages for Obsidian WP.
  *
  * @return void
