@@ -47,14 +47,46 @@ class OwpTopbar extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        // Set initial current-page if not already set
-        if (!this.hasAttribute('current-page')) {
-            const currentHash = window.location.hash.substring(1); // Remove '#'
-            const currentPage = this.steps.find(step => step.name.toLowerCase().replace(/\s/g, '-') === currentHash)?.page || this.steps[0].page;
+        // Set initial current-page based on hash, which will trigger updateStepsHighlighting via attributeChangedCallback
+        this.handleHashChange();
+        this.addStepEventListeners(); // Ensure listeners are added after initial render
+        window.addEventListener('hashchange', this.handleHashChange.bind(this));
+    }
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        window.removeEventListener('hashchange', this.handleHashChange.bind(this));
+    }
+
+
+    /**
+     * @description Handles hash change event to update the current page.
+     * @returns {void}
+     */
+    handleHashChange() {
+        const currentHash = window.location.hash.substring(1); // Remove '#'
+        const currentPage = this.steps.find(step => step.name.toLowerCase().replace(/\s/g, '-') === currentHash)?.page;
+        if (currentPage) {
             this.setAttribute('current-page', currentPage);
         }
-        this.updateStepsHighlighting(this.getAttribute('current-page'));
-        this.addStepEventListeners(); // Ensure listeners are added after initial render
+    }
+
+    /**
+     * @description Handles click event for a step item.
+     * @param {Event} event - The click event.
+     * @returns {void}
+     */
+    handleStepClick(event) {
+        const page = event.currentTarget.dataset.page;
+        const stepName = event.currentTarget.getAttribute('name');
+        if (page && stepName) {
+            const hash = stepName.toLowerCase().replace(/\s/g, '-');
+            window.location.hash = hash;
+            // The hashchange event listener will now handle updating 'current-page'
+        }
     }
 
 
@@ -74,22 +106,6 @@ class OwpTopbar extends HTMLElement {
     }
 
     /**
-     * @description Handles click event for a step item.
-     * @param {Event} event - The click event.
-     * @returns {void}
-     */
-    handleStepClick(event) {
-        const page = event.currentTarget.dataset.page;
-        const stepName = event.currentTarget.getAttribute('name');
-        if (page && stepName) {
-            const hash = stepName.toLowerCase().replace(/\s/g, '-');
-            window.location.hash = hash;
-            this.setAttribute('current-page', page);
-        }
-    }
-
-
-    /**
      * @description Generates the static HTML template for the top bar.
      * @returns {string} The HTML string for the component.
      */
@@ -105,7 +121,6 @@ class OwpTopbar extends HTMLElement {
             </div>
         `;
     }
-
 
     /**
      * @description Updates the highlighting of the steps based on the current URL.
@@ -146,12 +161,15 @@ class OwpTopbar extends HTMLElement {
 
             if (index < this.steps.length - 1) {
                 const separatorElement = document.createElement('owp-topbar-step-separator');
-                if (isActive || isCompleted) {
-                    separatorElement.setAttribute('is-active', '');
+                if (isCompleted) {
                     separatorElement.setAttribute('is-completed', '');
                 } else {
-                    separatorElement.removeAttribute('is-active');
                     separatorElement.removeAttribute('is-completed');
+                }
+                if (index + 1 === currentPageIndex) {
+                    separatorElement.setAttribute('is-active', '');
+                } else {
+                    separatorElement.removeAttribute('is-active');
                 }
                 navElement.appendChild(separatorElement);
             }
