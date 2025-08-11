@@ -10,9 +10,10 @@ class OwpNextButton extends HTMLElement {
      */
     constructor() {
         super();
+        this.className += ``;
         this.innerHTML = `
-            <button id="nextButton" class="flex flex-row justify-center items-center gap-2 bg-purple-500 hover:bg-purple-600 p-4 mt-6 h-11 rounded-md flex items-center">
-                <span class="text-gray-50 font-semibold">
+            <button id="nextButton" class="flex flex-row justify-center items-center gap-2 bg-cyan-600 hover:bg-cyan-500 p-4 h-11 rounded-md flex items-center cursor-pointer">
+                <span class="text-slate-100 text-md font-semibold">
                     ${this.innerHTML}
                 </span>
                 <img src="/wp-content/plugins/owp/assets/icons/arrow-right.svg"/>

@@ -55,7 +55,7 @@ class OwpTopbarCloseButton extends HTMLElement {
         return `
             <div class="relative">
                 <div id="crossButton" class="focus:outline-none cursor-pointer">
-                    <img src="/wp-content/plugins/owp/assets/icons/x.svg" alt="Close" class="h-8 w-8" />
+                    <img src="/wp-content/plugins/owp/assets/icons/x.svg" alt="Close" class="h-6 w-auto" />
                 </div>
                 <div id="dropdownContent" class="hidden absolute right-0 w-72 bg-slate-800 rounded-md shadow-lg p-2 z-10 border border-slate-700">
                     <div class="px-4 py-2 text-md text-slate-100">

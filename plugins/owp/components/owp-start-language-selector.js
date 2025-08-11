@@ -10,34 +10,93 @@ class OwpStartLanguageSelector extends HTMLElement {
      */
     constructor() {
         super();
+
+        /**
+         * @public
+         * @type {string}
+         * @description The currently selected language code.
+         */
+        this.selectedLanguage = 'en';
+
+        /**
+         * @private
+         * @type {Array<Object>}
+         * @description List of supported languages.
+         */
+        this.languages = [
+            { code: 'en', name: 'English', default: true },
+            { code: 'es', name: 'Español' },
+            { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'zh', name: '中文' },
+            { code: 'ja', name: '日本語' },
+            { code: 'ko', name: '한국어' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'pt', name: 'Português' },
+            { code: 'it', name: 'Italiano' },
+            { code: 'ar', name: 'العربية' },
+            { code: 'hi', name: 'हिन्दी' },
+            { code: 'bn', name: 'বাংলা' },
+            { code: 'pa', name: 'ਪੰਜਾਬੀ' },
+            { code: 'jv', name: 'Basa Jawa' },
+            { code: 'tr', name: 'Türkçe' },
+            { code: 'vi', name: 'Tiếng Việt' },
+            { code: 'pl', name: 'Polski' },
+            { code: 'nl', name: 'Nederlands' },
+            { code: 'sv', name: 'Svenska' },
+        ];
+
+        
+        const defaultLang = this.languages.find(lang => lang.default);
+        
+        this.className = "min-w-64 mb-6";
         this.innerHTML = `
-            <div class="min-w-64">
-                <label for="websiteLanguage" class="block text-gray-600 text-sm font-semibold mb-2">This website will be in</label>
-                <div class="relative">
-                    <input type="text" id="websiteLanguageSearch" class="shadow appearance-none border border-gray-300 rounded-lg w-full h-11 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline pr-10" value="EN English (Default)">
-                    <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    <div id="websiteLanguageDropdown" class="absolute w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 z-10 hidden">
-                        <div class="py-1">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="EN-GB">EN-GB English (UK)</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="EN-AU">EN-AU English (Australia)</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="EN-NZ">EN-NZ English (New Zealand)</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="EN-CA">EN-CA English (Canada)</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 flex justify-between items-center" data-value="EN">EN English <svg class="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></a>
-                        </div>
+            <label for="websiteLanguage" class="block text-slate-300 text-sm font-semibold mb-2">Language of the Site</label>
+            <div class="relative flex items-center border border-slate-700 rounded-lg bg-slate-900 w-full h-11 px-3 text-slate-200 text-md leading-tight focus:outline-none focus:shadow-outline cursor-pointer" id="websiteLanguageInput">
+                <span id="selectedLanguageDisplay" class="flex-grow">${defaultLang ? `${defaultLang.code.toUpperCase()} ${defaultLang.name}` : 'EN English'}</span>
+                <img src="/wp-content/plugins/owp/assets/icons/chevron-down.svg" class="w-5 h-5 text-slate-100 cursor-pointer chevron-icon" />
+                <div id="websiteLanguageDropdown" class="absolute left-0 right-0 bg-slate-900 border border-slate-700 rounded-lg shadow-lg mt-1 z-10 hidden max-h-60 overflow-y-auto" style="top: 100%;">
+                    <div class="py-1">
+                        ${this.languages.map(lang => `
+                            <a href="#" class="block px-4 py-2 text-md text-slate-100 hover:bg-slate-800 flex justify-between items-center" data-value="${lang.code}">
+                                ${lang.code.toUpperCase()} ${lang.name}
+                            </a>
+                        `).join('')}
                     </div>
                 </div>
             </div>
         `;
 
-        this.websiteLanguageSearch = this.querySelector('#websiteLanguageSearch');
+        this.websiteLanguageInput = this.querySelector('#websiteLanguageInput');
+        this.selectedLanguageDisplay = this.querySelector('#selectedLanguageDisplay');
         this.websiteLanguageDropdown = this.querySelector('#websiteLanguageDropdown');
+        this.chevronIcon = this.querySelector('.chevron-icon');
 
-        this.websiteLanguageSearch.addEventListener('focus', () => this.websiteLanguageDropdown.classList.remove('hidden'));
-        this.websiteLanguageSearch.addEventListener('blur', () => setTimeout(() => this.websiteLanguageDropdown.classList.add('hidden'), 100));
+        if (defaultLang) {
+            this.selectedLanguage = defaultLang.code;
+        }
+
+        this.websiteLanguageInput.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent the document click listener from immediately closing it
+            this.websiteLanguageDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', (event) => {
+            if (!this.websiteLanguageInput.contains(event.target) && !this.websiteLanguageDropdown.contains(event.target)) {
+                this.websiteLanguageDropdown.classList.add('hidden');
+            }
+        });
+
         this.websiteLanguageDropdown.querySelectorAll('a').forEach(item => {
             item.addEventListener('click', (event) => {
                 event.preventDefault();
-                this.websiteLanguageSearch.value = event.target.textContent.trim();
+                event.stopPropagation(); // Add this line to prevent event bubbling
+                const selectedCode = event.currentTarget.dataset.value;
+                const selectedLang = this.languages.find(lang => lang.code === selectedCode);
+
+                if (selectedLang) {
+                    this.selectedLanguageDisplay.textContent = `${selectedLang.code.toUpperCase()} ${selectedLang.name}`;
+                    this.selectedLanguage = selectedCode;
+                }
                 this.websiteLanguageDropdown.classList.add('hidden');
             });
         });

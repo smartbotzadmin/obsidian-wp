@@ -5,48 +5,108 @@
  */
 class OwpStartBusinessSelector extends HTMLElement {
     /**
+     * @private
+     * @type {Array<string>}
+     * @description List of available business options.
+     */
+    #businessOptions = [
+        "Agency", "Restaurant", "Entrepreneur", "Event", "Non-profit",
+        "Local business", "Gym", "Spa", "SaaS", "Dentist"
+    ];
+
+    /**
+     * @public
+     * @type {string|null}
+     * @description Stores the currently selected business.
+     */
+    selectedBusiness = null;
+
+    /**
      * @description Constructs the OwpStartBusinessSelector instance.
      * @returns {void}
      */
     constructor() {
         super();
+        this.className = "min-w-86 flex flex-col relative mb-6";
         this.innerHTML = `
-            <div class="min-w-86">
-                <label for="websiteFor" class="block text-gray-600 text-sm font-semibold mb-2">This website is for</label>
-                <div class="relative">
-                    <input type="text" id="websiteForSearch" class="shadow appearance-none border border-gray-300 rounded-lg w-full h-11 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline pr-10" placeholder="Type to search your business">
-                    <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <div id="websiteForDropdown" class="absolute w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 z-10 hidden">
-                        <div class="py-1">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Agency">Agency</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Restaurant">Restaurant</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Entrepreneur">Entrepreneur</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Event">Event</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Non-profit">Non-profit</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Local business">Local business</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Gym">Gym</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Spa">Spa</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="SaaS">SaaS</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" data-value="Dentist">Dentist</a>
+            <label for="websiteFor" class="text-sm text-slate-300 mb-2 font-semibold">This website is for</label>
+            <div class="flex items-center h-11 px-3 text-md text-slate-100 bg-slate-900 border border-slate-700 rounded-lg focus-within:border-slate-500 cursor-pointer">
+                <div id="websiteForSearch" class="flex-grow bg-transparent focus:outline-none text-slate-100">Type to search your business</div>
+                <div class="h-5 w-5">
+                    <img src="/wp-content/plugins/owp/assets/icons/chevron-down.svg" />
+                </div>
+            </div>
+            <div id="websiteForDropdown" class="absolute w-full bg-slate-900 border border-slate-700 rounded-lg shadow-lg z-10 hidden max-h-60 overflow-y-auto" style="top: 105%; left: 0;">
+                <div class="py-1">
+                    ${this.#businessOptions.map(option => `
+                        <div class="flex items-center justify-between px-4 py-2 text-md text-slate-100 hover:bg-slate-800 cursor-pointer" data-value="${option}">
+                            <span>${option}</span>
+                            <span class="check-icon hidden">
+                                <img src="/wp-content/plugins/owp/assets/icons/check.svg" />
+                            </span>
                         </div>
-                    </div>
+                    `).join('')}
                 </div>
             </div>
         `;
 
         this.websiteForSearch = this.querySelector('#websiteForSearch');
         this.websiteForDropdown = this.querySelector('#websiteForDropdown');
+        this.websiteForInputContainer = this.querySelector('.flex.items-center.h-11');
 
-        this.websiteForSearch.addEventListener('focus', () => this.websiteForDropdown.classList.remove('hidden'));
-        this.websiteForSearch.addEventListener('blur', () => setTimeout(() => this.websiteForDropdown.classList.add('hidden'), 100));
-        this.websiteForDropdown.querySelectorAll('a').forEach(item => {
+        this.websiteForInputContainer.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent document click from immediately closing
+            this.websiteForDropdown.classList.toggle('hidden');
+        });
+        // Use a single blur event on the container to hide the dropdown
+
+        this.websiteForDropdown.querySelectorAll('div[data-value]').forEach(item => {
             item.addEventListener('click', (event) => {
-                event.preventDefault();
-                this.websiteForSearch.value = event.target.dataset.value;
+                event.stopPropagation(); // Prevent event bubbling
+                const selectedValue = event.currentTarget.dataset.value;
+                this.websiteForSearch.textContent = selectedValue;
+                this.selectedBusiness = selectedValue;
                 this.websiteForDropdown.classList.add('hidden');
+
+                this.websiteForDropdown.querySelectorAll('.check-icon').forEach(icon => {
+                    icon.classList.add('hidden');
+                });
+                event.currentTarget.querySelector('.check-icon').classList.remove('hidden');
             });
         });
     }
+
+
+    /**
+     * @description Called when the element is inserted into the DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        document.addEventListener('click', this.#handleClickOutside);
+    }
+
+
+    /**
+     * @description Called when the element is removed from the DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        document.removeEventListener('click', this.#handleClickOutside);
+    }
+
+
+    /**
+     * @private
+     * @description Handles clicks outside the component to close the dropdown.
+     * @param {Event} event - The click event.
+     * @returns {void}
+     */
+    #handleClickOutside = (event) => {
+        // If the click is outside the component (both input and dropdown) and the dropdown is visible, hide it.
+        if (!this.contains(event.target) && !this.websiteForDropdown.classList.contains('hidden')) {
+            this.websiteForDropdown.classList.add('hidden');
+        }
+    };
 }
 
 customElements.define('owp-start-business-selector', OwpStartBusinessSelector);
