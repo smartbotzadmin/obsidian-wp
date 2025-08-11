@@ -4,7 +4,7 @@
   "description": "Obsidian WP Plugin",
   "main": "owp.php",
   "scripts": {
-    "tw": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/output.css --watch --minify"
+    "tw": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/output.css --watch"
   },
   "keywords": [],
   "author": "",

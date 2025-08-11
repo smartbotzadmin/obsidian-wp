@@ -11,10 +11,14 @@ class OwpApp extends HTMLElement {
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
+
         shadowRoot.innerHTML = `
-            <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
+            <link rel="stylesheet" href="/wp-content/plugins/owp/assets/css/output.css">
             <owp-topbar></owp-topbar>
         `;
+        
+        document.querySelector('#wpfooter').remove();
+
         this.routes = {
             '': 'owp-start',
             'start': 'owp-start',
@@ -56,7 +60,6 @@ class OwpApp extends HTMLElement {
         }
 
         if (tagName) {
-            console.log(tagName)
             this.shadowRoot.appendChild(document.createElement(tagName));
         } else {
             const notFoundElement = document.createElement('p');

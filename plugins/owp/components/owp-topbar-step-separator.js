@@ -56,9 +56,9 @@ class OwpTopbarStepSeparator extends HTMLElement {
         if (lineElement) {
             let classList = ['h-[1px]', 'w-6', 'mx-2'];
             if (isActive || isCompleted) {
-                classList.push('bg-purple-500');
+                classList.push('bg-cyan-400');
             } else {
-                classList.push('bg-gray-300');
+                classList.push('bg-gray-400');
             }
             lineElement.className = classList.join(' ');
         }

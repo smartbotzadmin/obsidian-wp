@@ -95,7 +95,7 @@ class OwpTopbar extends HTMLElement {
      */
     getTemplate() {
         return `
-            <div class="flex items-center justify-between p-4 bg-white shadow-md max-h-18">
+            <div class="fixed top-0 right-0 w-full max-h-18 flex items-center justify-between p-4 bg-slate-950 shadow-md">
                 <owp-topbar-logo class="ml-2"></owp-topbar-logo>
                 <div class="flex items-center flex-grow justify-center">
                     <nav class="flex items-center text-gray-600 font-semibold" id="step-navigation">

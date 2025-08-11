@@ -18,25 +18,23 @@ class OwpDesign extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
+        this.className = `flex justify-center items-center bg-slate-800 h-screen`;
         this.innerHTML = `
-            <div class="h-screen bg-purple-50">
-    
-                <div class="w-full p-6 rounded-lg mt-10">
-                    <h2 class="text-2xl font-bold mb-4 text-center">
-                        Choose the Design
-                    </h2>
-                    <p class="text-md text-gray-600 my-6 text-center">
-                        Select a design that best fits your website.
-                    </p>
-                    
-                    <owp-design-search-bar></owp-design-search-bar>
- 
-                    <owp-design-grid class="w-full"></owp-design-grid>
- 
-                    <div class="flex flex-row justify-between mt-10">
-                        <owp-back-button data-owp-navigate="#pictures">Back</owp-back-button>
-                        <owp-next-button data-owp-navigate="#publish">Next</owp-next-button>
-                    </div>
+            <div class="w-full p-6 rounded-lg mt-10">
+                <h2 class="text-2xl font-bold mb-4 text-center">
+                    Choose the Design
+                </h2>
+                <p class="text-md text-gray-600 my-6 text-center">
+                    Select a design that best fits your website.
+                </p>
+                
+                <owp-design-search-bar></owp-design-search-bar>
+
+                <owp-design-grid class="w-full"></owp-design-grid>
+
+                <div class="flex flex-row justify-between mt-10">
+                    <owp-back-button data-owp-navigate="#pictures">Back</owp-back-button>
+                    <owp-next-button data-owp-navigate="#publish">Next</owp-next-button>
                 </div>
             </div>
         `;
