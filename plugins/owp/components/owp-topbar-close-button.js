@@ -54,17 +54,17 @@ class OwpTopbarCloseButton extends HTMLElement {
     getTemplate() {
         return `
             <div class="relative">
-                <div id="crossButton" class="text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer">
-                    <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/x.svg" alt="Close" class="h-6 w-6" />
+                <div id="crossButton" class="focus:outline-none cursor-pointer">
+                    <img src="/wp-content/plugins/owp/assets/icons/x.svg" alt="Close" class="h-8 w-8" />
                 </div>
-                <div id="dropdownContent" class="hidden absolute right-0 w-64 bg-white rounded-md shadow-lg p-4 z-10 border border-gray-200">
-                    <div class="px-4 py-2 text-sm text-gray-500">
-                        <p>Cancel will close this dialog.</p>
-                        <p>Exit will take you to the WordPress admin dashboard.</p>
+                <div id="dropdownContent" class="hidden absolute right-0 w-72 bg-slate-800 rounded-md shadow-lg p-2 z-10 border border-slate-700">
+                    <div class="px-4 py-2 text-md text-slate-100">
+                        <p><b>Cancel</b> will close this dialog.</p>
+                        <p><b>Exit</b> will take you to the WordPress admin dashboard.</p>
                     </div>
-                    <div class="flex justify-end gap-2 px-4">
-                        <a href="#" id="cancelButton" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">Cancel</a>
-                        <a href="${window.location.origin}/wp-admin/" class="px-4 py-2 text-sm bg-purple-500 text-white hover:bg-purple-600 rounded-md">Exit</a>
+                    <div class="flex justify-end gap-4 p-4">
+                        <a href="#" id="cancelButton" class="px-4 py-2 text-md text-slate-100 bg-slate-700 hover:bg-slate-600 rounded-md">Cancel</a>
+                        <a href="/wp-admin/" class="px-4 py-2 text-md bg-cyan-600 text-slate-100 hover:bg-cyan-500 rounded-md">Exit</a>
                     </div>
                 </div>
             </div>
