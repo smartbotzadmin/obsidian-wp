@@ -89,6 +89,7 @@ add_action( 'enqueue_block_editor_assets', 'owp_enqueue_gutenberg_assets' );
  * @return void
  */
 function owp_enqueue_components() {
+    wp_enqueue_style( 'owp-output-style', plugins_url( 'output.css', __FILE__ ) );
     $component_dir = plugin_dir_path( __FILE__ ) . 'components/';
     $component_files = glob( $component_dir . '*.js' );
 

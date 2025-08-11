@@ -59,6 +59,7 @@
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
     --text-md: 16px;
+    --tw-border-style: solid;
   }
 }
 @layer base {
@@ -504,10 +505,6 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
-  .border-5 {
-    border-style: var(--tw-border-style);
-    border-width: 5px;
-  }
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
@@ -523,9 +520,6 @@
   .border-none {
     --tw-border-style: none;
     border-style: none;
-  }
-  .border-blue-500 {
-    border-color: var(--color-blue-500);
   }
   .border-gray-200 {
     border-color: var(--color-gray-200);

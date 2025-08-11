@@ -24,7 +24,7 @@ class OwpStart extends HTMLElement {
                     Let's build your website!
                 </h2>
 
-                <div class="text-md text-gray-600 mb-12 border-5 border-blue-500">
+                <div class="text-lg text-gray-600 mb-12">
                     Please share some basic details of the website to get started.
                 </div>
 
