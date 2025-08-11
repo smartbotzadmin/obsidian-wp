@@ -31,7 +31,7 @@ class OwpDescribe extends HTMLElement {
                 <owp-describe-text-area></owp-describe-text-area>
 
                 <div class="flex flex-row justify-between">
-                    <owp-back-button data-owp-navigate="#start">Back</owp-back-button>
+                    <owp-back-button data-owp-navigate="#let's-start">Back</owp-back-button>
                     <owp-next-button data-owp-navigate="#contact">Next</owp-next-button>
                 </div>
             </div>
