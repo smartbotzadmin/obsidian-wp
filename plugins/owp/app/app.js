@@ -14,6 +14,8 @@ class OwpApp extends HTMLElement {
 
         shadowRoot.innerHTML = `
             <link rel="stylesheet" href="/wp-content/plugins/owp/assets/css/output.css">
+            <img class="absolute -z-2 object-cover h-full w-auto" src="/wp-content/plugins/owp/assets/icons/obsidian-background.webp"/>
+            <div class="absolute -z-1 w-full h-full bg-slate-900 opacity-50"></div>
             <owp-topbar></owp-topbar>
         `;
         
@@ -55,7 +57,7 @@ class OwpApp extends HTMLElement {
      */
     renderPage(path) {
         const tagName = this.routes[path] || this.routes[''];
-        if (this.shadowRoot.children.length > 2) {
+        if (this.shadowRoot.children.length > 4) {
             this.shadowRoot.lastElementChild.remove();
         }
 

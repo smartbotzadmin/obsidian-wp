@@ -17,7 +17,7 @@ class OwpStart extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        this.className = `flex justify-center items-center bg-slate-900 h-screen`;
+        this.className = `flex justify-center items-center h-screen`;
         this.innerHTML = `
             <div class="flex flex-col justify-center w-[800px] p-12 rounded-lg bg-slate-950 border border-slate-700">
                 <h2 class="text-3xl font-bold mb-12 text-slate-100">

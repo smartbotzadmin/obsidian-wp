@@ -18,7 +18,7 @@ class OwpPictures extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        this.className = `flex justify-center items-center bg-slate-900 h-screen w-full`;
+        this.className = `flex justify-center items-center h-screen w-full`;
         this.innerHTML = `
             <div class="flex flex-col h-screen bg-slate-950">
     

@@ -11,7 +11,7 @@ class OwpSidebarChat extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <div class="h-full overflow-y-auto p-4 bg-slate-950">
+            <div class="h-full overflow-y-auto p-2 bg-slate-950">
                 <div class="flex flex-col items-center justify-center h-full text-center text-white">
                     <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/wand-sparkles-dark.svg" alt="Sparkles" class="h-12 w-12 mb-4" />
                     <p class="text-lg text-slate-100 font-semibold mb-2 cursor-default">Hi there! I'm here to assist you.</p>

@@ -11,7 +11,7 @@ class OwpSidebarHeader extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <div class="flex items-center justify-between p-4 h-[64px] border-b border-slate-700 bg-slate-800">
+            <div class="flex items-center justify-between p-2 h-[64px] border-b border-slate-700 bg-slate-800">
                 <button id="returnButton">
                     <img class="h-8 w-8 p-1 bg-slate-600 hover:bg-slate-500 rounded-full cursor-pointer" src="${window.location.origin}/wp-content/plugins/owp/assets/icons/arrow-right.svg" alt="Return" />
                 </button>

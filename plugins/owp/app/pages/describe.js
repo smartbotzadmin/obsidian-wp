@@ -18,7 +18,7 @@ class OwpDescribe extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        this.className = `flex justify-center items-center h-screen bg-slate-900`;
+        this.className = `flex justify-center items-center h-screen`;
         this.innerHTML = `
             <div class="w-[800px] bg-slate-950 p-12 rounded-lg border border-slate-700">
                 <h2 class="text-3xl font-bold mb-12 text-slate-100">

@@ -11,10 +11,10 @@ class OwpSidebarSuggestions extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <div class="p-4 border-t border-slate-700 flex flex-wrap gap-2 bg-slate-700">
-                <button class="bg-slate-100 hover:bg-slate-300 text-slate-900 text-sm px-3 py-1 rounded-full cursor-pointer">Write an attractive heading about...</button>
-                <button class="bg-slate-100 hover:bg-slate-300 text-slate-900 text-sm px-3 py-1 rounded-full cursor-pointer">Write a sub-heading for...</button>
-                <button class="bg-slate-100 hover:bg-slate-300 text-slate-900 text-sm px-3 py-1 rounded-full cursor-pointer">Paste from clipboard</button>
+            <div class="p-2 border-t border-slate-700 flex flex-wrap gap-2 bg-slate-800 text-slate-300 text-[14px] font-medium">
+                <button class="bg-slate-950 hover:bg-slate-900 px-3 py-1 rounded-full cursor-pointer">Write an attractive heading about...</button>
+                <button class="bg-slate-950 hover:bg-slate-900 px-3 py-1 rounded-full cursor-pointer">Write a sub-heading for...</button>
+                <button class="bg-slate-950 hover:bg-slate-900 px-3 py-1 rounded-full cursor-pointer">Paste from clipboard</button>
             </div>
         `;
     }
