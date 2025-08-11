@@ -3,13 +3,13 @@
     function onSettingsElementReady() {
         const settings = document.querySelector('.editor-header__settings');
         const newElement = document.createElement('div');
+        newElement.className = `flex justify-center items-center w-8 h-8 rounded-md cursor-pointer bg-slate-300 hover:bg-slate-900`;
         newElement.innerHTML = `
-            <img src="/wp-content/plugins/owp/assets/icons/owp-logo-dark.svg" class="w-6 h-6 block mx-auto" />
+            <img src="/wp-content/plugins/owp/assets/icons/obsidian-logo.png" class="w-6 h-6 block mx-auto rounded-md p-0.5" />
         `;
-        newElement.classList.add('bg-black', 'border-none', 'rounded-md', 'cursor-pointer', 'w-8', 'h-8', 'flex', 'justify-center', 'items-center', 'transition-colors', 'duration-200', 'hover:bg-[#27276f]');
 
         if (settings) {
-            settings.classList.add('flex', 'items-center');
+            settings.className += ` flex flex-row items-center`;
             if (settings.children.length >= 2) {
                 settings.insertBefore(newElement, settings.children[settings.children.length - 2]);
             } else {
