@@ -10,21 +10,22 @@ class OwpDescribeTextArea extends HTMLElement {
      */
     constructor() {
         super();
+        this.className = `flex flex-col mb-6`;
         this.innerHTML = `
-            <div class="text-right text-gray-500 text-sm mb-2">
+            <div class="text-right text-slate-300 text-sm font-semibold mb-2 cursor-default">
                 Characters: <span id="charCount">0</span> / <span id="maxChars">3000</span>
             </div>
-            <textarea id="describeTextArea" class="w-full p-4 border border-gray-300 rounded-lg h-48 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="E.g. Mantra Minds is a yoga studio located in Chino Hills, California. The studio offers a variety of classes such as Hatha yoga, Vinyasa flow, and Restorative yoga. The studio is led by Jane, an experienced and certified yoga instructor with over 10 years of teaching expertise. The welcoming atmosphere and personalized Jane make it a favorite among yoga enthusiasts in the area."></textarea>
+            <textarea id="describeTextArea" class="w-full p-4 border border-slate-700 rounded-lg min-h-42 resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-slate-900 text-md text-slate-100" placeholder="E.g. Mantra Minds is a yoga studio located in Chino Hills, California. The studio offers a variety of classes such as Hatha yoga, Vinyasa flow, and Restorative yoga. The studio is led by Jane, an experienced and certified yoga instructor with over 10 years of teaching expertise. The welcoming atmosphere and personalized Jane make it a favorite among yoga enthusiasts in the area."></textarea>
             
-            <div class="flex justify-between items-center mt-4">
+            <div class="flex justify-between items-center">
                 <owp-describe-ai-button></owp-describe-ai-button>
-                <div class="flex items-center text-gray-500">
-                    <button id="prevSuggestion" class="p-1">
-                        <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/chevron-left.svg"/>
+                <div class="flex items-center text-sm font-semibold text-slate-100">
+                    <button id="prevSuggestion" class="p-1 cursor-pointer">
+                        <img src="/wp-content/plugins/owp/assets/icons/chevron-left.svg"/>
                     </button>
-                    <span id="suggestionIndex" class="mx-2">1 / 1</span>
-                    <button id="nextSuggestion" class="p-1">
-                        <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/chevron-right.svg"/>
+                    <span id="suggestionIndex" class="mx-2 cursor-default">1 / 1</span>
+                    <button id="nextSuggestion" class="p-1 cursor-pointer">
+                        <img src="/wp-content/plugins/owp/assets/icons/chevron-right.svg"/>
                     </button>
                 </div>
             </div>

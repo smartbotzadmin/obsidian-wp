@@ -18,12 +18,12 @@ class OwpPictures extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        this.className = `flex justify-center items-center bg-slate-800 h-screen w-full`;
+        this.className = `flex justify-center items-center bg-slate-900 h-screen w-full`;
         this.innerHTML = `
-            <div class="flex flex-col h-screen bg-purple-50">
+            <div class="flex flex-col h-screen bg-slate-950">
     
-                <div class="bg-white p-6 rounded-lg shadow-md flex-1">
-                    <h2 class="text-2xl font-bold mb-4 text-center">
+                <div class="bg-slate-950 p-6 rounded-lg border border-slate-700 flex-1">
+                    <h2 class="text-3xl font-bold mb-12 text-slate-100 text-center">
                         Select the Images
                     </h2>
                     

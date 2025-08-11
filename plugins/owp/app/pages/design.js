@@ -18,13 +18,13 @@ class OwpDesign extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        this.className = `flex justify-center items-center bg-slate-800 h-screen`;
+        this.className = `flex justify-center items-center bg-slate-900 h-screen`;
         this.innerHTML = `
-            <div class="w-full p-6 rounded-lg mt-10">
-                <h2 class="text-2xl font-bold mb-4 text-center">
+            <div class="w-[800px] p-12 rounded-lg bg-slate-950 border border-slate-700">
+                <h2 class="text-3xl font-bold mb-12 text-slate-100 text-center">
                     Choose the Design
                 </h2>
-                <p class="text-md text-gray-600 my-6 text-center">
+                <p class="text-lg text-slate-100 mb-12 text-center">
                     Select a design that best fits your website.
                 </p>
                 

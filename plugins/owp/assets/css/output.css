@@ -309,6 +309,9 @@
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
+  .\!mb-6 {
+    margin-bottom: calc(var(--spacing) * 6) !important;
+  }
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
   }
@@ -395,6 +398,12 @@
   }
   .max-h-screen {
     max-height: 100vh;
+  }
+  .min-h-42 {
+    min-height: calc(var(--spacing) * 42);
+  }
+  .min-h-48 {
+    min-height: calc(var(--spacing) * 48);
   }
   .w-1 {
     width: calc(var(--spacing) * 1);
@@ -567,6 +576,9 @@
     --tw-border-style: none;
     border-style: none;
   }
+  .border-cyan-400 {
+    border-color: var(--color-cyan-400);
+  }
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
@@ -639,6 +651,9 @@
   .fill-current {
     fill: currentcolor;
   }
+  .stroke-cyan-500 {
+    stroke: var(--color-cyan-500);
+  }
   .p-0 {
     padding: calc(var(--spacing) * 0);
   }
@@ -650,6 +665,9 @@
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
+  }
+  .p-3 {
+    padding: calc(var(--spacing) * 3);
   }
   .p-4 {
     padding: calc(var(--spacing) * 4);
@@ -741,6 +759,9 @@
   }
   .text-cyan-400 {
     color: var(--color-cyan-400);
+  }
+  .text-cyan-500 {
+    color: var(--color-cyan-500);
   }
   .text-gray-400 {
     color: var(--color-gray-400);
@@ -983,6 +1004,20 @@
       }
     }
   }
+  .hover\:text-cyan-400 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-cyan-400);
+      }
+    }
+  }
+  .hover\:text-cyan-500 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-cyan-500);
+      }
+    }
+  }
   .hover\:text-gray-700 {
     &:hover {
       @media (hover: hover) {
@@ -997,6 +1032,20 @@
       }
     }
   }
+  .hover\:text-slate-100 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-slate-100);
+      }
+    }
+  }
+  .hover\:text-slate-300 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-slate-300);
+      }
+    }
+  }
   .hover\:shadow-lg {
     &:hover {
       @media (hover: hover) {
@@ -1008,6 +1057,16 @@
   .focus\:border-gray-500 {
     &:focus {
       border-color: var(--color-gray-500);
+    }
+  }
+  .focus\:border-slate-500 {
+    &:focus {
+      border-color: var(--color-slate-500);
+    }
+  }
+  .focus\:bg-slate-900 {
+    &:focus {
+      background-color: var(--color-slate-900);
     }
   }
   .focus\:bg-white {

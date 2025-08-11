@@ -12,8 +12,8 @@ class OwpPicturesSearchBar extends HTMLElement {
         super();
         this.innerHTML = `
             <div class="relative flex justify-center items-center mb-6">
-                <input type="text" id="imageSearchInput" class="max-w-96 shadow appearance-none border border-gray-300 rounded-lg w-full h-11 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Search for images...">
-                <button id="clearSearchButton" class="absolute right-3 text-gray-500 hover:text-gray-700 focus:outline-none hidden">
+                <input type="text" id="imageSearchInput" class="max-w-96 shadow appearance-none border border-slate-700 rounded-lg w-full h-11 px-3 text-slate-300 leading-tight focus:outline-none focus:shadow-outline bg-slate-900" placeholder="Search for images...">
+                <button id="clearSearchButton" class="absolute right-3 text-slate-100 hover:text-slate-300 focus:outline-none hidden">
                     <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/x.svg" alt="Clear" class="h-5 w-5" />
                 </button>
             </div>

@@ -10,13 +10,12 @@ class OwpContactSocialMedia extends HTMLElement {
      */
     constructor() {
         super();
+        this.className = `flex flex-col mb-6`;
         this.innerHTML = `
-            <div class="mb-4">
-                <label for="socialMedia" class="block text-gray-700 text-sm font-bold mb-2">Social Media <img class="inline-block ml-1" src="${window.location.origin}/wp-content/plugins/owp/assets/icons/info.svg" alt="info icon"></label>
-                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg flex items-center justify-center w-12 h-12 text-2xl">
-                    +
-                </button>
-            </div>
+            <label for="socialMedia" class="block text-slate-300 text-sm font-semibold mb-2">Social Media <img class="inline-block ml-1" src="/wp-content/plugins/owp/assets/icons/info.svg" alt="info icon"></label>
+            <button class="bg-slate-700 hover:bg-slate-600 text-slate-100 font-bold py-2 px-4 rounded-lg flex items-center justify-center w-12 h-12 text-2xl">
+                +
+            </button>
         `;
     }
 }

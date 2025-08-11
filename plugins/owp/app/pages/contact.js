@@ -18,17 +18,17 @@ class OwpContact extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        this.className = `flex justify-center items-center bg-slate-800 h-screen`;
-        this.innerHTML = `    
-            <div class="w-[800px] h-[600px] bg-white p-12 rounded-lg shadow-md">
-                <h2 class="text-2xl font-bold mb-4">
+        this.className = `flex justify-center items-center bg-slate-900 h-screen`;
+        this.innerHTML = `
+            <div class="w-[800px] bg-slate-950 p-12 rounded-lg border border-slate-700">
+                <h2 class="text-3xl font-bold mb-12 text-slate-100">
                     How can people get in touch with asd
                 </h2>
-                <p class="text-md text-gray-600 my-6">
+                <p class="text-lg text-slate-100 mb-12">
                     Please provide the contact information below. These will be used on the website.
                 </p>
 
-                <div class="flex flex-col md:flex-row justify-between gap-6 my-6">
+                <div class="flex flex-col md:flex-row justify-between gap-6 mb-6">
                     <owp-contact-email-field></owp-contact-email-field>
                     <owp-contact-phone-field></owp-contact-phone-field>
                 </div>
@@ -37,7 +37,7 @@ class OwpContact extends HTMLElement {
 
                 <owp-contact-social-media></owp-contact-social-media>
 
-                <div class="flex flex-row justify-end items-center mt-6 gap-4">
+                <div class="flex flex-row justify-end items-center gap-4">
                     <owp-skip-step-button data-owp-navigate="#pictures"></owp-skip-step-button>
                     <owp-back-button data-owp-navigate="#describe">Back</owp-back-button>
                     <owp-next-button data-owp-navigate="#pictures">Next</owp-next-button>

@@ -10,11 +10,10 @@ class OwpContactPhoneField extends HTMLElement {
      */
     constructor() {
         super();
+        this.className = `min-w-72`;
         this.innerHTML = `
-            <div class="min-w-72 mb-4 flex-1">
-                <label for="phoneNumber" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
-                <input type="tel" id="phoneNumber" class="shadow appearance-none border border-gray-300 rounded-lg w-full h-11 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your phone number">
-            </div>
+            <label for="phoneNumber" class="block text-slate-300 text-sm font-semibold mb-2">Phone Number</label>
+            <input type="tel" id="phoneNumber" class="shadow appearance-none border border-slate-700 rounded-lg w-full h-11 px-3 text-md text-slate-100 leading-tight focus:outline-none focus:shadow-outline bg-slate-900" placeholder="Your phone number">
         `;
     }
 }

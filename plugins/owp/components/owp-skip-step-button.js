@@ -11,7 +11,7 @@ class OwpSkipStepButton extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <button id="skipButton" class="text-gray-500 hover:text-gray-700 font-bold py-2 px-4 mt-6 h-11 rounded-md flex items-center">
+            <button id="skipButton" class="text-slate-100 hover:text-slate-300 font-bold p-4 h-11 rounded-md flex justify-center items-center cursor-pointer">
                 Skip Step
             </button>
         `;

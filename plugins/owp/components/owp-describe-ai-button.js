@@ -11,8 +11,8 @@ class OwpDescribeAiButton extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <button class="flex items-center text-blue-600 font-semibold">
-                <img class="pr-2" src="${window.location.origin}/wp-content/plugins/owp/assets/icons/wand-sparkles.svg"/>
+            <button class="flex items-center gap-2 text-slate-100 hover:text-cyan-400 font-semibold cursor-pointer p-2">
+                <img src="/wp-content/plugins/owp/assets/icons/wand-sparkles-dark.svg"/>
                 Write Using AI
             </button>
         `;
