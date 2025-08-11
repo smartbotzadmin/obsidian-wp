@@ -14,7 +14,7 @@ class OwpApp extends HTMLElement {
 
         shadowRoot.innerHTML = `
             <link rel="stylesheet" href="/wp-content/plugins/owp/assets/css/output.css">
-            <img class="absolute -z-2 object-cover h-full w-auto" src="/wp-content/plugins/owp/assets/icons/obsidian-background.webp"/>
+            <img class="absolute -z-2 object-cover h-full w-full" src="/wp-content/plugins/owp/assets/icons/obsidian-background.webp"/>
             <div class="absolute -z-1 w-full h-full bg-slate-900 opacity-50"></div>
             <owp-topbar></owp-topbar>
         `;
