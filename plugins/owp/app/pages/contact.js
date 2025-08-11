@@ -10,6 +10,14 @@ class OwpContact extends HTMLElement {
      */
     constructor() {
         super();
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
         this.innerHTML = `
             <div class="h-screen bg-purple-50">
     

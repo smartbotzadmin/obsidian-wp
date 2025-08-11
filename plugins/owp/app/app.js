@@ -13,9 +13,8 @@ class OwpApp extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.innerHTML = `
             <link rel="stylesheet" href="${window.location.origin}/wp-content/plugins/owp/assets/css/output.css">
-            <div id="owp-spa-container"></div>
+            <owp-topbar></owp-topbar>
         `;
-        this.container = shadowRoot.getElementById('owp-spa-container');
         this.routes = {
             '': 'owp-start',
             'start': 'owp-start',
@@ -51,16 +50,18 @@ class OwpApp extends HTMLElement {
      * @returns {void}
      */
     renderPage(path) {
-        if (!this.container) {
-            console.error('SPA container not found!');
-            return;
+        const tagName = this.routes[path] || this.routes[''];
+        if (this.shadowRoot.children.length > 2) {
+            this.shadowRoot.lastElementChild.remove();
         }
 
-        const tagName = this.routes[path] || this.routes['']; // Default to 'start' if path is not found
         if (tagName) {
-            this.container.innerHTML = `<owp-topbar></owp-topbar><${tagName}></${tagName}>`;
+            console.log(tagName)
+            this.shadowRoot.appendChild(document.createElement(tagName));
         } else {
-            this.container.innerHTML = '<p>Page not found.</p>';
+            const notFoundElement = document.createElement('p');
+            notFoundElement.textContent = 'Page not found.';
+            this.shadowRoot.appendChild(notFoundElement);
         }
     }
 
@@ -80,10 +81,3 @@ class OwpApp extends HTMLElement {
 }
 
 customElements.define('owp-app', OwpApp);
-
-document.addEventListener('DOMContentLoaded', () => {
-    const appContainer = document.getElementById('owp-spa-container');
-    if (appContainer) {
-        appContainer.innerHTML = '<owp-app></owp-app>';
-    }
-});

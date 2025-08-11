@@ -10,6 +10,14 @@ class OwpDesign extends HTMLElement {
      */
     constructor() {
         super();
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
         this.innerHTML = `
             <div class="h-screen bg-purple-50">
     
@@ -22,9 +30,9 @@ class OwpDesign extends HTMLElement {
                     </p>
                     
                     <owp-design-search-bar></owp-design-search-bar>
-
+ 
                     <owp-design-grid class="w-full"></owp-design-grid>
-
+ 
                     <div class="flex flex-row justify-between mt-10">
                         <owp-back-button data-owp-navigate="#pictures">Back</owp-back-button>
                         <owp-next-button data-owp-navigate="#publish">Next</owp-next-button>

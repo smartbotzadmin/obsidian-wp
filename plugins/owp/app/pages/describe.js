@@ -10,6 +10,14 @@ class OwpDescribe extends HTMLElement {
      */
     constructor() {
         super();
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
         this.innerHTML = `
             <div class="h-screen bg-purple-50">
     
@@ -22,13 +30,13 @@ class OwpDescribe extends HTMLElement {
                     </p>
     
                     <owp-describe-text-area></owp-describe-text-area>
-
+ 
                     <div class="flex flex-row justify-between mt-6">
                         <owp-back-button data-owp-navigate="#start">Back</owp-back-button>
                         <owp-next-button data-owp-navigate="#contact">Next</owp-next-button>
                     </div>
                 </div>
-
+ 
             </div>
         `;
     }

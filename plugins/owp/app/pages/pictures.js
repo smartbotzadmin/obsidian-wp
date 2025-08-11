@@ -10,6 +10,14 @@ class OwpPictures extends HTMLElement {
      */
     constructor() {
         super();
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
         this.innerHTML = `
             <div class="flex flex-col h-screen bg-purple-50">
     
@@ -19,9 +27,9 @@ class OwpPictures extends HTMLElement {
                     </h2>
                     
                     <owp-pictures-search-bar></owp-pictures-search-bar>
-
+ 
                     <owp-pictures-tabs></owp-pictures-tabs>
-
+ 
                     <owp-pictures-grid></owp-pictures-grid>
     
                     <div class="flex flex-row justify-end mt-6 gap-4">

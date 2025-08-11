@@ -61,7 +61,7 @@ function owp_render_app_page() {
     add_filter( 'show_admin_bar', '__return_false' );
     wp_enqueue_style( 'owp-hide-admin-bars', plugins_url( 'assets/css/hide-admin-bars.css', __FILE__ ) );
     wp_enqueue_script( 'owp-app-script', plugins_url( 'app/app.js', __FILE__ ), array(), null, true );
-    echo '<div id="owp-spa-container"></div>';
+    echo '<owp-app></owp-app>';
 }
 
 
