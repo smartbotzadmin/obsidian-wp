@@ -10,11 +10,10 @@ class OwpDesignGrid extends HTMLElement {
      */
     constructor() {
         super();
+        this.className = `overflow-y-auto w-full max-h-screen pr-2`;
         this.innerHTML = `
-            <div class="w-full overflow-y-auto max-h-[calc(100vh-280px)] pr-2">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
-                    ${this.getPlaceholderDesigns(8)}
-                </div>
+            <div class="flex flex-wrap gap-6 justify-center pl-4 pr-2">
+                ${this.getPlaceholderDesigns(12)}
             </div>
         `;
     }

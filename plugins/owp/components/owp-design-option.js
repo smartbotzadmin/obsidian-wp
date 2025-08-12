@@ -10,50 +10,30 @@ class OwpDesignOption extends HTMLElement {
      */
     constructor() {
         super();
+        this.className = `flex flex-col grow w-full sm:w-1/3 lg:w-1/4 xl:w-1/5 h-[480px] bg-slate-950 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-700`;
         this.innerHTML = `
-            <div class="bg-slate-950 rounded-lg border border-slate-700 overflow-hidden cursor-pointer hover:border-slate-500 transition-colors duration-200">
-                <div class="relative bg-slate-900 aspect-video flex items-center justify-center text-slate-100">
-                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <span class="absolute top-2 right-2 bg-cyan-400 text-slate-100 text-xs font-bold px-2 py-1 rounded-full">PREMIUM</span>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg mb-2 text-slate-100">Innovative Marketing Solutions for Your Business</h3>
-                    <p class="text-slate-100 text-sm mb-4">We will write a persuasive introduction for you or your company. This can be about your products, offerings, or simply why you exist.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-100 text-sm font-medium">Option ${this.getAttribute('option-number') || '1'}</span>
-                        <div class="flex items-center space-x-2">
-                            <a href="#" class="text-slate-100 hover:text-slate-300">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                            <a href="#" class="text-slate-100 hover:text-slate-300">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </a>
-                        </div>
+            <div class="relative flex grow items-center justify-center bg-slate-900 text-slate-100 overflow-hidden">
+                <img src="/wp-content/plugins/owp/assets/icons/image.svg" alt="Image Icon" class="w-full h-full opacity-25">
+                <span class="absolute top-2 right-2 bg-cyan-400 text-slate-100 text-xs font-bold px-2 py-1 rounded-full">
+                    PREMIUM
+                </span>
+            </div>
+            <div class="flex flex-col grow-0 shrink-0 p-4 cursor-default">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-100 text-md font-semibold">
+                        Option ${this.getAttribute('option-number') || '1'}
+                    </span>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="text-slate-100 hover:text-slate-300 hover:opacity-75">
+                            <img src="/wp-content/plugins/owp/assets/icons/external-link.svg" alt="External Link Icon" class="w-5 h-5">
+                        </a>
+                        <a href="#" class="text-slate-100 hover:text-slate-300 hover:opacity-75">
+                            <img src="/wp-content/plugins/owp/assets/icons/info.svg" alt="Info Icon" class="w-5 h-5">
+                        </a>
                     </div>
                 </div>
             </div>
         `;
-    }
-
-    /**
-     * @description Observes changes to the 'option-number' attribute.
-     * @returns {Array<string>} The observed attributes.
-     */
-    static get observedAttributes() {
-        return ['option-number'];
-    }
-
-    /**
-     * @description Handles changes to observed attributes.
-     * @param {string} name - The name of the attribute.
-     * @param {string} oldVal - The old value of the attribute.
-     * @param {string} newVal - The new value of the attribute.
-     * @returns {void}
-     */
-    attributeChangedCallback(name, oldVal, newVal) {
-        if (name === 'option-number' && oldVal !== newVal) {
-            this.querySelector('.text-blue-600').textContent = `Option ${newVal}`;
-        }
     }
 }
 

@@ -10,16 +10,11 @@ class OwpDesignSearchBar extends HTMLElement {
      */
     constructor() {
         super();
+        this.className = `flex flex-row shrink-0 justify-between items-center gap-2 mb-6 w-1/3 border border-slate-700 rounded-lg h-11 px-2 bg-slate-900`;
         this.innerHTML = `
-            <div class="relative flex justify-center items-center mb-6">
-                <div class="relative min-w-96">
-                    <input type="text" id="designSearchInput" class="shadow appearance-none border border-slate-700 rounded-lg w-full h-11 px-3 text-slate-300 leading-tight focus:outline-none focus:shadow-outline pl-10 bg-slate-900" placeholder="agency, consultant, web designer">
-                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    <button id="clearSearchButton" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-100 hover:text-slate-300 focus:outline-none hidden">
-                        <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/x.svg" alt="Clear" class="h-5 w-5" />
-                    </button>
-                </div>
-            </div>
+            <img src="/wp-content/plugins/owp/assets/icons/menu.svg" class="h-5 w-5 cursor-pointer" />
+            <input class="flex-grow px-1 text-md text-slate-300 h-full appearance-none focus:outline-none focus:shadow-outline" type="text" id="designSearchInput" placeholder="agency, consultant, web designer">
+            <img src="/wp-content/plugins/owp/assets/icons/x.svg" id="clearSearchButton" class="h-5 w-5 hidden cursor-pointer h-full" />
         `;
         this.searchInput = this.querySelector('#designSearchInput');
         this.clearButton = this.querySelector('#clearSearchButton');
