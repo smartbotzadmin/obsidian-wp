@@ -10,13 +10,12 @@ class OwpPicturesSearchBar extends HTMLElement {
      */
     constructor() {
         super();
+        this.className = `relative flex justify-center items-center w-1/3 mb-3`;
         this.innerHTML = `
-            <div class="relative flex justify-center items-center mb-6">
-                <input type="text" id="imageSearchInput" class="max-w-96 shadow appearance-none border border-slate-700 rounded-lg w-full h-11 px-3 text-slate-300 leading-tight focus:outline-none focus:shadow-outline bg-slate-900" placeholder="Search for images...">
-                <button id="clearSearchButton" class="absolute right-3 text-slate-100 hover:text-slate-300 focus:outline-none hidden">
-                    <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/x.svg" alt="Clear" class="h-5 w-5" />
-                </button>
-            </div>
+            <input type="text" id="imageSearchInput" class="shadow appearance-none border border-slate-700 rounded-lg w-full h-11 px-3 text-md text-slate-300 focus:outline-none focus:shadow-outline bg-slate-900" placeholder="Search for images...">
+            <button id="clearSearchButton" class="absolute right-3 cursor-pointer hidden">
+                <img src="/wp-content/plugins/owp/assets/icons/x.svg" class="h-5 w-5" />
+            </button>
         `;
         this.searchInput = this.querySelector('#imageSearchInput');
         this.clearButton = this.querySelector('#clearSearchButton');
