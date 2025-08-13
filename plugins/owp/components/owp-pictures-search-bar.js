@@ -21,6 +21,7 @@ class OwpPicturesSearchBar extends HTMLElement {
         this.clearButton = this.querySelector('#clearSearchButton');
 
         this.searchInput.addEventListener('input', this.handleInputChange.bind(this));
+        this.searchInput.addEventListener('keydown', this.handleSearchKeyDown.bind(this));
         this.clearButton.addEventListener('click', this.handleClearSearch.bind(this));
     }
 
@@ -43,7 +44,22 @@ class OwpPicturesSearchBar extends HTMLElement {
     handleClearSearch() {
         this.searchInput.value = '';
         this.clearButton.classList.add('hidden');
-        // Optionally trigger a search update here if needed
+        this.dispatchEvent(new CustomEvent('search-cleared'));
+    }
+
+
+    /**
+     * @description Handles keydown events on the search bar, triggering a search on Enter key.
+     * @param {KeyboardEvent} event - The keyboard event.
+     * @returns {void}
+     */
+    handleSearchKeyDown(event) {
+        if (event.key === 'Enter') {
+            const query = this.searchInput.value.trim();
+            this.dispatchEvent(new CustomEvent('search-triggered', {
+                detail: { query: query }
+            }));
+        }
     }
 }
 

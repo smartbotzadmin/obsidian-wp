@@ -10,6 +10,8 @@ class OwpPictures extends HTMLElement {
      */
     constructor() {
         super();
+        this.currentQuery = '';
+        this.currentOrientation = '';
     }
 
 
@@ -36,6 +38,64 @@ class OwpPictures extends HTMLElement {
                 <owp-next-button data-owp-navigate="#design">Next</owp-next-button>
             </div>
         `;
+
+        this.searchBar = this.querySelector('owp-pictures-search-bar');
+        this.picturesGrid = this.querySelector('owp-pictures-grid');
+        this.picturesTabs = this.querySelector('owp-pictures-tabs');
+
+        this.searchBar.addEventListener('search-triggered', this.handleSearchTriggered.bind(this));
+        this.searchBar.addEventListener('search-cleared', this.handleSearchCleared.bind(this));
+        this.picturesTabs.addEventListener('orientation-changed', this.handleOrientationChanged.bind(this));
+    }
+
+
+    /**
+     * @description Handles the 'search-triggered' event from the search bar.
+     * @param {CustomEvent} event - The custom event containing the search query.
+     * @returns {void}
+     */
+    handleSearchTriggered(event) {
+        const newQuery = event.detail.query;
+        if (this.picturesGrid) {
+            if (this.currentQuery !== newQuery) {
+                this.currentQuery = newQuery;
+                this.picturesGrid.clearGrid(); // Clear displayed images
+                this.picturesGrid.allImages = []; // Clear cached images for new search
+                this.picturesGrid.currentPage = 1; // Reset page for new search
+                this.picturesGrid.fetchImages(this.currentQuery, this.picturesGrid.currentPage);
+            } else {
+                // If query is the same, just re-filter with current orientation
+                this.picturesGrid.filterAndDisplayImages(this.currentQuery, this.currentOrientation);
+            }
+        }
+    }
+
+
+    /**
+     * @description Handles the 'search-cleared' event from the search bar.
+     * @returns {void}
+     */
+    handleSearchCleared() {
+        this.currentQuery = '';
+        this.currentOrientation = ''; // Reset orientation when search is cleared
+        if (this.picturesGrid) {
+            // Do not clear allImages or the grid, just re-filter to show all loaded images
+            this.picturesGrid.filterAndDisplayImages('', '');
+        }
+    }
+
+
+    /**
+     * @description Handles the 'orientation-changed' event from the tabs component.
+     * @param {CustomEvent} event - The custom event containing the selected orientation.
+     * @returns {void}
+     */
+    handleOrientationChanged(event) {
+        this.currentOrientation = event.detail.orientation;
+        if (this.picturesGrid) {
+            // Filter and display images based on the new orientation, no re-fetch needed
+            this.picturesGrid.filterAndDisplayImages(this.currentQuery, this.currentOrientation);
+        }
     }
 }
 
