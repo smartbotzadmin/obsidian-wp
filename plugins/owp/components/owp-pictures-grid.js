@@ -21,7 +21,7 @@ class OwpPicturesGrid extends HTMLElement {
 
         this.className = `overflow-y-auto w-full max-h-screen px-4`;
         this.innerHTML = `
-            <div class="flex flex-wrap justify-center" id="imageGridContainer">
+            <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 p-2" id="imageGridContainer">
             </div>
             <div id="loadingSpinner" class="text-slate-100 text-center py-4 hidden">Loading...</div>
         `;
@@ -167,12 +167,11 @@ class OwpPicturesGrid extends HTMLElement {
         images.forEach(image => {
             const imgDiv = document.createElement('div');
             // Re-introducing responsive width classes and ensuring padding
-            imgDiv.className = `p-1 w-full sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6`;
+            imgDiv.className = `mb-3 break-inside-avoid cursor-pointer`;
             imgDiv.innerHTML = `
                 <img src="${image.urls.small}"
                      alt="${image.alt_description || 'Unsplash Image'}"
-                     class="rounded-md ring-2 ring-slate-700"
-                     style="max-width: 100%; height: auto; display: block;">
+                     class="rounded-md ring-2 ring-slate-700 hover:ring-slate-500">
             `;
             fragment.appendChild(imgDiv);
         });
