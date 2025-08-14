@@ -17,6 +17,8 @@ class OwpPicturesGrid extends HTMLElement {
         this.currentOrientation = '';
         this.allImages = [];
         this.displayedImages = [];
+        this.selectedImages = this.loadSelectedImages();
+        this.currentTab = 'search-results'; // Initialize currentTab
 
 
         this.className = `overflow-y-auto w-full max-h-screen px-4`;
@@ -37,6 +39,7 @@ class OwpPicturesGrid extends HTMLElement {
      */
     connectedCallback() {
         this.setupIntersectionObserver();
+        this.addEventListener('click', this.handleImageClick.bind(this));
     }
 
 
@@ -84,7 +87,7 @@ class OwpPicturesGrid extends HTMLElement {
             const data = JSON.parse(cachedData);
             this.allImages = [...this.allImages, ...data.results];
             this.currentPage++;
-            this.filterAndDisplayImages(this.currentQuery, this.currentOrientation);
+            this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
             return;
         }
 
@@ -104,7 +107,7 @@ class OwpPicturesGrid extends HTMLElement {
                 sessionStorage.setItem(cacheKey, JSON.stringify(data));
                 this.allImages = [...this.allImages, ...data.results];
                 this.currentPage++;
-                this.filterAndDisplayImages(this.currentQuery, this.currentOrientation);
+                this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
             }
         } catch (error) {
             console.error('Error fetching images:', error);
@@ -136,14 +139,21 @@ class OwpPicturesGrid extends HTMLElement {
      * @description Filters and displays images based on the current query and orientation.
      * @param {string} query - The search query.
      * @param {string} orientation - The orientation filter.
+     * @param {string} currentTab - The currently active tab.
      * @returns {void}
      */
-    filterAndDisplayImages(query, orientation) {
+    filterAndDisplayImages(query, orientation, currentTab = 'search-results') {
         this.imageGridContainer.innerHTML = ''; // Clear existing images
         this.currentQuery = query; // Keep current query for lazy loading
         this.currentOrientation = orientation;
+        this.currentTab = currentTab; // Update currentTab property
 
-        let filtered = this.allImages.filter(image => {
+        let imagesToFilter = this.allImages;
+        if (currentTab === 'selected-images') {
+            imagesToFilter = this.selectedImages;
+        }
+
+        let filtered = imagesToFilter.filter(image => {
             // If no orientation filter is selected, show all images
             if (!orientation) {
                 return true;
@@ -167,11 +177,22 @@ class OwpPicturesGrid extends HTMLElement {
         images.forEach(image => {
             const imgDiv = document.createElement('div');
             // Re-introducing responsive width classes and ensuring padding
-            imgDiv.className = `mb-3 break-inside-avoid cursor-pointer`;
+            const isSelected = this.selectedImages.some(selectedImg => selectedImg.id === image.id);
+            const selectedClass = isSelected ? 'ring-cyan-500' : 'ring-slate-700';
+
+            imgDiv.className = `relative mb-3 break-inside-avoid cursor-pointer group`;
+            imgDiv.dataset.imageId = image.id; // Store image ID for selection
+            imgDiv.dataset.imageJson = JSON.stringify(image); // Store full image data
+
             imgDiv.innerHTML = `
                 <img src="${image.urls.small}"
                      alt="${image.alt_description || 'Unsplash Image'}"
-                     class="rounded-md ring-2 ring-slate-700 hover:ring-slate-500">
+                     class="rounded-md ring-2 ${selectedClass} hover:ring-cyan-500">
+                ${isSelected ? `
+                    <div class="absolute top-2 right-2 w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center">
+                        <img src="/wp-content/plugins/owp/assets/icons/check.svg" class="w-5 h-5" alt="Selected">
+                    </div>
+                ` : ''}
             `;
             fragment.appendChild(imgDiv);
         });
@@ -189,6 +210,62 @@ class OwpPicturesGrid extends HTMLElement {
         this.displayedImages = [];
         // Do NOT clear this.allImages, this.currentQuery, this.currentOrientation here
         // They are managed by the parent component or filterAndDisplayImages
+    }
+
+
+    /**
+     * @description Loads selected images from sessionStorage.
+     * @returns {Array<Object>} An array of selected image objects.
+     */
+    loadSelectedImages() {
+        try {
+            const storedImages = sessionStorage.getItem('owp_selected_images');
+            return storedImages ? JSON.parse(storedImages) : [];
+        } catch (error) {
+            console.error('Error loading selected images from sessionStorage:', error);
+            return [];
+        }
+    }
+
+    /**
+     * @description Saves selected images to sessionStorage.
+     * @param {Array<Object>} images - The array of image objects to save.
+     * @returns {void}
+     */
+    saveSelectedImages(images) {
+        try {
+            sessionStorage.setItem('owp_selected_images', JSON.stringify(images));
+        } catch (error) {
+            console.error('Error saving selected images to sessionStorage:', error);
+        }
+    }
+
+    /**
+     * @description Handles click events on images to toggle selection.
+     * @param {Event} event - The click event.
+     * @returns {void}
+     */
+    handleImageClick(event) {
+        const imgDiv = event.target.closest('[data-image-id]');
+        if (!imgDiv) {
+            return;
+        }
+
+        const imageId = imgDiv.dataset.imageId;
+        const imageData = JSON.parse(imgDiv.dataset.imageJson);
+
+        const index = this.selectedImages.findIndex(img => img.id === imageId);
+
+        if (index > -1) {
+            // Image is already selected, remove it
+            this.selectedImages.splice(index, 1);
+        } else {
+            // Image is not selected, add it
+            this.selectedImages.push(imageData);
+        }
+
+        this.saveSelectedImages(this.selectedImages);
+        this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
     }
 }
 

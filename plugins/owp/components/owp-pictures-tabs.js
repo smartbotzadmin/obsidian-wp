@@ -29,8 +29,8 @@ class OwpPicturesTabs extends HTMLElement {
         this.className = `flex w-full border-b border-slate-700 mb-6 py-3 px-12`;
         this.innerHTML = `
             <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 border-b-2 border-cyan-500 focus:outline-none" data-tab="search-results">Search Results</button>
-            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 hover:text-slate-300 focus:outline-none" data-tab="upload-images">Upload Your Images</button>
-            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 hover:text-slate-300 focus:outline-none" data-tab="selected-images">Selected Images</button>
+            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 hover:text-cyan-500 focus:outline-none" data-tab="upload-images">Upload Your Images</button>
+            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 hover:text-cyan-500 focus:outline-none" data-tab="selected-images">Selected Images</button>
 
             <div class="flex-grow"></div> <!-- spacing -->
 
@@ -43,7 +43,7 @@ class OwpPicturesTabs extends HTMLElement {
                 <div class="origin-top-right absolute top-full mt-2 right-0 w-56 rounded-md shadow-lg bg-slate-800 border border-slate-700 ring-opacity-5 focus:outline-none  hidden" role="menu" aria-orientation="vertical" aria-labelledby="orientation-menu-button" tabindex="-1">
                     <div class="py-1" role="none">
                         ${this.orientationOptions.map((option, index) => `
-                            <a href="#" class="text-[14px] text-slate-300 block px-4 py-2 text-sm hover:bg-slate-700" role="menuitem" tabindex="-1" id="menu-item-${index}" data-value="${option.value}">${option.label}</a>
+                            <a href="#" class="text-[14px] text-slate-300 block px-4 py-2 text-sm hover:bg-cyan-700" role="menuitem" tabindex="-1" id="menu-item-${index}" data-value="${option.value}">${option.label}</a>
                         `).join('')}
                     </div>
                 </div>
@@ -109,9 +109,9 @@ class OwpPicturesTabs extends HTMLElement {
     handleTabClick(event) {
         this.tabButtons.forEach(button => {
             button.classList.remove('text-cyan-600', 'border-b-2', 'border-cyan-600');
-            button.classList.add('text-slate-300', 'hover:text-slate-500');
+            button.classList.add('text-slate-300', 'hover:text-cyan-500');
         });
-        event.currentTarget.classList.remove('text-slate-300', 'border-b-2', 'hover:text-slate-500');
+        event.currentTarget.classList.remove('text-slate-300', 'border-b-2', 'hover:text-cyan-500');
         event.currentTarget.classList.add('text-cyan-600', 'border-b-2', 'border-cyan-600');
         // Optionally dispatch a custom event to notify parent of tab change
         this.dispatchEvent(new CustomEvent('tab-changed', {

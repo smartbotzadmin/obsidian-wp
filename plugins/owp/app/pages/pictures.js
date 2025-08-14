@@ -12,6 +12,7 @@ class OwpPictures extends HTMLElement {
         super();
         this.currentQuery = '';
         this.currentOrientation = '';
+        this.currentTab = 'search-results'; // Default tab
     }
 
 
@@ -46,6 +47,7 @@ class OwpPictures extends HTMLElement {
         this.searchBar.addEventListener('search-triggered', this.handleSearchTriggered.bind(this));
         this.searchBar.addEventListener('search-cleared', this.handleSearchCleared.bind(this));
         this.picturesTabs.addEventListener('orientation-changed', this.handleOrientationChanged.bind(this));
+        this.picturesTabs.addEventListener('tab-changed', this.handleTabChanged.bind(this));
     }
 
 
@@ -95,6 +97,17 @@ class OwpPictures extends HTMLElement {
         if (this.picturesGrid) {
             // Filter and display images based on the new orientation, no re-fetch needed
             this.picturesGrid.filterAndDisplayImages(this.currentQuery, this.currentOrientation);
+        }
+    }
+    /**
+     * @description Handles the 'tab-changed' event from the tabs component.
+     * @param {CustomEvent} event - The custom event containing the selected tab.
+     * @returns {void}
+     */
+    handleTabChanged(event) {
+        this.currentTab = event.detail.tab;
+        if (this.picturesGrid) {
+            this.picturesGrid.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
         }
     }
 }
