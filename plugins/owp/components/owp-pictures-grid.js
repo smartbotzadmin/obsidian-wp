@@ -21,7 +21,7 @@ class OwpPicturesGrid extends HTMLElement {
         this.currentTab = 'search-results'; // Initialize currentTab
 
 
-        this.className = `overflow-y-auto w-full max-h-screen px-4`;
+        this.className = `flex-1 w-full max-h-screen overflow-y-auto px-4`;
         this.innerHTML = `
             <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 p-2" id="imageGridContainer">
             </div>
@@ -187,7 +187,7 @@ class OwpPicturesGrid extends HTMLElement {
             imgDiv.innerHTML = `
                 <img src="${image.urls.small}"
                      alt="${image.alt_description || 'Unsplash Image'}"
-                     class="rounded-md ring-2 ${selectedClass} hover:ring-cyan-500">
+                     class="rounded-md p-0.5 ring-2 ${selectedClass} hover:ring-cyan-500" draggable="false">
                 ${isSelected ? `
                     <div class="absolute top-2 right-2 w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center">
                         <img src="/wp-content/plugins/owp/assets/icons/check.svg" class="w-5 h-5" alt="Selected">

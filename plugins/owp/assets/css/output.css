@@ -5,6 +5,7 @@
   :root, :host {
     --font-sans: "Open Sans";
     --font-mono: "Google Sans Code";
+    --color-cyan-200: oklch(91.7% 0.08 205.041);
     --color-cyan-400: oklch(78.9% 0.154 211.53);
     --color-cyan-500: oklch(71.5% 0.143 215.221);
     --color-cyan-600: oklch(60.9% 0.126 221.723);
@@ -246,6 +247,9 @@
   }
   .z-10 {
     z-index: 10;
+  }
+  .z-999 {
+    z-index: 999;
   }
   .z-\[99999\] {
     z-index: 99999;
@@ -569,6 +573,9 @@
   .border-slate-700 {
     border-color: var(--color-slate-700);
   }
+  .bg-cyan-200 {
+    background-color: var(--color-cyan-200);
+  }
   .bg-cyan-400 {
     background-color: var(--color-cyan-400);
   }
@@ -577,6 +584,9 @@
   }
   .bg-cyan-600 {
     background-color: var(--color-cyan-600);
+  }
+  .bg-cyan-700 {
+    background-color: var(--color-cyan-700);
   }
   .bg-cyan-900 {
     background-color: var(--color-cyan-900);

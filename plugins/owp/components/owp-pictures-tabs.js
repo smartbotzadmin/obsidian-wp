@@ -40,7 +40,7 @@ class OwpPicturesTabs extends HTMLElement {
                     <img src="/wp-content/plugins/owp/assets/icons/chevron-down.svg" class="ml-2 -mr-1 h-4 w-4" alt="Dropdown icon">
                 </div>
 
-                <div class="origin-top-right absolute top-full mt-2 right-0 w-56 rounded-md shadow-lg bg-slate-800 border border-slate-700 ring-opacity-5 focus:outline-none  hidden" role="menu" aria-orientation="vertical" aria-labelledby="orientation-menu-button" tabindex="-1">
+                <div class="origin-top-right absolute top-full mt-2 right-0 w-56 rounded-md shadow-lg bg-slate-800 border border-slate-700 ring-opacity-5 focus:outline-none  hidden z-10" role="menu" aria-orientation="vertical" aria-labelledby="orientation-menu-button" tabindex="-1">
                     <div class="py-1" role="none">
                         ${this.orientationOptions.map((option, index) => `
                             <a href="#" class="text-[14px] text-slate-300 block px-4 py-2 text-sm hover:bg-cyan-700" role="menuitem" tabindex="-1" id="menu-item-${index}" data-value="${option.value}">${option.label}</a>
