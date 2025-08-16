@@ -2,6 +2,9 @@
 applyTo: '**/*.{js,jsx,ts,tsx,py,c,cc,cpp,cs,h,hpp}'
 ---
 
+Be clear, brief and straightforward.
+Don't introduce things out of context.
+
 # Principles
 
 1. Every app you help to write is a Critical System.
@@ -15,6 +18,19 @@ applyTo: '**/*.{js,jsx,ts,tsx,py,c,cc,cpp,cs,h,hpp}'
 10. The codebase must be well organized.
 11. Don't add possible improvements by your own.
 12. Don't add new libraries or modules by your own.
+
+
+## Security
+
+- For sensible information, rely on .env file and load it to access the that sensible information. e.g. API keys, passwords, db credentials etc.
+- Always sanitize user input to prevent SQL injection, XSS, CSRF and other attacks.
+- For simple Authentication always rely on JWT.
+- For external user authentication OAuth2.0, when available.
+- Always process tokens, JWTs, encrypted data from server side.
+- Never save high privacy information at client side.
+- Never serve high privacy files.
+- Never serve high privacy data.
+
 
 ## Code Style & Patterns
 
@@ -57,23 +73,8 @@ applyTo: '**/*.{js,jsx,ts,tsx,py,c,cc,cpp,cs,h,hpp}'
   9. Limit pointer use to a single dereference, and do not use function pointers.
   10. Compile with all possible warnings active; all warnings should then be addressed before release of the software.
 
-## Security
 
-- For sensible information, rely on .env file and load it to access the that sensible information. e.g. API keys, passwords, db credentials etc.
-- Always sanitize user input to prevent SQL injection, XSS, CSRF and other attacks.
-- For simple Authentication always rely on JWT.
-- For external user authentication OAuth2.0, when available.
-- Always process tokens, JWTs, encrypted data from server side.
-- Never save high privacy information at client side.
-- Never serve high privacy files.
-- Never serve high privacy data.
-
-## CodeModel
-
-Javascript is used as example language, but this should be applied to all other languages
-C, C++, Rust, Typescript, Javascript, Python.
-
-## Headers
+### Headers
 
 - prior global imports over relative imports.
 import Foo from "@/some-dir/Foo"        // Yes
@@ -172,53 +173,19 @@ const variable = someFunction();
 - the only comments allowed are the docstrings.
 
 - docstrings must be native of the script language.
-// Yes
+Javascript is used as example language, but these rules should be applied to all other languages
+C, C++, Rust, Typescript, Javascript, Python.
 ```javascript
 /**
- * @route {HTTP method} {path}
- * @desc function/class/method description ...
- * @access Private
- * @args {type} argument or parameter ...
- * @path {type} pathParam ...
- * @query {type} queryParam ...
- * @body {type} bodyField ...
- * @response {code} response ...
+ * [@route <HTTP method> <path>] @access [Private|Public]
+ * @desc function/class/method description ... 
+ * @param {[arg|query|body]:<paramName>} argument or parameter ...
+ * @return {<type>} [Result|Response]
  */
 ```
-// Yes
-```python
-"""
-Route:
-  {HTTP method} {path}
-Description:
-  function/class/method description ...
-Access:
-  Private
-Args:
-  {type} argument or parameter ...
-Path:
-  {type} pathParam ...
-Query:
-  {type} queryParam ...
-Body:
-  {type} bodyField ...
-Response:
-  {code} response ...
-"""
-```
-// Yes
-```c
-/**
- * @route {HTTP method} {path}
- * @desc function/class/method description ...
- * @access Private
- * @args {type} argument or parameter ...
- * @path {type} pathParam ...
- * @query {type} queryParam ...
- * @body {type} bodyField ...
- * @response {code} response ...
- */
-```
+where:
+  * <>: required
+  * []: optional
 
 - docstring must be unique per scope, no nested docstrings
 // Yes

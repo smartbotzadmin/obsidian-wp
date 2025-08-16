@@ -47,13 +47,27 @@ class OwpDescribeTextArea extends HTMLElement {
         this.currentSuggestionIndex = 0;
     }
 
+
     /**
-     * @description Updates the displayed character count.
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        this.textArea.addEventListener('input', this.updateCharCount.bind(this));
+        this.prevSuggestionButton.addEventListener('click', this.showPrevSuggestion.bind(this));
+        this.nextSuggestionButton.addEventListener('click', this.showNextSuggestion.bind(this));
+        this.#loadInitialValue();
+    }
+
+
+    /**
+     * @description Updates the displayed character count and the session payload.
      * @returns {void}
      */
     updateCharCount() {
         const currentLength = this.textArea.value.length;
         this.charCountElement.textContent = currentLength;
+        window.owpSessionManager.updatePayloadSection('describe', this.textArea.value);
     }
 
     /**
@@ -65,6 +79,7 @@ class OwpDescribeTextArea extends HTMLElement {
         this.suggestions.push(suggestion);
         this.currentSuggestionIndex = this.suggestions.length - 1;
         this.displayCurrentSuggestion();
+        window.owpSessionManager.updatePayloadSection('describe', suggestion);
     }
 
     /**
@@ -102,6 +117,18 @@ class OwpDescribeTextArea extends HTMLElement {
         if (this.currentSuggestionIndex < this.suggestions.length - 1) {
             this.currentSuggestionIndex++;
             this.displayCurrentSuggestion();
+        }
+    }
+    /**
+     * @private
+     * @description Loads the initial value from sessionStorage and sets it to the text area.
+     * @returns {void}
+     */
+    #loadInitialValue() {
+        const currentPayload = window.owpSessionManager.getPayload();
+        if (currentPayload.describe) {
+            this.textArea.value = currentPayload.describe;
+            this.updateCharCount(); // Update character count based on loaded value
         }
     }
 }

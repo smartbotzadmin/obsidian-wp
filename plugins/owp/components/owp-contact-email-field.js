@@ -16,6 +16,46 @@ class OwpContactEmailField extends HTMLElement {
             <input type="email" id="email" class="shadow appearance-none border border-slate-700 rounded-lg w-full h-11 px-3 text-md text-slate-100 leading-tight focus:outline-none focus:shadow-outline bg-slate-900" placeholder="Your email">
         `;
     }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        this.emailInput = this.querySelector('#email');
+        this.emailInput.addEventListener('input', this.#handleInputChange.bind(this));
+        this.#loadInitialValue();
+    }
+
+
+    /**
+     * @private
+     * @description Handles the input event on the email field, updating the session payload.
+     * @param {Event} event - The input event.
+     * @returns {void}
+     */
+    #handleInputChange(event) {
+        const email = event.target.value;
+        const currentPayload = window.owpSessionManager.getPayload();
+        window.owpSessionManager.updatePayloadSection('contact', {
+            ...currentPayload.contact,
+            email: email
+        });
+    }
+
+
+    /**
+     * @private
+     * @description Loads the initial value from sessionStorage and sets it to the input field.
+     * @returns {void}
+     */
+    #loadInitialValue() {
+        const currentPayload = window.owpSessionManager.getPayload();
+        if (currentPayload.contact && currentPayload.contact.email) {
+            this.emailInput.value = currentPayload.contact.email;
+        }
+    }
 }
 
 customElements.define('owp-contact-email-field', OwpContactEmailField);

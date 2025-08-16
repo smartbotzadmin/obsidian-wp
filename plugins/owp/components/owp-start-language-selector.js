@@ -86,6 +86,8 @@ class OwpStartLanguageSelector extends HTMLElement {
             }
         });
 
+        this.#loadInitialValue();
+
         this.websiteLanguageDropdown.querySelectorAll('a').forEach(item => {
             item.addEventListener('click', (event) => {
                 event.preventDefault();
@@ -96,10 +98,34 @@ class OwpStartLanguageSelector extends HTMLElement {
                 if (selectedLang) {
                     this.selectedLanguageDisplay.textContent = `${selectedLang.code.toUpperCase()} ${selectedLang.name}`;
                     this.selectedLanguage = selectedCode;
+
+                    const currentPayload = window.owpSessionManager.getPayload();
+                    window.owpSessionManager.updatePayloadSection('start', {
+                        ...currentPayload.start,
+                        language: selectedCode
+                    });
                 }
                 this.websiteLanguageDropdown.classList.add('hidden');
             });
         });
+    }
+
+
+    /**
+     * @private
+     * @description Loads the initial value from sessionStorage and sets it to the display.
+     * @returns {void}
+     */
+    #loadInitialValue() {
+        const currentPayload = window.owpSessionManager.getPayload();
+        if (currentPayload.start && currentPayload.start.language) {
+            const storedLangCode = currentPayload.start.language;
+            const storedLang = this.languages.find(lang => lang.code === storedLangCode);
+            if (storedLang) {
+                this.selectedLanguage = storedLangCode;
+                this.selectedLanguageDisplay.textContent = `${storedLang.code.toUpperCase()} ${storedLang.name}`;
+            }
+        }
     }
 }
 

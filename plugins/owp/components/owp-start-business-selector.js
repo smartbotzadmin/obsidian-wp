@@ -68,6 +68,12 @@ class OwpStartBusinessSelector extends HTMLElement {
                 this.selectedBusiness = selectedValue;
                 this.websiteForDropdown.classList.add('hidden');
 
+                const currentPayload = window.owpSessionManager.getPayload();
+                window.owpSessionManager.updatePayloadSection('start', {
+                    ...currentPayload.start,
+                    business: selectedValue
+                });
+
                 this.websiteForDropdown.querySelectorAll('.check-icon').forEach(icon => {
                     icon.classList.add('hidden');
                 });
@@ -83,6 +89,7 @@ class OwpStartBusinessSelector extends HTMLElement {
      */
     connectedCallback() {
         document.addEventListener('click', this.#handleClickOutside);
+        this.#loadInitialValue();
     }
 
 
@@ -107,6 +114,28 @@ class OwpStartBusinessSelector extends HTMLElement {
             this.websiteForDropdown.classList.add('hidden');
         }
     };
+
+
+    /**
+     * @private
+     * @description Loads the initial value from sessionStorage and sets it to the display.
+     * @returns {void}
+     */
+    #loadInitialValue() {
+        const currentPayload = window.owpSessionManager.getPayload();
+        if (currentPayload.start && currentPayload.start.business) {
+            this.selectedBusiness = currentPayload.start.business;
+            this.websiteForSearch.textContent = currentPayload.start.business;
+            // Also update the checkmark for the pre-selected option
+            this.websiteForDropdown.querySelectorAll('div[data-value]').forEach(item => {
+                if (item.dataset.value === currentPayload.start.business) {
+                    item.querySelector('.check-icon').classList.remove('hidden');
+                } else {
+                    item.querySelector('.check-icon').classList.add('hidden');
+                }
+            });
+        }
+    }
 }
 
 customElements.define('owp-start-business-selector', OwpStartBusinessSelector);

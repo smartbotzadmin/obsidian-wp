@@ -86,3 +86,110 @@ class OwpApp extends HTMLElement {
 }
 
 customElements.define('owp-app', OwpApp);
+
+
+/**
+ * @class OwpSessionManager
+ * @description Manages the 'owp_payload' in sessionStorage, providing methods for initialization, retrieval, and updates.
+ */
+class OwpSessionManager {
+    /**
+     * @private
+     * @type {string}
+     * @description The key for the sessionStorage variable.
+     */
+    #payloadKey = 'owp_payload';
+
+    /**
+     * @private
+     * @type {Object}
+     * @description The default structure for the owp_payload.
+     */
+    #defaultPayload = {
+        "start": {
+            "name": "",
+            "business": "",
+            "language": ""
+        },
+        "describe": "",
+        "contact": {
+            "email": "",
+            "address": "",
+            "phone": ""
+        },
+        "pictures": []
+    };
+
+    /**
+     * @description Constructs the OwpSessionManager instance.
+     * Initializes the payload from sessionStorage or sets a default.
+     * @returns {void}
+     */
+    constructor() {
+        this.#initializePayload();
+    }
+
+    /**
+     * @private
+     * @description Initializes the owp_payload in sessionStorage.
+     * If it doesn't exist or is invalid, it sets the default structure.
+     * @returns {void}
+     */
+    #initializePayload() {
+        try {
+            const storedPayload = sessionStorage.getItem(this.#payloadKey);
+            if (storedPayload) {
+                const parsedPayload = JSON.parse(storedPayload);
+                // Merge with default to ensure all keys exist, especially if structure changes
+                this.setPayload({ ...this.#defaultPayload, ...parsedPayload });
+            } else {
+                this.setPayload(this.#defaultPayload);
+            }
+        } catch (error) {
+            console.error('Error parsing owp_payload from sessionStorage, resetting:', error);
+            this.setPayload(this.#defaultPayload);
+        }
+    }
+
+    /**
+     * @description Retrieves the current owp_payload from sessionStorage.
+     * @returns {Object} The current owp_payload.
+     */
+    getPayload() {
+        try {
+            const storedPayload = sessionStorage.getItem(this.#payloadKey);
+            return storedPayload ? JSON.parse(storedPayload) : this.#defaultPayload;
+        } catch (error) {
+            console.error('Error retrieving owp_payload from sessionStorage:', error);
+            return this.#defaultPayload;
+        }
+    }
+
+    /**
+     * @description Sets the entire owp_payload in sessionStorage.
+     * @param {Object} payload - The new payload object to save.
+     * @returns {void}
+     */
+    setPayload(payload) {
+        try {
+            sessionStorage.setItem(this.#payloadKey, JSON.stringify(payload));
+        } catch (error) {
+            console.error('Error saving owp_payload to sessionStorage:', error);
+        }
+    }
+
+    /**
+     * @description Updates a specific section of the owp_payload.
+     * @param {string} section - The top-level key to update (e.g., 'start', 'describe', 'contact', 'pictures').
+     * @param {any} data - The data to set for that section.
+     * @returns {void}
+     */
+    updatePayloadSection(section, data) {
+        const currentPayload = this.getPayload();
+        currentPayload[section] = data;
+        this.setPayload(currentPayload);
+    }
+}
+
+// Instantiate the session manager globally
+window.owpSessionManager = new OwpSessionManager();

@@ -16,6 +16,46 @@ class OwpStartNameField extends HTMLElement {
             <input type="text" id="siteName" class="shadow appearance-none border border-slate-700 rounded-lg w-full h-11 px-3 text-slate-300 text-md bg-slate-900 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter name or title of the website">
         `;
     }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        this.siteNameInput = this.querySelector('#siteName');
+        this.siteNameInput.addEventListener('input', this.#handleInputChange.bind(this));
+        this.#loadInitialValue();
+    }
+
+
+    /**
+     * @private
+     * @description Handles the input event on the site name field, updating the session payload.
+     * @param {Event} event - The input event.
+     * @returns {void}
+     */
+    #handleInputChange(event) {
+        const siteName = event.target.value;
+        const currentPayload = window.owpSessionManager.getPayload();
+        window.owpSessionManager.updatePayloadSection('start', {
+            ...currentPayload.start,
+            name: siteName
+        });
+    }
+
+
+    /**
+     * @private
+     * @description Loads the initial value from sessionStorage and sets it to the input field.
+     * @returns {void}
+     */
+    #loadInitialValue() {
+        const currentPayload = window.owpSessionManager.getPayload();
+        if (currentPayload.start && currentPayload.start.name) {
+            this.siteNameInput.value = currentPayload.start.name;
+        }
+    }
 }
 
 customElements.define('owp-start-name-field', OwpStartNameField);

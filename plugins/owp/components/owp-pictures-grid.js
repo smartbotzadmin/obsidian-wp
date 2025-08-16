@@ -40,6 +40,9 @@ class OwpPicturesGrid extends HTMLElement {
     connectedCallback() {
         this.setupIntersectionObserver();
         this.addEventListener('click', this.handleImageClick.bind(this));
+        // Load initial selected images from owp_payload on connectedCallback
+        this.selectedImages = this.loadSelectedImages();
+        this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
     }
 
 
@@ -219,6 +222,11 @@ class OwpPicturesGrid extends HTMLElement {
      */
     loadSelectedImages() {
         try {
+            const owpPayload = window.owpSessionManager.getPayload();
+            if (owpPayload.pictures && owpPayload.pictures.length > 0) {
+                return owpPayload.pictures;
+            }
+
             const storedImages = sessionStorage.getItem('owp_selected_images');
             return storedImages ? JSON.parse(storedImages) : [];
         } catch (error) {
@@ -265,6 +273,7 @@ class OwpPicturesGrid extends HTMLElement {
         }
 
         this.saveSelectedImages(this.selectedImages);
+        window.owpSessionManager.updatePayloadSection('pictures', this.selectedImages); // Update owp_payload
         this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
     }
 }
