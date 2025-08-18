@@ -79,4 +79,5 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #64748b; /* slate-500 */
+  cursor: default;
 }

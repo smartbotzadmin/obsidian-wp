@@ -438,6 +438,9 @@
   .cursor-default {
     cursor: default;
   }
+  .cursor-not-allowed {
+    cursor: not-allowed;
+  }
   .cursor-pointer {
     cursor: pointer;
   }
@@ -978,6 +981,7 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #64748b;
+  cursor: default;
 }
 @property --tw-border-style {
   syntax: "*";

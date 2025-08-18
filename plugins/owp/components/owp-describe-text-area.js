@@ -32,19 +32,14 @@ class OwpDescribeTextArea extends HTMLElement {
         `;
 
         this.textArea = this.querySelector('#describeTextArea');
-        this.textArea = this.querySelector('#describeTextArea');
         this.charCountElement = this.querySelector('#charCount');
         this.maxCharsElement = this.querySelector('#maxChars');
         this.prevSuggestionButton = this.querySelector('#prevSuggestion');
         this.nextSuggestionButton = this.querySelector('#nextSuggestion');
         this.suggestionIndexElement = this.querySelector('#suggestionIndex');
 
-        this.textArea.addEventListener('input', this.updateCharCount.bind(this));
-        this.prevSuggestionButton.addEventListener('click', this.showPrevSuggestion.bind(this));
-        this.nextSuggestionButton.addEventListener('click', this.showNextSuggestion.bind(this));
-
-        this.suggestions = [];
-        this.currentSuggestionIndex = 0;
+        this.suggestions = this.#loadSuggestions();
+        this.currentSuggestionIndex = this.suggestions.length > 0 ? this.suggestions.length - 1 : 0;
     }
 
 
@@ -56,7 +51,16 @@ class OwpDescribeTextArea extends HTMLElement {
         this.textArea.addEventListener('input', this.updateCharCount.bind(this));
         this.prevSuggestionButton.addEventListener('click', this.showPrevSuggestion.bind(this));
         this.nextSuggestionButton.addEventListener('click', this.showNextSuggestion.bind(this));
+        this.aiButton = this.querySelector('owp-describe-ai-button');
+        this.aiButton.addEventListener('ai-text-generated', this.#handleAiTextGenerated.bind(this));
         this.#loadInitialValue();
+        this.displayCurrentSuggestion();
+        // Defer #updateAiButtonState to ensure owpSessionManager is available
+        // This is a temporary measure. A more robust solution might involve
+        // a custom event from OwpApp when owpSessionManager is ready.
+        setTimeout(() => {
+            this.#updateAiButtonState();
+        }, 0);
     }
 
 
@@ -76,10 +80,15 @@ class OwpDescribeTextArea extends HTMLElement {
      * @returns {void}
      */
     addSuggestion(suggestion) {
+        if (this.suggestions.length >= 3) {
+            this.suggestions.shift(); // Remove the oldest suggestion
+        }
         this.suggestions.push(suggestion);
         this.currentSuggestionIndex = this.suggestions.length - 1;
         this.displayCurrentSuggestion();
+        this.#saveSuggestions();
         window.owpSessionManager.updatePayloadSection('describe', suggestion);
+        this.#updateAiButtonState();
     }
 
     /**
@@ -93,7 +102,7 @@ class OwpDescribeTextArea extends HTMLElement {
             this.suggestionIndexElement.textContent = `${this.currentSuggestionIndex + 1} / ${this.suggestions.length}`;
         } else {
             this.textArea.value = '';
-            this.updateCharCount();
+            this.charCountElement.textContent = '0'; // Reset char count explicitly
             this.suggestionIndexElement.textContent = '0 / 0';
         }
     }
@@ -105,8 +114,10 @@ class OwpDescribeTextArea extends HTMLElement {
     showPrevSuggestion() {
         if (this.currentSuggestionIndex > 0) {
             this.currentSuggestionIndex--;
-            this.displayCurrentSuggestion();
+        } else if (this.suggestions.length > 0) {
+            this.currentSuggestionIndex = this.suggestions.length - 1; // Wrap around to the last suggestion
         }
+        this.displayCurrentSuggestion();
     }
 
     /**
@@ -116,8 +127,10 @@ class OwpDescribeTextArea extends HTMLElement {
     showNextSuggestion() {
         if (this.currentSuggestionIndex < this.suggestions.length - 1) {
             this.currentSuggestionIndex++;
-            this.displayCurrentSuggestion();
+        } else if (this.suggestions.length > 0) {
+            this.currentSuggestionIndex = 0; // Wrap around to the first suggestion
         }
+        this.displayCurrentSuggestion();
     }
     /**
      * @private
@@ -128,7 +141,68 @@ class OwpDescribeTextArea extends HTMLElement {
         const currentPayload = window.owpSessionManager.getPayload();
         if (currentPayload.describe) {
             this.textArea.value = currentPayload.describe;
-            this.updateCharCount(); // Update character count based on loaded value
+            this.updateCharCount();
+        }
+    }
+
+
+    /**
+     * @private
+     * @description Handles the 'ai-text-generated' event from the AI button.
+     * @param {CustomEvent} event - The custom event containing the AI-generated text.
+     * @returns {void}
+     */
+    #handleAiTextGenerated(event) {
+        const aiText = event.detail.text;
+        this.addSuggestion(aiText);
+    }
+
+
+    /**
+     * @private
+     * @description Loads suggestions from sessionStorage.
+     * @returns {Array<string>} An array of stored suggestions.
+     */
+    #loadSuggestions() {
+        try {
+            const storedSuggestions = sessionStorage.getItem('owp_describe_suggestions');
+            return storedSuggestions ? JSON.parse(storedSuggestions) : [];
+        } catch (error) {
+            console.error('Error loading suggestions from sessionStorage:', error);
+            return [];
+        }
+    }
+
+
+    /**
+        * @private
+        * @description Updates the state of the AI button (disabled/enabled) based on the number of suggestions.
+        * @returns {void}
+        */
+    #updateAiButtonState() {
+        if (this.aiButton) {
+            const aiButtonElement = this.aiButton.querySelector('#writeAiButton');
+            if (this.suggestions.length >= 3) {
+                aiButtonElement.disabled = true;
+                aiButtonElement.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                aiButtonElement.disabled = false;
+                aiButtonElement.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+    }
+
+
+    /**
+     * @private
+     * @description Saves current suggestions to sessionStorage.
+     * @returns {void}
+     */
+    #saveSuggestions() {
+        try {
+            sessionStorage.setItem('owp_describe_suggestions', JSON.stringify(this.suggestions));
+        } catch (error) {
+            console.error('Error saving suggestions to sessionStorage:', error);
         }
     }
 }

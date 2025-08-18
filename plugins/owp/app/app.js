@@ -97,9 +97,6 @@ class OwpApp extends HTMLElement {
     }
 }
 
-customElements.define('owp-app', OwpApp);
-
-
 /**
  * @class OwpSessionManager
  * @description Manages the 'owp_payload' in sessionStorage, providing methods for initialization, retrieval, and updates.
@@ -203,5 +200,6 @@ class OwpSessionManager {
     }
 }
 
-// Instantiate the session manager globally
 window.owpSessionManager = new OwpSessionManager();
+customElements.define('owp-app', OwpApp);
+
