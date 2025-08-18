@@ -63,10 +63,6 @@ class OwpDescribeAiButton extends HTMLElement {
 
         } catch (error) {
             console.error('Error fetching AI description:', error);
-            // Optionally, dispatch an error event or show a user-friendly message
-        } finally {
-            this.writeAiButton.disabled = false;
-            this.writeAiButton.classList.remove('opacity-50', 'cursor-not-allowed');
         }
     }
 }
