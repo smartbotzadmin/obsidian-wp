@@ -11,7 +11,7 @@ class OwpTopbar extends HTMLElement {
     constructor() {
         super();
         this.steps = [
-            { name: "Let's Start", page: "owp-start" },
+            { name: "Start", page: "owp-start" },
             { name: "Describe", page: "owp-describe" },
             { name: "Contact", page: "owp-contact" },
             { name: "Pictures", page: "owp-pictures" },

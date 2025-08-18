@@ -45,9 +45,21 @@ class OwpApp extends HTMLElement {
      * @description Handles routing for the Single Page Application (SPA) within the WordPress admin.
      * @returns {void}
      */
+    /**
+     * @description Handles routing for the Single Page Application (SPA) within the WordPress admin.
+     * If no hash is present or if the hash is not mapped in this.routes, redirects to '#let's-start'.
+     * @returns {void}
+     */
     handleRouting() {
-        const path = window.location.hash.substring(1);
-        this.renderPage(path);
+        const currentHash = window.location.hash.substring(1);
+        const defaultHash = 'start';
+        const baseUrl = window.location.origin + window.location.pathname + window.location.search;
+
+        if (!currentHash || !this.routes[currentHash]) {
+            window.location.replace(`${baseUrl}#${defaultHash}`);
+            return;
+        }
+        this.renderPage(currentHash);
     }
 
     /**
