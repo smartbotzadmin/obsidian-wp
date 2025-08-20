@@ -16,7 +16,7 @@ class OwpContactSocialMedia extends HTMLElement {
                 Social Media
                 <img class="ml-1" src="/wp-content/plugins/owp/assets/icons/info.svg" alt="info icon">
             </label>
-            <button id="socialMenu" class="bg-slate-700 hover:bg-slate-600 text-slate-100 font-bold p-3 rounded-full flex items-center justify-center h-11 w-11 text-2xl cursor-pointer">
+            <button id="socialMenu" class="bg-slate-700 hover:bg-slate-600 text-slate-100 font-bold p-2 rounded-full flex items-center justify-center h-8 w-8 cursor-pointer">
                 <img class="h-full aspect-square" src="/wp-content/plugins/owp/assets/icons/plus.svg" />
             </button>
             <div id="socialDropdown" class="hidden absolute top-full bg-slate-300 rounded-xl shadow-lg border-2 border-slate-500 flex flex-row gap-5 p-2 mt-2 z-10">
@@ -24,8 +24,7 @@ class OwpContactSocialMedia extends HTMLElement {
             </div>
         `;
         this.socialMediaIcons = [
-            'discord', 'facebook', 'github', 'instagram', 'linkedin',
-            'messenger', 'twitch', 'whatsapp', 'youtube'
+            'discord', 'facebook', 'github', 'instagram', 'linkedin', 'twitch', 'youtube'
         ];
     }
 
@@ -42,6 +41,7 @@ class OwpContactSocialMedia extends HTMLElement {
             this.toggleSocialDropdown();
         });
         this.loadSocialIcons();
+        this.loadExistingSocialFields(); // Call the new method here
         document.addEventListener('click', this.handleOutsideClick.bind(this));
     }
 
@@ -87,10 +87,11 @@ class OwpContactSocialMedia extends HTMLElement {
 
     /**
      * @description Adds a new social media input field.
-     * @param {Event} event The click event.
+     * @param {Event} event The click event or a simulated event object.
+     * @param {string} [initialValue=''] The initial value to pre-fill the input field.
      * @returns {void}
      */
-    addSocialField(event) {
+    addSocialField(event, initialValue = '') {
         const socialName = event.target.dataset.social;
         if (!socialName) {
             return;
@@ -105,12 +106,14 @@ class OwpContactSocialMedia extends HTMLElement {
         }
 
         const socialFieldRow2 = document.createElement('div');
-        socialFieldRow2.className = "social-field-row h-11 flex items-center gap-4 mb-2"
+        socialFieldRow2.className = "social-field-row h-8 w-[70%] flex items-center gap-4 mb-2"
         socialFieldRow2.dataset.social = `${socialName}`;
         socialFieldRow2.innerHTML = /*html*/`
-            <img src="/wp-content/plugins/owp/assets/icons/social/${socialName}.svg" alt="${socialName} icon" class="h-full aspect-square flex-shrink-0 p-3 bg-slate-300 rounded-full" />
-            <input id='${socialName}-field' type="text" placeholder="Enter ${socialName} Profile URL" class='h-full flex-grow p-2 rounded-lg bg-slate-800 text-md text-slate-100 border border-slate-700 focus:outline-none focus:border-cyan-500' data-social="${socialName}" />
-            <button id='${socialName}-trashButton' class='h-full aspect-square bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold p-3 rounded-lg flex items-center justify-center flex-shrink-0 cursor-pointer' data-social="${socialName}">
+            <div class="h-full bg-slate-300 rounded-full p-2">
+                <img src="/wp-content/plugins/owp/assets/icons/social/${socialName}.svg" alt="${socialName} icon" class="h-full aspect-square" />
+            </div>
+            <input id='${socialName}-field' type="text" placeholder="Enter ${socialName} Profile URL" value="${initialValue}" class='h-full flex-grow p-2 rounded-lg bg-slate-900 text-md text-slate-100 border border-slate-700 focus:outline-none focus:border-cyan-500' data-social="${socialName}" />
+            <button id='${socialName}-trashButton' class='h-full aspect-square bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold p-2 rounded-lg flex items-center justify-center flex-shrink-0 cursor-pointer' data-social="${socialName}">
                 <img src="/wp-content/plugins/owp/assets/icons/trash.svg" alt="trash icon" class="h-full w-auto">
             </button>
         `;
@@ -136,7 +139,6 @@ class OwpContactSocialMedia extends HTMLElement {
      */
     updateSocialPayload(event) {
         const socialName = event.target.dataset.social;
-        console.log(socialName, event, event.target)
         const socialValue = event.target.value;
         const currentPayload = window.owpSessionManager.getPayload();
 
@@ -166,5 +168,44 @@ class OwpContactSocialMedia extends HTMLElement {
             }
         }
     }
+
+
+    /**
+     * @description Loads existing social media fields from the owp_payload in sessionStorage.
+     * @returns {void}
+     */
+    loadExistingSocialFields() {
+        const currentPayload = window.owpSessionManager.getPayload();
+        const socialData = currentPayload.contact.social;
+
+        if (socialData) {
+            for (const socialName in socialData) {
+                if (Object.hasOwnProperty.call(socialData, socialName)) {
+                    const socialValue = socialData[socialName];
+                    // Simulate event object for addSocialField
+                    this.addSocialField({ target: { dataset: { social: socialName } } }, socialValue);
+                }
+            }
+        }
+    }
+    /**
+     * @description Loads existing social media fields from the owp_payload in sessionStorage.
+     * @returns {void}
+     */
+    loadExistingSocialFields() {
+        const currentPayload = window.owpSessionManager.getPayload();
+        const socialData = currentPayload.contact.social;
+
+        if (socialData) {
+            for (const socialName in socialData) {
+                if (Object.hasOwnProperty.call(socialData, socialName)) {
+                    const socialValue = socialData[socialName];
+                    // Simulate event object for addSocialField
+                    this.addSocialField({ target: { dataset: { social: socialName } } }, socialValue);
+                }
+            }
+        }
+    }
 }
+
 customElements.define('owp-contact-social-media', OwpContactSocialMedia);
