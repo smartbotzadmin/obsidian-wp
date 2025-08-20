@@ -104,37 +104,28 @@ class OwpContactSocialMedia extends HTMLElement {
             return;
         }
 
-        const socialFieldRow = document.createElement('div');
-        socialFieldRow.className = `social-field-row h-11 flex items-center gap-4 mb-2`;
-        socialFieldRow.dataset.social = socialName;
-
-        const icon = document.createElement('img');
-        icon.src = `/wp-content/plugins/owp/assets/icons/social/${socialName}.svg`;
-        icon.alt = `${socialName} icon`;
-        icon.className = `h-full aspect-square flex-shrink-0 p-3 bg-slate-300 rounded-full`;
-
-        const input = document.createElement('input');
-        input.type = `text`;
-        input.placeholder = `Enter ${socialName} Profile URL`;
-        input.className = `h-full flex-grow p-2 rounded-lg bg-slate-800 text-md text-slate-100 border border-slate-700 focus:outline-none focus:border-cyan-500`;
-        input.dataset.social = socialName;
-        input.addEventListener('input', this.updateSocialPayload.bind(this));
-
-        const trashButton = document.createElement('button');
-        trashButton.className = `h-full aspect-square bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold p-3 rounded-lg flex items-center justify-center flex-shrink-0 cursor-pointer`;
-        trashButton.innerHTML = `<img src="/wp-content/plugins/owp/assets/icons/trash.svg" alt="trash icon" class="h-full w-auto">`;
-        trashButton.dataset.social = socialName;
-        trashButton.addEventListener('click', this.removeSocialField.bind(this));
-
-        socialFieldRow.appendChild(icon);
-        socialFieldRow.appendChild(input);
-        socialFieldRow.appendChild(trashButton);
+        const socialFieldRow2 = document.createElement('div');
+        socialFieldRow2.className = "social-field-row h-11 flex items-center gap-4 mb-2"
+        socialFieldRow2.dataset.social = `${socialName}`;
+        socialFieldRow2.innerHTML = /*html*/`
+            <img src="/wp-content/plugins/owp/assets/icons/social/${socialName}.svg" alt="${socialName} icon" class="h-full aspect-square flex-shrink-0 p-3 bg-slate-300 rounded-full" />
+            <input id='${socialName}-field' type="text" placeholder="Enter ${socialName} Profile URL" class='h-full flex-grow p-2 rounded-lg bg-slate-800 text-md text-slate-100 border border-slate-700 focus:outline-none focus:border-cyan-500' data-social="${socialName}" />
+            <button id='${socialName}-trashButton' class='h-full aspect-square bg-rose-500 hover:bg-rose-400 text-slate-100 font-bold p-3 rounded-lg flex items-center justify-center flex-shrink-0 cursor-pointer' data-social="${socialName}">
+                <img src="/wp-content/plugins/owp/assets/icons/trash.svg" alt="trash icon" class="h-full w-auto">
+            </button>
+        `;
 
         // Insert the new social field row before the social menu button
-        this.socialMenuButton.parentNode.insertBefore(socialFieldRow, this.socialMenuButton);
+        this.socialMenuButton.parentNode.insertBefore(socialFieldRow2, this.socialMenuButton);
+
+        // exp
+        const field = socialFieldRow2.querySelector(`#${socialName}-field`)
+        field.addEventListener('input', this.updateSocialPayload.bind(this));
+        const trashButton = socialFieldRow2.querySelector(`#${socialName}-trashButton`)
+        trashButton.addEventListener('click', this.removeSocialField.bind(this));
 
         // Initialize payload if not already present
-        this.updateSocialPayload({ target: input });
+        this.updateSocialPayload({ target: field });
     }
 
 
@@ -145,6 +136,7 @@ class OwpContactSocialMedia extends HTMLElement {
      */
     updateSocialPayload(event) {
         const socialName = event.target.dataset.social;
+        console.log(socialName, event, event.target)
         const socialValue = event.target.value;
         const currentPayload = window.owpSessionManager.getPayload();
 
