@@ -14,8 +14,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Main plugin class or functions will go here
 
 /**
+ * Adds a custom button to the WordPress admin bar.
+ * @param WP_Admin_Bar $admin_bar The WP_Admin_Bar instance.
+ * @return void
+ */
+function owp_add_admin_bar_button( $admin_bar ) {
+    $admin_bar->add_node( array(
+        'id'    => 'owp-create-with-ai',
+        'title' => 'Create with AI ObsidianWP',
+        'href'  => admin_url( 'admin.php?page=owp-app' ),
+        'meta'  => array(
+            'target' => '_self',
+            'class'  => 'owp-admin-bar-button',
+        ),
+    ) );
+}
+add_action( 'admin_bar_menu', 'owp_add_admin_bar_button', 999 );
+
+/**
  * Adds custom admin pages for Obsidian WP.
- *
  * @return void
  */
 function owp_add_admin_pages() {
@@ -38,10 +55,29 @@ function owp_add_admin_pages() {
 }
 add_action( 'admin_menu', 'owp_add_admin_pages' );
 
+/**
+ * Renders the main SPA application page.
+ * @return void
+ */
+function owp_render_app_page() {
+    add_filter( 'show_admin_bar', '__return_false' );
+    wp_enqueue_style(
+        'owp-hide-admin-bars',
+        plugins_url( 'assets/css/hide-admin-bars.css', __FILE__ )
+    );
+    wp_enqueue_script(
+        'owp-app-script',
+        plugins_url( 'app/app.js', __FILE__ ),
+        array(),
+        null,
+        true
+    );
+    echo '<owp-app></owp-app>';
+}
+
 
 /**
  * Handles redirection for the "New AI ObsidianWP" page menu item.
- *
  * @return void
  */
 function owp_handle_pages_menu_redirect() {
@@ -52,25 +88,13 @@ function owp_handle_pages_menu_redirect() {
 }
 add_action( 'admin_init', 'owp_handle_pages_menu_redirect' );
 
-/**
- * Renders the main SPA application page.
- *
- * @return void
- */
-function owp_render_app_page() {
-    add_filter( 'show_admin_bar', '__return_false' );
-    wp_enqueue_style( 'owp-hide-admin-bars', plugins_url( 'assets/css/hide-admin-bars.css', __FILE__ ) );
-    wp_enqueue_script( 'owp-app-script', plugins_url( 'app/app.js', __FILE__ ), array(), null, true );
-    echo '<owp-app></owp-app>';
-}
-
 
 /**
- * Enqueues scripts for the Gutenberg editor.
- *
- * @return void
- */
-function owp_enqueue_gutenberg_assets() {
+ * Enqueues all custom components as modules.
+* @return void
+*/
+function owp_enqueue_components() {
+    // Enqueue Gutenberg Sidebar scripts
     wp_enqueue_script(
         'owp-gutenberg-sidebar',
         plugins_url( 'gutenberg/sidebar.js', __FILE__ ),
@@ -79,16 +103,7 @@ function owp_enqueue_gutenberg_assets() {
         true
     );
 
-}
-add_action( 'enqueue_block_editor_assets', 'owp_enqueue_gutenberg_assets' );
-
-
-/**
- * Enqueues all custom components as modules.
- *
- * @return void
- */
-function owp_enqueue_components() {
+    // Enqueue Web Components scripts
     wp_enqueue_style( 'owp-output-style', plugins_url( 'assets/css/output.css', __FILE__ ) );
     $component_dir = plugin_dir_path( __FILE__ ) . 'components/';
     $component_files = glob( $component_dir . '*.js' );
@@ -101,11 +116,11 @@ function owp_enqueue_components() {
             $src,
             array(),
             null,
-            array( 'in_footer' => true, 'type' => 'module' )
+            true
         );
     }
 
-    // Enqueue SPA page components
+    // Enqueue SPA pages scripts
     $page_dir = plugin_dir_path( __FILE__ ) . 'app/pages/';
     $page_files = glob( $page_dir . '*.js' );
 
@@ -117,30 +132,10 @@ function owp_enqueue_components() {
             $src,
             array(),
             null,
-            array( 'in_footer' => true, 'type' => 'module' )
+            true
         );
     }
 }
 add_action( 'wp_enqueue_scripts', 'owp_enqueue_components' );
 add_action( 'admin_enqueue_scripts', 'owp_enqueue_components' );
 add_action( 'enqueue_block_editor_assets', 'owp_enqueue_components' );
-
-
-/**
- * Adds a custom button to the WordPress admin bar.
- *
- * @param WP_Admin_Bar $admin_bar The WP_Admin_Bar instance.
- * @return void
- */
-function owp_add_admin_bar_button( $admin_bar ) {
-    $admin_bar->add_node( array(
-        'id'    => 'owp-create-with-ai',
-        'title' => 'Create with AI ObsidianWP',
-        'href'  => admin_url( 'admin.php?page=owp-app' ),
-        'meta'  => array(
-            'target' => '_self',
-            'class'  => 'owp-admin-bar-button',
-        ),
-    ) );
-}
-add_action( 'admin_bar_menu', 'owp_add_admin_bar_button', 999 );
