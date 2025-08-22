@@ -80,13 +80,11 @@ class OwpDesignOption extends HTMLElement {
     }
     
     scrollDownDesignOption() {
-        this.hoverScroller.addEventListener('mouseenter', () => {
+        this.hoverScroller.onmouseenter = () => {
             if (this.scrollInterval) {
                 clearInterval(this.scrollInterval);
                 this.scrollInterval = null;
             }
-            
-            console.log('Entering Design Option', this.getAttribute('option-number'))
 
             const iframeDoc = this.iframe.contentDocument || this.iframe.contentWindow.document;
             const iframeBody = iframeDoc.body;
@@ -96,17 +94,15 @@ class OwpDesignOption extends HTMLElement {
                     iframeBody.style.transform = `translateY(-${this.currentScrollPostion}px)`;
                 }
             }, 20);
-        });
+        };
     }
 
     scrollUpDesignOption() {
-        this.hoverScroller.addEventListener('mouseleave', () => {
+        this.hoverScroller.onmouseleave = () => {
             if (this.scrollInterval) {
                 clearInterval(this.scrollInterval);
                 this.scrollInterval = null;
             }
-
-            console.log('Leaving Design Option', this.getAttribute('option-number'))
 
             const iframeDoc = this.iframe.contentDocument || this.iframe.contentWindow.document;
             const iframeBody = iframeDoc.body;
@@ -116,7 +112,7 @@ class OwpDesignOption extends HTMLElement {
                     iframeBody.style.transform = `translateY(-${this.currentScrollPostion}px)`;
                 }
             }, 20);
-        });
+        };
     }
 }
 

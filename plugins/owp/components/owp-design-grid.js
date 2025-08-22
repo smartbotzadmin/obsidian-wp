@@ -13,7 +13,7 @@ class OwpDesignGrid extends HTMLElement {
         this.className = `overflow-y-auto w-full max-h-screen pr-2`;
         this.innerHTML = `
             <div class="flex flex-wrap gap-6 justify-center pl-4 pr-2">
-                ${this.getPlaceholderDesigns(12)}
+                ${this.getPlaceholderDesigns(9)}
             </div>
         `;
     }
