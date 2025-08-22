@@ -56,7 +56,7 @@ function owp_add_admin_pages() {
 add_action( 'admin_menu', 'owp_add_admin_pages' );
 
 /**
- * Renders the main SPA application page.
+ * Renders the main SPA application page with no adminbar.
  * @return void
  */
 function owp_render_app_page() {
@@ -73,6 +73,18 @@ function owp_render_app_page() {
         true
     );
     echo '<owp-app></owp-app>';
+}
+
+
+/**
+ * Renders the owp design previews with no adminbar.
+ * @return void
+ */
+add_action( 'init', 'owp_preview_hide_admin_bar' );
+function owp_preview_hide_admin_bar() {
+    if ( isset( $_GET['owp-preview'] ) && $_GET['owp-preview'] === 'true' ) {
+        add_filter( 'show_admin_bar', '__return_false' );
+    }
 }
 
 
