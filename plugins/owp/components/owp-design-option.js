@@ -16,13 +16,17 @@ class OwpDesignOption extends HTMLElement {
         this.innerHTML = /*html*/`
             <div class="relative flex grow items-center justify-center bg-slate-900 text-slate-100 overflow-hidden">
                 <img
-                id="loadingOption${optionNo}"
-                src="/wp-content/plugins/owp/assets/icons/image.svg"
-                alt="Image Icon"
-                class="absolute z-3 w-full h-full opacity-10 animate-pulse"
-                >
+                    id="loadingOption${optionNo}"
+                    src="/wp-content/plugins/owp/assets/icons/image.svg"
+                    alt="Image Icon"
+                    class="absolute z-3 w-full h-full opacity-10 animate-pulse"
+                />
                 <div id="hoverScroller${optionNo}" class="absolute w-full h-full z-2 bg-slate-900" ></div>
-                <iframe class="h-full w-full" src="/?elementor_library=aspera-homepage&owp-preview=true"></iframe>
+                <iframe
+                    class="h-full w-full"
+                    src="/?elementor_library=aspera-homepage&owp-preview=true"
+                    frameborder="0"
+                ></iframe>
             </div>
             <div class="flex flex-col grow-0 shrink-0 p-4 cursor-default">
                 <div class="flex justify-between items-center">
@@ -53,6 +57,10 @@ class OwpDesignOption extends HTMLElement {
         this.setIFrameStyles();
         this.scrollDownDesignOption();
         this.scrollUpDesignOption();
+
+        this.hoverScroller.addEventListener('click', () => {
+            document.body.appendChild(new OwpDesignPreviewModal());
+        });
     }
 
     setIFrameStyles() {
