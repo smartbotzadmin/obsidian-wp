@@ -24,7 +24,7 @@ class OwpDesignOption extends HTMLElement {
                 <div id="hoverScroller${optionNo}" class="absolute w-full h-full z-2 bg-slate-900" ></div>
                 <iframe
                     class="h-full w-full"
-                    src="/?elementor_library=aspera-homepage&owp-preview=true"
+                    src="/?elementor_library=aspera-home&owp-preview=true"
                     frameborder="0"
                 ></iframe>
             </div>
@@ -59,7 +59,8 @@ class OwpDesignOption extends HTMLElement {
         this.scrollUpDesignOption();
 
         this.hoverScroller.addEventListener('click', () => {
-            document.body.appendChild(new OwpDesignPreviewModal());
+            const owpApp = document.querySelector('owp-app')
+            if (owpApp) owpApp.shadowRoot.appendChild(new OwpDesignPreviewModal());
         });
     }
 

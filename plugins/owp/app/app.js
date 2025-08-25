@@ -69,14 +69,18 @@ class OwpApp extends HTMLElement {
      */
     renderPage(path) {
         const tagName = this.routes[path] || this.routes[''];
-        if (this.shadowRoot.children.length > 4) {
-            this.shadowRoot.lastElementChild.remove();
+        const currentPage = this.shadowRoot.querySelector('#page');
+        if (currentPage) {
+            currentPage.remove();
         }
 
         if (tagName) {
-            this.shadowRoot.appendChild(document.createElement(tagName));
+            const page = document.createElement(tagName);
+            page.id = 'page';
+            this.shadowRoot.appendChild(page);
         } else {
             const notFoundElement = document.createElement('p');
+            notFoundElement.id = 'page';
             notFoundElement.textContent = 'Page not found.';
             this.shadowRoot.appendChild(notFoundElement);
         }
