@@ -31,6 +31,8 @@ class OwpDesignPreviewModal extends HTMLElement {
             'astra-palette-dark'
         ];
 
+        this.palette = this.palettes[0];
+
         this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
         this.innerHTML = /*html*/`
         <div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
@@ -79,7 +81,17 @@ class OwpDesignPreviewModal extends HTMLElement {
 
                     <!-- Color Palette Selection -->
                     <div class="flex flex-col gap-2 mb-6">
-                        <label class="flex text-slate-400 text-sm font-semibold">Color Palette: Original</label>
+                        <div class="flex items-center gap-2">
+                            <label class="flex text-slate-400 text-sm font-semibold">
+                                Color Palette:
+                            </label>
+                            <span id="selectedPalettePreview" class="flex-1 text-slate-100 text-[14px] font-normal text-wrap">
+                                ${
+                                    this.palette.replace('astra-palette-', '').charAt(0).toUpperCase()
+                                    + this.palette.replace('astra-palette-', '').slice(1)
+                                }
+                            </span>
+                        </div>
                         <div class="grid grid-cols-5 gap-2 auto-rows-2">
                             ${this.palettes.map((palette, index) => /*html*/`
                                 <div id="paletteNo${index}" class="flex justify-center items-center gap-1 p-2 bg-(--ast-global-color-5) border border-slate-700 rounded-lg cursor-pointer hover:outline hover:outline-cyan-500 hover:outline-offset-2 ${palette}">
@@ -262,6 +274,11 @@ class OwpDesignPreviewModal extends HTMLElement {
         previewBody.classList.remove(this.palette);
         this.palette = palette;
         previewBody.classList.add(this.palette);
+
+        this.querySelector('#selectedPalettePreview').innerHTML = `${
+            this.palette.replace('astra-palette-', '').charAt(0).toUpperCase()
+            + this.palette.replace('astra-palette-', '').slice(1)
+        }`;
     }
 }
 
