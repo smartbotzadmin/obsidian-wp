@@ -7,7 +7,7 @@ class OwpDesignPreviewModal extends HTMLElement {
 
     constructor() {
         super();
-        
+
         this.fontPairs = [
             { heading: 'Playfair Display', body: 'Open Sans' },
             { heading: 'Lato', body: 'Lora' },
@@ -15,6 +15,20 @@ class OwpDesignPreviewModal extends HTMLElement {
             { heading: 'Monsterrat', body: 'Source Sans Pro' },
             { heading: 'Rubik', body: 'Karla' },
             { heading: 'DM Serif Display', body: 'Work Sans' },
+        ];
+
+        this.palettes = [
+            'astra-palette-oak',
+            'astra-palette-viola',
+            'astra-palette-cedar',
+            'astra-palette-widow',
+            'astra-palette-lily',
+            'astra-palette-rose',
+            'astra-palette-sage',
+            'astra-palette-flare',
+            'astra-palette-maple',
+            'astra-palette-brich',
+            'astra-palette-dark'
         ];
 
         this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
@@ -66,46 +80,13 @@ class OwpDesignPreviewModal extends HTMLElement {
                     <!-- Color Palette Selection -->
                     <div class="flex flex-col gap-2 mb-6">
                         <label class="flex text-slate-400 text-sm font-semibold">Color Palette: Original</label>
-                        <div class="flex flex-wrap gap-2">
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-red-500"></div>
-                                <div class="w-5 h-5 rounded-full bg-blue-500"></div>
-                            </div>
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-purple-500"></div>
-                                <div class="w-5 h-5 rounded-full bg-pink-500"></div>
-                            </div>
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-blue-500"></div>
-                                <div class="w-5 h-5 rounded-full bg-green-500"></div>
-                            </div>
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-red-500"></div>
-                                <div class="w-5 h-5 rounded-full bg-yellow-500"></div>
-                            </div>
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-yellow-700"></div>
-                                <div class="w-5 h-5 rounded-full bg-orange-700"></div>
-                            </div>
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-pink-700"></div>
-                                <div class="w-5 h-5 rounded-full bg-red-700"></div>
-                            </div>
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-blue-700"></div>
-                                <div class="w-5 h-5 rounded-full bg-cyan-700"></div>
-                            </div>
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-green-700"></div>
-                                <div class="w-5 h-5 rounded-full bg-lime-700"></div>
-                            </div>
-                            <div class="flex space-x-1 p-2 border border-slate-700 rounded-md">
-                                <div class="w-5 h-5 rounded-full bg-yellow-500"></div>
-                                <div class="w-5 h-5 rounded-full bg-orange-500"></div>
-                            </div>
-                            <div class="flex items-center justify-center p-2 border border-slate-700 rounded-md bg-gray-800">
-                                <div class="w-full h-full bg-grid-pattern"></div>
-                            </div>
+                        <div class="grid grid-cols-5 gap-2 auto-rows-2">
+                            ${this.palettes.map((palette, index) => /*html*/`
+                                <div id="paletteNo${index}" class="flex justify-center items-center gap-1 p-2 bg-(--ast-global-color-5) border border-slate-700 rounded-lg cursor-pointer hover:outline hover:outline-cyan-500 hover:outline-offset-2 ${palette}">
+                                    <div class="size-3 rounded-full bg-(--ast-global-color-0)"></div>
+                                    <div class="size-3 rounded-full bg-(--ast-global-color-1)"></div>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
 
@@ -164,10 +145,10 @@ class OwpDesignPreviewModal extends HTMLElement {
         this.iframe = this.querySelector('iframe');
         this.iframe.onload = () => {
             this.preview = this.iframe.contentDocument || this.iframe.contentWindow.document;
-            
+
             const previewBody = this.preview.body;
             previewBody.style.zoom = 0.8;
-            
+
             const previewHead = this.preview.head;
             const linkGoogleFonts = `
             <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -178,7 +159,7 @@ class OwpDesignPreviewModal extends HTMLElement {
             document.head.insertAdjacentHTML('beforeend', linkGoogleFonts);
             previewHead.insertAdjacentHTML('beforeend', linkGoogleFonts);
 
-            previewBody.classList.add('astra-palette-cedar')
+            previewBody.classList.add(this.palette)
 
             this.querySelector('#loadingMaskModal').remove()
         }
@@ -186,6 +167,12 @@ class OwpDesignPreviewModal extends HTMLElement {
         this.fontPairs.forEach((fontPair, index) => {
             this.querySelector(`#fontPairNo${index}`).onclick = (e) => {
                 this.changeIFrameFontFamily(fontPair);
+            }
+        })
+
+        this.palettes.forEach((palette, index) => {
+            this.querySelector(`#paletteNo${index}`).onclick = (e) => {
+                this.changeIFramePalette(palette);
             }
         })
     }
@@ -268,8 +255,13 @@ class OwpDesignPreviewModal extends HTMLElement {
 
     }
 
-    changeIframeColors(palette) {
-        // TODO: logic here!
+    changeIFramePalette(palette) {
+        this.preview = this.iframe.contentDocument || this.iframe.contentWindow.document;
+        const previewBody = this.preview.body;
+
+        previewBody.classList.remove(this.palette);
+        this.palette = palette;
+        previewBody.classList.add(this.palette);
     }
 }
 
