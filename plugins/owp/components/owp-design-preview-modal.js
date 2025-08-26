@@ -201,42 +201,42 @@ class OwpDesignPreviewModal extends HTMLElement {
                 font-weight: 600;
             }
             
-            h1,.entry-content :where(h1){
+            h1, .entry-content :where(h1) {
                 font-size:54px;
                 font-size:3.375rem;
                 font-weight:600;
                 font-family:'${fontPair.heading}',serif;
                 line-height:1.4em;
             }
-            h2,.entry-content :where(h2){
+            h2, .entry-content :where(h2) {
                 font-size:42px;
                 font-size:2.625rem;
                 font-weight:600;
                 font-family:'${fontPair.heading}',serif;
                 line-height:1.3em;
             }
-            h3,.entry-content :where(h3){
+            h3, .entry-content :where(h3) {
                 font-size:36px;
                 font-size:2.25rem;
                 font-weight:600;
                 font-family:'${fontPair.heading}',serif;
                 line-height:1.3em;
             }
-            h4,.entry-content :where(h4){
+            h4, .entry-content :where(h4) {
                 font-size:25px;
                 font-size:1.5625rem;
                 line-height:1.2em;
                 font-weight:600;
                 font-family:'${fontPair.heading}',serif;
             }
-            h5,.entry-content :where(h5){
+            h5, .entry-content :where(h5) {
                 font-size:20px;
                 font-size:1.25rem;
                 line-height:1.2em;
                 font-weight:600;
                 font-family:'${fontPair.heading}',serif;
             }
-            h6,.entry-content :where(h6){
+            h6, .entry-content :where(h6) {
                 font-size:15px;
                 font-size:0.9375rem;
                 line-height:1.25em;
