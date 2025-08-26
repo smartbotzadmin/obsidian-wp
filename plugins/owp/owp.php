@@ -110,7 +110,7 @@ function owp_enqueue_components() {
     wp_enqueue_script(
         'owp-gutenberg-sidebar',
         plugins_url( 'gutenberg/sidebar.js', __FILE__ ),
-        array( 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data' ),
+        array(),
         null,
         true
     );
