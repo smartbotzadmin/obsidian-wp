@@ -18,6 +18,10 @@ class OwpDesignPreviewModal extends HTMLElement {
         this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
         this.innerHTML = /*html*/`
         <div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
+            <!-- Loading Mask -->
+            <div id="loadingMaskModal" class="absolute inset-0 bg-slate-900 flex justify-center items-center">
+                <span class="text-slate-700 text-lg font-sans font-semibold animate-pulse">Loading...</span>
+            </div>
             <!-- Sidebar -->
             <div id="sidebarModal" class="lg:w-[350px] w-0 h-full bg-slate-950 lg:p-8 p-0 lg:visible invisible">
                 <!-- Sidebar Container -->
@@ -170,6 +174,8 @@ class OwpDesignPreviewModal extends HTMLElement {
 
             document.head.insertAdjacentHTML('beforeend', linkGoogleFonts);
             previewHead.insertAdjacentHTML('beforeend', linkGoogleFonts);
+
+            this.querySelector('#loadingMaskModal').remove()
         }
 
         this.fontPairs.forEach((fontPair, index) => {

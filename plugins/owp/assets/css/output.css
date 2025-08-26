@@ -232,6 +232,9 @@
   .static {
     position: static;
   }
+  .inset-0 {
+    inset: calc(var(--spacing) * 0);
+  }
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
@@ -716,6 +719,9 @@
   .bg-slate-300 {
     background-color: var(--color-slate-300);
   }
+  .bg-slate-500 {
+    background-color: var(--color-slate-500);
+  }
   .bg-slate-600 {
     background-color: var(--color-slate-600);
   }
@@ -812,6 +818,9 @@
   .text-right {
     text-align: right;
   }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
   .text-3xl {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
@@ -880,6 +889,12 @@
   }
   .text-slate-400 {
     color: var(--color-slate-400);
+  }
+  .text-slate-500 {
+    color: var(--color-slate-500);
+  }
+  .text-slate-700 {
+    color: var(--color-slate-700);
   }
   .text-white {
     color: var(--color-white);
