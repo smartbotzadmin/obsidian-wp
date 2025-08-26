@@ -15,7 +15,6 @@ class OwpDesignPreviewModal extends HTMLElement {
             { heading: 'Rubik', body: 'Karla' },
             { heading: 'DM Serif Display', body: 'Work Sans' },
         ]
-        this.fontPairSelected = this.fontPairs[0];
         this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
         this.innerHTML = /*html*/`
         <div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
@@ -40,19 +39,19 @@ class OwpDesignPreviewModal extends HTMLElement {
 
                     <!-- Font Pair Selection -->
                     <div class="flex flex-col gap-2 mb-6">
-                        <div class="flex items-end gap-2">
-                            <label class="flex items-center text-slate-400 text-sm font-semibold">
+                        <div class="flex items-center gap-2">
+                            <label class="flex shrink-0 items-center text-slate-400 text-sm font-semibold">
                                 Font Pair:
                             </label>
-                            <span class="text-slate-100 text-[14px] font-normal">
-                                ${this.fontPairSelected.heading} & ${this.fontPairSelected.body}
+                            <span id="selectedFontPairPreview" class="flex-1 text-slate-100 text-[14px] font-normal text-wrap">
+                                ${this.fontPairs[0].heading} & ${this.fontPairs[0].body}
                             </span>
                         </div>
                         <div class="flex flex-wrap gap-2">
                             ${this.fontPairs.map((fontPair, index) => /*html*/`
                                 <div id="fontPairNo${index}" class="flex grow items-center justify-center w-1/4 h-10 border border-slate-700 hover:outline hover:outline-cyan-500 hover:outline-offset-2 rounded-md text-slate-300 text-md cursor-pointer">
-                                    <span class="font-bold" style="font-family: ${fontPair.heading};">A</span>
-                                    <span class="font-normal" style="font-family: ${fontPair.body};">g</span>
+                                    <span class="font-bold text-lg" style="font-family: ${fontPair.heading};">A</span>
+                                    <span class="font-normal text-lg" style="font-family: ${fontPair.body};">g</span>
                                 </div>
                             `).join('')}
                         </div>
@@ -208,6 +207,12 @@ class OwpDesignPreviewModal extends HTMLElement {
         }
 
         previewAstraFontFamily.innerHTML = styleTemplate;
+
+        const selectedFontPairPreview = this.querySelector('#selectedFontPairPreview');
+        selectedFontPairPreview.innerHTML = `
+            ${fontPair.heading} & ${fontPair.body}
+        `;
+
     }
 
     changeIframeColors(palette) {
