@@ -33,6 +33,24 @@ class OwpDesignPreviewModal extends HTMLElement {
 
         this.palette = this.palettes[0];
 
+        this.responsiveResolutions = {
+            desktop: {
+                width: '1366px', //1920px
+                height: '768px' //1080px
+            },
+            tablet: {
+                width: '545px', //768px
+                height: '768px' //1080px
+            },
+            mobile: {
+                width: '300px', //422px
+                height: '650px' //915px
+            }
+        }
+
+        this.responsiveResolution = this.responsiveResolutions.desktop;
+        console.log(this.responsiveResolution.width, this.responsiveResolution.height)
+
         this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
         this.innerHTML = /*html*/`
         <div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
@@ -41,7 +59,7 @@ class OwpDesignPreviewModal extends HTMLElement {
                 <span class="text-slate-700 text-lg font-sans font-semibold animate-pulse">Loading...</span>
             </div>
             <!-- Sidebar -->
-            <div id="sidebarModal" class="lg:w-[350px] w-0 h-full bg-slate-950 lg:p-8 p-0 lg:visible invisible">
+            <div id="sidebarModal" class="shrink-0 lg:w-[350px] w-0 h-full bg-slate-950 lg:p-8 p-0 lg:visible invisible">
                 <!-- Sidebar Container -->
                 <div class="flex flex-col justify-between w-full h-full">
                     <!-- Obsidian Logo -->
@@ -54,7 +72,7 @@ class OwpDesignPreviewModal extends HTMLElement {
                         <label class="flex text-slate-400 text-sm font-semibold">
                           Site Logo
                         </label>
-                        <div class="flex grow items-center justify-center border-2 border-slate-700 rounded-md p-4 cursor-pointer">
+                        <div class="min-h-20 flex grow items-center justify-center border-2 border-slate-700 rounded-md p-4 cursor-pointer bg-slate-900 hover:bg-slate-950 hover:outline hover:outline-offset-2 hover:outline-cyan-500 transition-colors duration-200">
                             <img src="/wp-content/plugins/owp/assets/icons/image.svg" />
                         </div>
                     </div>
@@ -71,7 +89,7 @@ class OwpDesignPreviewModal extends HTMLElement {
                         </div>
                         <div class="flex flex-wrap gap-2">
                             ${this.fontPairs.map((fontPair, index) => /*html*/`
-                                <div id="fontPairNo${index}" class="flex grow items-center justify-center w-1/4 h-10 border border-slate-700 hover:outline hover:outline-cyan-500 hover:outline-offset-2 rounded-md text-slate-300 text-md cursor-pointer">
+                                <div id="fontPairNo${index}" class="flex grow items-center justify-center w-1/4 h-10 border border-slate-700 hover:outline hover:bg-slate-950 outline-cyan-500 rounded-md text-slate-300 text-md cursor-pointer bg-slate-900 transition-colors duration-200">
                                     <span class="font-bold text-lg" style="font-family: ${fontPair.heading};">A</span>
                                     <span class="font-normal text-lg" style="font-family: ${fontPair.body};">g</span>
                                 </div>
@@ -92,11 +110,11 @@ class OwpDesignPreviewModal extends HTMLElement {
                                 }
                             </span>
                         </div>
-                        <div class="grid grid-cols-5 gap-2 auto-rows-2">
+                        <div class="grid grid-cols-5 gap-1">
                             ${this.palettes.map((palette, index) => /*html*/`
-                                <div id="paletteNo${index}" class="flex justify-center items-center gap-1 p-2 bg-(--ast-global-color-5) border border-slate-700 rounded-lg cursor-pointer hover:outline hover:outline-cyan-500 hover:outline-offset-2 ${palette}">
-                                    <div class="size-3 rounded-full bg-(--ast-global-color-0)"></div>
-                                    <div class="size-3 rounded-full bg-(--ast-global-color-1)"></div>
+                                <div id="paletteNo${index}" class="flex justify-center items-center gap-1 py-2 bg-(--ast-global-color-5) border border-slate-700 rounded-lg cursor-pointer hover:outline hover:outline-cyan-500 hover:outline-offset-2 ${palette}">
+                                    <div class="size-4 rounded-full bg-(--ast-global-color-0)"></div>
+                                    <div class="size-4 rounded-full bg-(--ast-global-color-1)"></div>
                                 </div>
                             `).join('')}
                         </div>
@@ -104,26 +122,26 @@ class OwpDesignPreviewModal extends HTMLElement {
 
                     <!-- Action Buttons -->
                     <div class="flex flex-col gap-2 mb-6">
-                        <button class="w-full bg-indigo-600 text-white py-3 rounded-md flex items-center justify-center">
-                            Continue <span class="ml-2">→</span>
+                        <button class="w-full flex gap-2 bg-cyan-600 hover:bg-cyan-500 text-slate-100 text-sm font-semibold py-3 rounded-md flex items-center justify-center cursor-pointer transition-colors duration-200">
+                            <label>Continue</label>
+                            <img class="size-5" src="/wp-content/plugins/owp/assets/icons/arrow-right.svg" />
                         </button>
-                        <button class="w-full bg-slate-700 text-white py-3 rounded-md">Back to Other Designs</button>
+                        <button id="returnToOtherDesignsButton" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-sm font-semibold py-3 rounded-md cursor-pointer transition-colors duration-200">
+                            Back to Other Designs
+                        </button>
                     </div>
 
                     <!-- Responsive Preview Buttons-->
                     <div class="flex items-center justify-between border-t border-slate-700 pt-4">
                         <span class="text-slate-400 text-sm font-semibold">Responsive Preview</span>
-                        <div class="flex space-x-2">
-                            <button class="p-2 border border-slate-700 rounded-md text-slate-300">
-                                <!-- Desktop Icon -->
+                        <div class="flex gap-2">
+                            <button id="desktopPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
                                 <img src="/wp-content/plugins/owp/assets/icons/desktop.svg" alt="Desktop Icon" class="w-5 h-5">
                             </button>
-                            <button class="p-2 border border-slate-700 rounded-md text-slate-300">
-                                <!-- Tablet Icon -->
+                            <button id="tabletPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
                                 <img src="/wp-content/plugins/owp/assets/icons/tablet.svg" alt="Tablet Icon" class="w-5 h-5">
                             </button>
-                            <button class="p-2 border border-slate-700 rounded-md text-slate-300">
-                                <!-- Mobile Icon -->
+                            <button id="mobilePreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
                                 <img src="/wp-content/plugins/owp/assets/icons/mobile.svg" alt="Mobile Icon" class="w-5 h-5">
                             </button>
                         </div>
@@ -132,14 +150,26 @@ class OwpDesignPreviewModal extends HTMLElement {
             </div>
 
             <!-- Iframe -->
-            <iframe
-                src="/?elementor_library=aspera-home&owp-preview=true"
-                class="h-full flex-1 bg-slate-100"
-                frameborder="0"
-            ></iframe>
+            <div class="grow-1 flex justify-center items-center p-10 bg-slate-900">
+                <div id="previewContainer" class="flex flex-col rounded-lg overflow-hidden" style="width: ${this.responsiveResolution.width}; height: ${this.responsiveResolution.height};">
+                    <div id="falseBrowserHeader" class="flex-0 flex flex-row justify-between items-center h-8 bg-slate-100 p-2">
+                        <img src="/wp-content/plugins/owp/assets/icons/globe.svg" class="size-4"/>
+                        <div class="flex justify-center items-center gap-2">
+                            <div class="size-4 bg-yellow-500 rounded-full"></div>
+                            <div class="size-4 bg-green-500 rounded-full"></div>
+                            <div class="size-4 bg-red-500 rounded-full"></div>
+                        </div>
+                    </div>
+                    <iframe
+                        src="/?elementor_library=aspera-home&owp-preview=true"
+                        class="flex-1 bg-slate-100"
+                        frameborder="0"
+                    ></iframe>
+                </div>
+            </div>
 
             <!-- Close Button -->
-            <button id="closeModal" class="absolute top-4 right-4 p-2 bg-slate-700 rounded-full hover:bg-slate-600 cursor-pointer">
+            <button id="closeModal" class="absolute top-1 right-1 p-1 bg-slate-700 rounded-full hover:bg-slate-600 cursor-pointer">
                 <img src="/wp-content/plugins/owp/assets/icons/x.svg" alt="Close Icon" class="w-6 h-6">
             </button>
         </div>
@@ -150,16 +180,17 @@ class OwpDesignPreviewModal extends HTMLElement {
         this.sidebar = this.querySelector('#sidebarModal');
 
         this.closeButton = this.querySelector('#closeModal');
-        this.closeButton.addEventListener('click', () => {
-            this.remove();
-        });
+        this.closeButton.onclick = () => { this.remove() };
+
+        this.returnToOtherDesignsButton = this.querySelector('#returnToOtherDesignsButton');
+        this.returnToOtherDesignsButton.onclick = () => { this.remove() };
 
         this.iframe = this.querySelector('iframe');
         this.iframe.onload = () => {
             this.preview = this.iframe.contentDocument || this.iframe.contentWindow.document;
 
             const previewBody = this.preview.body;
-            previewBody.style.zoom = 0.8;
+            previewBody.style.zoom = 0.71;
 
             const previewHead = this.preview.head;
             const linkGoogleFonts = `
@@ -185,6 +216,13 @@ class OwpDesignPreviewModal extends HTMLElement {
         this.palettes.forEach((palette, index) => {
             this.querySelector(`#paletteNo${index}`).onclick = (e) => {
                 this.changeIFramePalette(palette);
+            }
+        })
+
+        Object.keys(this.responsiveResolutions).forEach(key => {
+            this.querySelector(`#${key}Preview`).onclick = (e) => {
+                console.log('pressed responsive:', key)
+                this.changeResponsiveResolution(key);
             }
         })
     }
@@ -264,7 +302,6 @@ class OwpDesignPreviewModal extends HTMLElement {
         selectedFontPairPreview.innerHTML = `
             ${fontPair.heading} & ${fontPair.body}
         `;
-
     }
 
     changeIFramePalette(palette) {
@@ -279,6 +316,18 @@ class OwpDesignPreviewModal extends HTMLElement {
             this.palette.replace('astra-palette-', '').charAt(0).toUpperCase()
             + this.palette.replace('astra-palette-', '').slice(1)
         }`;
+    }
+
+    changeResponsiveResolution(type) {
+        const previewContainer = this.querySelector('#previewContainer');
+        this.responsiveResolution = this.responsiveResolutions[type];
+        previewContainer.style.width = this.responsiveResolution.width;
+        previewContainer.style.height = this.responsiveResolution.height;
+
+        const falseBrowserHeader = this.querySelector('#falseBrowserHeader');
+        (type === 'desktop') 
+        ? falseBrowserHeader.classList.remove('hidden')
+        : falseBrowserHeader.classList.add('hidden')
     }
 }
 
