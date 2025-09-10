@@ -4,33 +4,41 @@
  * @description Web component for displaying a grid of design options on the design page.
  */
 class OwpDesignGrid extends HTMLElement {
-    /**
-     * @description Constructs the OwpDesignGrid instance.
-     * @returns {void}
-     */
+    designs = [];
+
     constructor() {
         super();
-        this.className = `overflow-y-auto w-full max-h-screen pr-2`;
+        this.getTemplates()
+            .then(designs => {
+                this.designs = designs
+                console.log(this.designs)
+                this.querySelector('#designGrid').innerHTML = /*html*/`
+                    ${this.designs.map((design, index) => /*html*/`
+                        <owp-design-option
+                            option=${index + 1}
+                            url=${design.url}
+                        ></owp-design-option>
+                    `).join('')}
+                `;
+
+            })
+        this.className = `flex-1 overflow-y-auto w-full max-h-screen pr-2`;
         this.innerHTML = `
-            <div class="flex flex-wrap gap-6 justify-center pl-4 pr-2">
-                ${this.getPlaceholderDesigns(9)}
+            <div id="designGrid" class="h-full flex flex-wrap gap-6 justify-center items-center text-2xl text-gray-300 font-semibold pl-4 pr-2">
+                Loading...
             </div>
         `;
     }
 
     /**
      * @description Generates placeholder design option HTML.
-     * @param {number} count - The number of placeholder design options to generate.
-     * @returns {string} The HTML string for placeholder design options.
+     * @returns {string} The owp pre-made elementor templates, design options.
      */
-    getPlaceholderDesigns(count) {
-        let designsHtml = '';
-        for (let i = 0; i < count; i++) {
-            designsHtml += `
-                <owp-design-option option-number="${i + 1}"></owp-design-option>
-            `;
-        }
-        return designsHtml;
+    async getTemplates() {
+        const res = await fetch(
+            '/wp-json/owp/api/templates'
+        )
+        return await res.json()
     }
 }
 

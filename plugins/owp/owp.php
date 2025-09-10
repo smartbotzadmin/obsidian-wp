@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-// Main plugin class or functions will go here
 
 /**
  * Adds a custom button to the WordPress admin bar.
@@ -30,6 +29,7 @@ function owp_add_admin_bar_button( $admin_bar ) {
     ) );
 }
 add_action( 'admin_bar_menu', 'owp_add_admin_bar_button', 999 );
+
 
 /**
  * Adds custom admin pages for Obsidian WP.
@@ -54,6 +54,20 @@ function owp_add_admin_pages() {
     );
 }
 add_action( 'admin_menu', 'owp_add_admin_pages' );
+
+
+/**
+ * Handles redirection for the "New AI ObsidianWP" page menu item.
+ * @return void
+ */
+function owp_handle_pages_menu_redirect() {
+    if ( is_admin() && isset( $_GET['page'] ) && 'owp-start-redirect' === $_GET['page'] ) {
+        wp_redirect( admin_url( 'admin.php?page=owp-app' ) );
+        exit;
+    }
+}
+add_action( 'admin_init', 'owp_handle_pages_menu_redirect' );
+
 
 /**
  * Renders the main SPA application page with no adminbar.
@@ -89,23 +103,18 @@ function owp_preview_hide_admin_bar() {
 
 
 /**
- * Handles redirection for the "New AI ObsidianWP" page menu item.
- * @return void
- */
-function owp_handle_pages_menu_redirect() {
-    if ( is_admin() && isset( $_GET['page'] ) && 'owp-start-redirect' === $_GET['page'] ) {
-        wp_redirect( admin_url( 'admin.php?page=owp-app' ) );
-        exit;
-    }
-}
-add_action( 'admin_init', 'owp_handle_pages_menu_redirect' );
-
-
-/**
- * Enqueues all custom components as modules.
+ * Enqueues the tailwindcss output.css for global styles.
+ * Enqueues all JS owp plugin pages.
+ * Enqueues all JS owp plugin components.
 * @return void
 */
 function owp_enqueue_components() {
+    // Enqueue global style
+    wp_enqueue_style(
+        'owp-output-style',
+        plugins_url( 'assets/css/output.css', __FILE__ )
+    );
+
     // Enqueue Gutenberg Sidebar scripts
     wp_enqueue_script(
         'owp-gutenberg-sidebar',
@@ -115,24 +124,7 @@ function owp_enqueue_components() {
         true
     );
 
-    // Enqueue Web Components scripts
-    wp_enqueue_style( 'owp-output-style', plugins_url( 'assets/css/output.css', __FILE__ ) );
-    $component_dir = plugin_dir_path( __FILE__ ) . 'components/';
-    $component_files = glob( $component_dir . '*.js' );
-
-    foreach ( $component_files as $file ) {
-        $handle = 'owp-component-' . sanitize_title( basename( $file, '.js' ) );
-        $src = plugins_url( 'components/' . basename( $file ), __FILE__ );
-        wp_enqueue_script(
-            $handle,
-            $src,
-            array(),
-            null,
-            true
-        );
-    }
-
-    // Enqueue SPA pages scripts
+    // Enqueue Page scripts
     $page_dir = plugin_dir_path( __FILE__ ) . 'app/pages/';
     $page_files = glob( $page_dir . '*.js' );
 
@@ -147,7 +139,44 @@ function owp_enqueue_components() {
             true
         );
     }
+
+    // Enqueue Web Components scripts
+    $component_dir = plugin_dir_path( __FILE__ ) . 'components/';
+    $component_files = glob( $component_dir . '*.js' );
+
+    foreach ( $component_files as $file ) {
+        $handle = 'owp-component-' . sanitize_title( basename( $file, '.js' ) );
+        $src = plugins_url( 'components/' . basename( $file ), __FILE__ );
+        wp_enqueue_script(
+            $handle,
+            $src,
+            array(),
+            null,
+            true
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'owp_enqueue_components' );
 add_action( 'admin_enqueue_scripts', 'owp_enqueue_components' );
 add_action( 'enqueue_block_editor_assets', 'owp_enqueue_components' );
+
+
+/**
+ * Register plugin API endpoints
+* @return void
+*/
+function register_api_endpoints() {
+    register_rest_route(
+        'owp/api',
+        '/templates',
+        array(
+            'methods'   => 'GET',
+            'callback'  => 'get_templates',
+            'permission_callback' => '__return_true',
+            'args' => array(),
+        )
+    );
+}
+add_action( 'rest_api_init', 'register_api_endpoints' );
+
+require_once plugin_dir_path( __FILE__ ) . 'api/templates.php';

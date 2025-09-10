@@ -5,7 +5,7 @@
  */
 class OwpDesignPreviewModal extends HTMLElement {
 
-    constructor() {
+    constructor(url) {
         super();
 
         this.fontPairs = [
@@ -49,15 +49,16 @@ class OwpDesignPreviewModal extends HTMLElement {
         }
 
         this.responsiveResolution = this.responsiveResolutions.desktop;
-        console.log(this.responsiveResolution.width, this.responsiveResolution.height)
 
         this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
         this.innerHTML = /*html*/`
         <div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
+
             <!-- Loading Mask -->
             <div id="loadingMaskModal" class="absolute inset-0 bg-slate-900 flex justify-center items-center">
                 <span class="text-slate-700 text-lg font-sans font-semibold animate-pulse">Loading...</span>
             </div>
+
             <!-- Sidebar -->
             <div id="sidebarModal" class="shrink-0 lg:w-[350px] w-0 h-full bg-slate-950 lg:p-8 p-0 lg:visible invisible">
                 <!-- Sidebar Container -->
@@ -161,7 +162,7 @@ class OwpDesignPreviewModal extends HTMLElement {
                         </div>
                     </div>
                     <iframe
-                        src="/?elementor_library=aspera-home&owp-preview=true"
+                        src="${url}"
                         class="flex-1 bg-slate-100"
                         frameborder="0"
                     ></iframe>
@@ -221,7 +222,6 @@ class OwpDesignPreviewModal extends HTMLElement {
 
         Object.keys(this.responsiveResolutions).forEach(key => {
             this.querySelector(`#${key}Preview`).onclick = (e) => {
-                console.log('pressed responsive:', key)
                 this.changeResponsiveResolution(key);
             }
         })
