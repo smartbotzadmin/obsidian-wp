@@ -176,10 +176,10 @@ class OwpDesignPreviewModal extends HTMLElement {
 
     const close = () => {
       this.remove()
-      const currentPayload = window.owpSessionManager.getPayload()
       window.owpSessionManager.updatePayloadSection('design', {
-        ...currentPayload.design,
-        template: null
+        template: null,
+        font: null,
+        palette: null
       })
     }
 
@@ -217,10 +217,14 @@ class OwpDesignPreviewModal extends HTMLElement {
       this.querySelector('#loadingMaskModal').remove()
     }
 
-    const currentPayload = window.owpSessionManager.getPayload()
+    const paletteName = this.palette
+      .replace('astra-palette-', '')
+      .charAt(0)
+      .toUpperCase() + this.palette.replace('astra-palette-', '').slice(1)
     window.owpSessionManager.updatePayloadSection('design', {
-      ...currentPayload.design,
-      template: this.id
+      template: this.id,
+      font: this.fontPairs[0],
+      palette: paletteName
     })
 
     this.fontPairs.forEach((fontPair, index) => {

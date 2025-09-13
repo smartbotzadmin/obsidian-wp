@@ -13,7 +13,11 @@
 function create_page( WP_REST_Request $req) {
   $payload = $req->get_json_params();
 
-  $template_id = $payload['design']['template'];
+  $design = $payload['design'];
+  $template_id = $design['template'];
+  $palette = $design['palette'];
+  $font_body = $design['font']['body'];
+  $font_heading = $design['font']['heading'];
   
   // Get the template
   $template = get_post( $template_id );
@@ -45,7 +49,20 @@ function create_page( WP_REST_Request $req) {
       $css_file->update();
   }
 
-  // Setup the wp_options (Astra & Elementor global settings)
+  // Setup the wp_options (Astra Typography)
+  $astra_settings = get_option( 'astra-settings', null);
+  $astra_settings['body-font-family'] = "'{$font_body}'" . ", sans-serif";
+  $astra_settings['headings-font-family'] = "'{$font_heading}'" . ", serif";
+  
+  // Setup the wp_options (Astra Color Palette)
+  $astra_color_palettes = get_option( 'astra-color-palettes', null);
+  $palette_selected = $astra_color_palettes['presets'][$palette];
+  $astra_settings['global-color-palette']['palette'] = $palette_selected;
+  $astra_color_palettes['palettes']['palette_1'] = $palette_selected;
+  
+  update_option( 'astra-settings', $astra_settings );
+  update_option( 'astra-color-palettes', $astra_color_palettes );
 
-  return new WP_REST_Response( array( $page_metadata, $page_id ), 200 );
+
+  return new WP_REST_Response( array( $page_metadata, $page_id, $astra_settings, $astra_color_palettes ), 200 );
 }
