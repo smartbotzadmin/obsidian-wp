@@ -5,53 +5,47 @@
  */
 class OwpDesignPreviewModal extends HTMLElement {
 
-    constructor(url) {
-        super();
+  constructor() {
+    super();
 
-        this.fontPairs = [
-            { heading: 'Playfair Display', body: 'Open Sans' },
-            { heading: 'Lato', body: 'Lora' },
-            { heading: 'Barlow Semi Condensed', body: 'Roboto' },
-            { heading: 'Monsterrat', body: 'Source Sans Pro' },
-            { heading: 'Rubik', body: 'Karla' },
-            { heading: 'DM Serif Display', body: 'Work Sans' },
-        ];
+    this.fontPairs = [
+      { heading: 'Playfair Display', body: 'Open Sans' },
+      { heading: 'Lato', body: 'Lora' },
+      { heading: 'Barlow Semi Condensed', body: 'Roboto' },
+      { heading: 'Monsterrat', body: 'Source Sans Pro' },
+      { heading: 'Rubik', body: 'Karla' },
+      { heading: 'DM Serif Display', body: 'Work Sans' },
+    ];
 
-        this.palettes = [
-            'astra-palette-oak',
-            'astra-palette-viola',
-            'astra-palette-cedar',
-            'astra-palette-widow',
-            'astra-palette-lily',
-            'astra-palette-rose',
-            'astra-palette-sage',
-            'astra-palette-flare',
-            'astra-palette-maple',
-            'astra-palette-brich',
-            'astra-palette-dark'
-        ];
+    this.palettes = [
+      'astra-palette-oak',
+      'astra-palette-viola',
+      'astra-palette-cedar',
+      'astra-palette-widow',
+      'astra-palette-lily',
+      'astra-palette-rose',
+      'astra-palette-sage',
+      'astra-palette-flare',
+      'astra-palette-maple',
+      'astra-palette-brich',
+      'astra-palette-dark'
+    ];
+    this.palette = this.palettes[0];
 
-        this.palette = this.palettes[0];
+    this.responsiveResolutions = {
+      desktop: { width: '1366px', height: '768px' },  //1920x1080
+      tablet: { width: '545px', height: '768px' },    //768x1080
+      mobile: { width: '300px', height: '650px' }     //422x915
+    }
+    this.responsiveResolution = this.responsiveResolutions.desktop;
+  }
 
-        this.responsiveResolutions = {
-            desktop: {
-                width: '1366px', //1920px
-                height: '768px' //1080px
-            },
-            tablet: {
-                width: '545px', //768px
-                height: '768px' //1080px
-            },
-            mobile: {
-                width: '300px', //422px
-                height: '650px' //915px
-            }
-        }
+  connectedCallback() {
+    this.id = this.getAttribute('template-id')
+    this.url = this.getAttribute('url')
 
-        this.responsiveResolution = this.responsiveResolutions.desktop;
-
-        this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
-        this.innerHTML = /*html*/`
+    this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
+    this.innerHTML = /*html*/`
         <div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
 
             <!-- Loading Mask -->
@@ -105,10 +99,12 @@ class OwpDesignPreviewModal extends HTMLElement {
                                 Color Palette:
                             </label>
                             <span id="selectedPalettePreview" class="flex-1 text-slate-100 text-[14px] font-normal text-wrap">
-                                ${
-                                    this.palette.replace('astra-palette-', '').charAt(0).toUpperCase()
-                                    + this.palette.replace('astra-palette-', '').slice(1)
-                                }
+                                ${this.palette
+        .replace('astra-palette-', '')
+        .charAt(0).toUpperCase() + this.palette.replace('astra-palette-', '')
+          .slice(1)
+
+      }
                             </span>
                         </div>
                         <div class="grid grid-cols-5 gap-1">
@@ -123,12 +119,12 @@ class OwpDesignPreviewModal extends HTMLElement {
 
                     <!-- Action Buttons -->
                     <div class="flex flex-col gap-2 mb-6">
-                        <button class="w-full flex gap-2 bg-cyan-600 hover:bg-cyan-500 text-slate-100 text-sm font-semibold py-3 rounded-md flex items-center justify-center cursor-pointer transition-colors duration-200">
-                            <label>Continue</label>
+                        <button id="createButton" class="w-full flex gap-2 bg-cyan-600 hover:bg-cyan-500 text-slate-100 text-sm font-semibold py-3 rounded-md flex items-center justify-center cursor-pointer transition-colors duration-200">
+                            <span>Create</span>
                             <img class="size-5" src="/wp-content/plugins/owp/assets/icons/arrow-right.svg" />
                         </button>
                         <button id="returnToOtherDesignsButton" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-sm font-semibold py-3 rounded-md cursor-pointer transition-colors duration-200">
-                            Back to Other Designs
+                            <span>Back to Other Designs</span>
                         </button>
                     </div>
 
@@ -162,7 +158,7 @@ class OwpDesignPreviewModal extends HTMLElement {
                         </div>
                     </div>
                     <iframe
-                        src="${url}"
+                        src="${this.url}"
                         class="flex-1 bg-slate-100"
                         frameborder="0"
                     ></iframe>
@@ -174,63 +170,82 @@ class OwpDesignPreviewModal extends HTMLElement {
                 <img src="/wp-content/plugins/owp/assets/icons/x.svg" alt="Close Icon" class="w-6 h-6">
             </button>
         </div>
-      `;
+        `;
+
+    this.sidebar = this.querySelector('#sidebarModal');
+
+    const close = () => {
+      this.remove()
+      const currentPayload = window.owpSessionManager.getPayload()
+      window.owpSessionManager.updatePayloadSection('design', {
+        ...currentPayload.design,
+        template: null
+      })
     }
 
-    connectedCallback() {
-        this.sidebar = this.querySelector('#sidebarModal');
+    this.closeButton = this.querySelector('#closeModal');
+    this.closeButton.onclick = close
 
-        this.closeButton = this.querySelector('#closeModal');
-        this.closeButton.onclick = () => { this.remove() };
+    const returnToOtherDesignsButton =
+      this.querySelector('#returnToOtherDesignsButton');
+    returnToOtherDesignsButton.onclick = close
 
-        this.returnToOtherDesignsButton = this.querySelector('#returnToOtherDesignsButton');
-        this.returnToOtherDesignsButton.onclick = () => { this.remove() };
+    const createButton = this.querySelector('#createButton');
+    createButton.onclick = () => {
+      this.createPage()
+    }
 
-        this.iframe = this.querySelector('iframe');
-        this.iframe.onload = () => {
-            this.preview = this.iframe.contentDocument || this.iframe.contentWindow.document;
+    this.iframe = this.querySelector('iframe');
+    this.iframe.onload = () => {
+      this.preview = this.iframe.contentDocument || this.iframe.contentWindow.document;
 
-            const previewBody = this.preview.body;
-            previewBody.style.zoom = 0.71;
+      const previewBody = this.preview.body;
+      previewBody.style.zoom = 0.71;
 
-            const previewHead = this.preview.head;
-            const linkGoogleFonts = `
+      const previewHead = this.preview.head;
+      const linkGoogleFonts = `
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Serif+Display:ital@0;1&family=Karla:ital,wght@0,200..800;1,200..800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 `;
 
-            document.head.insertAdjacentHTML('beforeend', linkGoogleFonts);
-            previewHead.insertAdjacentHTML('beforeend', linkGoogleFonts);
+      document.head.insertAdjacentHTML('beforeend', linkGoogleFonts);
+      previewHead.insertAdjacentHTML('beforeend', linkGoogleFonts);
 
-            previewBody.classList.add(this.palette)
+      previewBody.classList.add(this.palette)
 
-            this.querySelector('#loadingMaskModal').remove()
-        }
-
-        this.fontPairs.forEach((fontPair, index) => {
-            this.querySelector(`#fontPairNo${index}`).onclick = (e) => {
-                this.changeIFrameFontFamily(fontPair);
-            }
-        })
-
-        this.palettes.forEach((palette, index) => {
-            this.querySelector(`#paletteNo${index}`).onclick = (e) => {
-                this.changeIFramePalette(palette);
-            }
-        })
-
-        Object.keys(this.responsiveResolutions).forEach(key => {
-            this.querySelector(`#${key}Preview`).onclick = (e) => {
-                this.changeResponsiveResolution(key);
-            }
-        })
+      this.querySelector('#loadingMaskModal').remove()
     }
 
-    changeIFrameFontFamily(fontPair) {
-        const iframeHead = this.iframe.contentDocument.head;
-        const previewAstraFontFamily = iframeHead.querySelector('#previewAstraFontFamily')
-        const styleTemplate = `
+    const currentPayload = window.owpSessionManager.getPayload()
+    window.owpSessionManager.updatePayloadSection('design', {
+      ...currentPayload.design,
+      template: this.id
+    })
+
+    this.fontPairs.forEach((fontPair, index) => {
+      this.querySelector(`#fontPairNo${index}`).onclick = (e) => {
+        this.changeIFrameFontFamily(fontPair);
+      }
+    })
+
+    this.palettes.forEach((palette, index) => {
+      this.querySelector(`#paletteNo${index}`).onclick = (e) => {
+        this.changeIFramePalette(palette);
+      }
+    })
+
+    Object.keys(this.responsiveResolutions).forEach(key => {
+      this.querySelector(`#${key}Preview`).onclick = (e) => {
+        this.changeResponsiveResolution(key);
+      }
+    })
+  }
+
+  changeIFrameFontFamily(fontPair) {
+    const iframeHead = this.iframe.contentDocument.head;
+    const previewAstraFontFamily = iframeHead.querySelector('#previewAstraFontFamily')
+    const styleTemplate = `
         <style id="previewAstraFontFamily" rel="stylesheet">
             /* headings */
             h1, h2, h3, h4, h5, h6, .entry-content :where(h1, h2, h3, h4, h5, h6), .site-title, .site-title a {
@@ -291,44 +306,68 @@ class OwpDesignPreviewModal extends HTMLElement {
             }
         </style>`;
 
-        if (!previewAstraFontFamily) {
-            iframeHead.insertAdjacentHTML('beforeend', styleTemplate);
-            return;
-        }
+    if (!previewAstraFontFamily) {
+      iframeHead.insertAdjacentHTML('beforeend', styleTemplate);
+      return;
+    }
 
-        previewAstraFontFamily.innerHTML = styleTemplate;
+    previewAstraFontFamily.innerHTML = styleTemplate;
 
-        const selectedFontPairPreview = this.querySelector('#selectedFontPairPreview');
-        selectedFontPairPreview.innerHTML = `
+    const selectedFontPairPreview = this.querySelector('#selectedFontPairPreview');
+    selectedFontPairPreview.innerHTML = `
             ${fontPair.heading} & ${fontPair.body}
         `;
-    }
 
-    changeIFramePalette(palette) {
-        this.preview = this.iframe.contentDocument || this.iframe.contentWindow.document;
-        const previewBody = this.preview.body;
+    const currentPayload = window.owpSessionManager.getPayload()
+    window.owpSessionManager.updatePayloadSection('design', {
+      ...currentPayload.design,
+      font: fontPair
+    })
+  }
 
-        previewBody.classList.remove(this.palette);
-        this.palette = palette;
-        previewBody.classList.add(this.palette);
+  changeIFramePalette(palette) {
+    this.preview = this.iframe.contentDocument || this.iframe.contentWindow.document;
+    const previewBody = this.preview.body;
 
-        this.querySelector('#selectedPalettePreview').innerHTML = `${
-            this.palette.replace('astra-palette-', '').charAt(0).toUpperCase()
-            + this.palette.replace('astra-palette-', '').slice(1)
-        }`;
-    }
+    previewBody.classList.remove(this.palette);
+    this.palette = palette;
+    previewBody.classList.add(this.palette);
 
-    changeResponsiveResolution(type) {
-        const previewContainer = this.querySelector('#previewContainer');
-        this.responsiveResolution = this.responsiveResolutions[type];
-        previewContainer.style.width = this.responsiveResolution.width;
-        previewContainer.style.height = this.responsiveResolution.height;
+    const paletteName = this.palette
+      .replace('astra-palette-', '')
+      .charAt(0)
+      .toUpperCase() + this.palette.replace('astra-palette-', '').slice(1)
 
-        const falseBrowserHeader = this.querySelector('#falseBrowserHeader');
-        (type === 'desktop') 
-        ? falseBrowserHeader.classList.remove('hidden')
-        : falseBrowserHeader.classList.add('hidden')
-    }
+    this.querySelector('#selectedPalettePreview').innerHTML = paletteName;
+
+    const currentPayload = window.owpSessionManager.getPayload()
+    window.owpSessionManager.updatePayloadSection('design', {
+      ...currentPayload.design,
+      palette: paletteName
+    })
+  }
+
+  changeResponsiveResolution(type) {
+    const previewContainer = this.querySelector('#previewContainer');
+    this.responsiveResolution = this.responsiveResolutions[type];
+    previewContainer.style.width = this.responsiveResolution.width;
+    previewContainer.style.height = this.responsiveResolution.height;
+
+    const falseBrowserHeader = this.querySelector('#falseBrowserHeader');
+    (type === 'desktop')
+      ? falseBrowserHeader.classList.remove('hidden')
+      : falseBrowserHeader.classList.add('hidden')
+  }
+
+  createPage() {
+    fetch('/wp-json/owp/api/page', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(window.owpSessionManager.getPayload())
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+  }
 }
 
 customElements.define('owp-design-preview-modal', OwpDesignPreviewModal);

@@ -176,7 +176,19 @@ function register_api_endpoints() {
             'args' => array(),
         )
     );
+
+    register_rest_route(
+        'owp/api',
+        '/page',
+        array(
+            'methods'   => 'POST',
+            'callback'  => 'create_page',
+            'permission_callback' => '__return_true',
+            'args' => array(),
+        )
+    );
 }
 add_action( 'rest_api_init', 'register_api_endpoints' );
 
 require_once plugin_dir_path( __FILE__ ) . 'api/templates.php';
+require_once plugin_dir_path( __FILE__ ) . 'api/page.php';

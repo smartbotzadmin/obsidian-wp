@@ -120,17 +120,22 @@ class OwpSessionManager {
      */
     #defaultPayload = {
         "start": {
-            "name": "",
-            "business": "",
-            "language": ""
+            "name": null,
+            "business": null,
+            "language": null
         },
-        "describe": "",
+        "describe": null,
         "contact": {
-            "email": "",
-            "address": "",
-            "phone": ""
+            "email": null,
+            "address": null,
+            "phone": null
         },
-        "pictures": []
+        "pictures": [],
+        "design": {
+            "template": null,
+            "font": null,
+            "palette": null
+        }
     };
 
     /**

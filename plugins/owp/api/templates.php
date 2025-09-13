@@ -1,6 +1,7 @@
 <?php
 /**
- * Template API endpoints
+ * Obsidian API
+ * Template Endpoints
  * 
  * Provides access to elementor pre-made templates library
  */

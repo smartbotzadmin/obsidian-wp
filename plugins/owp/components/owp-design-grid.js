@@ -8,13 +8,22 @@ class OwpDesignGrid extends HTMLElement {
 
     constructor() {
         super();
+        this.className = `flex-1 overflow-y-auto w-full max-h-screen pr-2`;
+        this.innerHTML = `
+            <div id="designGrid" class="h-full flex flex-wrap gap-6 justify-center items-center text-2xl text-gray-300 font-semibold pl-4 pr-2">
+                Loading...
+            </div>
+        `;
+    }
+
+    connectedCallback() {
         this.getTemplates()
             .then(designs => {
                 this.designs = designs
-                console.log(this.designs)
                 this.querySelector('#designGrid').innerHTML = /*html*/`
                     ${this.designs.map((design, index) => /*html*/`
                         <owp-design-option
+                            template-id=${design.ID}
                             option=${index + 1}
                             url=${design.url}
                         ></owp-design-option>
@@ -22,12 +31,6 @@ class OwpDesignGrid extends HTMLElement {
                 `;
 
             })
-        this.className = `flex-1 overflow-y-auto w-full max-h-screen pr-2`;
-        this.innerHTML = `
-            <div id="designGrid" class="h-full flex flex-wrap gap-6 justify-center items-center text-2xl text-gray-300 font-semibold pl-4 pr-2">
-                Loading...
-            </div>
-        `;
     }
 
     /**

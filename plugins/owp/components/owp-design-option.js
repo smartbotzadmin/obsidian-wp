@@ -7,19 +7,20 @@ class OwpDesignOption extends HTMLElement {
 
     constructor() {
         super();
-        const optionNo = this.getAttribute('option')
+        this.id = this.getAttribute('template-id')
         this.url = this.getAttribute('url') + '&owp-preview=true'
+        this.option = this.getAttribute('option')
 
         this.className = `grow flex flex-col w-screen sm:w-1/3 lg:w-1/4 xl:w-1/5 h-[450px] bg-slate-950 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-700 overflow-hidden`;
         this.innerHTML = /*html*/`
             <div class="relative flex grow items-center justify-center bg-slate-900 text-slate-100 overflow-hidden">
                 <img
-                    id="loadingOption${optionNo}"
+                    id="loadingOption${this.option}"
                     src="/wp-content/plugins/owp/assets/icons/image.svg"
                     alt="Image Icon"
                     class="absolute z-3 w-full h-full opacity-10 animate-pulse"
                 />
-                <div id="hoverScroller${optionNo}" class="absolute w-full h-full z-2 bg-slate-900" ></div>
+                <div id="hoverScroller${this.option}" class="absolute w-full h-full z-2 bg-slate-900" ></div>
                 <iframe
                     class="h-full w-screen"
                     src="${this.url}"
@@ -29,7 +30,7 @@ class OwpDesignOption extends HTMLElement {
             <div class="flex flex-col grow-0 shrink-0 p-4 cursor-default">
                 <div class="flex justify-between items-center">
                     <span class="text-slate-100 text-md font-semibold">
-                        Option ${optionNo}
+                        Option ${this.option}
                     </span>
                     <div class="flex items-center gap-4">
                         <a href="#" class="text-slate-100 hover:text-slate-300 hover:opacity-75">
@@ -45,10 +46,8 @@ class OwpDesignOption extends HTMLElement {
     }
 
     connectedCallback() {
-        const optionNo = this.getAttribute('option')
-
         this.iframe = this.querySelector('iframe');
-        this.hoverScroller = this.querySelector(`#hoverScroller${optionNo}`);
+        this.hoverScroller = this.querySelector(`#hoverScroller${this.option}`);
         this.scrollInterval = null;
         this.currentScrollPostion = 0;
         this.scrollSpeed = 10;
@@ -59,7 +58,9 @@ class OwpDesignOption extends HTMLElement {
         this.hoverScroller.addEventListener('click', () => {
             const owpApp = document.querySelector('owp-app')
             if (owpApp) {
-                const previewModal = new OwpDesignPreviewModal(this.url)
+                const previewModal = new OwpDesignPreviewModal()
+                previewModal.setAttribute('url', this.url)
+                previewModal.setAttribute('template-id', this.id)
                 owpApp.shadowRoot.appendChild(previewModal);
             }
         });
@@ -77,14 +78,12 @@ class OwpDesignOption extends HTMLElement {
             `;
             iframeDoc.head.appendChild(style);
             iframeBody.style.zoom = 0.5;
-
-            const optionNo = this.getAttribute('option')
             
-            const loadingOptionImg = this.querySelector(`#loadingOption${optionNo}`)
+            const loadingOptionImg = this.querySelector(`#loadingOption${this.option}`)
             loadingOptionImg.classList.remove('animate-pulse')
             loadingOptionImg.classList.add('hidden')
     
-            const hoverScrollerBg = this.querySelector(`#hoverScroller${optionNo}`)
+            const hoverScrollerBg = this.querySelector(`#hoverScroller${this.option}`)
             hoverScrollerBg.classList.remove('bg-slate-900')
         }
     }
