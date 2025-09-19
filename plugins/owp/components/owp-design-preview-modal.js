@@ -46,131 +46,126 @@ class OwpDesignPreviewModal extends HTMLElement {
 
     this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
     this.innerHTML = /*html*/`
-        <div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
+      <div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
 
-            <!-- Loading Mask -->
-            <div id="loadingMaskModal" class="absolute inset-0 bg-slate-900 flex justify-center items-center">
-                <span class="text-slate-700 text-lg font-sans font-semibold animate-pulse">Loading...</span>
-            </div>
-
-            <!-- Sidebar -->
-            <div id="sidebarModal" class="shrink-0 lg:w-[350px] w-0 h-full bg-slate-950 lg:p-8 p-0 lg:visible invisible">
-                <!-- Sidebar Container -->
-                <div class="flex flex-col justify-between w-full h-full">
-                    <!-- Obsidian Logo -->
-                    <div class="flex items-center justify-start mb-6">
-                        <img src="/wp-content/plugins/owp/assets/icons/obsidian-logo.png" class="w-10 h-10 rounded-full"/>
-                    </div>
-
-                    <!-- Site Logo Upload -->
-                    <div class="flex flex-col gap-2 mb-6">
-                        <label class="flex text-slate-400 text-sm font-semibold">
-                          Site Logo
-                        </label>
-                        <div class="min-h-20 flex grow items-center justify-center border-2 border-slate-700 rounded-md p-4 cursor-pointer bg-slate-900 hover:bg-slate-950 hover:outline hover:outline-offset-2 hover:outline-cyan-500 transition-colors duration-200">
-                            <img src="/wp-content/plugins/owp/assets/icons/image.svg" />
-                        </div>
-                    </div>
-
-                    <!-- Font Pair Selection -->
-                    <div class="flex flex-col gap-2 mb-6">
-                        <div class="flex items-center gap-2">
-                            <label class="flex shrink-0 items-center text-slate-400 text-sm font-semibold">
-                                Font Pair:
-                            </label>
-                            <span id="selectedFontPairPreview" class="flex-1 text-slate-100 text-[14px] font-normal text-wrap">
-                                ${this.fontPairs[0].heading} & ${this.fontPairs[0].body}
-                            </span>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            ${this.fontPairs.map((fontPair, index) => /*html*/`
-                                <div id="fontPairNo${index}" class="flex grow items-center justify-center w-1/4 h-10 border border-slate-700 hover:outline hover:bg-slate-950 outline-cyan-500 rounded-md text-slate-300 text-md cursor-pointer bg-slate-900 transition-colors duration-200">
-                                    <span class="font-bold text-lg" style="font-family: ${fontPair.heading};">A</span>
-                                    <span class="font-normal text-lg" style="font-family: ${fontPair.body};">g</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <!-- Color Palette Selection -->
-                    <div class="flex flex-col gap-2 mb-6">
-                        <div class="flex items-center gap-2">
-                            <label class="flex text-slate-400 text-sm font-semibold">
-                                Color Palette:
-                            </label>
-                            <span id="selectedPalettePreview" class="flex-1 text-slate-100 text-[14px] font-normal text-wrap">
-                                ${this.palette
-        .replace('astra-palette-', '')
-        .charAt(0).toUpperCase() + this.palette.replace('astra-palette-', '')
-          .slice(1)
-
-      }
-                            </span>
-                        </div>
-                        <div class="grid grid-cols-5 gap-1">
-                            ${this.palettes.map((palette, index) => /*html*/`
-                                <div id="paletteNo${index}" class="flex justify-center items-center gap-1 py-2 bg-(--ast-global-color-5) border border-slate-700 rounded-lg cursor-pointer hover:outline hover:outline-cyan-500 hover:outline-offset-2 ${palette}">
-                                    <div class="size-4 rounded-full bg-(--ast-global-color-0)"></div>
-                                    <div class="size-4 rounded-full bg-(--ast-global-color-1)"></div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="flex flex-col gap-2 mb-6">
-                        <button id="createButton" class="w-full flex gap-2 bg-cyan-600 hover:bg-cyan-500 text-slate-100 text-sm font-semibold py-3 rounded-md flex items-center justify-center cursor-pointer transition-colors duration-200">
-                            <span>Create</span>
-                            <img class="size-5" src="/wp-content/plugins/owp/assets/icons/arrow-right.svg" />
-                        </button>
-                        <button id="returnToOtherDesignsButton" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-sm font-semibold py-3 rounded-md cursor-pointer transition-colors duration-200">
-                            <span>Back to Other Designs</span>
-                        </button>
-                    </div>
-
-                    <!-- Responsive Preview Buttons-->
-                    <div class="flex items-center justify-between border-t border-slate-700 pt-4">
-                        <span class="text-slate-400 text-sm font-semibold">Responsive Preview</span>
-                        <div class="flex gap-2">
-                            <button id="desktopPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
-                                <img src="/wp-content/plugins/owp/assets/icons/desktop.svg" alt="Desktop Icon" class="w-5 h-5">
-                            </button>
-                            <button id="tabletPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
-                                <img src="/wp-content/plugins/owp/assets/icons/tablet.svg" alt="Tablet Icon" class="w-5 h-5">
-                            </button>
-                            <button id="mobilePreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
-                                <img src="/wp-content/plugins/owp/assets/icons/mobile.svg" alt="Mobile Icon" class="w-5 h-5">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Iframe -->
-            <div class="grow-1 flex justify-center items-center p-10 bg-slate-900">
-                <div id="previewContainer" class="flex flex-col rounded-lg overflow-hidden" style="width: ${this.responsiveResolution.width}; height: ${this.responsiveResolution.height};">
-                    <div id="falseBrowserHeader" class="flex-0 flex flex-row justify-between items-center h-8 bg-slate-100 p-2">
-                        <img src="/wp-content/plugins/owp/assets/icons/globe.svg" class="size-4"/>
-                        <div class="flex justify-center items-center gap-2">
-                            <div class="size-4 bg-yellow-500 rounded-full"></div>
-                            <div class="size-4 bg-green-500 rounded-full"></div>
-                            <div class="size-4 bg-red-500 rounded-full"></div>
-                        </div>
-                    </div>
-                    <iframe
-                        src="${this.url}"
-                        class="flex-1 bg-slate-100"
-                        frameborder="0"
-                    ></iframe>
-                </div>
-            </div>
-
-            <!-- Close Button -->
-            <button id="closeModal" class="absolute top-1 right-1 p-1 bg-slate-700 rounded-full hover:bg-slate-600 cursor-pointer">
-                <img src="/wp-content/plugins/owp/assets/icons/x.svg" alt="Close Icon" class="w-6 h-6">
-            </button>
+        <!-- Loading Mask -->
+        <div id="loadingMaskModal" class="absolute inset-0 bg-slate-900 flex justify-center items-center">
+          <span class="text-slate-700 text-lg font-sans font-semibold animate-pulse">Loading...</span>
         </div>
-        `;
+
+        <!-- Sidebar -->
+        <div id="sidebarModal" class="shrink-0 lg:w-[350px] w-0 h-full bg-slate-950 lg:p-8 p-0 lg:visible invisible">
+          <!-- Sidebar Container -->
+          <div class="flex flex-col justify-between w-full h-full">
+            <!-- Obsidian Logo -->
+            <div class="flex items-center justify-start mb-6">
+              <img src="/wp-content/plugins/owp/assets/icons/obsidian-logo.png" class="w-10 h-10 rounded-full"/>
+            </div>
+
+            <!-- Site Logo Upload -->
+            <div class="flex flex-col gap-2 mb-6">
+              <label class="flex text-slate-400 text-sm font-semibold">
+                Site Logo
+              </label>
+              <div class="min-h-20 flex grow items-center justify-center border-2 border-slate-700 rounded-md p-4 cursor-pointer bg-slate-900 hover:bg-slate-950 hover:outline hover:outline-offset-2 hover:outline-cyan-500 transition-colors duration-200">
+                <img src="/wp-content/plugins/owp/assets/icons/image.svg" />
+                </div>
+            </div>
+
+            <!-- Font Pair Selection -->
+            <div class="flex flex-col gap-2 mb-6">
+              <div class="flex items-center gap-2">
+                <label class="flex shrink-0 items-center text-slate-400 text-sm font-semibold">
+                  Font Pair:
+                </label>
+                <span id="selectedFontPairPreview" class="flex-1 text-slate-100 text-[14px] font-normal text-wrap">
+                  ${this.fontPairs[0].heading} & ${this.fontPairs[0].body}
+                </span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                ${this.fontPairs.map((fontPair, index) => /*html*/`
+                  <div id="fontPairNo${index}" class="flex grow items-center justify-center w-1/4 h-10 border border-slate-700 hover:outline hover:bg-slate-950 outline-cyan-500 rounded-md text-slate-300 text-md cursor-pointer bg-slate-900 transition-colors duration-200">
+                    <span class="font-bold text-lg" style="font-family: ${fontPair.heading};">A</span>
+                    <span class="font-normal text-lg" style="font-family: ${fontPair.body};">g</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Color Palette Selection -->
+            <div class="flex flex-col gap-2 mb-6">
+              <div class="flex items-center gap-2">
+                <label class="flex text-slate-400 text-sm font-semibold">
+                  Color Palette:
+                </label>
+                <span id="selectedPalettePreview" class="flex-1 text-slate-100 text-[14px] font-normal text-wrap">
+                  ${this.palette.replace('astra-palette-', '').charAt(0).toUpperCase() + this.palette.replace('astra-palette-', '').slice(1)}
+                </span>
+              </div>
+              <div class="grid grid-cols-5 gap-1">
+                ${this.palettes.map((palette, index) => /*html*/`
+                  <div id="paletteNo${index}" class="flex justify-center items-center gap-1 py-2 bg-(--ast-global-color-5) border border-slate-700 rounded-lg cursor-pointer hover:outline hover:outline-cyan-500 hover:outline-offset-2 ${palette}">
+                    <div class="size-4 rounded-full bg-(--ast-global-color-0)"></div>
+                    <div class="size-4 rounded-full bg-(--ast-global-color-1)"></div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col gap-2 mb-6">
+              <button id="createButton" class="w-full flex gap-2 bg-cyan-600 hover:bg-cyan-500 text-slate-100 text-sm font-semibold py-3 rounded-md flex items-center justify-center cursor-pointer transition-colors duration-200">
+                <span>Create</span>
+                <img class="size-5" src="/wp-content/plugins/owp/assets/icons/arrow-right.svg" />
+              </button>
+              <button id="returnToOtherDesignsButton" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-sm font-semibold py-3 rounded-md cursor-pointer transition-colors duration-200">
+                <span>Back to Other Designs</span>
+              </button>
+            </div>
+
+            <!-- Responsive Preview Buttons-->
+            <div class="flex items-center justify-between border-t border-slate-700 pt-4">
+              <span class="text-slate-400 text-sm font-semibold">Responsive Preview</span>
+              <div class="flex gap-2">
+                <button id="desktopPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
+                  <img src="/wp-content/plugins/owp/assets/icons/desktop.svg" alt="Desktop Icon" class="w-5 h-5">
+                </button>
+                <button id="tabletPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
+                  <img src="/wp-content/plugins/owp/assets/icons/tablet.svg" alt="Tablet Icon" class="w-5 h-5">
+                </button>
+                <button id="mobilePreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
+                  <img src="/wp-content/plugins/owp/assets/icons/mobile.svg" alt="Mobile Icon" class="w-5 h-5">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Iframe -->
+        <div class="grow-1 flex justify-center items-center p-10 bg-slate-900">
+          <div id="previewContainer" class="flex flex-col rounded-lg overflow-hidden" style="width: ${this.responsiveResolution.width}; height: ${this.responsiveResolution.height};">
+            <div id="falseBrowserHeader" class="flex-0 flex flex-row justify-between items-center h-8 bg-slate-100 p-2">
+              <img src="/wp-content/plugins/owp/assets/icons/globe.svg" class="size-4"/>
+              <div class="flex justify-center items-center gap-2">
+                <div class="size-4 bg-yellow-500 rounded-full"></div>
+                <div class="size-4 bg-green-500 rounded-full"></div>
+                <div class="size-4 bg-red-500 rounded-full"></div>
+              </div>
+            </div>
+            <iframe
+              src="${this.url}"
+              class="flex-1 bg-slate-100"
+              frameborder="0"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Close Button -->
+        <button id="closeModal" class="absolute top-1 right-1 p-1 bg-slate-700 rounded-full hover:bg-slate-600 cursor-pointer">
+          <img src="/wp-content/plugins/owp/assets/icons/x.svg" alt="Close Icon" class="w-6 h-6">
+        </button>
+      </div>
+    `;
 
     this.sidebar = this.querySelector('#sidebarModal');
 
@@ -247,86 +242,87 @@ class OwpDesignPreviewModal extends HTMLElement {
   }
 
   changeIFrameFontFamily(fontPair) {
-    const iframeHead = this.iframe.contentDocument.head;
-    const previewAstraFontFamily = iframeHead.querySelector('#previewAstraFontFamily')
-    const styleTemplate = `
-        <style id="previewAstraFontFamily" rel="stylesheet">
-            /* headings */
-            h1, h2, h3, h4, h5, h6, .entry-content :where(h1, h2, h3, h4, h5, h6), .site-title, .site-title a {
-                font-family: '${fontPair.heading}', serif;
-                font-weight: 600;
-            }
-            
-            h1, .entry-content :where(h1) {
-                font-size:54px;
-                font-size:3.375rem;
-                font-weight:600;
-                font-family:'${fontPair.heading}',serif;
-                line-height:1.4em;
-            }
-            h2, .entry-content :where(h2) {
-                font-size:42px;
-                font-size:2.625rem;
-                font-weight:600;
-                font-family:'${fontPair.heading}',serif;
-                line-height:1.3em;
-            }
-            h3, .entry-content :where(h3) {
-                font-size:36px;
-                font-size:2.25rem;
-                font-weight:600;
-                font-family:'${fontPair.heading}',serif;
-                line-height:1.3em;
-            }
-            h4, .entry-content :where(h4) {
-                font-size:25px;
-                font-size:1.5625rem;
-                line-height:1.2em;
-                font-weight:600;
-                font-family:'${fontPair.heading}',serif;
-            }
-            h5, .entry-content :where(h5) {
-                font-size:20px;
-                font-size:1.25rem;
-                line-height:1.2em;
-                font-weight:600;
-                font-family:'${fontPair.heading}',serif;
-            }
-            h6, .entry-content :where(h6) {
-                font-size:15px;
-                font-size:0.9375rem;
-                line-height:1.25em;
-                font-weight:600;
-                font-family:'${fontPair.heading}',serif;
-            }
-
-            /* body */
-            body, button, input, select, textarea, .ast-button, .ast-custom-button {
-                font-family: '${fontPair.body}', sans-serif;
-                font-weight: 400;
-                font-size: 16px;
-                font-size: 1rem;
-                line-height: var(--ast-body-line-height, 1.65);
-            }
-        </style>`;
-
-    if (!previewAstraFontFamily) {
-      iframeHead.insertAdjacentHTML('beforeend', styleTemplate);
-      return;
-    }
-
-    previewAstraFontFamily.innerHTML = styleTemplate;
-
     const selectedFontPairPreview = this.querySelector('#selectedFontPairPreview');
-    selectedFontPairPreview.innerHTML = `
-            ${fontPair.heading} & ${fontPair.body}
-        `;
-
+    selectedFontPairPreview.innerHTML = /*html*/`
+    ${fontPair.heading} & ${fontPair.body}
+    `;
+    
     const currentPayload = window.owpSessionManager.getPayload()
     window.owpSessionManager.updatePayloadSection('design', {
       ...currentPayload.design,
       font: fontPair
     })
+
+    const iframeHead = this.iframe.contentDocument.head;
+    const previewAstraFontFamily =
+      iframeHead.querySelector('#previewAstraFontFamily')
+    const styleTemplate = `
+    <style id="previewAstraFontFamily" rel="stylesheet">
+      /* headings */
+      h1, h2, h3, h4, h5, h6, .entry-content :where(h1, h2, h3, h4, h5, h6), .site-title, .site-title a {
+          font-family: '${fontPair.heading}', serif;
+          font-weight: 600;
+      }
+      
+      h1, .entry-content :where(h1) {
+          font-size:54px;
+          font-size:3.375rem;
+          font-weight:600;
+          font-family:'${fontPair.heading}',serif;
+          line-height:1.4em;
+      }
+      h2, .entry-content :where(h2) {
+          font-size:42px;
+          font-size:2.625rem;
+          font-weight:600;
+          font-family:'${fontPair.heading}',serif;
+          line-height:1.3em;
+      }
+      h3, .entry-content :where(h3) {
+          font-size:36px;
+          font-size:2.25rem;
+          font-weight:600;
+          font-family:'${fontPair.heading}',serif;
+          line-height:1.3em;
+      }
+      h4, .entry-content :where(h4) {
+          font-size:25px;
+          font-size:1.5625rem;
+          line-height:1.2em;
+          font-weight:600;
+          font-family:'${fontPair.heading}',serif;
+      }
+      h5, .entry-content :where(h5) {
+          font-size:20px;
+          font-size:1.25rem;
+          line-height:1.2em;
+          font-weight:600;
+          font-family:'${fontPair.heading}',serif;
+      }
+      h6, .entry-content :where(h6) {
+          font-size:15px;
+          font-size:0.9375rem;
+          line-height:1.25em;
+          font-weight:600;
+          font-family:'${fontPair.heading}',serif;
+      }
+
+      /* body */
+      body, button, input, select, textarea, .ast-button, .ast-custom-button {
+          font-family: '${fontPair.body}', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          font-size: 1rem;
+          line-height: var(--ast-body-line-height, 1.65);
+      }
+    </style>`;
+
+    if (!previewAstraFontFamily) {
+      iframeHead.insertAdjacentHTML('beforeend', styleTemplate);
+      return;
+    } else {
+      previewAstraFontFamily.innerHTML = styleTemplate;
+    }
   }
 
   changeIFramePalette(palette) {

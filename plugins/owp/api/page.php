@@ -16,45 +16,38 @@ require_once plugin_dir_path( __FILE__ ) . 'lib/image_hydration_elementor.php';
 function create_page( WP_REST_Request $req) {
   $payload = $req->get_json_params();
 
-  $pictures = $payload['pictures'];
-
   $design = $payload['design'];
   $template_id = $design['template'];
   $palette = $design['palette'];
   $font_body = $design['font']['body'];
   $font_heading = $design['font']['heading'];
   
-  // Get the template
+  // Get the elemetor template
   $template = get_post( $template_id );
-
+  
   // Hydrate template with selected images
+  $pictures = $payload['pictures']['selected'];
   $image_url = $pictures[0]['urls']['raw'] . '.jpg';
   $uploaded_image = upload_media( $image_url );
 
+  // Create a DOMDocument to parse the HTML
+  $dom = new DOMDocument();
+  
+  libxml_use_internal_errors(true); 
+  $dom->loadHTML(
+    $template->post_content,
+    LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+  );
+  libxml_clear_errors();
 
+  // Get all img tags
+  $images = $dom->getElementsByTagName('img');
 
-    // Create a DOMDocument to parse the HTML
-    $dom = new DOMDocument();
-    // Suppress warnings for malformed HTML
-    libxml_use_internal_errors(true); 
-    $dom->loadHTML(
-      $template->post_content,
-      LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
-    );
-    libxml_clear_errors();
+  foreach ($images as $img) {
+      $img->setAttribute('src', $uploaded_image); 
+  }
 
-    // Get all img tags
-    $images = $dom->getElementsByTagName('img');
-
-    foreach ($images as $img) {
-        // Change the src attribute
-        $img->setAttribute('src', $uploaded_image); 
-        // You can add more complex logic here to determine the new src
-    }
-
-    // Save the modified HTML back to a string
-    // $modified_content = $dom->saveHTML();
-    $template->post_content = $dom->saveHTML();
+  $template->post_content = $dom->saveHTML();
 
 
 
