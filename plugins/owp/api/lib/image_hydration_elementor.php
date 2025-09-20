@@ -1,7 +1,7 @@
 <?php
 
 
-function image_hydration_elementor(&$elementor_data, $url) {
+function image_hydration_elementor(&$elementor_data, $pictures) {
 
   if (!is_array($elementor_data) && !is_object($elementor_data)) {
     return;
@@ -19,11 +19,13 @@ function image_hydration_elementor(&$elementor_data, $url) {
           || $element['widgetType'] == 'image-box'
           )
         && isset($element['settings']['image']['url'])
+        && preg_match('/image(\d+)\.(webp|png|jpg)/', $element['settings']['image']['url'], $matches)
         ) {
-        $element['settings']['image']['url'] = $url;
+          $picture_index = $matches[1];
+          $element['settings']['image']['url'] = $pictures[$picture_index - 1];
       }
 
-      image_hydration_elementor( $element, $url );
+      image_hydration_elementor( $element, $pictures );
     }
   }
 }

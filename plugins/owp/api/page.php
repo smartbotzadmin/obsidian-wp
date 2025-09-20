@@ -24,15 +24,9 @@ function create_page( WP_REST_Request $req) {
   
   // Get the elemetor template
   $template = get_post( $template_id );
-  
-  // Hydrate template with selected images
-  $pictures = $payload['pictures']['selected'];
-  $image_url = $pictures[0]['urls']['raw'] . '.jpg';
-  $uploaded_image = upload_media( $image_url );
 
-  // Create a DOMDocument to parse the HTML
+  // Hydrate template with selected images
   $dom = new DOMDocument();
-  
   libxml_use_internal_errors(true); 
   $dom->loadHTML(
     $template->post_content,
@@ -40,20 +34,27 @@ function create_page( WP_REST_Request $req) {
   );
   libxml_clear_errors();
 
-  // Get all img tags
   $images = $dom->getElementsByTagName('img');
+  $pictures = $payload['pictures']['selected'];
+  $uploaded_pictures = array();
 
   foreach ($images as $img) {
-      $img->setAttribute('src', $uploaded_image); 
+    $src = $img->getAttribute('src');
+    if (preg_match('/image(\d+)\.(webp|png|jpg)/', $src, $matches)) {
+      $image_index = $matches[1]; // digit match (\d+)
+      $picture_url = $pictures[$image_index - 1]['urls']['raw'] . '.jpg';
+      $uploaded_picture_url = upload_media( $picture_url );
+      $img->setAttribute( 'src', $uploaded_picture_url );
+      $uploaded_pictures[] = $uploaded_picture_url;
+    } 
   }
 
   $template->post_content = $dom->saveHTML();
 
 
-
-
   // Hydrate template with AI content
   // TODO:
+
 
   // Create the wp_post (Page)
   $page_id = wp_insert_post(array(
@@ -77,7 +78,7 @@ function create_page( WP_REST_Request $req) {
 
   // Hydrate Elemetor data with images
   $elementor_data = json_decode( $page_metadata['_elementor_data'][0], true );
-  image_hydration_elementor( $elementor_data, $uploaded_image );
+  image_hydration_elementor( $elementor_data, $uploaded_pictures );
   update_post_meta( $page_id, '_elementor_data', json_encode($elementor_data));
 
   // Clear Elementor cache
@@ -102,10 +103,7 @@ function create_page( WP_REST_Request $req) {
 
   return new WP_REST_Response(
     array(
-      'page_id'         =>$page_id,
-      'url'             => 'http://localhost:10005/' . $template->post_name,
-      'image_url'       => $image_url,
-      'uploaded_image'  => $uploaded_image,
+      'page_id'         => $page_id,
       'updated_elementor_data' => $elementor_data
     ),
     200
