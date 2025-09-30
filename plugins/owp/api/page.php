@@ -51,11 +51,6 @@ function create_page( WP_REST_Request $req) {
 
   $template->post_content = $dom->saveHTML();
 
-
-  // Hydrate template with AI content
-  // TODO:
-
-
   // Create the wp_post (Page)
   $page_id = wp_insert_post(array(
     'post_author'   => '1',
@@ -81,11 +76,15 @@ function create_page( WP_REST_Request $req) {
   image_hydration_elementor( $elementor_data, $uploaded_pictures );
   update_post_meta( $page_id, '_elementor_data', json_encode($elementor_data));
 
+  // Hydrate template with AI content
+  // TODO:
+  // Get the AI generation fields
+  // Hydrate fields into elementor page
+
   // Clear Elementor cache
   if (class_exists('\Elementor\Plugin')) {
     \Elementor\Plugin::instance()->files_manager->clear_cache();
   }
-
 
   // Setup the wp_options (Astra Typography & Astra Color Palette)
   $astra_settings = get_option( 'astra-settings', null);
