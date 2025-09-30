@@ -1,0 +1,44 @@
+/* headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.entry-content :where(h1, h2, h3, h4, h5, h6),
+.site-title,
+.site-title a {
+	font-family: 'Playfair Display', serif;
+	font-weight: 600;
+}
+
+/* body */
+body,
+button,
+input,
+select,
+textarea,
+.ast-button,
+.ast-custom-button {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 16px;
+	font-size: 1rem;
+	line-height: var(--ast-body-line-height, 1.65);
+}
+
+.fonts {
+	--font-heading-1: 'Playfair Display';
+	--font-body-1: 'Open Sans';
+	--font-heading-2: 'Lato';
+	--font-body-2: 'Lora';
+	--font-heading-3: 'Barlow Semi Condensed';
+	--font-body-3: 'Roboto';
+	--font-heading-4: 'Monserrat';
+	--font-body-4: 'Source Sans Pro';
+	--font-heading-5: 'Rubik';
+	--font-body-5: 'Carla';
+	--font-heading-6: 'DM Serif Display';
+	--font-body-6: 'Work Sans';
+}
+

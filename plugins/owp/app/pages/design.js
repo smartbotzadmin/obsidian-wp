@@ -30,7 +30,6 @@ class OwpDesign extends HTMLElement {
 
             <div class="flex flex-row justify-between items-center p-3 gap-4">
                 <owp-back-button data-owp-navigate="#pictures">Back</owp-back-button>
-                <owp-next-button data-owp-navigate="#publish">Next</owp-next-button>
             </div>
         `;
     }
