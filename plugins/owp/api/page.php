@@ -23,11 +23,69 @@ function create_page( WP_REST_Request $req) {
 
   $payload = $req->get_json_params();
 
+  // 1. extract fields
+  $start = $payload['start'];
+  $describe = $payload['describe'];
+  $contact = $payload['contact'];
   $design = $payload['design'];
-  $template_id = $design['template'];
-  $palette = $design['palette'];
-  $font_body = $design['font']['body'];
-  $font_heading = $design['font']['heading'];
+  $pictures = $payload['pictures'];
+
+  $pages = array('home', 'services', 'contact', 'about');
+  // Process for every page of the template kit
+  foreach ( $pages as $page ){
+    // 2. Load template json
+    $design_dir = WP_PLUGIN_DIR . "/owp/designs";
+    $design_name = str_replace('obsidian', '', strtolower($design['name']));
+    $design_page_dir = "{$design_dir}/{$design_name}/templatekit/{$page}";
+    $template_json_file = 
+      file_get_contents("{$design_page_dir}/template.json");
+    $template_json = json_decode($template_json_file, true);  // array
+
+    // 3. Load fields_content json
+    $fields_content_file = 
+      file_get_contents("{$design_page_dir}/fields_content.json");
+    $fields_content_json = json_decode($fields_content_file, true);  // array
+
+    // 4. Load field_img json
+    $fields_img_file = 
+      file_get_contents("{$design_page_dir}/fields_img.json");
+    $fields_img_json = json_decode($fields_img_file, true);  // array
+  
+    // Hydrate templates
+    // TODO: 1. Fetch AI text content from 'Gemini'
+    //        - Gemini AI request.
+    // TODO: 2. Fetch selected and default images from 'Creation flow'
+    // TODO: 3. Hydrate AI content & images into every 'template.json'
+    //        - upload images as media.
+    //        - populate images where CSS_ID applies.
+    //        - populate AI content where CSS_ID applies.
+    //        - special treatments:
+    //          - field(text): string
+    //          - field(editor): <p></p>
+    //          - field(title): string
+    //          - *iconbox: fields(title_text, description_text)
+    //          - faq-accordion: fields(items: [{"item_title: string}, ...])
+    // TODO: 4. Create Elementor page settings (_elementor_page_settings)
+    //        - don't forget add "canvas = true"
+    // TODO: 5. Create Elementor pages from 'template.json' (_elementor_data)
+  }
+
+  // Clear Elementor cache
+  \Elementor\Plugin::instance()->files_manager->clear_cache()
+
+  return new WP_REST_Response(array(
+    // 'payload' => $payload,
+    'design_dir' => $template_json_dir,
+    'template_json' => json_encode($template_json),
+    'fields_content_json' => json_encode($fields_content_json),
+    'fields_img_json' => json_encode($fields_img_json)
+  ), 200);
+
+  // $design = $payload['design'];
+  // $template_id = $design['template'];
+  // $palette = $design['palette'];
+  // $font_body = $design['font']['body'];
+  // $font_heading = $design['font']['heading'];
   
   // // Get the elemetor template
   // $template = get_post( $template_id );
@@ -83,20 +141,8 @@ function create_page( WP_REST_Request $req) {
   // image_hydration_elementor( $elementor_data, $uploaded_pictures );
   // update_post_meta( $page_id, '_elementor_data', json_encode($elementor_data));
 
-  // Hydrate templates
-  // TODO: 1. Fetch AI text content from 'Gemini'
-  //        - Gemini AI request.
-  // TODO: 2. Fetch selected and default images from 'Creation flow'
-  // TODO: 3. Hydrate AI content & images into every 'template.json'
-  //        - upload images as media.
-  //        - populate images where CSS_ID applies.
-  //        - populate AI content where CSS_ID applies.
-  // TODO: 4. Create Elementor page settings (_elementor_page_settings)
-  //        - don't forget add "canvas = true"
-  // TODO: 5. Create Elementor pages from 'template.json' (_elementor_data)
-
   // Clear Elementor cache
-  \Elementor\Plugin::instance()->files_manager->clear_cache();
+  // \Elementor\Plugin::instance()->files_manager->clear_cache();
 
   // Setup Astra Typography & Astra Color Palette (wp_options)
   // $astra_settings = get_option( 'astra-settings', null);
@@ -112,7 +158,8 @@ function create_page( WP_REST_Request $req) {
   // update_option( 'astra-color-palettes', $astra_color_palettes );
 
 
-  return new WP_REST_Response(array(
-      'page_id' => $payload
-  ), 200);
+  // return new WP_REST_Response(array(
+  //     'payload' => $payload,
+  //     'template_dir' => $template_dir
+  // ), 200);
 }
