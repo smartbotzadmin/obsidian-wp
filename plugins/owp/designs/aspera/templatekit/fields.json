@@ -1,0 +1,138 @@
+{
+	"about": {
+		"ob-hero-title": "",
+		"ob-hero-shortdescription": "",
+		"ob-feats-tagline": "",
+		"ob-feats-title": "",
+		"ob-feats-text": "",
+		"ob-team-tagline": "",
+		"ob-team-title": "",
+		"ob-team-text": "",
+		"ob-values-tagline": "",
+		"ob-values-title": "",
+		"ob-values-value1-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-values-value2-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-values-value3-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-values-value4-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-values-value5-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-values-value6-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-cta-tagline": "",
+		"ob-cta-title": "",
+		"ob-cta-button": ""
+	},
+	"contact": {
+		"ob-hero-title": "",
+		"ob-hero-shortdescription": "",
+		"ob-contact-title": "",
+		"ob-contact-address-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-contact-phone-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-contact-email-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-map-tagline": "",
+		"ob-map-title": "",
+		"ob-faq-title": "",
+		"ob-faq-shortdescription": "",
+		"ob-faq-accordion": {
+			"ob-faq-accordion-question1": "",
+			"ob-faq-accordion-answer1": "",
+			"ob-faq-accordion-question2": "",
+			"ob-faq-accordion-answer2": "",
+			"ob-faq-accordion-question3": "",
+			"ob-faq-accordion-answer3": "",
+			"ob-faq-accordion-question4": "",
+			"ob-faq-accordion-answer4": ""
+		},
+		"ob-cta-tagline": "",
+		"ob-cta-title": "",
+		"ob-cta-button": ""
+	},
+	"home": {
+		"ob-hero-title": "",
+		"ob-hero-shortdescription": "",
+		"ob-hero-button": "",
+		"ob-content-tagline": "",
+		"ob-content-title": "",
+		"ob-content-text": "",
+		"ob-content-button": "",
+		"ob-stepbystep-title": "",
+		"ob-stepbystep-button": "",
+		"ob-stepbystep-step1-title": "",
+		"ob-stepbystep-step1-description": "",
+		"ob-stepbystep-step2-title": "",
+		"ob-stepbystep-step2-description": "",
+		"ob-stepbystep-step3-title": "",
+		"ob-stepbystep-step3-description": "",
+		"ob-testimonial-tagline": "",
+		"ob-testimonial-title": "",
+		"ob-testimonial-review1-text": "",
+		"ob-testimonial-review1-author-name": "",
+		"ob-testimonial-review1-author-role": "",
+		"ob-testimonial-review2-text": "",
+		"ob-testimonial-review2-author-name": "",
+		"ob-testimonial-review2-author-role": "",
+		"ob-cta-tagline": "",
+		"ob-cta-title": "",
+		"ob-cta-button": ""
+	},
+	"services": {
+		"ob-hero-title": "",
+		"ob-hero-shortdescription": "",
+		"ob-serviceslist-tagline": "",
+		"ob-serviceslist-title": "",
+		"ob-serviceslist-service1-title": "",
+		"ob-serviceslist-service1-shortdescription": "",
+		"ob-serviceslist-service2-title": "",
+		"ob-serviceslist-service2-shortdescription": "",
+		"ob-serviceslist-service3-title": "",
+		"ob-serviceslist-service3-shortdescription": "",
+		"ob-serviceslist-service4-title": "",
+		"ob-serviceslist-service4-shortdescription": "",
+		"ob-serviceslist-service5-title": "",
+		"ob-serviceslist-service5-shortdescription": "",
+		"ob-serviceslist-service6-title": "",
+		"ob-serviceslist-service6-shortdescription": "",
+		"ob-servicesdetail-title": "",
+		"ob-servicesdetail-shortdescription": "",
+		"ob-contact-address-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-contact-phone-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-contact-email-iconbox": {
+			"title": "",
+			"description": ""
+		},
+		"ob-cta-tagline": "",
+		"ob-cta-title": "",
+		"ob-cta-button": ""
+	}
+}

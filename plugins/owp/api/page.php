@@ -13,7 +13,7 @@ require_once plugin_dir_path( __FILE__ ) . 'lib/image_hydration_elementor.php';
 /**
  * POST page
  */
-function create_page( WP_REST_Request $req) {
+function create_page( WP_REST_Request $req ) {
 
   if ( ! defined( 'ELEMENTOR_PATH' ) ) {
     return new WP_REST_Response(array(
@@ -30,7 +30,7 @@ function create_page( WP_REST_Request $req) {
   $design = $payload['design'];
   $pictures = $payload['pictures'];
 
-  $pages = array('home', 'services', 'contact', 'about');
+  $pages = array('home');
   // Process for every page of the template kit
   foreach ( $pages as $page ){
     // 2. Load template json
@@ -52,9 +52,12 @@ function create_page( WP_REST_Request $req) {
     $fields_img_json = json_decode($fields_img_file, true);  // array
   
     // Hydrate templates
-    // TODO: 1. Fetch AI text content from 'Gemini'
+    // TODO: 5. Fetch AI text content from 'Gemini'
     //        - Gemini AI request.
-    // TODO: 2. Fetch selected and default images from 'Creation flow'
+    
+    // 6. Fetch selected and default images from 'Creation flow'
+    $images = $pictures['merge'];
+
     // TODO: 3. Hydrate AI content & images into every 'template.json'
     //        - upload images as media.
     //        - populate images where CSS_ID applies.
@@ -71,14 +74,15 @@ function create_page( WP_REST_Request $req) {
   }
 
   // Clear Elementor cache
-  \Elementor\Plugin::instance()->files_manager->clear_cache()
+  \Elementor\Plugin::instance()->files_manager->clear_cache();
 
   return new WP_REST_Response(array(
     // 'payload' => $payload,
     'design_dir' => $template_json_dir,
-    'template_json' => json_encode($template_json),
-    'fields_content_json' => json_encode($fields_content_json),
-    'fields_img_json' => json_encode($fields_img_json)
+    // 'template_json' => json_encode($template_json),
+    // 'fields_content_json' => json_encode($fields_content_json),
+    // 'fields_img_json' => json_encode($fields_img_json)
+    // 'images' => $images
   ), 200);
 
   // $design = $payload['design'];
