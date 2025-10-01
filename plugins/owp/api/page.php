@@ -99,24 +99,20 @@ function create_page( WP_REST_Request $req) {
   \Elementor\Plugin::instance()->files_manager->clear_cache();
 
   // Setup Astra Typography & Astra Color Palette (wp_options)
-  $astra_settings = get_option( 'astra-settings', null);
-  $astra_settings['body-font-family'] = "'{$font_body}'" . ", sans-serif";
-  $astra_settings['headings-font-family'] = "'{$font_heading}'" . ", serif";
+  // $astra_settings = get_option( 'astra-settings', null);
+  // $astra_settings['body-font-family'] = "'{$font_body}'" . ", sans-serif";
+  // $astra_settings['headings-font-family'] = "'{$font_heading}'" . ", serif";
 
-  $astra_color_palettes = get_option( 'astra-color-palettes', null);
-  $palette_selected = $astra_color_palettes['presets'][$palette];
-  $astra_settings['global-color-palette']['palette'] = $palette_selected;
-  $astra_color_palettes['palettes']['palette_1'] = $palette_selected;
+  // $astra_color_palettes = get_option( 'astra-color-palettes', null);
+  // $palette_selected = $astra_color_palettes['presets'][$palette];
+  // $astra_settings['global-color-palette']['palette'] = $palette_selected;
+  // $astra_color_palettes['palettes']['palette_1'] = $palette_selected;
   
-  update_option( 'astra-settings', $astra_settings );
-  update_option( 'astra-color-palettes', $astra_color_palettes );
+  // update_option( 'astra-settings', $astra_settings );
+  // update_option( 'astra-color-palettes', $astra_color_palettes );
 
 
-  return new WP_REST_Response(
-    array(
-      'page_id'         => $page_id,
-      'updated_elementor_data' => $elementor_data
-    ),
-    200
-  );
+  return new WP_REST_Response(array(
+      'page_id' => 'null'
+  ), 200);
 }
