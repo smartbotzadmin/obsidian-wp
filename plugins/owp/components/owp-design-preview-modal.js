@@ -43,6 +43,7 @@ class OwpDesignPreviewModal extends HTMLElement {
   connectedCallback() {
     this.id = this.getAttribute('template-id')
     this.url = this.getAttribute('url')
+    this.name = this.getAttribute('name')
 
     this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
     this.innerHTML = /*html*/`
@@ -218,6 +219,7 @@ class OwpDesignPreviewModal extends HTMLElement {
       .toUpperCase() + this.palette.replace('astra-palette-', '').slice(1)
     window.owpSessionManager.updatePayloadSection('design', {
       template: this.id,
+      name: this.name,
       font: this.fontPairs[0],
       palette: paletteName
     })

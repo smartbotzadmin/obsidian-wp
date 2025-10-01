@@ -1,16 +1,16 @@
 <?php
 /**
  * Obsidian API
- * Template Endpoints
+ * Design Endpoints
  * 
- * Provides access to elementor pre-made templates library
+ * Provides access to elementor pre-made designs library
  */
 
 
 /**
- * GET templates
+ * GET designs
  */
-function get_templates() {
+function get_designs() {
   $posts = get_posts( array(
       'post_type'     => 'elementor_library',
       'post_status'   => 'publish',

@@ -17,7 +17,7 @@ class OwpDesignGrid extends HTMLElement {
     }
 
     connectedCallback() {
-        this.getTemplates()
+        this.getDesigns()
             .then(designs => {
                 this.designs = designs
                 this.querySelector('#designGrid').innerHTML = /*html*/`
@@ -26,10 +26,10 @@ class OwpDesignGrid extends HTMLElement {
                             template-id=${design.ID}
                             option=${index + 1}
                             url=${design.url}
+                            name=${design.title}
                         ></owp-design-option>
                     `).join('')}
                 `;
-
             })
     }
 
@@ -37,10 +37,8 @@ class OwpDesignGrid extends HTMLElement {
      * @description Generates placeholder design option HTML.
      * @returns {string} The owp pre-made elementor templates, design options.
      */
-    async getTemplates() {
-        const res = await fetch(
-            '/wp-json/owp/api/templates'
-        )
+    async getDesigns() {
+        const res = await fetch('/wp-json/owp/api/designs')
         return await res.json()
     }
 }

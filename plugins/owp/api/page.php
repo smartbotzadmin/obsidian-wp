@@ -113,6 +113,6 @@ function create_page( WP_REST_Request $req) {
 
 
   return new WP_REST_Response(array(
-      'page_id' => 'null'
+      'page_id' => $payload
   ), 200);
 }
