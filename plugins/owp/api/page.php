@@ -6,9 +6,8 @@
  * Provides functions to create a page/post in wordpress (based on elementor)
  */
 
-require_once plugin_dir_path( __FILE__ ) . 'lib/owp_upload_media.php';
 require_once plugin_dir_path( __FILE__ ) . 'lib/owp_generate_content.php';
-require_once plugin_dir_path( __FILE__ ) . 'lib/image_hydration_elementor.php';
+require_once plugin_dir_path( __FILE__ ) . 'lib/owp_hydrate_content.php';
 
 
 /**
@@ -54,14 +53,14 @@ function create_page( WP_REST_Request $req ) {
     'fyi'     => $fyi_json,
     'fields'  => $fields_json
   );
-  
+
   $ai_content = owp_generate_content( $body );
 
   if ( ! $ai_content ) {
     return new WP_REST_Response(array(
         'error'     => 'AI Content generation error.',
         'response'  => $ai_content
-    ), 200);
+    ), 500);
   }
 
   $ai_content = json_decode( $ai_content, true );
@@ -69,35 +68,72 @@ function create_page( WP_REST_Request $req ) {
 
   // 4. Process for every page of the template kit
   $pages = array('home', 'services', 'contact', 'about');
+  $created = array(
+    'home'      => '',
+    'services'  => '',
+    'contact'   => '',
+    'about'     => ''
+  );
   foreach ( $pages as $page ){
     // Load template json
     $design_page_dir = "{$design_dir}/{$design_name}/templatekit/{$page}";
     $template_json_file = 
       file_get_contents("{$design_page_dir}/template.json");
-    $template_json = json_decode($template_json_file, true);  // array
+    $template_json = json_decode($template_json_file, true);  // elementor data
+    $elementor_data = $template_json['content'];
+
+    // current CSS IDs fields - contents: IA generated text
+    $fields = $ai_content[$page];
+    // $fields = $fields_json[$page];
+
+    // current CSS IDs imgs - contents: Picked images urls
+    $images = $images_json[$page];
+    $index = 0;
+    foreach ( $images as $key => &$value ) {
+      $value = $pictures['merge'][$index]['urls']['raw'] . '.jpg';
+      $index++;
+    }
 
     // Hydrate templates
-    // TODO: 3. Hydrate AI content & images into every 'template.json'
-    //        - upload images as media.
-    //        - populate images where CSS_ID applies.
-    //        - populate AI content where CSS_ID applies.
-    //        - special treatments:
-    //          - field(text): string
-    //          - field(editor): <p></p>
-    //          - field(title): string
-    //          - *iconbox: fields(title_text, description_text)
-    //          - faq-accordion: fields(items: [{"item_title: string}, ...])
-    // TODO: 4. Create Elementor page settings (_elementor_page_settings)
-    //        - don't forget add "canvas = true"
-    // TODO: 5. Create Elementor pages from 'template.json' (_elementor_data)
+    owp_hydrate_content( $elementor_data, $fields, $images);
+
+    // create empty wp page post
+    $new_page = wp_insert_post([
+        'post_title' => 'Obsidian' . " {$design_name} " . $page,
+        'post_status' => 'publish',
+        'post_type' => 'page',
+        'post_content' => ''
+    ]);
+    $post_id = is_wp_error( $new_page ) ? 0 : $new_page;
+
+    // elementor settings
+     if ( $post_id > 0 ) {
+        // Create Elementor page settings (_elementor_page_settings)
+        $page_settings = [
+          'page_layout' => 'elementor_canvas', // Use 'elementor_canvas' layout
+          'hide_title' => 'yes', 
+        ];
+        update_post_meta(
+          $post_id, '_elementor_page_settings', $page_settings
+        );
+        
+        // Create Elementor pages from 'template.json' (_elementor_data)
+        update_post_meta( $post_id, '_elementor_data', $elementor_data );
+        update_post_meta( $post_id, '_elementor_edit_mode', 'builder' );
+        update_post_meta( $post_id, '_wp_page_template', 'elementor_canvas' );
+        update_post_meta( $post_id, '_elementor_version', ELEMENTOR_VERSION );
+        update_post_meta( $post_id, '_elementor_template_type', 'page' );
+        update_post_meta( $post_id, 'site-post-title', 'disabled' );
+    }
+
+    $created[$page] = get_permalink( $post_id );
   }
 
   // * Clear Elementor cache
   \Elementor\Plugin::instance()->files_manager->clear_cache();
 
   return new WP_REST_Response(array(
-    'body' => $body,
-    'ai_content' => $ai_content
+    'created' => $created
   ), 200);
 
 
