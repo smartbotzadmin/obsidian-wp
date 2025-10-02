@@ -7,6 +7,7 @@
  */
 
 require_once plugin_dir_path( __FILE__ ) . 'lib/owp_upload_media.php';
+require_once plugin_dir_path( __FILE__ ) . 'lib/owp_generate_content.php';
 require_once plugin_dir_path( __FILE__ ) . 'lib/image_hydration_elementor.php';
 
 
@@ -23,6 +24,7 @@ function create_page( WP_REST_Request $req ) {
 
   $payload = $req->get_json_params();
 
+  
   // 1. extract fields
   $start = $payload['start'];
   $describe = $payload['describe'];
@@ -30,34 +32,51 @@ function create_page( WP_REST_Request $req ) {
   $design = $payload['design'];
   $pictures = $payload['pictures'];
 
-  $pages = array('home');
-  // Process for every page of the template kit
+  $design_dir = WP_PLUGIN_DIR . "/owp/designs";
+  $design_name = str_replace('obsidian', '', strtolower($design['name']));
+  $design_page_dir = "{$design_dir}/{$design_name}/templatekit";
+
+  
+  // 2. Prepare fyi, fields & images CSS IDs for AI content request
+  $fields_file = file_get_contents("{$design_page_dir}/fields.json");
+  $fields_json = json_decode($fields_file, true);  // array
+
+  $images_file = file_get_contents("{$design_page_dir}/images.json");
+  $images_json = json_decode($images_file, true);  // array
+  
+  unset($payload['pictures']);
+  unset($payload['design']);
+  $fyi_json = $payload;
+
+  
+  // 3. AI content generation from 'Gemini', fill the fields json
+  $body = array(
+    'fyi'     => $fyi_json,
+    'fields'  => $fields_json
+  );
+  
+  $ai_content = owp_generate_content( $body );
+
+  if ( ! $ai_content ) {
+    return new WP_REST_Response(array(
+        'error'     => 'AI Content generation error.',
+        'response'  => $ai_content
+    ), 200);
+  }
+
+  $ai_content = json_decode( $ai_content, true );
+
+
+  // 4. Process for every page of the template kit
+  $pages = array('home', 'services', 'contact', 'about');
   foreach ( $pages as $page ){
-    // 2. Load template json
-    $design_dir = WP_PLUGIN_DIR . "/owp/designs";
-    $design_name = str_replace('obsidian', '', strtolower($design['name']));
+    // Load template json
     $design_page_dir = "{$design_dir}/{$design_name}/templatekit/{$page}";
     $template_json_file = 
       file_get_contents("{$design_page_dir}/template.json");
     $template_json = json_decode($template_json_file, true);  // array
 
-    // 3. Load fields_content json
-    $fields_content_file = 
-      file_get_contents("{$design_page_dir}/fields_content.json");
-    $fields_content_json = json_decode($fields_content_file, true);  // array
-
-    // 4. Load field_img json
-    $fields_img_file = 
-      file_get_contents("{$design_page_dir}/fields_img.json");
-    $fields_img_json = json_decode($fields_img_file, true);  // array
-  
     // Hydrate templates
-    // TODO: 5. Fetch AI text content from 'Gemini'
-    //        - Gemini AI request.
-    
-    // 6. Fetch selected and default images from 'Creation flow'
-    $images = $pictures['merge'];
-
     // TODO: 3. Hydrate AI content & images into every 'template.json'
     //        - upload images as media.
     //        - populate images where CSS_ID applies.
@@ -73,17 +92,34 @@ function create_page( WP_REST_Request $req ) {
     // TODO: 5. Create Elementor pages from 'template.json' (_elementor_data)
   }
 
-  // Clear Elementor cache
+  // * Clear Elementor cache
   \Elementor\Plugin::instance()->files_manager->clear_cache();
 
   return new WP_REST_Response(array(
-    // 'payload' => $payload,
-    'design_dir' => $template_json_dir,
-    // 'template_json' => json_encode($template_json),
-    // 'fields_content_json' => json_encode($fields_content_json),
-    // 'fields_img_json' => json_encode($fields_img_json)
-    // 'images' => $images
+    'body' => $body,
+    'ai_content' => $ai_content
   ), 200);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // $design = $payload['design'];
   // $template_id = $design['template'];
