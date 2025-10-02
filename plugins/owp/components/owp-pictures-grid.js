@@ -263,10 +263,11 @@ class OwpPicturesGrid extends HTMLElement {
       const currentPictures = window.owpSessionManager.getPayload().pictures
       window.owpSessionManager.updatePayloadSection('pictures', {
         ...currentPictures,
-        default: data.results
+        default: data.results,
+        merge: [...currentPictures.selected, ...data.results].slice(0, 10)
       })
     } catch (error) {
-      console.log('Error fetching default images')
+      console.log('Error fetching default images', error)
     }
   }
 
@@ -312,7 +313,8 @@ class OwpPicturesGrid extends HTMLElement {
     const currentPictures = window.owpSessionManager.getPayload().pictures
     window.owpSessionManager.updatePayloadSection('pictures', {
       ...currentPictures,
-      selected: this.selectedImages
+      selected: this.selectedImages,
+      merge: [...this.selectedImages, ...currentPictures.default].slice(0, 10)
     });
     this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
   }

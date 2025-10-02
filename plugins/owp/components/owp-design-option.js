@@ -9,6 +9,7 @@ class OwpDesignOption extends HTMLElement {
 		super();
 		this.id = this.getAttribute('template-id')
 		this.url = this.getAttribute('url') + '&owp-preview=true'
+		this.name = this.getAttribute('name')
 		this.option = this.getAttribute('option')
 
 		this.className = `grow flex flex-col w-screen sm:w-1/3 lg:w-1/4 xl:w-1/5 h-[450px] bg-slate-950 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-700 overflow-hidden`;
@@ -61,6 +62,7 @@ class OwpDesignOption extends HTMLElement {
 				const previewModal = new OwpDesignPreviewModal()
 				previewModal.setAttribute('url', this.url)
 				previewModal.setAttribute('template-id', this.id)
+				previewModal.setAttribute('name', this.name)
 				owpApp.shadowRoot.appendChild(previewModal);
 			}
 		});

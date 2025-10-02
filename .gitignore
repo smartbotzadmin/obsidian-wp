@@ -109,3 +109,8 @@ wp-config-sample.php
 /local/
 /tmp/
 /temp/
+/themes
+/uploads
+/upgrade
+/backup
+index.php

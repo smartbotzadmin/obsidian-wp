@@ -132,7 +132,8 @@ class OwpSessionManager {
     },
     pictures: {
       selected: [],
-      default: []
+      default: [],
+      merge: []
     },
     design: {
       template: null,
