@@ -168,10 +168,10 @@ add_action( 'enqueue_block_editor_assets', 'owp_enqueue_components' );
 function register_api_endpoints() {
     register_rest_route(
         'owp/api',
-        '/templates',
+        '/designs',
         array(
             'methods'   => 'GET',
-            'callback'  => 'get_templates',
+            'callback'  => 'get_designs',
             'permission_callback' => '__return_true',
             'args' => array(),
         )
@@ -190,5 +190,5 @@ function register_api_endpoints() {
 }
 add_action( 'rest_api_init', 'register_api_endpoints' );
 
-require_once plugin_dir_path( __FILE__ ) . 'api/templates.php';
+require_once plugin_dir_path( __FILE__ ) . 'api/design.php';
 require_once plugin_dir_path( __FILE__ ) . 'api/page.php';

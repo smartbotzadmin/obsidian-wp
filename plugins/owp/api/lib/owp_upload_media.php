@@ -1,6 +1,6 @@
 <?php
 
-function upload_media($image_url) {
+function owp_upload_media($image_url) {
     require_once(ABSPATH . 'wp-admin/includes/image.php');
     require_once(ABSPATH . 'wp-admin/includes/file.php');
     require_once(ABSPATH . 'wp-admin/includes/media.php');
