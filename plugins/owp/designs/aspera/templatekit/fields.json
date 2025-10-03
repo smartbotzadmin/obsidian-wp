@@ -59,15 +59,15 @@
 		"ob-faq-title": "",
 		"ob-faq-shortdescription": "",
 		"ob-faq-accordion": {
-		"ob-faq-accordion-question1": "",
-		"ob-faq-accordion-question2": "",
-		"ob-faq-accordion-question3": "",
-		"ob-faq-accordion-question4": ""
-	},
-	"ob-faq-accordion-answer1": "",
-	"ob-faq-accordion-answer2": "",
-	"ob-faq-accordion-answer3": "",
-	"ob-faq-accordion-answer4": "",
+			"ob-faq-accordion-question1": "",
+			"ob-faq-accordion-question2": "",
+			"ob-faq-accordion-question3": "",
+			"ob-faq-accordion-question4": ""
+		},
+		"ob-faq-accordion-answer1": "",
+		"ob-faq-accordion-answer2": "",
+		"ob-faq-accordion-answer3": "",
+		"ob-faq-accordion-answer4": "",
 		"ob-cta-tagline": "",
 		"ob-cta-title": "",
 		"ob-cta-button": ""

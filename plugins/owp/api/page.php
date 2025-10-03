@@ -74,6 +74,7 @@ function create_page( WP_REST_Request $req ) {
     'contact'   => '',
     'about'     => ''
   );
+
   foreach ( $pages as $page ){
     // Load template json
     $design_page_dir = "{$design_dir}/{$design_name}/templatekit/{$page}";
@@ -128,6 +129,28 @@ function create_page( WP_REST_Request $req ) {
 
     $created[$page] = get_permalink( $post_id );
   }
+
+
+  // 5. Setup Astra Typography & Astra Color Palette (wp_options)
+  
+  // fonts
+  $astra_settings = get_option( 'astra-settings', null);
+  
+  $astra_settings['body-font-family'] =
+    "'{$design['font']['body']}, sans-serif";
+  $astra_settings['headings-font-family'] =
+    "'{$design['font']['heading']}, serif";
+
+  // palette
+  $astra_color_palettes = get_option( 'astra-color-palettes', []);
+
+  $palette_selected = $astra_color_palettes['presets'][$design['palette']];
+  $astra_settings['global-color-palette']['palette'] = $palette_selected;
+  $astra_color_palettes['palettes']['palette_1'] = $palette_selected;
+  
+  update_option( 'astra-settings', $astra_settings );
+  update_option( 'astra-color-palettes', $astra_color_palettes );
+
 
   // * Clear Elementor cache
   \Elementor\Plugin::instance()->files_manager->clear_cache();

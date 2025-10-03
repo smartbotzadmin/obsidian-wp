@@ -1,32 +1,61 @@
 <?php
 
 function owp_upload_media($image_url) {
-    require_once(ABSPATH . 'wp-admin/includes/image.php');
-    require_once(ABSPATH . 'wp-admin/includes/file.php');
-    require_once(ABSPATH . 'wp-admin/includes/media.php');
+  require_once(ABSPATH . 'wp-admin/includes/image.php');
+  require_once(ABSPATH . 'wp-admin/includes/file.php');
+  require_once(ABSPATH . 'wp-admin/includes/media.php');
 
-    $file_array = array();
-    $file_array['name'] = basename($image_url);
+  $file_array = array();
+  $file_array['name'] = basename($image_url);
 
-    // Download file to a temporary location
-    $tmp_name = download_url($image_url);
 
-    if (is_wp_error($tmp_name)) {
-        return $tmp_name; // Return WP_Error object
-    }
+  // check if photo already is uploaded
+  global $wpdb;
 
-    $file_array['tmp_name'] = $tmp_name;
+  preg_match('/(photo-\d+-\w+)/', $image_url, $matches);
+  $photo_id = $matches[0];
+  
+  $query = $wpdb->prepare(
+    "
+    SELECT *
+    FROM {$wpdb->postmeta}
+    WHERE meta_value LIKE %s
+    AND meta_key = %s
+    LIMIT 50
+    ",
+    '%' . $wpdb->esc_like($photo_id) . '%',
+    '_wp_attached_file'
+  );
 
-    // Upload the file to WordPress media library
-    $id = media_handle_sideload($file_array, 0);
+  $results = $wpdb->get_results($query);
+  if (!empty($results)) {
+    $uploads_path = wp_upload_dir()['baseurl'];
+    $existing_url = $uploads_path . "/" . $results[0]->meta_value;
+    return $existing_url;
+  }
+  
 
-    if (is_wp_error($id)) {
-        @unlink($tmp_name); // Delete the temporary file
-        return $id; // Return WP_Error object
-    }
+  // Download file to a temporary location
+  $tmp_name = download_url($image_url);
 
-    // Get the attachment URL
-    $image_url = wp_get_attachment_url($id);
+  if (is_wp_error($tmp_name)) {
+    return $tmp_name; // Return WP_Error object
+  }
 
-    return $image_url;
+  $file_array['tmp_name'] = $tmp_name;
+
+
+  // Upload the file to WordPress media library
+  $id = media_handle_sideload($file_array, 0);
+
+  if (is_wp_error($id)) {
+    @unlink($tmp_name); // Delete the temporary file
+    return $id; // Return WP_Error object
+  }
+
+
+  // Get the attachment URL
+  $image_url = wp_get_attachment_url($id);
+
+  return $image_url;
 }
