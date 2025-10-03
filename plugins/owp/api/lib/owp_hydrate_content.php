@@ -57,6 +57,7 @@ function owp_hydrate_content( &$elementor_data, $fields, $images ) {
       // images hydration
       if ( array_key_exists($element['settings']['_element_id'], $images) ) {
         $uploaded_image_url = owp_upload_media( $images[$css_id] );
+        
         // case bg
         if ( isset($element['settings']['background_image']) ) {
           $element['settings']['background_image']['url'] = $uploaded_image_url;
