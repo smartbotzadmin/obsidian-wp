@@ -183,25 +183,27 @@ add_action( 'enqueue_block_editor_assets', 'owp_enqueue_components' );
 * @return void
 */
 function register_api_endpoints() {
-    register_rest_route(
-        'owp/api',
-        '/designs',
-        array(
+    // get_designs
+    register_rest_route( 'owp/api', '/designs', array(
             'methods'   => 'GET',
             'callback'  => 'get_designs',
-            'permission_callback' => '__return_true',
-            'args' => array(),
+            'permission_callback' => '__return_true'
         )
     );
 
-    register_rest_route(
-        'owp/api',
-        '/page',
-        array(
+    // get_images_json
+    register_rest_route( 'owp/api', '/json/images', array(
+            'methods'   => 'GET',
+            'callback'  => 'get_images_json',
+            'permission_callback' => '__return_true'
+        )
+    );
+
+    // create_page
+    register_rest_route( 'owp/api', '/page', array(
             'methods'   => 'POST',
             'callback'  => 'create_page',
-            'permission_callback' => '__return_true',
-            'args' => array(),
+            'permission_callback' => '__return_true'
         )
     );
 }
