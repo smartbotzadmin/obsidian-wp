@@ -4,29 +4,42 @@
  * @description Web component for the close button and dropdown menu in the top bar.
  */
 class OwpTopbarCloseButton extends HTMLElement {
+    crossButton = null;
+    dropdownContent = null;
+    cancelButton = null;
+    boundHandleOutsideClick = null;
+
+
     /**
      * @description Constructs the OwpTopBarCloseButton instance.
      * @returns {void}
      */
     constructor() {
         super();
-        this.innerHTML = this.getTemplate();
-        this.crossButton = this.querySelector('#crossButton');
-        this.dropdownContent = this.querySelector('#dropdownContent');
-        this.cancelButton = this.querySelector('#cancelButton');
-
-        this.crossButton.addEventListener('click', this.toggleDropdown.bind(this));
-        this.cancelButton.addEventListener('click', this.toggleDropdown.bind(this));
-        this.boundHandleOutsideClick = this.handleOutsideClick.bind(this);
+        this.innerHTML = this.#getTemplate();
     }
+
 
     /**
      * @description Called when the element is added to the document's DOM.
      * @returns {void}
      */
     connectedCallback() {
+        this.crossButton = this.querySelector('#crossButton');
+        this.dropdownContent = this.querySelector('#dropdownContent');
+        this.cancelButton = this.querySelector('#cancelButton');
+
+        if (this.crossButton) {
+            this.crossButton.addEventListener('click', this.#toggleDropdown.bind(this));
+        }
+        if (this.cancelButton) {
+            this.cancelButton.addEventListener('click', this.#toggleDropdown.bind(this));
+        }
+
+        this.boundHandleOutsideClick = this.#handleOutsideClick.bind(this);
         document.addEventListener('click', this.boundHandleOutsideClick);
     }
+
 
     /**
      * @description Called when the element is removed from the document's DOM.
@@ -34,24 +47,34 @@ class OwpTopbarCloseButton extends HTMLElement {
      */
     disconnectedCallback() {
         document.removeEventListener('click', this.boundHandleOutsideClick);
+        if (this.crossButton) {
+            this.crossButton.removeEventListener('click', this.#toggleDropdown.bind(this));
+        }
+        if (this.cancelButton) {
+            this.cancelButton.removeEventListener('click', this.#toggleDropdown.bind(this));
+        }
     }
 
+
     /**
+     * @private
      * @description Handles clicks outside the dropdown to close it.
      * @param {Event} event The click event.
      * @returns {void}
      */
-    handleOutsideClick(event) {
-        if (!this.contains(event.target) && this.dropdownContent.classList.contains('block')) {
-            this.toggleDropdown(event);
+    #handleOutsideClick(event) {
+        if (!this.contains(event.target) && this.dropdownContent && this.dropdownContent.classList.contains('block')) {
+            this.#toggleDropdown(event);
         }
     }
 
+
     /**
+     * @private
      * @description Generates the HTML template for the close button and dropdown.
      * @returns {string} The HTML string for the component.
      */
-    getTemplate() {
+    #getTemplate() {
         return `
             <div class="relative">
                 <div id="crossButton" class="focus:outline-none cursor-pointer">
@@ -71,19 +94,23 @@ class OwpTopbarCloseButton extends HTMLElement {
         `;
     }
 
+
     /**
+     * @private
      * @description Toggles the visibility of the dropdown menu.
      * @param {Event} event The click event.
      * @returns {void}
      */
-    toggleDropdown(event) {
+    #toggleDropdown(event) {
         event.stopPropagation();
-        if (this.dropdownContent.classList.contains('hidden')) {
-            this.dropdownContent.classList.remove('hidden');
-            this.dropdownContent.classList.add('block');
-        } else {
-            this.dropdownContent.classList.remove('block');
-            this.dropdownContent.classList.add('hidden');
+        if (this.dropdownContent) {
+            if (this.dropdownContent.classList.contains('hidden')) {
+                this.dropdownContent.classList.remove('hidden');
+                this.dropdownContent.classList.add('block');
+            } else {
+                this.dropdownContent.classList.remove('block');
+                this.dropdownContent.classList.add('hidden');
+            }
         }
     }
 }

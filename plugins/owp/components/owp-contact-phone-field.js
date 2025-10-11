@@ -30,6 +30,16 @@ class OwpContactPhoneField extends HTMLElement {
 
 
     /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        // Cleanup event listeners if necessary
+        this.phoneNumberInput.removeEventListener('input', this.#handleInputChange.bind(this));
+    }
+
+
+    /**
      * @private
      * @description Handles the input event on the phone number field, updating the session payload.
      * @param {Event} event - The input event.

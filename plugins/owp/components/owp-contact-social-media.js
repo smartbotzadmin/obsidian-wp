@@ -4,6 +4,11 @@
  * @description Web component for adding social media links on the contact page.
  */
 class OwpContactSocialMedia extends HTMLElement {
+    static socialMediaIcons = [
+        'discord', 'facebook', 'github', 'instagram', 'linkedin', 'twitch', 'youtube'
+    ];
+
+
     /**
      * @description Constructs the OwpContactSocialMedia instance.
      * @returns {void}
@@ -23,9 +28,9 @@ class OwpContactSocialMedia extends HTMLElement {
                 <!-- Social media icons will be loaded here -->
             </div>
         `;
-        this.socialMediaIcons = [
-            'discord', 'facebook', 'github', 'instagram', 'linkedin', 'twitch', 'youtube'
-        ];
+        this.socialMenuButton = null;
+        this.socialDropdown = null;
+        this.boundHandleOutsideClick = this.#handleOutsideClick.bind(this);
     }
 
 
@@ -40,18 +45,36 @@ class OwpContactSocialMedia extends HTMLElement {
             event.stopPropagation(); // Prevent the click from bubbling up to the document
             this.toggleSocialDropdown();
         });
-        this.loadSocialIcons();
-        this.loadExistingSocialFields(); // Call the new method here
-        document.addEventListener('click', this.handleOutsideClick.bind(this));
+        this.#loadSocialIcons();
+        this.#loadExistingSocialFields();
+        document.addEventListener('click', this.boundHandleOutsideClick);
     }
 
 
     /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        document.removeEventListener('click', this.boundHandleOutsideClick);
+        // Remove other event listeners if necessary
+        if (this.socialMenuButton) {
+            this.socialMenuButton.removeEventListener('click', (event) => {
+                event.stopPropagation();
+                this.toggleSocialDropdown();
+            });
+        }
+        // Note: Dynamically added event listeners on social icons and trash buttons are handled by their removal from DOM.
+    }
+
+
+    /**
+     * @private
      * @description Handles clicks outside the social menu and dropdown to hide the dropdown.
      * @param {Event} event The click event.
      * @returns {void}
      */
-    handleOutsideClick(event) {
+    #handleOutsideClick(event) {
         if (!this.socialMenuButton.contains(event.target) && !this.socialDropdown.contains(event.target)) {
             this.socialDropdown.classList.add('hidden');
         }
@@ -68,30 +91,32 @@ class OwpContactSocialMedia extends HTMLElement {
 
 
     /**
+     * @private
      * @description Loads social media icons into the dropdown.
      * @returns {void}
      */
-    loadSocialIcons() {
-        this.socialMediaIcons.forEach(iconName => {
+    #loadSocialIcons() {
+        OwpContactSocialMedia.socialMediaIcons.forEach(iconName => {
             const iconPath = `/wp-content/plugins/owp/assets/icons/social/${iconName}.svg`;
             const img = document.createElement('img');
             img.src = iconPath;
             img.alt = `${iconName} icon`;
             img.className = `w-8 h-8 cursor-pointer hover:opacity-75`;
             img.dataset.social = iconName;
-            img.addEventListener('click', this.addSocialField.bind(this));
+            img.addEventListener('click', this.#addSocialField.bind(this));
             this.socialDropdown.appendChild(img);
         });
     }
 
 
     /**
+     * @private
      * @description Adds a new social media input field.
      * @param {Event} event The click event or a simulated event object.
      * @param {string} [initialValue=''] The initial value to pre-fill the input field.
      * @returns {void}
      */
-    addSocialField(event, initialValue = '') {
+    #addSocialField(event, initialValue = '') {
         const socialName = event.target.dataset.social;
         if (!socialName) {
             return;
@@ -123,21 +148,22 @@ class OwpContactSocialMedia extends HTMLElement {
 
         // exp
         const field = socialFieldRow2.querySelector(`#${socialName}-field`)
-        field.addEventListener('input', this.updateSocialPayload.bind(this));
+        field.addEventListener('input', this.#updateSocialPayload.bind(this));
         const trashButton = socialFieldRow2.querySelector(`#${socialName}-trashButton`)
-        trashButton.addEventListener('click', this.removeSocialField.bind(this));
+        trashButton.addEventListener('click', this.#removeSocialField.bind(this));
 
         // Initialize payload if not already present
-        this.updateSocialPayload({ target: field });
+        this.#updateSocialPayload({ target: field });
     }
 
 
     /**
+     * @private
      * @description Updates the owp_payload with social media information.
      * @param {Event} event The input event.
      * @returns {void}
      */
-    updateSocialPayload(event) {
+    #updateSocialPayload(event) {
         const socialName = event.target.dataset.social;
         const socialValue = event.target.value;
         const currentPayload = window.owpSessionManager.getPayload();
@@ -151,11 +177,12 @@ class OwpContactSocialMedia extends HTMLElement {
 
 
     /**
+     * @private
      * @description Removes a social media input field and updates the owp_payload.
      * @param {Event} event The click event.
      * @returns {void}
      */
-    removeSocialField(event) {
+    #removeSocialField(event) {
         const socialName = event.currentTarget.dataset.social;
         const socialFieldRow = event.currentTarget.closest('.social-field-row');
 
@@ -171,10 +198,11 @@ class OwpContactSocialMedia extends HTMLElement {
 
 
     /**
+     * @private
      * @description Loads existing social media fields from the owp_payload in sessionStorage.
      * @returns {void}
      */
-    loadExistingSocialFields() {
+    #loadExistingSocialFields() {
         const currentPayload = window.owpSessionManager.getPayload();
         const socialData = currentPayload.contact.social;
 
@@ -183,25 +211,7 @@ class OwpContactSocialMedia extends HTMLElement {
                 if (Object.hasOwnProperty.call(socialData, socialName)) {
                     const socialValue = socialData[socialName];
                     // Simulate event object for addSocialField
-                    this.addSocialField({ target: { dataset: { social: socialName } } }, socialValue);
-                }
-            }
-        }
-    }
-    /**
-     * @description Loads existing social media fields from the owp_payload in sessionStorage.
-     * @returns {void}
-     */
-    loadExistingSocialFields() {
-        const currentPayload = window.owpSessionManager.getPayload();
-        const socialData = currentPayload.contact.social;
-
-        if (socialData) {
-            for (const socialName in socialData) {
-                if (Object.hasOwnProperty.call(socialData, socialName)) {
-                    const socialValue = socialData[socialName];
-                    // Simulate event object for addSocialField
-                    this.addSocialField({ target: { dataset: { social: socialName } } }, socialValue);
+                    this.#addSocialField({ target: { dataset: { social: socialName } } }, socialValue);
                 }
             }
         }

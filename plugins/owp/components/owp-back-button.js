@@ -5,6 +5,15 @@
  */
 class OwpBackButton extends HTMLElement {
     /**
+     * @description Observes changes to the 'redirect-to' attribute.
+     * @returns {Array<string>} The observed attributes.
+     */
+    static get observedAttributes() {
+        return ['data-owp-navigate'];
+    }
+
+
+    /**
      * @description Constructs the OwpBackButton instance.
      * @returns {void}
      */
@@ -18,15 +27,22 @@ class OwpBackButton extends HTMLElement {
                 </span>
             </button>
         `;
+        this.backButton = null;
+        this.redirectTo = this.getAttribute('data-owp-navigate');
     }
 
+
     /**
-     * @description Observes changes to the 'redirect-to' attribute.
-     * @returns {Array<string>} The observed attributes.
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
      */
-    static get observedAttributes() {
-        return ['data-owp-navigate'];
+    connectedCallback() {
+        this.backButton = this.querySelector('#backButton');
+        if (this.backButton) {
+            this.backButton.addEventListener('click', this.#handleButtonClick.bind(this));
+        }
     }
+
 
     /**
      * @description Handles changes to observed attributes.
@@ -36,10 +52,20 @@ class OwpBackButton extends HTMLElement {
      * @returns {void}
      */
     attributeChangedCallback(name, oldVal, newVal) {
-        if (name === 'data-owp-navigate' && newVal) {
-            this.querySelector('#backButton').addEventListener('click', () => {
-                window.location.hash = newVal;
-            });
+        if (name === 'data-owp-navigate') {
+            this.redirectTo = newVal;
+        }
+    }
+
+
+    /**
+     * @private
+     * @description Handles the click event for the back button.
+     * @returns {void}
+     */
+    #handleButtonClick() {
+        if (this.redirectTo) {
+            window.location.hash = this.redirectTo;
         }
     }
 }

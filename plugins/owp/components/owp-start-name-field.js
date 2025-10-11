@@ -4,6 +4,8 @@
  * @description Web component for the website name input field.
  */
 class OwpStartNameField extends HTMLElement {
+    siteNameInput = null;
+
     /**
      * @description Constructs the OwpStartNameField instance.
      * @returns {void}
@@ -26,6 +28,17 @@ class OwpStartNameField extends HTMLElement {
         this.siteNameInput = this.querySelector('#siteName');
         this.siteNameInput.addEventListener('input', this.#handleInputChange.bind(this));
         this.#loadInitialValue();
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        if (this.siteNameInput) {
+            this.siteNameInput.removeEventListener('input', this.#handleInputChange.bind(this));
+        }
     }
 
 

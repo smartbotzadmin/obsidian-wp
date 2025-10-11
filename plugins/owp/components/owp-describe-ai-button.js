@@ -30,6 +30,15 @@ class OwpDescribeAiButton extends HTMLElement {
 
 
     /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        this.writeAiButton.removeEventListener('click', this.#handleWriteAiClick.bind(this));
+    }
+
+
+    /**
      * @private
      * @description Handles the click event for the "Write Using AI" button,
      *              makes an API call, and dispatches the response.

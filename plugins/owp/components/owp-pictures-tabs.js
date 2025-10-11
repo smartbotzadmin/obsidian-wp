@@ -4,28 +4,33 @@
  * @description Web component for tab navigation on the pictures page.
  */
 class OwpPicturesTabs extends HTMLElement {
+    orientationOptions = [{
+        label: 'All orientations',
+        value: ''
+    }, {
+        label: 'Landscape',
+        value: 'landscape'
+    }, {
+        label: 'Portrait',
+        value: 'portrait'
+    }, {
+        label: 'Square',
+        value: 'squarish'
+    }, ];
+
+    selectedOrientationValue = this.orientationOptions[0].label; // Initialize with the first option
+    tabButtons = null;
+    orientationMenuButton = null;
+    orientationDropdown = null;
+    boundHandleOutsideClick = null;
+
+
     /**
      * @description Constructs the OwpPicturesTabs instance.
      * @returns {void}
      */
     constructor() {
         super();
-       this.orientationOptions = [{
-           label: 'All orientations',
-           value: ''
-       }, {
-           label: 'Landscape',
-           value: 'landscape'
-       }, {
-           label: 'Portrait',
-           value: 'portrait'
-       }, {
-           label: 'Square',
-           value: 'squarish'
-       }, ];
-
-       this.selectedOrientationValue = this.orientationOptions[0].label; // Initialize with the first option
-
         this.className = `flex w-full border-b border-slate-700 mb-6 py-3 px-12`;
         this.innerHTML = `
             <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 border-b-2 border-cyan-500 focus:outline-none" data-tab="search-results">Search Results</button>
@@ -49,43 +54,84 @@ class OwpPicturesTabs extends HTMLElement {
                 </div>
             </div>
         `;
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
         this.tabButtons = this.querySelectorAll('.tab-button');
         this.tabButtons.forEach(button => {
-            button.addEventListener('click', this.handleTabClick.bind(this));
+            button.addEventListener('click', this.#handleTabClick.bind(this));
         });
 
         this.orientationMenuButton = this.querySelector('#orientation-menu-button');
         this.orientationDropdown = this.orientationMenuButton.nextElementSibling;
 
-        this.orientationMenuButton.addEventListener('click', this.handleOrientationMenuClick.bind(this));
+        this.orientationMenuButton.addEventListener('click', this.#handleOrientationMenuClick.bind(this));
         this.orientationDropdown.querySelectorAll('a').forEach(item => {
-            item.addEventListener('click', this.handleOrientationSelection.bind(this));
+            item.addEventListener('click', this.#handleOrientationSelection.bind(this));
         });
 
-        document.addEventListener('click', (event) => {
-            if (!this.orientationMenuButton.contains(event.target) && !this.orientationDropdown.contains(event.target)) {
-                this.orientationDropdown.classList.add('hidden');
-            }
-        });
+        this.boundHandleOutsideClick = this.#handleOutsideClick.bind(this);
+        document.addEventListener('click', this.boundHandleOutsideClick);
     }
 
+
     /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        this.tabButtons.forEach(button => {
+            button.removeEventListener('click', this.#handleTabClick.bind(this));
+        });
+        if (this.orientationMenuButton) {
+            this.orientationMenuButton.removeEventListener('click', this.#handleOrientationMenuClick.bind(this));
+        }
+        if (this.orientationDropdown) {
+            this.orientationDropdown.querySelectorAll('a').forEach(item => {
+                item.removeEventListener('click', this.#handleOrientationSelection.bind(this));
+            });
+        }
+        document.removeEventListener('click', this.boundHandleOutsideClick);
+    }
+
+
+    /**
+     * @private
+     * @description Handles clicks outside the orientation menu and dropdown to hide the dropdown.
+     * @param {Event} event - The click event.
+     * @returns {void}
+     */
+    #handleOutsideClick(event) {
+        if (!this.orientationMenuButton.contains(event.target) && !this.orientationDropdown.contains(event.target)) {
+            this.orientationDropdown.classList.add('hidden');
+        }
+    }
+
+
+    /**
+     * @private
      * @description Handles click events on the orientation menu button, toggling the dropdown visibility.
      * @param {Event} event - The click event.
      * @returns {void}
      */
-    handleOrientationMenuClick(event) {
+    #handleOrientationMenuClick(event) {
         event.stopPropagation();
         this.orientationDropdown.classList.toggle('hidden');
     }
 
 
     /**
+     * @private
      * @description Handles selection of an orientation from the dropdown.
      * @param {Event} event - The click event.
      * @returns {void}
      */
-    handleOrientationSelection(event) {
+    #handleOrientationSelection(event) {
         event.preventDefault();
         const selectedLabel = event.currentTarget.textContent;
         const selectedValue = event.currentTarget.dataset.value;
@@ -102,11 +148,12 @@ class OwpPicturesTabs extends HTMLElement {
 
 
     /**
+     * @private
      * @description Handles click events on tab buttons, updating the active tab.
      * @param {Event} event - The click event.
      * @returns {void}
      */
-    handleTabClick(event) {
+    #handleTabClick(event) {
         this.tabButtons.forEach(button => {
             button.classList.remove('text-cyan-600', 'border-b-2', 'border-cyan-600');
             button.classList.add('text-slate-300', 'hover:text-cyan-500');

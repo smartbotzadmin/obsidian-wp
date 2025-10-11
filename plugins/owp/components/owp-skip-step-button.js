@@ -4,6 +4,19 @@
  * @description Web component for a customizable skip step button with redirection functionality.
  */
 class OwpSkipStepButton extends HTMLElement {
+    skipButton = null;
+    redirectTo = null;
+
+
+    /**
+     * @description Observes changes to the 'redirect-to' attribute.
+     * @returns {Array<string>} The observed attributes.
+     */
+    static get observedAttributes() {
+        return ['data-owp-navigate'];
+    }
+
+
     /**
      * @description Constructs the OwpSkipStepButton instance.
      * @returns {void}
@@ -17,13 +30,31 @@ class OwpSkipStepButton extends HTMLElement {
         `;
     }
 
+
     /**
-     * @description Observes changes to the 'redirect-to' attribute.
-     * @returns {Array<string>} The observed attributes.
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
      */
-    static get observedAttributes() {
-        return ['data-owp-navigate'];
+    connectedCallback() {
+        this.skipButton = this.querySelector('#skipButton');
+        this.redirectTo = this.getAttribute('data-owp-navigate');
+
+        if (this.skipButton) {
+            this.skipButton.addEventListener('click', this.#handleButtonClick.bind(this));
+        }
     }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        if (this.skipButton) {
+            this.skipButton.removeEventListener('click', this.#handleButtonClick.bind(this));
+        }
+    }
+
 
     /**
      * @description Handles changes to observed attributes.
@@ -33,10 +64,20 @@ class OwpSkipStepButton extends HTMLElement {
      * @returns {void}
      */
     attributeChangedCallback(name, oldVal, newVal) {
-        if (name === 'data-owp-navigate' && newVal) {
-            this.querySelector('#skipButton').addEventListener('click', () => {
-                window.location.hash = newVal;
-            });
+        if (name === 'data-owp-navigate') {
+            this.redirectTo = newVal;
+        }
+    }
+
+
+    /**
+     * @private
+     * @description Handles the click event for the skip button.
+     * @returns {void}
+     */
+    #handleButtonClick() {
+        if (this.redirectTo) {
+            window.location.hash = this.redirectTo;
         }
     }
 }

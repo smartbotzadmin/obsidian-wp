@@ -10,14 +10,34 @@ class OwpTopbarLogo extends HTMLElement {
      */
     constructor() {
         super();
-        this.innerHTML = this.getTemplate();
+        this.innerHTML = this.#getTemplate();
     }
 
+
     /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        // No specific logic needed on connection for this component.
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        // No specific cleanup needed for this component.
+    }
+
+
+    /**
+     * @private
      * @description Generates the HTML template for the OWP logo.
      * @returns {string} The HTML string for the component.
      */
-    getTemplate() {
+    #getTemplate() {
         return `
             <img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/obsidian-logo.png" alt="OWP Logo" class="h-8 w-auto">
         `;

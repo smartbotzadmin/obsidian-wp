@@ -4,6 +4,9 @@
  * @description Web component for the image search bar on the pictures page.
  */
 class OwpPicturesSearchBar extends HTMLElement {
+    searchInput = null;
+    clearButton = null;
+
     /**
      * @description Constructs the OwpPicturesSearchBar instance.
      * @returns {void}
@@ -17,19 +20,44 @@ class OwpPicturesSearchBar extends HTMLElement {
                 <img src="/wp-content/plugins/owp/assets/icons/x.svg" class="h-5 w-5" />
             </button>
         `;
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
         this.searchInput = this.querySelector('#imageSearchInput');
         this.clearButton = this.querySelector('#clearSearchButton');
 
-        this.searchInput.addEventListener('input', this.handleInputChange.bind(this));
-        this.searchInput.addEventListener('keydown', this.handleSearchKeyDown.bind(this));
-        this.clearButton.addEventListener('click', this.handleClearSearch.bind(this));
+        this.searchInput.addEventListener('input', this.#handleInputChange.bind(this));
+        this.searchInput.addEventListener('keydown', this.#handleSearchKeyDown.bind(this));
+        this.clearButton.addEventListener('click', this.#handleClearSearch.bind(this));
     }
 
+
     /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        if (this.searchInput) {
+            this.searchInput.removeEventListener('input', this.#handleInputChange.bind(this));
+            this.searchInput.removeEventListener('keydown', this.#handleSearchKeyDown.bind(this));
+        }
+        if (this.clearButton) {
+            this.clearButton.removeEventListener('click', this.#handleClearSearch.bind(this));
+        }
+    }
+
+
+    /**
+     * @private
      * @description Handles input changes in the search bar, showing/hiding the clear button.
      * @returns {void}
      */
-    handleInputChange() {
+    #handleInputChange() {
         if (this.searchInput.value.length > 0) {
             this.clearButton.classList.remove('hidden');
         } else {
@@ -37,11 +65,13 @@ class OwpPicturesSearchBar extends HTMLElement {
         }
     }
 
+
     /**
+     * @private
      * @description Clears the search input and hides the clear button.
      * @returns {void}
      */
-    handleClearSearch() {
+    #handleClearSearch() {
         this.searchInput.value = '';
         this.clearButton.classList.add('hidden');
         this.dispatchEvent(new CustomEvent('search-cleared'));
@@ -49,11 +79,12 @@ class OwpPicturesSearchBar extends HTMLElement {
 
 
     /**
+     * @private
      * @description Handles keydown events on the search bar, triggering a search on Enter key.
      * @param {KeyboardEvent} event - The keyboard event.
      * @returns {void}
      */
-    handleSearchKeyDown(event) {
+    #handleSearchKeyDown(event) {
         if (event.key === 'Enter') {
             const query = this.searchInput.value.trim();
             this.dispatchEvent(new CustomEvent('search-triggered', {

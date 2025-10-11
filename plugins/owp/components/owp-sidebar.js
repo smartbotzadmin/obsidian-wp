@@ -1,4 +1,10 @@
 class OwpSidebar extends HTMLElement {
+    sidebarContainer = null;
+
+    /**
+     * @description Constructs the OwpSidebar instance.
+     * @returns {void}
+     */
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
@@ -14,16 +20,35 @@ class OwpSidebar extends HTMLElement {
                 </div>
             </div>
         `;
-
-        this.sidebarContainer = shadowRoot.getElementById('owp-custom-sidebar-container');
     }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        this.sidebarContainer = this.shadowRoot.getElementById('owp-custom-sidebar-container');
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        // No specific cleanup needed for this component.
+    }
+
 
     /**
      * @description Toggles the visibility of the sidebar.
      * @returns {void}
      */
     toggleSidebar() {
-        this.sidebarContainer.classList.toggle('!right-0');
+        if (this.sidebarContainer) {
+            this.sidebarContainer.classList.toggle('!right-0');
+        }
     }
 }
 

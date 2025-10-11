@@ -21,6 +21,12 @@ class OwpStartBusinessSelector extends HTMLElement {
      */
     selectedBusiness = null;
 
+    websiteForSearch = null;
+    websiteForDropdown = null;
+    websiteForInputContainer = null;
+    boundHandleClickOutside = null;
+
+
     /**
      * @description Constructs the OwpStartBusinessSelector instance.
      * @returns {void}
@@ -49,37 +55,6 @@ class OwpStartBusinessSelector extends HTMLElement {
                 </div>
             </div>
         `;
-
-        this.websiteForSearch = this.querySelector('#websiteForSearch');
-        this.websiteForDropdown = this.querySelector('#websiteForDropdown');
-        this.websiteForInputContainer = this.querySelector('.flex.items-center.h-11');
-
-        this.websiteForInputContainer.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent document click from immediately closing
-            this.websiteForDropdown.classList.toggle('hidden');
-        });
-        // Use a single blur event on the container to hide the dropdown
-
-        this.websiteForDropdown.querySelectorAll('div[data-value]').forEach(item => {
-            item.addEventListener('click', (event) => {
-                event.stopPropagation(); // Prevent event bubbling
-                const selectedValue = event.currentTarget.dataset.value;
-                this.websiteForSearch.textContent = selectedValue;
-                this.selectedBusiness = selectedValue;
-                this.websiteForDropdown.classList.add('hidden');
-
-                const currentPayload = window.owpSessionManager.getPayload();
-                window.owpSessionManager.updatePayloadSection('start', {
-                    ...currentPayload.start,
-                    business: selectedValue
-                });
-
-                this.websiteForDropdown.querySelectorAll('.check-icon').forEach(icon => {
-                    icon.classList.add('hidden');
-                });
-                event.currentTarget.querySelector('.check-icon').classList.remove('hidden');
-            });
-        });
     }
 
 
@@ -88,7 +63,17 @@ class OwpStartBusinessSelector extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        document.addEventListener('click', this.#handleClickOutside);
+        this.websiteForSearch = this.querySelector('#websiteForSearch');
+        this.websiteForDropdown = this.querySelector('#websiteForDropdown');
+        this.websiteForInputContainer = this.querySelector('.flex.items-center.h-11');
+
+        this.websiteForInputContainer.addEventListener('click', this.#handleInputContainerClick.bind(this));
+        this.websiteForDropdown.querySelectorAll('div[data-value]').forEach(item => {
+            item.addEventListener('click', this.#handleOptionClick.bind(this));
+        });
+
+        this.boundHandleClickOutside = this.#handleClickOutside.bind(this);
+        document.addEventListener('click', this.boundHandleClickOutside);
         this.#loadInitialValue();
     }
 
@@ -98,7 +83,53 @@ class OwpStartBusinessSelector extends HTMLElement {
      * @returns {void}
      */
     disconnectedCallback() {
-        document.removeEventListener('click', this.#handleClickOutside);
+        document.removeEventListener('click', this.boundHandleClickOutside);
+        if (this.websiteForInputContainer) {
+            this.websiteForInputContainer.removeEventListener('click', this.#handleInputContainerClick.bind(this));
+        }
+        if (this.websiteForDropdown) {
+            this.websiteForDropdown.querySelectorAll('div[data-value]').forEach(item => {
+                item.removeEventListener('click', this.#handleOptionClick.bind(this));
+            });
+        }
+    }
+
+
+    /**
+     * @private
+     * @description Handles clicks on the input container to toggle the dropdown.
+     * @param {Event} event - The click event.
+     * @returns {void}
+     */
+    #handleInputContainerClick(event) {
+        event.stopPropagation(); // Prevent document click from immediately closing
+        this.websiteForDropdown.classList.toggle('hidden');
+    }
+
+
+    /**
+     * @private
+     * @description Handles clicks on a business option in the dropdown.
+     * @param {Event} event - The click event.
+     * @returns {void}
+     */
+    #handleOptionClick(event) {
+        event.stopPropagation(); // Prevent event bubbling
+        const selectedValue = event.currentTarget.dataset.value;
+        this.websiteForSearch.textContent = selectedValue;
+        this.selectedBusiness = selectedValue;
+        this.websiteForDropdown.classList.add('hidden');
+
+        const currentPayload = window.owpSessionManager.getPayload();
+        window.owpSessionManager.updatePayloadSection('start', {
+            ...currentPayload.start,
+            business: selectedValue
+        });
+
+        this.websiteForDropdown.querySelectorAll('.check-icon').forEach(icon => {
+            icon.classList.add('hidden');
+        });
+        event.currentTarget.querySelector('.check-icon').classList.remove('hidden');
     }
 
 
@@ -108,12 +139,12 @@ class OwpStartBusinessSelector extends HTMLElement {
      * @param {Event} event - The click event.
      * @returns {void}
      */
-    #handleClickOutside = (event) => {
+    #handleClickOutside(event) {
         // If the click is outside the component (both input and dropdown) and the dropdown is visible, hide it.
         if (!this.contains(event.target) && !this.websiteForDropdown.classList.contains('hidden')) {
             this.websiteForDropdown.classList.add('hidden');
         }
-    };
+    }
 
 
     /**

@@ -65,6 +65,20 @@ class OwpDescribeTextArea extends HTMLElement {
 
 
     /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        this.textArea.removeEventListener('input', this.updateCharCount.bind(this));
+        this.prevSuggestionButton.removeEventListener('click', this.showPrevSuggestion.bind(this));
+        this.nextSuggestionButton.removeEventListener('click', this.showNextSuggestion.bind(this));
+        if (this.aiButton) {
+            this.aiButton.removeEventListener('ai-text-generated', this.#handleAiTextGenerated.bind(this));
+        }
+    }
+
+
+    /**
      * @description Updates the displayed character count and the session payload.
      * @returns {void}
      */
@@ -73,6 +87,7 @@ class OwpDescribeTextArea extends HTMLElement {
         this.charCountElement.textContent = currentLength;
         window.owpSessionManager.updatePayloadSection('describe', this.textArea.value);
     }
+
 
     /**
      * @description Adds a new AI suggestion to the list and displays it.
@@ -91,6 +106,7 @@ class OwpDescribeTextArea extends HTMLElement {
         this.#updateAiButtonState();
     }
 
+
     /**
      * @description Displays the current AI suggestion in the text area.
      * @returns {void}
@@ -107,6 +123,7 @@ class OwpDescribeTextArea extends HTMLElement {
         }
     }
 
+
     /**
      * @description Shows the previous AI suggestion.
      * @returns {void}
@@ -120,6 +137,7 @@ class OwpDescribeTextArea extends HTMLElement {
         this.displayCurrentSuggestion();
     }
 
+
     /**
      * @description Shows the next AI suggestion.
      * @returns {void}
@@ -132,6 +150,8 @@ class OwpDescribeTextArea extends HTMLElement {
         }
         this.displayCurrentSuggestion();
     }
+
+
     /**
      * @private
      * @description Loads the initial value from sessionStorage and sets it to the text area.

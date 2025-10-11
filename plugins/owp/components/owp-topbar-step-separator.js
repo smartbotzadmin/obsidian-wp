@@ -4,26 +4,8 @@
  * @description Web component for the separator between steps in the top navigation bar.
  */
 class OwpTopbarStepSeparator extends HTMLElement {
-    /**
-     * @description Constructs the OwpTopBarStepSeparator instance.
-     * @returns {void}
-     */
-    constructor() {
-        super();
-    }
+    separatorLineDiv = null;
 
-    /**
-     * @description Called when the element is added to the document's DOM.
-     * @returns {void}
-     */
-    connectedCallback() {
-        if (!this.hasChildNodes()) {
-            const separatorLineDiv = document.createElement('div');
-            separatorLineDiv.className = 'separator-line';
-            this.appendChild(separatorLineDiv);
-        }
-        this.updateLineClass();
-    }
 
     /**
      * @description Observes changes to the 'is-active' and 'is-completed' attributes.
@@ -33,6 +15,41 @@ class OwpTopbarStepSeparator extends HTMLElement {
         return ['is-active', 'is-completed'];
     }
 
+
+    /**
+     * @description Constructs the OwpTopBarStepSeparator instance.
+     * @returns {void}
+     */
+    constructor() {
+        super();
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        if (!this.hasChildNodes()) {
+            this.separatorLineDiv = document.createElement('div');
+            this.separatorLineDiv.className = 'separator-line';
+            this.appendChild(this.separatorLineDiv);
+        } else {
+            this.separatorLineDiv = this.querySelector('.separator-line');
+        }
+        this.#updateLineClass();
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        // No specific cleanup needed for this component.
+    }
+
+
     /**
      * @description Handles changes to observed attributes.
      * @param {string} name - The name of the attribute.
@@ -41,19 +58,20 @@ class OwpTopbarStepSeparator extends HTMLElement {
      * @returns {void}
      */
     attributeChangedCallback(name, oldVal, newVal) {
-        this.updateLineClass();
+        this.#updateLineClass();
     }
 
+
     /**
+     * @private
      * @description Updates the class of the separator line.
      * @returns {void}
      */
-    updateLineClass() {
+    #updateLineClass() {
         const isActive = this.hasAttribute('is-active');
         const isCompleted = this.hasAttribute('is-completed');
-        const lineElement = this.querySelector('.separator-line');
 
-        if (lineElement) {
+        if (this.separatorLineDiv) {
             let classList = ['h-[1px]', 'w-4', 'mx-2'];
             if (isActive) {
                 classList.push('bg-cyan-400');
@@ -62,7 +80,7 @@ class OwpTopbarStepSeparator extends HTMLElement {
             } else {
                 classList.push('bg-slate-300');
             }
-            lineElement.className = classList.join(' ');
+            this.separatorLineDiv.className = classList.join(' ');
         }
     }
 }

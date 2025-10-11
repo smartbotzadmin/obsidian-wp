@@ -17,7 +17,7 @@ class OwpDesignGrid extends HTMLElement {
     }
 
     connectedCallback() {
-        this.getDesigns()
+        this.#getDesigns()
             .then(designs => {
                 this.designs = designs
                 this.querySelector('#designGrid').innerHTML = /*html*/`
@@ -33,11 +33,22 @@ class OwpDesignGrid extends HTMLElement {
             })
     }
 
+
     /**
-     * @description Generates placeholder design option HTML.
-     * @returns {string} The owp pre-made elementor templates, design options.
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
      */
-    async getDesigns() {
+    disconnectedCallback() {
+        // No specific cleanup needed for this component's event listeners or observers.
+    }
+
+
+    /**
+     * @private
+     * @description Fetches design options from the API.
+     * @returns {Promise<Array<Object>>} A promise that resolves to an array of design objects.
+     */
+    async #getDesigns() {
         const res = await fetch('/wp-json/owp/api/designs')
         return await res.json()
     }
