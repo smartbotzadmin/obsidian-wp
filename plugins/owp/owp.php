@@ -127,7 +127,6 @@ function owp_enqueue_components() {
             plugins_url( 'assets/css/output.css', __FILE__ )
         );
 
-        // FIX: this is not working...
         // Enqueue Gutenberg Sidebar scripts
         wp_enqueue_script(
             'owp-gutenberg-sidebar',
