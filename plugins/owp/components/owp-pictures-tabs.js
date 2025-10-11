@@ -34,7 +34,6 @@ class OwpPicturesTabs extends HTMLElement {
         this.className = `flex w-full border-b border-slate-700 mb-6 py-3 px-12`;
         this.innerHTML = `
             <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 border-b-2 border-cyan-500 focus:outline-none" data-tab="search-results">Search Results</button>
-            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 hover:text-cyan-500 focus:outline-none" data-tab="upload-images">Upload Your Images</button>
             <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 hover:text-cyan-500 focus:outline-none" data-tab="selected-images">Selected Images</button>
 
             <div class="flex-grow"></div> <!-- spacing -->
