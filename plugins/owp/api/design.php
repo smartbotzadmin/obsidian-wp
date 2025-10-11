@@ -11,6 +11,8 @@
  * GET designs
  */
 function get_designs() {
+  // TODO: Change by reading folders available inside 'designs' folder.
+  
   $posts = get_posts( array(
       'post_type'     => 'elementor_library',
       'post_status'   => 'publish',
