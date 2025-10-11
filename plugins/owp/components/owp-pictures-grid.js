@@ -97,7 +97,7 @@ class OwpPicturesGrid extends HTMLElement {
    * @returns {Promise<void>}
    */
   async fetchImages(query, page) {
-    if (this.isLoading) {
+    if (this.isLoading || !query) {
       return;
     }
 
@@ -164,10 +164,8 @@ class OwpPicturesGrid extends HTMLElement {
    * @returns {void}
    */
   filterAndDisplayImages(query, orientation, currentTab = 'search-results') {
-    if (!query) {
-      this.currentQuery = sessionStorage.getItem('owp_last_picture_query');
-    } else {
-      this.currentQuery = query;
+    this.currentQuery = query;
+    if (query) {
       sessionStorage.setItem('owp_last_picture_query', query);
     }
     this.currentOrientation = orientation;
@@ -323,32 +321,43 @@ class OwpPicturesGrid extends HTMLElement {
    * @returns {void}
    */
   handleImageClick(event) {
-    const imgDiv = event.target.closest('[data-image-id]');
-    if (!imgDiv) {
-      return;
-    }
+      const imgDiv = event.target.closest('[data-image-id]');
+      if (!imgDiv) {
+          return;
+      }
 
-    const imageId = imgDiv.dataset.imageId;
-    const imageData = JSON.parse(imgDiv.dataset.imageJson);
+      const imageId = imgDiv.dataset.imageId;
+      const imageData = JSON.parse(imgDiv.dataset.imageJson);
 
-    const index = this.selectedImages.findIndex(img => img.id === imageId);
+      const index = this.selectedImages.findIndex(img => img.id === imageId);
 
-    if (index > -1) {
-      // Image is already selected, remove it
-      this.selectedImages.splice(index, 1);
-    } else {
-      // Image is not selected, add it
-      this.selectedImages.push(imageData);
-    }
+      if (index > -1) {
+          // Image is already selected, remove it
+          this.selectedImages.splice(index, 1);
+      } else {
+          // Image is not selected, add it
+          this.selectedImages.push(imageData);
+      }
 
-    this.saveSelectedImages(this.selectedImages);
-    const currentPictures = window.owpSessionManager.getPayload().pictures;
-    window.owpSessionManager.updatePayloadSection('pictures', {
-      ...currentPictures,
-      selected: this.selectedImages,
-      merge: [...currentPictures.selected, ...currentPictures.default].slice(0, 10)
-    });
-    this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
+      this.saveSelectedImages(this.selectedImages);
+      const currentPictures = window.owpSessionManager.getPayload().pictures;
+      window.owpSessionManager.updatePayloadSection('pictures', {
+          ...currentPictures,
+          selected: this.selectedImages,
+          merge: [...currentPictures.selected, ...currentPictures.default].slice(0, 10)
+      });
+      this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
+  }
+
+
+  /**
+   * @description Clears the grid and loads default images when the search query is empty.
+   * @returns {Promise<void>}
+   */
+  async loadImagesForEmptyQuery() {
+      this.clearGrid();
+      await this.loadDefaultImages();
+      this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
   }
 }
 

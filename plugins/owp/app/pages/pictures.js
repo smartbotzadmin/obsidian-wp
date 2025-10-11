@@ -59,7 +59,9 @@ class OwpPictures extends HTMLElement {
     handleSearchTriggered(event) {
         const newQuery = event.detail.query;
         if (this.picturesGrid) {
-            if (this.currentQuery !== newQuery) {
+            if (!newQuery) {
+                this.picturesGrid.loadImagesForEmptyQuery();
+            } else if (this.currentQuery !== newQuery) {
                 this.currentQuery = newQuery;
                 this.picturesGrid.clearGrid(); // Clear displayed images
                 this.picturesGrid.allImages = []; // Clear cached images for new search
@@ -81,8 +83,7 @@ class OwpPictures extends HTMLElement {
         this.currentQuery = '';
         this.currentOrientation = ''; // Reset orientation when search is cleared
         if (this.picturesGrid) {
-            // Do not clear allImages or the grid, just re-filter to show all loaded images
-            this.picturesGrid.filterAndDisplayImages('', '');
+            this.picturesGrid.loadImagesForEmptyQuery();
         }
     }
 
