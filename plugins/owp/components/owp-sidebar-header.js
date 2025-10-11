@@ -53,10 +53,7 @@ class OwpSidebarHeader extends HTMLElement {
      * @returns {void}
      */
     #handleReturnClick() {
-        const sidebar = document.querySelector('owp-sidebar');
-        if (sidebar && typeof sidebar.toggleSidebar === 'function') {
-            sidebar.toggleSidebar();
-        }
+        window.dispatchEvent(new CustomEvent('toggle-sidebar'));
     }
 }
 

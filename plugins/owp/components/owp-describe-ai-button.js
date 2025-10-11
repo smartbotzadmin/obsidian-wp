@@ -66,7 +66,7 @@ class OwpDescribeAiButton extends HTMLElement {
 
             const data = await response.json();
             
-            this.dispatchEvent(new CustomEvent('ai-text-generated', {
+            window.dispatchEvent(new CustomEvent('ai-text-generated', {
                 detail: { text: data.content }
             }));
 

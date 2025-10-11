@@ -140,7 +140,7 @@ class OwpPicturesTabs extends HTMLElement {
 
         this.orientationDropdown.classList.add('hidden');
 
-        this.dispatchEvent(new CustomEvent('orientation-changed', {
+        window.dispatchEvent(new CustomEvent('orientation-changed', {
             detail: { orientation: selectedValue }
         }));
     }
@@ -160,7 +160,7 @@ class OwpPicturesTabs extends HTMLElement {
         event.currentTarget.classList.remove('text-slate-300', 'border-b-2', 'hover:text-cyan-500');
         event.currentTarget.classList.add('text-cyan-600', 'border-b-2', 'border-cyan-600');
         // Optionally dispatch a custom event to notify parent of tab change
-        this.dispatchEvent(new CustomEvent('tab-changed', {
+        window.dispatchEvent(new CustomEvent('tab-changed', {
             detail: { tab: event.currentTarget.dataset.tab }
         }));
     }

@@ -39,7 +39,6 @@ class OwpPictures extends HTMLElement {
                 <owp-next-button data-owp-navigate="#design">Next</owp-next-button>
             </div>
         `;
-
         this.searchBar = this.querySelector('owp-pictures-search-bar');
         this.picturesGrid = this.querySelector('owp-pictures-grid');
         this.picturesTabs = this.querySelector('owp-pictures-tabs');

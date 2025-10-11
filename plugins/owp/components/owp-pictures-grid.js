@@ -45,6 +45,10 @@ class OwpPicturesGrid extends HTMLElement {
 
     this.setupIntersectionObserver();
     this.addEventListener('click', this.handleImageClick);
+    window.addEventListener('search-triggered', this.#handleSearchTriggered.bind(this));
+    window.addEventListener('search-cleared', this.#handleSearchCleared.bind(this));
+    window.addEventListener('orientation-changed', this.#handleOrientationChanged.bind(this));
+    window.addEventListener('tab-changed', this.#handleTabChanged.bind(this));
     await this.loadDefaultImages();
     this.selectedImages = this.loadSelectedImages();
     this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
@@ -60,6 +64,10 @@ class OwpPicturesGrid extends HTMLElement {
       this.observer.disconnect();
     }
     this.removeEventListener('click', this.handleImageClick);
+    window.removeEventListener('search-triggered', this.#handleSearchTriggered.bind(this));
+    window.removeEventListener('search-cleared', this.#handleSearchCleared.bind(this));
+    window.removeEventListener('orientation-changed', this.#handleOrientationChanged.bind(this));
+    window.removeEventListener('tab-changed', this.#handleTabChanged.bind(this));
   }
 
 
@@ -310,7 +318,7 @@ class OwpPicturesGrid extends HTMLElement {
     this.imageGridContainer.innerHTML = '';
     this.allImages = [];
     this.displayedImages = [];
-    this.currentPage = 1;
+    this.currentPage = 1; // Ensure currentPage is reset
     this.isLoading = false;
   }
 
@@ -359,6 +367,59 @@ class OwpPicturesGrid extends HTMLElement {
       await this.loadDefaultImages();
       this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, this.currentTab);
   }
+
+
+   /**
+    * @private
+    * @description Handles the 'search-triggered' event from the search bar.
+    * @param {CustomEvent} event - The custom event containing the search query.
+    * @returns {void}
+    */
+   #handleSearchTriggered(event) {
+       const query = event.detail.query;
+       if (!query) {
+           this.#handleSearchCleared(); // Treat empty search as a clear
+           return;
+       }
+       this.clearGrid();
+       this.fetchImages(query, 1);
+   }
+
+
+   /**
+    * @private
+    * @description Handles the 'search-cleared' event from the search bar.
+    * @returns {void}
+    */
+   #handleSearchCleared() {
+       const currentPayload = window.owpSessionManager.getPayload();
+       this.currentQuery = currentPayload.start.business.toLowerCase(); // Reset currentQuery to default
+       this.loadImagesForEmptyQuery();
+   }
+
+
+   /**
+    * @private
+    * @description Handles the 'orientation-changed' event from the tabs component.
+    * @param {CustomEvent} event - The custom event containing the selected orientation.
+    * @returns {void}
+    */
+   #handleOrientationChanged(event) {
+       const orientation = event.detail.orientation;
+       this.filterAndDisplayImages(this.currentQuery, orientation, this.currentTab);
+   }
+
+
+   /**
+    * @private
+    * @description Handles the 'tab-changed' event from the tabs component.
+    * @param {CustomEvent} event - The custom event containing the selected tab.
+    * @returns {void}
+    */
+   #handleTabChanged(event) {
+       const tab = event.detail.tab;
+       this.filterAndDisplayImages(this.currentQuery, this.currentOrientation, tab);
+   }
 }
 
 customElements.define('owp-pictures-grid', OwpPicturesGrid);

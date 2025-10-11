@@ -72,3 +72,8 @@ No shadowRoot implementation unless requested in instructions.
 ## Templates
 
 No <template> implementation unles requested in instructions.
+
+## Communication
+
+Through CustomEvent API, or if user request it, through BroadcastChannel API.
+CustomEvents must be attached and listened to window object.

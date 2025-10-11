@@ -51,8 +51,7 @@ class OwpDescribeTextArea extends HTMLElement {
         this.textArea.addEventListener('input', this.updateCharCount.bind(this));
         this.prevSuggestionButton.addEventListener('click', this.showPrevSuggestion.bind(this));
         this.nextSuggestionButton.addEventListener('click', this.showNextSuggestion.bind(this));
-        this.aiButton = this.querySelector('owp-describe-ai-button');
-        this.aiButton.addEventListener('ai-text-generated', this.#handleAiTextGenerated.bind(this));
+        window.addEventListener('ai-text-generated', this.#handleAiTextGenerated.bind(this));
         this.#loadInitialValue();
         this.displayCurrentSuggestion();
         // Defer #updateAiButtonState to ensure owpSessionManager is available
@@ -61,6 +60,7 @@ class OwpDescribeTextArea extends HTMLElement {
         setTimeout(() => {
             this.#updateAiButtonState();
         }, 0);
+        this.aiButton = this.querySelector('owp-describe-ai-button');
     }
 
 
@@ -72,9 +72,7 @@ class OwpDescribeTextArea extends HTMLElement {
         this.textArea.removeEventListener('input', this.updateCharCount.bind(this));
         this.prevSuggestionButton.removeEventListener('click', this.showPrevSuggestion.bind(this));
         this.nextSuggestionButton.removeEventListener('click', this.showNextSuggestion.bind(this));
-        if (this.aiButton) {
-            this.aiButton.removeEventListener('ai-text-generated', this.#handleAiTextGenerated.bind(this));
-        }
+        window.removeEventListener('ai-text-generated', this.#handleAiTextGenerated.bind(this));
     }
 
 

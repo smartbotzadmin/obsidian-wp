@@ -239,6 +239,8 @@ class OwpDesignPreviewModal extends HTMLElement {
                 this.#changeResponsiveResolution(key);
             };
         });
+        window.addEventListener('design-selected', this.#handleDesignSelected.bind(this));
+
     }
 
 
@@ -511,7 +513,31 @@ class OwpDesignPreviewModal extends HTMLElement {
             body: JSON.stringify(window.owpSessionManager.getPayload())
         })
             .then((res) => res.json())
-            .then((data) => console.log(data));
+            .then((data) => {
+                console.log(data);
+                window.dispatchEvent(new CustomEvent('page-created', {
+                    detail: { success: true, data: data }
+                }));
+            })
+            .catch(error => {
+                console.error('Error creating page:', error);
+                window.dispatchEvent(new CustomEvent('page-created', {
+                    detail: { success: false, error: error }
+                }));
+            });
+    }
+
+
+    /**
+     * @private
+     * @description Handles the 'design-selected' event.
+     * @param {CustomEvent} event - The custom event.
+     * @returns {void}
+     */
+    #handleDesignSelected(event) {
+        // Placeholder for handling the design-selected event.
+        // The actual logic will be implemented based on requirements.
+        console.log('Design selected event received:', event.detail);
     }
 }
 

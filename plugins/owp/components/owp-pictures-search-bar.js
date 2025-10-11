@@ -74,7 +74,7 @@ class OwpPicturesSearchBar extends HTMLElement {
     #handleClearSearch() {
         this.searchInput.value = '';
         this.clearButton.classList.add('hidden');
-        this.dispatchEvent(new CustomEvent('search-cleared'));
+        window.dispatchEvent(new CustomEvent('search-cleared'));
     }
 
 
@@ -87,7 +87,7 @@ class OwpPicturesSearchBar extends HTMLElement {
     #handleSearchKeyDown(event) {
         if (event.key === 'Enter') {
             const query = this.searchInput.value.trim();
-            this.dispatchEvent(new CustomEvent('search-triggered', {
+            window.dispatchEvent(new CustomEvent('search-triggered', {
                 detail: { query: query }
             }));
         }

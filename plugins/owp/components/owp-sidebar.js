@@ -29,6 +29,7 @@ class OwpSidebar extends HTMLElement {
      */
     connectedCallback() {
         this.sidebarContainer = this.shadowRoot.getElementById('owp-custom-sidebar-container');
+        window.addEventListener('toggle-sidebar', this.toggleSidebar.bind(this));
     }
 
 
@@ -37,7 +38,7 @@ class OwpSidebar extends HTMLElement {
      * @returns {void}
      */
     disconnectedCallback() {
-        // No specific cleanup needed for this component.
+        window.removeEventListener('toggle-sidebar', this.toggleSidebar.bind(this));
     }
 
 
