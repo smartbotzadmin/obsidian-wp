@@ -36,6 +36,15 @@ add_action( 'admin_bar_menu', 'owp_add_admin_bar_button', 999 );
  * @return void
  */
 function owp_add_admin_pages() {
+    // Pages option
+    add_pages_page(
+        __( 'New AI ObsidianWP', 'owp' ),
+        __( 'New AI ObsidianWP', 'owp' ),
+        'manage_options',
+        'owp-start-redirect', // Use a unique slug for the redirect page
+        'owp_render_app_page' // Temporarily set to render, redirect will handle it
+    );
+    // Middle admin page to redirect to owp-app
     add_submenu_page(
         null,
         __( 'Obsidian WP App', 'owp' ),
@@ -44,20 +53,12 @@ function owp_add_admin_pages() {
         'owp-app',
         'owp_render_app_page'
     );
-
-    add_pages_page(
-        __( 'New AI ObsidianWP', 'owp' ),
-        __( 'New AI ObsidianWP', 'owp' ),
-        'manage_options',
-        'owp-start-redirect', // Use a unique slug for the redirect page
-        'owp_render_app_page' // Temporarily set to render, redirect will handle it
-    );
 }
 add_action( 'admin_menu', 'owp_add_admin_pages' );
 
 
 /**
- * Handles redirection for the "New AI ObsidianWP" page menu item.
+ * Handles redirection to owp-app
  * @return void
  */
 function owp_handle_pages_menu_redirect() {
@@ -70,7 +71,7 @@ add_action( 'admin_init', 'owp_handle_pages_menu_redirect' );
 
 
 /**
- * Renders the main SPA application page with no adminbar.
+ * Renders owp-app
  * @return void
  */
 function owp_render_app_page() {
@@ -86,7 +87,8 @@ function owp_render_app_page() {
 
 
 /**
- * Renders the owp design previews with no adminbar.
+ * Renders the owp design previews, gutenberg sidebar & owp-app
+ * with no top adminbar.
  * @return void
  */
 add_action( 'init', 'owp_preview_hide_admin_bar' );
