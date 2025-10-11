@@ -191,14 +191,6 @@ function register_api_endpoints() {
         )
     );
 
-    // get_images_json
-    register_rest_route( 'owp/api', '/json/images', array(
-            'methods'   => 'GET',
-            'callback'  => 'get_images_json',
-            'permission_callback' => '__return_true'
-        )
-    );
-
     // create_page
     register_rest_route( 'owp/api', '/page', array(
             'methods'   => 'POST',
