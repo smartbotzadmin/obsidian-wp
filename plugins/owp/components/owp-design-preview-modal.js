@@ -199,6 +199,9 @@ class OwpDesignPreviewModal extends HTMLElement {
 		this.id = this.getAttribute('template-id');
 		this.url = this.getAttribute('url');
 		this.name = this.getAttribute('name');
+		this.title = this.getAttribute('title');
+		this.imgCssIds = this.getAttribute('img-css-ids')
+		this.imgCssIds = JSON.parse(atob(this.imgCssIds))
 
 		this.sidebar = this.querySelector('#sidebarModal');
 		this.closeButton = this.querySelector('#closeModal');
@@ -248,7 +251,7 @@ class OwpDesignPreviewModal extends HTMLElement {
 				this.#changeResponsiveResolution(key);
 			};
 		});
-		window.addEventListener('design-selected', this.#handleDesignSelected.bind(this));
+		// window.addEventListener('design-selected', this.#handleDesignSelected.bind(this));
 
 	}
 
@@ -323,25 +326,63 @@ class OwpDesignPreviewModal extends HTMLElement {
 	 * @private
 	 * @description Handles the iframe load event.
 	 * @returns {void}
-	 */
+	*/
 	#handleIframeLoad() {
 		this.preview = this.iframe.contentDocument || this.iframe.contentWindow.document;
 
 		const previewBody = this.preview.body;
-		previewBody.style.zoom = 0.71;
+		previewBody.style.zoom = 0.8;
+		previewBody.classList.add(this.palette);
 
-		const previewHead = this.preview.head;
 		const linkGoogleFonts = `
 			<link rel="preconnect" href="https://fonts.googleapis.com">
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 			<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Serif+Display:ital@0;1&family=Karla:ital,wght@0,200..800;1,200..800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 		`;
 
-		document.head.insertAdjacentHTML('beforeend', linkGoogleFonts);
+		const previewHead = this.preview.head;
 		previewHead.insertAdjacentHTML('beforeend', linkGoogleFonts);
+		document.head.insertAdjacentHTML('beforeend', linkGoogleFonts);
 
-		previewBody.classList.add(this.palette);
+		// Hydrate images using img-css-ids
+		const homeCssIds = this.imgCssIds.home;
+		const mergePictures = JSON.parse(sessionStorage.getItem('owp_payload')).pictures.merge
+		// CSS rules in case of ::before
+		const style = this.preview.createElement('style');
+		let cssRules = '';
+		const homeCssKeys = Object.keys(homeCssIds);
+		homeCssKeys.forEach(key => {
+			cssRules += `
+				#${key}::before { 
+					content: ""; 
+					position: absolute; 
+					background-image: var(--hydration-url); 
+					background-size: cover;
+					z-index: 0;
+				}
+			`;
+		});
+		style.textContent = cssRules;
+		previewHead.appendChild(style); // Inject CSS into the IFRAME's head
 
+		Object.keys(homeCssIds).forEach((key, index) => {
+			const urlToHydrate = mergePictures[index].urls.raw
+			const containerDiv = previewBody.querySelector(`#${key}`)
+			if (!containerDiv) return
+			let targetImg = containerDiv.querySelector('img')
+			if (!targetImg) {
+				// Set ::before css style
+				containerDiv.style.backgroundImage = 'none';
+				containerDiv.style.setProperty('--hydration-url', `url(${urlToHydrate})`);
+				console.log(key, urlToHydrate, '--hydration-url', `url(${urlToHydrate})`)
+			}
+			if (targetImg) {
+				targetImg.src = urlToHydrate
+				console.log(key, urlToHydrate)
+			}
+		});
+
+		// Remove 'Loading...' message
 		const loadingMaskModal = this.querySelector('#loadingMaskModal');
 		if (loadingMaskModal) {
 			loadingMaskModal.remove();

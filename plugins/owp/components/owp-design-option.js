@@ -4,7 +4,7 @@
  * @description Web component for a single design option in the design grid.
  */
 class OwpDesignOption extends HTMLElement {
-    static observedAttributes = ['template-id', 'url', 'name', 'option'];
+    static observedAttributes = ['template-id', 'url', 'name', 'title', 'option', 'img-css-ids'];
 
 
     /**
@@ -23,9 +23,9 @@ class OwpDesignOption extends HTMLElement {
         this.currentScrollPostion = 0;
         this.scrollSpeed = 10;
 
-        this.className = `grow flex flex-col w-screen sm:w-1/3 lg:w-1/4 xl:w-1/5 h-[450px] bg-slate-950 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-700 overflow-hidden`;
+        this.className = `flex flex-col max-w-1/3 h-[450px] bg-slate-950 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-700 overflow-hidden`;
         this.innerHTML = /*html*/`
-            <div class="relative flex grow items-center justify-center bg-slate-900 text-slate-100 overflow-hidden">
+            <div class="relative grow flex items-center justify-center bg-slate-900 text-slate-100 overflow-hidden">
                 <img
                     id="loadingOption"
                     src="/wp-content/plugins/owp/assets/icons/image.svg"
@@ -67,6 +67,7 @@ class OwpDesignOption extends HTMLElement {
         this.url = this.getAttribute('url') + '&owp-preview=true';
         this.name = this.getAttribute('name');
         this.option = this.getAttribute('option');
+        this.imgCssIds = this.getAttribute('img-css-ids');
 
         this.iframe = this.querySelector('iframe');
         this.hoverScroller = this.querySelector('#hoverScroller');
@@ -135,6 +136,11 @@ class OwpDesignOption extends HTMLElement {
             case 'name':
                 this.name = newVal;
                 break;
+            case 'title':
+                this.title = newVal;
+                break;
+            case 'img-css-ids':
+                this.imgCssIds = newVal
             case 'option':
                 this.option = newVal;
                 const optionNameElement = this.querySelector('#optionName');
@@ -198,6 +204,8 @@ class OwpDesignOption extends HTMLElement {
             previewModal.setAttribute('url', this.url);
             previewModal.setAttribute('template-id', this.id);
             previewModal.setAttribute('name', this.name);
+            previewModal.setAttribute('title', this.title);
+            previewModal.setAttribute('img-css-ids', this.imgCssIds);
             owpApp.shadowRoot.appendChild(previewModal);
         }
     }
