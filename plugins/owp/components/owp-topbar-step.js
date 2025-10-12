@@ -33,7 +33,7 @@ class OwpTopbarStep extends HTMLElement {
     connectedCallback() {
         if (!this.hasChildNodes()) {
             this.stepItemDiv = document.createElement('div');
-            this.stepItemDiv.className = 'step-item cursor-pointer';
+            this.stepItemDiv.className = 'step-item';
 
             this.stepTextDiv = document.createElement('div');
             this.stepTextDiv.className = 'step-text';
@@ -82,9 +82,10 @@ class OwpTopbarStep extends HTMLElement {
 
         if (this.stepTextDiv) {
             this.stepTextDiv.textContent = name;
-            let classList = ['step-text', 'text-[14px]'];
+            let classList = ['step-text', 'font-gold text-md cursor-default'];
             if (isActive) {
                 classList.push('text-cyan-400');
+                classList.push('gradient-text-step');
             } else if (isCompleted) {
                 classList.push('text-cyan-900');
             } else {
