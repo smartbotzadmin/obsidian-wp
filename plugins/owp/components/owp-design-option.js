@@ -78,7 +78,7 @@ class OwpDesignOption extends HTMLElement {
             this.iframe.src = this.url;
         }
         if (optionNameElement) {
-            optionNameElement.textContent = `Option ${this.option}`;
+            optionNameElement.textContent = `Option ${this.option} - ${this.name}`;
         }
         if (loadingOptionImg) {
             loadingOptionImg.id = `loadingOption${this.option}`;
@@ -176,7 +176,43 @@ class OwpDesignOption extends HTMLElement {
                 }
             `;
             iframeDoc.head.appendChild(style);
-            iframeBody.style.zoom = 0.5;
+            iframeBody.style.zoom = 0.6;
+
+            // Hydrate images using img-css-ids
+            const homeCssIds = JSON.parse(atob(this.imgCssIds)).home;
+            const mergePictures = JSON.parse(sessionStorage.getItem('owp_payload')).pictures.merge;
+
+            // CSS rules in case of ::before
+            const hydrationStyle = iframeDoc.createElement('style');
+            let cssRules = '';
+            const homeCssKeys = Object.keys(homeCssIds);
+            homeCssKeys.forEach(key => {
+                cssRules += `
+                    #${key}::before {
+                        content: "";
+                        position: absolute;
+                        background-image: var(--hydration-url);
+                        background-size: cover;
+                        z-index: 0;
+                    }
+                `;
+            });
+            hydrationStyle.textContent = cssRules;
+            iframeDoc.head.appendChild(hydrationStyle); // Inject CSS into the IFRAME's head
+
+            Object.keys(homeCssIds).forEach((key, index) => {
+                const urlToHydrate = mergePictures[index].urls.raw;
+                const containerDiv = iframeBody.querySelector(`#${key}`);
+                if (!containerDiv) return;
+                let targetImg = containerDiv.querySelector('img');
+                if (!targetImg) {
+                    // Set ::before css style
+                    containerDiv.style.backgroundImage = 'none';
+                    containerDiv.style.setProperty('--hydration-url', `url(${urlToHydrate})`);
+                } else if (targetImg) {
+                    targetImg.src = urlToHydrate;
+                }
+            });
 
             const loadingOptionImg = this.querySelector(`#loadingOption${this.option}`);
             if (loadingOptionImg) {

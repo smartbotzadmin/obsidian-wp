@@ -201,7 +201,6 @@ class OwpDesignPreviewModal extends HTMLElement {
 		this.name = this.getAttribute('name');
 		this.title = this.getAttribute('title');
 		this.imgCssIds = this.getAttribute('img-css-ids')
-		this.imgCssIds = JSON.parse(atob(this.imgCssIds))
 
 		this.sidebar = this.querySelector('#sidebarModal');
 		this.closeButton = this.querySelector('#closeModal');
@@ -345,7 +344,7 @@ class OwpDesignPreviewModal extends HTMLElement {
 		document.head.insertAdjacentHTML('beforeend', linkGoogleFonts);
 
 		// Hydrate images using img-css-ids
-		const homeCssIds = this.imgCssIds.home;
+		const homeCssIds = JSON.parse(atob(this.imgCssIds)).home;
 		const mergePictures = JSON.parse(sessionStorage.getItem('owp_payload')).pictures.merge
 		// CSS rules in case of ::before
 		const style = this.preview.createElement('style');
@@ -374,11 +373,10 @@ class OwpDesignPreviewModal extends HTMLElement {
 				// Set ::before css style
 				containerDiv.style.backgroundImage = 'none';
 				containerDiv.style.setProperty('--hydration-url', `url(${urlToHydrate})`);
-				console.log(key, urlToHydrate, '--hydration-url', `url(${urlToHydrate})`)
-			}
-			if (targetImg) {
+				console.debug(key, urlToHydrate, '--hydration-url', `url(${urlToHydrate})`)
+			}	else if (targetImg) {
 				targetImg.src = urlToHydrate
-				console.log(key, urlToHydrate)
+				console.debug(key, urlToHydrate)
 			}
 		});
 
