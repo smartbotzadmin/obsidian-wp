@@ -28,13 +28,13 @@ class OwpTopbarCloseButton extends HTMLElement {
 				</div>
 			</div>
 
-			<div id="dropdownContent" class="absolute top-12 right-0 w-80 bg-slate-900 rounded-md shadow-lg p-2 z-10 border border-slate-800 hover:border-slate-700 transition-all duration-250 opacity-0 scale-90 pointer-events-none cursor-default select-none">
+			<div id="dropdownContent" class="absolute top-12 right-0 w-80 bg-slate-900 rounded-2xl shadow-lg p-2 z-10 border border-slate-800 hover:border-slate-700 transition-all duration-250 opacity-0 scale-90 pointer-events-none cursor-default select-none">
 				<div class="px-4 py-2 text-md text-slate-100">
 					<p>Are you sure you want to quit?</p>
 				</div>
 				<div class="flex justify-center items-center gap-4 p-2">
-					<a href="#" id="cancelButton" class="px-4 py-2 text-md text-slate-100 font-bold bg-cyan-600 hover:bg-cyan-500 rounded-md transition-all">Cancel</a>
-					<a href="/wp-admin/" class="px-4 py-2 text-md text-slate-100 bg-slate-700 hover:bg-slate-800  rounded-md transition-all">Yes</a>
+					<a href="#" id="cancelButton" class="px-5 py-1 text-md text-slate-100 font-bold bg-cyan-600 hover:bg-cyan-500 rounded-2xl transition-all">Cancel</a>
+					<a href="/wp-admin/" class="px-5 py-1 text-md text-slate-100 bg-slate-700 hover:bg-slate-800  rounded-2xl transition-all">Yes</a>
 				</div>
 			</div>
 		`;
