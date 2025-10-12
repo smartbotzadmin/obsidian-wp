@@ -57,7 +57,9 @@
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -234,6 +236,9 @@
   }
   .inset-0 {
     inset: calc(var(--spacing) * 0);
+  }
+  .-top-10 {
+    top: calc(var(--spacing) * -10);
   }
   .-top-16 {
     top: calc(var(--spacing) * -16);
@@ -424,6 +429,9 @@
   .h-screen {
     height: 100vh;
   }
+  .max-h-50 {
+    max-height: calc(var(--spacing) * 50);
+  }
   .max-h-60 {
     max-height: calc(var(--spacing) * 60);
   }
@@ -541,6 +549,9 @@
   .border-collapse {
     border-collapse: collapse;
   }
+  .origin-top {
+    transform-origin: top;
+  }
   .origin-top-right {
     transform-origin: top right;
   }
@@ -550,11 +561,20 @@
     --tw-scale-z: 90%;
     scale: var(--tw-scale-x) var(--tw-scale-y);
   }
+  .scale-96 {
+    --tw-scale-x: 96%;
+    --tw-scale-y: 96%;
+    --tw-scale-z: 96%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
   .scale-100 {
     --tw-scale-x: 100%;
     --tw-scale-y: 100%;
     --tw-scale-z: 100%;
     scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .rotate-180 {
+    rotate: 180deg;
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
@@ -636,6 +656,9 @@
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
+  }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);
@@ -975,6 +998,9 @@
   .outline-red-400 {
     outline-color: var(--color-red-400);
   }
+  .outline-transparent {
+    outline-color: transparent;
+  }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
@@ -988,6 +1014,11 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
+  .transition-transform {
+    transition-property: transform, translate, scale, rotate;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
   .duration-200 {
     --tw-duration: 200ms;
     transition-duration: 200ms;
@@ -996,9 +1027,17 @@
     --tw-duration: 250ms;
     transition-duration: 250ms;
   }
+  .duration-300 {
+    --tw-duration: 300ms;
+    transition-duration: 300ms;
+  }
   .duration-500 {
     --tw-duration: 500ms;
     transition-duration: 500ms;
+  }
+  .ease-in-out {
+    --tw-ease: var(--ease-in-out);
+    transition-timing-function: var(--ease-in-out);
   }
   .ease-out {
     --tw-ease: var(--ease-out);
@@ -1011,6 +1050,23 @@
   .focus-within\:border-slate-500 {
     &:focus-within {
       border-color: var(--color-slate-500);
+    }
+  }
+  .focus-within\:outline-2 {
+    &:focus-within {
+      outline-style: var(--tw-outline-style);
+      outline-width: 2px;
+    }
+  }
+  .focus-within\:outline-cyan-500 {
+    &:focus-within {
+      outline-color: var(--color-cyan-500);
+    }
+  }
+  .focus-within\:outline-none {
+    &:focus-within {
+      --tw-outline-style: none;
+      outline-style: none;
     }
   }
   .hover\:border-slate-700 {
@@ -1154,6 +1210,22 @@
       }
     }
   }
+  .hover\:outline-1 {
+    &:hover {
+      @media (hover: hover) {
+        outline-style: var(--tw-outline-style);
+        outline-width: 1px;
+      }
+    }
+  }
+  .hover\:outline-2 {
+    &:hover {
+      @media (hover: hover) {
+        outline-style: var(--tw-outline-style);
+        outline-width: 2px;
+      }
+    }
+  }
   .hover\:outline-offset-2 {
     &:hover {
       @media (hover: hover) {
@@ -1165,6 +1237,13 @@
     &:hover {
       @media (hover: hover) {
         outline-color: var(--color-cyan-500);
+      }
+    }
+  }
+  .hover\:outline-cyan-600 {
+    &:hover {
+      @media (hover: hover) {
+        outline-color: var(--color-cyan-600);
       }
     }
   }
@@ -1193,6 +1272,17 @@
   .focus\:ring-offset-slate-900 {
     &:focus {
       --tw-ring-offset-color: var(--color-slate-900);
+    }
+  }
+  .focus\:outline-2 {
+    &:focus {
+      outline-style: var(--tw-outline-style);
+      outline-width: 2px;
+    }
+  }
+  .focus\:outline-cyan-500 {
+    &:focus {
+      outline-color: var(--color-cyan-500);
     }
   }
   .focus\:outline-none {
