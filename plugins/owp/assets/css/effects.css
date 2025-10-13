@@ -26,22 +26,21 @@
 .gradient-text-step {
   /* apply variable changes over time */
   animation: gradient-change 2s linear infinite alternate;
-  
+
   background: linear-gradient(
-    /* 
+      /* 
       in oklch produces more vibrant gradient results 
       learn more https://developer.chrome.com/docs/css-ui/access-colors-spaces#color_interpolation
     */
-    to right in oklch, 
-    /* use the variables in a gradient (or wherever!) */
-    var(--＠color-1), 
-    var(--＠color-2)
-  );
-  
+      to right in oklch,
+      /* use the variables in a gradient (or wherever!) */
+      var(--＠color-1),
+      var(--＠color-2));
+
   /* old browser support */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  
+
   /* modern browser version */
   background-clip: text;
   color: transparent;
@@ -55,6 +54,7 @@
   background-size: 100% 0.2em;
   background-position: 0 100%;
   transition: background-size 0.25s ease-in;
+
   &:hover {
     background-size: 100% 88%;
   }
@@ -64,37 +64,57 @@
 
 /* HTML: <div class="loader"></div> */
 .picture-loader {
-    width: 40px;
-    height: 40px;
-    /* --c:no-repeat linear-gradient(orange 0 0); */
-    --c:no-repeat linear-gradient(oklch(72.236% 0.12981 217.989) 0 0);
-    background: var(--c),var(--c),var(--c),var(--c);
-    background-size: 21px 21px;
-    animation: l5 1.5s infinite cubic-bezier(0.3,1,0,1);
+  width: 40px;
+  height: 40px;
+  /* --c:no-repeat linear-gradient(orange 0 0); */
+  --c: no-repeat linear-gradient(oklch(72.236% 0.12981 217.989) 0 0);
+  background: var(--c), var(--c), var(--c), var(--c);
+  background-size: 21px 21px;
+  animation: l5 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
 }
+
 @keyframes l5 {
-   0%   {background-position: 0    0,100% 0   ,100% 100%,0 100%}
-   33%  {background-position: 0    0,100% 0   ,100% 100%,0 100%;width:60px;height: 60px}
-   66%  {background-position: 100% 0,100% 100%,0    100%,0 0   ;width:60px;height: 60px}
-   100% {background-position: 100% 0,100% 100%,0    100%,0 0   }
+  0% {
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%
+  }
+
+  33% {
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    width: 60px;
+    height: 60px
+  }
+
+  66% {
+    background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+    width: 60px;
+    height: 60px
+  }
+
+  100% {
+    background-position: 100% 0, 100% 100%, 0 100%, 0 0
+  }
 }
 
 
 .underline-fill-cyan {
   position: relative;
   display: inline-block;
-  padding-bottom: 0.2em; /* Adjust as needed for underline thickness */
-  
+  padding-bottom: 0.2em;
+  /* Adjust as needed for underline thickness */
+
   &::before {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     width: 0;
-    height: 0.2em; /* Underline thickness */
-    background-color: #06b6d4; /* Cyan 500 */
+    height: 0.2em;
+    /* Underline thickness */
+    background-color: #06b6d4;
+    /* Cyan 500 */
     transition: width 0.3s ease-out;
-    border-radius: 9999px; /* Rounded corners */
+    border-radius: 9999px;
+    /* Rounded corners */
   }
 
   &:hover::before {
@@ -102,7 +122,8 @@
   }
 
   &:focus::before,
-  &.active::before { /* Use .active for selected tab */
+  &.active::before {
+    /* Use .active for selected tab */
     width: 100%;
   }
 
@@ -110,5 +131,45 @@
   &.active {
     outline: none;
     border: none;
+  }
+}
+
+
+.creation-loader {
+  width: 80px;
+  height: 80px;
+  background-color: oklch(72.236% 0.12981 217.989);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset,
+    0 0 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.creation-loader:before,
+.creation-loader:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 45%;
+  top: -40%;
+  background-color: oklch(14.756% 0.02361 216.603);
+  animation: wave 5s linear infinite;
+}
+
+.creation-loader:before {
+  border-radius: 30%;
+  background: rgba(255, 255, 255, 0.25);
+  animation: wave 2.5s linear infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

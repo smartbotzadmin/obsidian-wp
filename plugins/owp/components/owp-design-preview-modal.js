@@ -51,6 +51,10 @@ class OwpDesignPreviewModal extends HTMLElement {
 	previewContainer = null;
 	falseBrowserHeader = null;
 	modalContainer = null;
+	creatingPageOverlay = null;
+	creatingPageLoader = null;
+	creatingPageSuccess = null;
+	homePageLink = null;
 
 	/**
 	 * @description Constructs the OwpDesignPreviewModal instance.
@@ -61,6 +65,22 @@ class OwpDesignPreviewModal extends HTMLElement {
 		this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
 		this.innerHTML = /*html*/`
 			<div id="modalContainer" class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700 transition-all duration-300 ease-out transform scale-95 opacity-0">
+
+				<!-- Creating Page Overlay -->
+				<div id="creatingPageOverlay" class="absolute inset-0 bg-slate-900 flex flex-col justify-center items-center z-20 hidden">
+					<div id="creatingPageLoader" class="flex flex-col justify-center items-center">
+						<span class="creation-loader size-30"></span>
+						<span class="text-slate-400 text-lg font-gold mt-4">
+							Please wait a while, we're cooking
+						</span>
+					</div>
+					<div id="creatingPageSuccess" class="flex flex-col justify-center items-center hidden">
+						<img src="/wp-content/plugins/owp/assets/icons/check.png" class="w-16 h-16 mb-4"/>
+						<a id="homePageLink" href="#" target="_blank" class="flex gap-2 justify-center items-center text-cyan-500 text-xl font-gold  font-semibold hover:underline">
+							<img src="/wp-content/plugins/owp/assets/icons/external-link.svg" /> Go to New Site
+						</a>
+					</div>
+				</div>
 
 				<!-- Loading Mask -->
 				<div id="loadingMaskModal" class="absolute inset-0 bg-slate-900 flex justify-center items-center">
@@ -86,7 +106,7 @@ class OwpDesignPreviewModal extends HTMLElement {
 							<label class="flex text-slate-400 text-sm font-semibold">
 								Site Logo
 							</label>
-							<div class="min-h-20 flex grow items-center justify-center border-2 border-slate-700 rounded-md p-4 cursor-pointer bg-slate-900 hover:bg-slate-950 hover:outline hover:outline-offset-2 hover:outline-cyan-500 transition-colors duration-200">
+							<div class="min-h-20 flex grow items-center justify-center border-2 border-slate-700 rounded-xl p-4 cursor-pointer bg-slate-900 hover:bg-slate-950 hover:outline hover:outline-offset-2 hover:outline-cyan-500 transition-colors duration-200">
 								<img src="/wp-content/plugins/owp/assets/icons/image.svg" />
 							</div>
 						</div>
@@ -103,7 +123,7 @@ class OwpDesignPreviewModal extends HTMLElement {
 							</div>
 							<div class="flex flex-wrap gap-2">
 								${this.fontPairs.map((fontPair, index) => /*html*/`
-									<div id="fontPairNo${index}" class="flex grow items-center justify-center w-1/4 h-10 border border-slate-700 hover:outline hover:bg-slate-950 outline-cyan-500 rounded-md text-slate-300 text-md cursor-pointer bg-slate-900 transition-colors duration-200">
+									<div id="fontPairNo${index}" class="flex grow items-center justify-center w-1/4 h-10 border border-slate-700 hover:outline hover:bg-slate-950 outline-cyan-500 rounded-xl text-slate-300 text-md cursor-pointer bg-slate-900 transition-colors duration-200">
 										<span	class="font-bold text-lg"	style="font-family: ${fontPair.heading};">
 											A
 										</span>
@@ -127,7 +147,7 @@ class OwpDesignPreviewModal extends HTMLElement {
 							</div>
 							<div class="grid grid-cols-5 gap-1">
 								${this.palettes.map((palette, index) => /*html*/`
-									<div id="paletteNo${index}" class="flex justify-center items-center gap-1 py-2 bg-(--ast-global-color-5) border border-slate-700 rounded-lg cursor-pointer hover:outline hover:outline-cyan-500 hover:outline-offset-2 ${palette}">
+									<div id="paletteNo${index}" class="flex justify-center items-center gap-1 py-2 bg-(--ast-global-color-5) border border-slate-700 rounded-xl cursor-pointer hover:outline hover:outline-cyan-500 hover:outline-offset-2 ${palette}">
 										<div class="size-4 rounded-full bg-(--ast-global-color-0)"></div>
 										<div class="size-4 rounded-full bg-(--ast-global-color-1)"></div>
 									</div>
@@ -137,11 +157,11 @@ class OwpDesignPreviewModal extends HTMLElement {
 
 						<!-- Action Buttons -->
 						<div class="flex flex-col gap-2 mb-6">
-							<button id="createButton" class="w-full flex gap-2 bg-cyan-600 hover:bg-cyan-500 text-slate-100 text-sm font-semibold py-3 rounded-md flex items-center justify-center cursor-pointer transition-colors duration-200">
+							<button id="createButton" class="w-full flex gap-2 bg-cyan-600 hover:bg-cyan-500 text-slate-100 text-md font-semibold py-3 rounded-xl flex items-center justify-center cursor-pointer transition-colors duration-200">
 								<span>Create</span>
 								<img class="size-5" src="/wp-content/plugins/owp/assets/icons/arrow-right.svg" />
 							</button>
-							<button id="returnToOtherDesignsButton" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-sm font-semibold py-3 rounded-md cursor-pointer transition-colors duration-200">
+							<button id="returnToOtherDesignsButton" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-md font-semibold py-3 rounded-xl cursor-pointer transition-colors duration-200">
 								<span>Back to Other Designs</span>
 							</button>
 						</div>
@@ -150,13 +170,13 @@ class OwpDesignPreviewModal extends HTMLElement {
 						<div class="flex items-center justify-between border-t border-slate-700 pt-4">
 							<span class="text-slate-400 text-sm font-semibold">Responsive Preview</span>
 							<div class="flex gap-2">
-								<button id="desktopPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
+								<button id="desktopPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-xl cursor-pointer">
 									<img src="/wp-content/plugins/owp/assets/icons/desktop.svg" alt="Desktop Icon" class="w-5 h-5">
 								</button>
-								<button id="tabletPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
+								<button id="tabletPreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-xl cursor-pointer">
 									<img src="/wp-content/plugins/owp/assets/icons/tablet.svg" alt="Tablet Icon" class="w-5 h-5">
 								</button>
-								<button id="mobilePreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-md cursor-pointer">
+								<button id="mobilePreview" class="p-2 bg-slate-900 hover:bg-slate-800 text-slate-100 text-sm font-semibold border border-slate-700 rounded-xl cursor-pointer">
 									<img src="/wp-content/plugins/owp/assets/icons/mobile.svg" alt="Mobile Icon" class="w-5 h-5">
 								</button>
 							</div>
@@ -213,6 +233,10 @@ class OwpDesignPreviewModal extends HTMLElement {
 		this.previewContainer = this.querySelector('#previewContainer');
 		this.falseBrowserHeader = this.querySelector('#falseBrowserHeader');
 		this.modalContainer = this.querySelector('#modalContainer');
+		this.creatingPageOverlay = this.querySelector('#creatingPageOverlay');
+		this.creatingPageLoader = this.querySelector('#creatingPageLoader');
+		this.creatingPageSuccess = this.querySelector('#creatingPageSuccess');
+		this.homePageLink = this.querySelector('#homePageLink');
 
 		if (this.iframe) {
 			this.iframe.src = this.url;
@@ -550,25 +574,35 @@ class OwpDesignPreviewModal extends HTMLElement {
 	 * @returns {void}
 	 */
 	#createPage() {
-		fetch('/wp-json/owp/api/page', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(window.owpSessionManager.getPayload())
+	this.creatingPageOverlay.classList.remove('hidden');
+	this.creatingPageLoader.classList.remove('hidden');
+	this.creatingPageSuccess.classList.add('hidden');
+
+	fetch('/wp-json/owp/api/page', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(window.owpSessionManager.getPayload())
+	})
+		.then((res) => res.json())
+		.then((data) => {
+			console.log(data);
+			window.dispatchEvent(new CustomEvent('page-created', {
+				detail: { success: true, data: data }
+			}));
+			this.creatingPageLoader.classList.add('hidden');
+			this.creatingPageSuccess.classList.remove('hidden');
+			if (data.created && data.created.home) {
+				this.homePageLink.href = data.created.home;
+			}
 		})
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data);
-				window.dispatchEvent(new CustomEvent('page-created', {
-					detail: { success: true, data: data }
-				}));
-			})
-			.catch(error => {
-				console.error('Error creating page:', error);
-				window.dispatchEvent(new CustomEvent('page-created', {
-					detail: { success: false, error: error }
-				}));
-			});
-	}
+		.catch(error => {
+			console.error('Error creating page:', error);
+			window.dispatchEvent(new CustomEvent('page-created', {
+				detail: { success: false, error: error }
+			}));
+			this.creatingPageOverlay.classList.add('hidden');
+		});
+}
 
 
 	/**
