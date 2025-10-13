@@ -346,23 +346,6 @@ class OwpDesignPreviewModal extends HTMLElement {
 		// Hydrate images using img-css-ids
 		const homeCssIds = JSON.parse(atob(this.imgCssIds)).home;
 		const mergePictures = JSON.parse(sessionStorage.getItem('owp_payload')).pictures.merge
-		// CSS rules in case of ::before
-		const style = this.preview.createElement('style');
-		let cssRules = '';
-		const homeCssKeys = Object.keys(homeCssIds);
-		homeCssKeys.forEach(key => {
-			cssRules += `
-				#${key}::before { 
-					content: ""; 
-					position: absolute; 
-					background-image: var(--hydration-url); 
-					background-size: cover;
-					z-index: 0;
-				}
-			`;
-		});
-		style.textContent = cssRules;
-		previewHead.appendChild(style); // Inject CSS into the IFRAME's head
 
 		Object.keys(homeCssIds).forEach((key, index) => {
 			const urlToHydrate = mergePictures[index].urls.raw
@@ -371,9 +354,8 @@ class OwpDesignPreviewModal extends HTMLElement {
 			let targetImg = containerDiv.querySelector('img')
 			if (!targetImg) {
 				// Set ::before css style
-				containerDiv.style.backgroundImage = 'none';
-				containerDiv.style.setProperty('--hydration-url', `url(${urlToHydrate})`);
-				console.debug(key, urlToHydrate, '--hydration-url', `url(${urlToHydrate})`)
+				containerDiv.style.backgroundImage = `url(${urlToHydrate})`;
+				console.debug(key, `url(${urlToHydrate})`)
 			}	else if (targetImg) {
 				targetImg.src = urlToHydrate
 				console.debug(key, urlToHydrate)

@@ -8,9 +8,9 @@ class OwpDesignGrid extends HTMLElement {
 
     constructor() {
         super();
-        this.className = `w-screen h-full flex-1 flex flex-wrap gap-6 text-2xl text-gray-300 font-semibold pl-4 pr-2 overflow-y-auto `;
+        this.className = `w-screen h-full flex-1 flex justify-center flex-wrap gap-6 text-2xl text-gray-300 font-semibold pl-4 pr-2 overflow-y-auto `;
         this.innerHTML = `
-            Loading...
+            <div class="size-full picture-loader"> </div>
         `;
     }
 

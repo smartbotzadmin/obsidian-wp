@@ -122,7 +122,9 @@ function owp_enqueue_components() {
     if (
         ( isset( $_GET['page'] ) && $_GET['page'] === 'owp-app' ) ||
         ( isset( $_GET['action'] ) && $_GET['action'] === 'edit' && basename( $_SERVER['PHP_SELF'] ) === 'post.php' ) ||
-        ( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'page' && basename( $_SERVER['PHP_SELF'] ) === 'post-new.php' )
+        ( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'page' && basename( $_SERVER['PHP_SELF'] ) === 'post-new.php' ) || (
+        isset( $_GET['owp-preview'] ) &&
+        $_GET['owp-preview'] === 'true')
     ) {
         wp_enqueue_style(
             'owp-output-style',

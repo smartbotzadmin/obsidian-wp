@@ -24,7 +24,7 @@ class OwpDesign extends HTMLElement {
                 Choose the Design
             </h2>
             
-            <owp-design-search-bar></owp-design-search-bar>
+            <!-- <owp-design-search-bar></owp-design-search-bar> -->
 
             <owp-design-grid></owp-design-grid>
 
