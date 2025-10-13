@@ -33,7 +33,7 @@ class OwpTopbarCloseButton extends HTMLElement {
 					<p>Are you sure you want to quit?</p>
 				</div>
 				<div class="flex justify-center items-center gap-4 p-2">
-					<a href="#" id="cancelButton" class="px-5 py-1 text-md text-slate-100 font-bold bg-cyan-600 hover:bg-cyan-500 rounded-2xl transition-all">Cancel</a>
+					<button id="cancelButton" class="px-5 py-1 text-md text-slate-100 font-bold bg-cyan-600 hover:bg-cyan-500 rounded-2xl transition-all cursor-pointer">Cancel</button>
 					<a href="/wp-admin/" class="px-5 py-1 text-md text-slate-100 bg-slate-700 hover:bg-slate-800  rounded-2xl transition-all">Yes</a>
 				</div>
 			</div>

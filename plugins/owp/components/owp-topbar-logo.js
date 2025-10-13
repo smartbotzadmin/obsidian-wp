@@ -13,7 +13,7 @@ class OwpTopbarLogo extends HTMLElement {
 		this.classList = `w-40 h-10 flex items-center gap-4`;
 		this.innerHTML = /*html*/`
 			<img src="${window.location.origin}/wp-content/plugins/owp/assets/icons/obsidian-logo.png" alt="OWP Logo" class="h-8 w-auto">
-			<span class="font-gold font-bold text-gray-100 text-lg">OBSIDIAN</span>
+			<span class="font-gold font-bold text-gray-100 text-lg cursor-default select-none">OBSIDIAN</span>
 		`;
 	}
 
