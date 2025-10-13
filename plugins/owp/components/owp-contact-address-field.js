@@ -13,7 +13,7 @@ class OwpContactAddressField extends HTMLElement {
         this.className = `flex flex-col mb-6`;
         this.innerHTML = `
             <label for="address" class="text-slate-300 text-sm font-semibold mb-2">Address</label>
-            <input type="text" id="address" class="shadow appearance-none border border-slate-700 rounded-xl w-full h-11 px-3 text-md text-slate-100 leading-tight bg-slate-900 transition duration-300 ease-in-out outline outline-transparent hover:outline-1 hover:outline-cyan-500 focus:outline-2 focus:outline-cyan-500" placeholder="Enter address">
+            <input type="text" id="address" class="shadow appearance-none border border-slate-700 rounded-xl w-full h-11 px-3 text-md text-slate-100 leading-tight bg-slate-900 transition duration-300 ease-in-out ring ring-0 ring-transparent outline-none hover:ring-1 hover:ring-cyan-500 focus:ring-2 focus:ring-cyan-500" placeholder="Enter address">
         `;
     }
 

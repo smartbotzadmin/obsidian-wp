@@ -22,7 +22,7 @@ class OwpPictures extends HTMLElement {
      */
     connectedCallback() {
         this.className = `flex flex-col items-center h-screen w-full`;
-        this.innerHTML = `
+        this.innerHTML = /*html*/`
             <h2 class="text-3xl font-bold mt-20 mb-8 text-slate-100 text-center">
                 Select the Images
             </h2>

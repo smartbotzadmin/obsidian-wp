@@ -30,7 +30,9 @@ class OwpPicturesGrid extends HTMLElement {
           id="imageGridContainer"
           class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 p-2"
         ></div>
-        <div id="loadingSpinner" class="text-slate-100 text-center py-4 hidden">Loading...</div>
+        <div id="loadingSpinner" class="text-slate-100 text-center py-4 hidden">
+          <div class="picture-loader mx-auto"></div>
+        </div>
     `;
   }
 
@@ -219,7 +221,7 @@ class OwpPicturesGrid extends HTMLElement {
       imgDiv.innerHTML = `
                 <img src="${image.urls.small}"
                     alt="${image.alt_description || 'Unsplash Image'}"
-                    class="rounded-md p-0.5 ring-2 ${selectedClass} hover:ring-cyan-500" draggable="false">
+                    class="rounded-md p-0.5 ring-2 ${selectedClass} hover:ring-cyan-500 w-full h-auto" draggable="false" loading="lazy">
                 ${isSelected ? `
                     <div class="absolute top-2 right-2 w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center">
                         <img src="/wp-content/plugins/owp/assets/icons/check.svg" class="w-5 h-5" alt="Selected">
@@ -272,6 +274,7 @@ class OwpPicturesGrid extends HTMLElement {
     }
 
     // 3. Fetch from API if neither of the above
+    this.loadingSpinner.classList.remove('hidden'); // Show loader for default images
     let url = `https://unsplash-images-313065021854.us-east1.run.app?query=${defaultQuery}&per_page=${this.perPage}&page=1`;
 
     try {
@@ -292,6 +295,8 @@ class OwpPicturesGrid extends HTMLElement {
       }
     } catch (error) {
       console.log('Error fetching default images', error);
+    } finally {
+      this.loadingSpinner.classList.add('hidden'); // Hide loader after fetching default images
     }
   }
 

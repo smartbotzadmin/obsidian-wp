@@ -179,7 +179,7 @@ class OwpContactSocialMedia extends HTMLElement {
 				type="text"
 				placeholder="Enter ${socialName} Profile URL"
 				value="${initialValue}"
-				class='h-full flex-grow p-2 rounded-xl bg-slate-900 text-md text-slate-100 border border-slate-700 transition duration-300 ease-in-out outline outline-transparent hover:outline-1 hover:outline-cyan-500 focus:outline-2 focus:outline-cyan-500'
+				class='h-full flex-grow p-2 rounded-xl bg-slate-900 text-md text-slate-100 ring ring-0 ring-transparent outline-none hover:ring-1 hover:ring-cyan-500 focus:ring-2 focus:ring-cyan-500 transition duration-300 ease-in-out'
 				data-social="${socialName}"
 			/>
 			<button

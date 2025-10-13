@@ -17,7 +17,7 @@ class OwpDescribeTextArea extends HTMLElement {
 			</div>
 			<textarea
 				id="describeTextArea"
-				class="w-full p-4 border border-slate-700 rounded-xl min-h-42 resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-slate-900 text-md text-slate-100 transition-all duration-300 outline outline-transparent hover:outline-cyan-500 hover:outline-1 focus:outline-cyan-500 focus:outline-2 placeholder-gray-700 overflow-y-auto"
+				class="w-full p-4 border border-slate-700 rounded-xl min-h-42 resize-none outline-none ring ring-0 ring-transparent hover:ring-1 hover:ring-cyan-500 focus:ring-2 focus:ring-cyan-500 bg-slate-900 text-md text-slate-100 transition-all duration-300 placeholder-gray-700 overflow-y-auto"
 				placeholder="E.g. Mantra Minds is a yoga studio located in Chino Hills, California. The studio offers a variety of classes such as Hatha yoga, Vinyasa flow, and Restorative yoga. The studio is led by Jane, an experienced and certified yoga instructor with over 10 years of teaching expertise. The welcoming atmosphere and personalized Jane make it a favorite among yoga enthusiasts in the area."
 			></textarea>
 			

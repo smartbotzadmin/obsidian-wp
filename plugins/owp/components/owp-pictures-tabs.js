@@ -31,23 +31,23 @@ class OwpPicturesTabs extends HTMLElement {
      */
     constructor() {
         super();
-        this.className = `flex w-full border-b border-slate-700 mb-6 py-3 px-12`;
+        this.className = `flex w-full border-b border-slate-700 mb-6 py-3 px-12 gap-4`;
         this.innerHTML = `
-            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 border-b-2 border-cyan-500 focus:outline-none" data-tab="search-results">Search Results</button>
-            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 hover:text-cyan-500 focus:outline-none" data-tab="selected-images">Selected Images</button>
+            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 transition-all duration-300 ease-in-out rounded-xl underline-fill-cyan active" data-tab="search-results">Search Results</button>
+            <button class="tab-button p-2 font-medium cursor-pointer text-[14px] text-slate-100 transition-all duration-300 ease-in-out rounded-xl underline-fill-cyan" data-tab="selected-images">Selected Images</button>
 
             <div class="flex-grow"></div> <!-- spacing -->
 
             <div class="relative flex text-left">
-                <div class="inline-flex justify-center w-full rounded-lg border border-slate-700 shadow-sm px-4 py-2 bg-slate-900 text-[14px] font-semibold text-slate-300 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 h-11 items-center cursor-pointer" id="orientation-menu-button" aria-expanded="true" aria-haspopup="true">
+                <div class="inline-flex justify-center w-full rounded-xl shadow-sm px-4 py-2 bg-slate-900 text-[14px] font-semibold text-slate-300 hover:bg-slate-800 transition-all duration-300 ease-in-out outline outline-0 outline-transparent hover:outline-1 hover:outline-cyan-500 focus:outline-2 focus:outline-cyan-500 h-11 items-center cursor-pointer" id="orientation-menu-button" aria-expanded="true" aria-haspopup="true">
                     ${this.selectedOrientationValue}
-                    <img src="/wp-content/plugins/owp/assets/icons/chevron-down.svg" class="ml-2 -mr-1 h-4 w-4" alt="Dropdown icon">
+                    <img src="/wp-content/plugins/owp/assets/icons/chevron-down.svg" class="ml-2 -mr-1 h-4 w-4 transition-transform duration-300 ease-in-out" alt="Dropdown icon">
                 </div>
 
-                <div class="origin-top-right absolute top-full mt-2 right-0 w-56 rounded-md shadow-lg bg-slate-800 border border-slate-700 ring-opacity-5 focus:outline-none  hidden z-10" role="menu" aria-orientation="vertical" aria-labelledby="orientation-menu-button" tabindex="-1">
-                    <div class="py-1" role="none">
+                <div class="origin-top-right absolute top-full mt-2 right-0 w-56 rounded-xl shadow-lg bg-slate-800 outline outline-0 outline-transparent hover:outline-1 hover:outline-cyan-500 focus:outline-2 focus:outline-cyan-500 ring-opacity-5 focus:outline-none opacity-0 scale-96 pointer-events-none transition-all duration-300 ease-in-out z-10 overflow-hidden" role="menu" aria-orientation="vertical" aria-labelledby="orientation-menu-button" tabindex="-1">
+                    <div class="py-2" role="none">
                         ${this.orientationOptions.map((option, index) => `
-                            <a href="#" class="text-[14px] text-slate-300 block px-4 py-2 text-sm hover:bg-cyan-700" role="menuitem" tabindex="-1" id="menu-item-${index}" data-value="${option.value}">${option.label}</a>
+                            <a href="#" class="text-[14px] text-slate-300 block px-4 py-2 text-sm hover:bg-cyan-600" role="menuitem" tabindex="-1" id="menu-item-${index}" data-value="${option.value}">${option.label}</a>
                         `).join('')}
                     </div>
                 </div>
@@ -106,8 +106,11 @@ class OwpPicturesTabs extends HTMLElement {
      * @returns {void}
      */
     #handleOutsideClick(event) {
+        const chevronIcon = this.orientationMenuButton.querySelector('img');
         if (!this.orientationMenuButton.contains(event.target) && !this.orientationDropdown.contains(event.target)) {
-            this.orientationDropdown.classList.add('hidden');
+            this.orientationDropdown.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+            this.orientationDropdown.classList.add('opacity-0', 'scale-96', 'pointer-events-none');
+            chevronIcon.classList.remove('rotate-180');
         }
     }
 
@@ -120,7 +123,16 @@ class OwpPicturesTabs extends HTMLElement {
      */
     #handleOrientationMenuClick(event) {
         event.stopPropagation();
-        this.orientationDropdown.classList.toggle('hidden');
+        const chevronIcon = this.orientationMenuButton.querySelector('img');
+        if (this.orientationDropdown.classList.contains('opacity-0')) {
+            this.orientationDropdown.classList.remove('opacity-0', 'scale-96', 'pointer-events-none');
+            this.orientationDropdown.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+            chevronIcon.classList.add('rotate-180');
+        } else {
+            this.orientationDropdown.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+            this.orientationDropdown.classList.add('opacity-0', 'scale-96', 'pointer-events-none');
+            chevronIcon.classList.remove('rotate-180');
+        }
     }
 
 
@@ -138,7 +150,9 @@ class OwpPicturesTabs extends HTMLElement {
         this.orientationMenuButton.childNodes[0].nodeValue = selectedLabel;
         this.selectedOrientationValue = selectedLabel; // Store the selected label
 
-        this.orientationDropdown.classList.add('hidden');
+        this.orientationDropdown.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        this.orientationDropdown.classList.add('opacity-0', 'scale-96', 'pointer-events-none');
+        this.orientationMenuButton.querySelector('img').classList.remove('rotate-180');
 
         window.dispatchEvent(new CustomEvent('orientation-changed', {
             detail: { orientation: selectedValue }
@@ -154,11 +168,9 @@ class OwpPicturesTabs extends HTMLElement {
      */
     #handleTabClick(event) {
         this.tabButtons.forEach(button => {
-            button.classList.remove('text-cyan-600', 'border-b-2', 'border-cyan-600');
-            button.classList.add('text-slate-300', 'hover:text-cyan-500');
+            button.classList.remove('active');
         });
-        event.currentTarget.classList.remove('text-slate-300', 'border-b-2', 'hover:text-cyan-500');
-        event.currentTarget.classList.add('text-cyan-600', 'border-b-2', 'border-cyan-600');
+        event.currentTarget.classList.add('active');
         // Optionally dispatch a custom event to notify parent of tab change
         window.dispatchEvent(new CustomEvent('tab-changed', {
             detail: { tab: event.currentTarget.dataset.tab }

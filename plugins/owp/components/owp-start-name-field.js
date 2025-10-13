@@ -15,7 +15,7 @@ class OwpStartNameField extends HTMLElement {
         this.className = `mb-6`;
         this.innerHTML = `
             <label for="siteName" class="block text-slate-300 text-sm font-semibold mb-2">Name of the website</label>
-            <input type="text" id="siteName" class="shadow appearance-none border border-slate-700 rounded-xl w-full h-11 px-3 text-slate-300 text-md bg-slate-900 leading-tight transition-all duration-300 ease-in-out outline-transparent hover:outline-1 hover:outline-cyan-500 focus:outline-2 focus:outline-cyan-500" placeholder="Enter name or title of the website">
+            <input type="text" id="siteName" class="shadow appearance-none border border-slate-700 rounded-xl w-full h-11 px-3 text-slate-300 text-md bg-slate-900 leading-tight transition-all duration-300 ease-in-out ring ring-0 ring-transparent outline-none hover:ring-1 hover:ring-cyan-500 focus:ring-2 focus:ring-cyan-500" placeholder="Enter name or title of the website">
         `;
     }
 
