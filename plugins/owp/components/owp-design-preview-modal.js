@@ -50,6 +50,7 @@ class OwpDesignPreviewModal extends HTMLElement {
 	selectedPalettePreview = null;
 	previewContainer = null;
 	falseBrowserHeader = null;
+	modalContainer = null;
 
 	/**
 	 * @description Constructs the OwpDesignPreviewModal instance.
@@ -59,12 +60,12 @@ class OwpDesignPreviewModal extends HTMLElement {
 		super();
 		this.className = `fixed top-0 left-0 z-10 w-full h-full flex p-8`;
 		this.innerHTML = /*html*/`
-			<div class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700">
+			<div id="modalContainer" class="relative flex flex-row w-full h-full rounded-2xl overflow-hidden border border-slate-700 transition-all duration-300 ease-out transform scale-95 opacity-0">
 
 				<!-- Loading Mask -->
 				<div id="loadingMaskModal" class="absolute inset-0 bg-slate-900 flex justify-center items-center">
 					<span class="text-slate-700 text-lg font-sans font-semibold animate-pulse">
-						Loading...
+						<div class="picture-loader"></div>
 					</span>
 				</div>
 
@@ -211,11 +212,18 @@ class OwpDesignPreviewModal extends HTMLElement {
 		this.selectedPalettePreview = this.querySelector('#selectedPalettePreview');
 		this.previewContainer = this.querySelector('#previewContainer');
 		this.falseBrowserHeader = this.querySelector('#falseBrowserHeader');
+		this.modalContainer = this.querySelector('#modalContainer');
 
 		if (this.iframe) {
 			this.iframe.src = this.url;
 			this.iframe.onload = this.#handleIframeLoad.bind(this);
 		}
+
+		// Animate modal open
+		setTimeout(() => {
+			this.modalContainer.classList.remove('scale-95', 'opacity-0');
+			this.modalContainer.classList.add('scale-100', 'opacity-100');
+		}, 10);
 
 		this.closeButton.onclick = this.#closeModal.bind(this);
 		this.returnToOtherDesignsButton.onclick = this.#closeModal.bind(this);
@@ -376,12 +384,17 @@ class OwpDesignPreviewModal extends HTMLElement {
 	 * @returns {void}
 	 */
 	#closeModal() {
-		this.remove();
-		window.owpSessionManager.updatePayloadSection('design', {
-			template: null,
-			font: null,
-			palette: null
-		});
+		this.modalContainer.classList.remove('scale-100', 'opacity-100');
+		this.modalContainer.classList.add('scale-95', 'opacity-0');
+
+		this.modalContainer.addEventListener('transitionend', () => {
+			this.remove();
+			window.owpSessionManager.updatePayloadSection('design', {
+				template: null,
+				font: null,
+				palette: null
+			});
+		}, { once: true });
 	}
 
 
