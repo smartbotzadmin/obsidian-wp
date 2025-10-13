@@ -22,7 +22,7 @@ class OwpContact extends HTMLElement {
         this.innerHTML = /*html*/`
             <div class="w-[800px] bg-slate-950 p-12 rounded-3xl border border-slate-700">
                 <h2 class="text-3xl font-bold mb-12 text-slate-100">
-                    How can people get in touch with asd
+                    How can people get in touch with <span class="underline--magical">${window.owpSessionManager.getPayload().start.name}</span>
                 </h2>
                 <p class="text-lg text-slate-100 mb-12">
                     Please provide the contact information below. These will be used on the website.
