@@ -26,14 +26,25 @@ class OwpNextButton extends HTMLElement {
         super();
         this.className += ` relative`;
         this.innerHTML = /*html*/`
-            <button id="nextButton" class="flex flex-row justify-center items-center gap-2 bg-cyan-600 hover:bg-cyan-500 p-4 h-11 rounded-md flex items-center cursor-pointer">
+            <style>
+                @keyframes bounce-outline {
+                    0% { outline: 2px solid transparent; }
+                    10%, 90% { outline: 2px solid #ef4444; } /* red-500 */
+                    100% { outline: 2px solid transparent; }
+                }
+                .animate-bounce-outline {
+                    animation: bounce-outline 2s linear;
+                }
+            </style>
+            <button id="nextButton" class="flex flex-row justify-center items-center gap-2 bg-cyan-600 hover:bg-cyan-500 p-4 h-11 rounded-xl flex items-center cursor-pointer transition-colors duration-300">
                 <span class="text-slate-100 text-md font-semibold">
                     ${this.innerHTML}
                 </span>
                 <img src="/wp-content/plugins/owp/assets/icons/arrow-right.svg"/>
             </button>
-            <div id="popup" class="absolute p-2 -top-16 w-40 bg-red-600 rounded-md border border-red-700 outline outline-red-400 text-gray-100 font-semibold invisible">
+            <div id="popup" class="absolute bottom-full left-0 mb-2 p-3 w-64 bg-gray-100 text-slate-950 text-base rounded-lg shadow-lg border border-gray-200 outline outline-gray-300 font-semibold opacity-0 scale-0 transition-all duration-300 ease-in-out transform-origin-bottom-left">
                 Please, complete the information
+                <div class="absolute left-3 bottom-0 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-gray-100 translate-y-full"></div>
             </div>
         `;
     }
@@ -95,9 +106,14 @@ class OwpNextButton extends HTMLElement {
             }
         } else {
             if (this.popup) {
-                this.popup.classList.remove('invisible');
+                this.popup.classList.remove('opacity-0', 'scale-0');
+                this.popup.classList.add('opacity-100', 'scale-100');
+                this.nextButton.classList.add('animate-bounce-outline');
+
                 setTimeout(() => {
-                    this.popup.classList.add('invisible');
+                    this.popup.classList.remove('opacity-100', 'scale-100');
+                    this.popup.classList.add('opacity-0', 'scale-0');
+                    this.nextButton.classList.remove('animate-bounce-outline');
                 }, 2000);
             }
         }

@@ -20,7 +20,7 @@ class OwpBackButton extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <button id="backButton" class="flex flex-row justify-center items-center gap-2 bg-gray-200 hover:bg-gray-300 p-4 h-11 rounded-md flex items-center cursor-pointer">
+            <button id="backButton" class="flex flex-row justify-center items-center gap-2 bg-gray-200 hover:bg-gray-400 p-4 h-11 rounded-xl flex items-center cursor-pointer transition-colors duration-300">
                 <img src="/wp-content/plugins/owp/assets/icons/arrow-left.svg"/>
                 <span class="text-md text-gray-600 font-semibold">
                     ${this.innerHTML}
