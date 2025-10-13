@@ -11,7 +11,7 @@ class OwpDescribeAiButton extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <button id="writeAiButton" class="flex items-center gap-2 text-slate-100 hover:text-cyan-400 font-semibold cursor-pointer p-2">
+            <button id="writeAiButton" class="flex items-center gap-2 text-slate-100 hover:text-cyan-400 font-semibold cursor-pointer p-2 rounded-xl transition-all duration-300 outline outline-transparent hover:outline-cyan-500 hover:outline-1 focus:outline-cyan-500 focus:outline-2">
                 <img src="/wp-content/plugins/owp/assets/icons/wand-sparkles-dark.svg"/>
                 Write Using AI
             </button>
@@ -72,6 +72,9 @@ class OwpDescribeAiButton extends HTMLElement {
 
         } catch (error) {
             console.error('Error fetching AI description:', error);
+        } finally {
+            this.writeAiButton.disabled = false;
+            this.writeAiButton.classList.remove('opacity-50', 'cursor-not-allowed');
         }
     }
 }

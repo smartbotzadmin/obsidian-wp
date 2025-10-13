@@ -19,16 +19,16 @@ class OwpDescribe extends HTMLElement {
      */
     connectedCallback() {
         this.className = `flex justify-center items-center h-screen`;
-        this.innerHTML = `
-            <div class="w-[800px] bg-slate-950 p-12 rounded-lg border border-slate-700">
+        this.innerHTML = /*html*/`
+            <div class="w-[800px] bg-slate-950 p-12 rounded-3xl border border-slate-700">
                 <h2 class="text-3xl font-bold mb-12 text-slate-100">
-                    What is asd? Tell us more about the restaurant.
+                    What is <span class="underline--magical">${window.owpSessionManager.getPayload().start.name}</span>? Tell us more about the restaurant.
                 </h2>
                 <p class="text-lg text-slate-100 mb-12">
                     Please be as descriptive as you can. Share details such as a brief about the restaurant, specialty, menu, etc.
                 </p>
 
-                <owp-describe-text-area></owp-describe-text-area>
+                <owp-describe-text-area class="mb-2"></owp-describe-text-area>
 
                 <div class="flex flex-row justify-between">
                     <owp-back-button data-owp-navigate="#let's-start">Back</owp-back-button>
