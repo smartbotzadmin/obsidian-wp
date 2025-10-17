@@ -18,6 +18,24 @@ class OwpSidebarSuggestions extends HTMLElement {
             </div>
         `;
     }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        // No specific logic needed on connection for this component.
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        // No specific cleanup needed for this component.
+    }
 }
 
 

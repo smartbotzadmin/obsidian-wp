@@ -13,7 +13,7 @@ class OwpContactPhoneField extends HTMLElement {
         this.className = `min-w-72`;
         this.innerHTML = `
             <label for="phoneNumber" class="block text-slate-300 text-sm font-semibold mb-2">Phone Number</label>
-            <input type="tel" id="phoneNumber" class="shadow appearance-none border border-slate-700 rounded-lg w-full h-11 px-3 text-md text-slate-100 leading-tight focus:outline-none focus:shadow-outline bg-slate-900" placeholder="Your phone number">
+            <input type="tel" id="phoneNumber" class="shadow appearance-none border border-slate-700 rounded-xl w-full h-11 px-3 text-md text-slate-100 leading-tight bg-slate-900 transition duration-300 ease-in-out ring ring-0 ring-transparent outline-none hover:ring-1 hover:ring-cyan-500 focus:ring-2 focus:ring-cyan-500" placeholder="Your phone number">
         `;
     }
 
@@ -26,6 +26,16 @@ class OwpContactPhoneField extends HTMLElement {
         this.phoneNumberInput = this.querySelector('#phoneNumber');
         this.phoneNumberInput.addEventListener('input', this.#handleInputChange.bind(this));
         this.#loadInitialValue();
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        // Cleanup event listeners if necessary
+        this.phoneNumberInput.removeEventListener('input', this.#handleInputChange.bind(this));
     }
 
 

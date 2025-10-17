@@ -119,12 +119,13 @@ function create_page( WP_REST_Request $req ) {
         );
         
         // Create Elementor pages from 'template.json' (_elementor_data)
-        update_post_meta( $post_id, '_elementor_data', $elementor_data );
+        update_post_meta( $post_id, '_elementor_data', json_encode($elementor_data) );
         update_post_meta( $post_id, '_elementor_edit_mode', 'builder' );
         update_post_meta( $post_id, '_wp_page_template', 'elementor_canvas' );
         update_post_meta( $post_id, '_elementor_version', ELEMENTOR_VERSION );
         update_post_meta( $post_id, '_elementor_template_type', 'page' );
         update_post_meta( $post_id, 'site-post-title', 'disabled' );
+        update_post_meta( $post_id, '_elementor_css', '' );
     }
 
     $created[$page] = get_permalink( $post_id );

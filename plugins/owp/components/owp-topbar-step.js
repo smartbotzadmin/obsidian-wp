@@ -4,31 +4,9 @@
  * @description Web component for a single step in the top navigation bar.
  */
 class OwpTopbarStep extends HTMLElement {
-    /**
-     * @description Constructs the OwpTopBarStep instance.
-     * @returns {void}
-     */
-    constructor() {
-        super();
-    }
+    stepItemDiv = null;
+    stepTextDiv = null;
 
-    /**
-     * @description Called when the element is added to the document's DOM.
-     * @returns {void}
-     */
-    connectedCallback() {
-        if (!this.hasChildNodes()) {
-            const stepItemDiv = document.createElement('div');
-            stepItemDiv.className = 'step-item cursor-pointer';
-
-            const stepTextDiv = document.createElement('div');
-            stepTextDiv.className = 'step-text';
-
-            stepItemDiv.appendChild(stepTextDiv);
-            this.appendChild(stepItemDiv);
-        }
-        this.updateContent();
-    }
 
     /**
      * @description Observes changes to the 'name', 'page', 'is-active', and 'is-completed' attributes.
@@ -38,6 +16,47 @@ class OwpTopbarStep extends HTMLElement {
         return ['name', 'page', 'is-active', 'is-completed'];
     }
 
+
+    /**
+     * @description Constructs the OwpTopBarStep instance.
+     * @returns {void}
+     */
+    constructor() {
+        super();
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
+        if (!this.hasChildNodes()) {
+            this.stepItemDiv = document.createElement('div');
+            this.stepItemDiv.className = 'step-item';
+
+            this.stepTextDiv = document.createElement('div');
+            this.stepTextDiv.className = 'step-text';
+
+            this.stepItemDiv.appendChild(this.stepTextDiv);
+            this.appendChild(this.stepItemDiv);
+        } else {
+            this.stepItemDiv = this.querySelector('.step-item');
+            this.stepTextDiv = this.querySelector('.step-text');
+        }
+        this.#updateContent();
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        // No specific cleanup needed for this component.
+    }
+
+
     /**
      * @description Handles changes to observed attributes.
      * @param {string} name - The name of the attribute.
@@ -46,31 +65,33 @@ class OwpTopbarStep extends HTMLElement {
      * @returns {void}
      */
     attributeChangedCallback(name, oldVal, newVal) {
-        this.updateContent();
+        this.#updateContent();
     }
 
+
     /**
+     * @private
      * @description Updates the content and classes of the step element.
      * @returns {void}
      */
-    updateContent() {
+    #updateContent() {
         const name = this.getAttribute('name') || '';
         const page = this.getAttribute('page');
         const isActive = this.hasAttribute('is-active');
         const isCompleted = this.hasAttribute('is-completed');
 
-        const stepTextElement = this.querySelector('.step-text');
-        if (stepTextElement) {
-            stepTextElement.textContent = name;
-            let classList = ['step-text', 'text-[14px]'];
+        if (this.stepTextDiv) {
+            this.stepTextDiv.textContent = name;
+            let classList = ['step-text', 'font-gold text-md cursor-default'];
             if (isActive) {
                 classList.push('text-cyan-400');
+                classList.push('gradient-text-step');
             } else if (isCompleted) {
                 classList.push('text-cyan-900');
             } else {
                 classList.push('text-slate-300');
             }
-            stepTextElement.className = classList.join(' ');
+            this.stepTextDiv.className = classList.join(' ');
         }
 
         if (page) {

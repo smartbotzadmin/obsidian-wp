@@ -11,7 +11,7 @@ class OwpDescribeAiButton extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
-            <button id="writeAiButton" class="flex items-center gap-2 text-slate-100 hover:text-cyan-400 font-semibold cursor-pointer p-2">
+            <button id="writeAiButton" class="flex items-center gap-2 text-slate-100 hover:text-cyan-400 font-semibold cursor-pointer p-2 rounded-xl transition-all duration-300 outline outline-transparent hover:outline-cyan-500 hover:outline-1 focus:outline-cyan-500 focus:outline-2">
                 <img src="/wp-content/plugins/owp/assets/icons/wand-sparkles-dark.svg"/>
                 Write Using AI
             </button>
@@ -26,6 +26,15 @@ class OwpDescribeAiButton extends HTMLElement {
      */
     connectedCallback() {
         this.writeAiButton.addEventListener('click', this.#handleWriteAiClick.bind(this));
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        this.writeAiButton.removeEventListener('click', this.#handleWriteAiClick.bind(this));
     }
 
 
@@ -57,12 +66,15 @@ class OwpDescribeAiButton extends HTMLElement {
 
             const data = await response.json();
             
-            this.dispatchEvent(new CustomEvent('ai-text-generated', {
+            window.dispatchEvent(new CustomEvent('ai-text-generated', {
                 detail: { text: data.content }
             }));
 
         } catch (error) {
             console.error('Error fetching AI description:', error);
+        } finally {
+            this.writeAiButton.disabled = false;
+            this.writeAiButton.classList.remove('opacity-50', 'cursor-not-allowed');
         }
     }
 }

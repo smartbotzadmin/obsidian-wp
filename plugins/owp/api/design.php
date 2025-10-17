@@ -11,6 +11,9 @@
  * GET designs
  */
 function get_designs() {
+  // TODO: Change by reading folders available inside 'designs' folder.
+  $DESIGNS_DIR = WP_PLUGIN_DIR . '/owp/designs';
+  
   $posts = get_posts( array(
       'post_type'     => 'elementor_library',
       'post_status'   => 'publish',
@@ -19,13 +22,29 @@ function get_designs() {
   $response = array();
 
   foreach ( $posts as $post ) {
+    // return if fidn default-kit
     if ( $post->post_name == 'default-kit' ) continue;
+
+    // return if is not obsidian template
+    if ( preg_match('/^[oO]bsidian.+$/', $post->post_title) !== 1 ) continue;
+
+    // get images css ids fields
+    $design_name = $post->post_name;
+    $images_json_path = "{$DESIGNS_DIR}/{$design_name}" . '/templatekit/images.json';
+    $images_json = array();
+
+    if ( file_exists( $images_json_path ) ) {
+      $images_json_content = file_get_contents( $images_json_path );
+      $images_json = json_decode( $images_json_content, true );
+    }
 
     array_push( $response, array(
       'ID'    => $post->ID,
       'name'  => $post->post_name,
       'title' => $post->post_title,
       'url'   => $post->guid,
+      'post_type' => $post->post_type,
+      'images_json' => $images_json
     ));
   }
 

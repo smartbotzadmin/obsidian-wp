@@ -4,6 +4,8 @@
  * @description Web component for the sidebar header, including a back button and title.
  */
 class OwpSidebarHeader extends HTMLElement {
+    returnButton = null;
+
     /**
      * @description Constructs the OwpSidebarHeader instance.
      * @returns {void}
@@ -19,13 +21,39 @@ class OwpSidebarHeader extends HTMLElement {
                 <img class="w-8" src="/wp-content/plugins/owp/assets/icons/obsidian-logo.png" /> <!-- alignment placeholder -->
             </div>
         `;
+    }
+
+
+    /**
+     * @description Called when the element is added to the document's DOM.
+     * @returns {void}
+     */
+    connectedCallback() {
         this.returnButton = this.querySelector('#returnButton');
-        this.returnButton.addEventListener('click', () => {
-            const sidebar = document.querySelector('owp-sidebar');
-            if (sidebar && typeof sidebar.toggleSidebar === 'function') {
-                sidebar.toggleSidebar();
-            }
-        });
+        if (this.returnButton) {
+            this.returnButton.addEventListener('click', this.#handleReturnClick.bind(this));
+        }
+    }
+
+
+    /**
+     * @description Called when the element is removed from the document's DOM.
+     * @returns {void}
+     */
+    disconnectedCallback() {
+        if (this.returnButton) {
+            this.returnButton.removeEventListener('click', this.#handleReturnClick.bind(this));
+        }
+    }
+
+
+    /**
+     * @private
+     * @description Handles the click event for the return button, toggling the sidebar.
+     * @returns {void}
+     */
+    #handleReturnClick() {
+        window.dispatchEvent(new CustomEvent('toggle-sidebar'));
     }
 }
 

@@ -1,38 +1,30 @@
 /* This file is the input for TailwindCSS CLI to generate output.css */
 @import "tailwindcss";
 
+@theme {
+	--font-sans: "Open Sans";
+	--font-gold: "Goldman";
+	--font-serif: "Noto Serif";
+	--font-mono: "Google Sans Code";
+	--text-xs: 10px;
+	--text-sm: 12px;
+	--text-md: 16px;
+	--text-lg: 20px;
+	--text-xl: 24px;
+	--text-2xl: 30px;
+	--text-3xl: 36px;
+	--tw-border-style: solid;
+}
+
+
+/* Own */
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-@theme {
-  --font-sans: "Open Sans";
-  --font-serif: "Noto Serif";
-  --font-mono: "Google Sans Code";
-  --text-xs: 10px;
-  --text-sm: 12px;
-  --text-md: 16px;
-  --text-lg: 20px;
-  --text-xl: 24px;
-  --text-2xl: 30px;
-  --text-3xl: 36px;
-  --tw-border-style: solid;
-}
+@import "./effects.css";
 
-@font-face {
-  font-family: 'Google Sans Code';
-  src: url('../fonts/Google_Sans_Code/GoogleSansCode-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900; /* Variable font range */
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Google Sans Code';
-  src: url('../fonts/Google_Sans_Code/GoogleSansCode-Italic-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900; /* Variable font range */
-  font-style: italic;
-}
 
 @font-face {
   font-family: 'Open Sans';
@@ -49,6 +41,20 @@
 }
 
 @font-face {
+  font-family: 'Goldman';
+  src: url('../fonts/Goldman/Goldman-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Goldman';
+  src: url('../fonts/Goldman/Goldman-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Noto Serif';
   src: url('../fonts/Noto_Serif/NotoSerif-VariableFont_wdth,wght.ttf') format('truetype');
   font-weight: 100 900; /* Variable font range */
@@ -61,6 +67,21 @@
   font-weight: 100 900; /* Variable font range */
   font-style: italic;
 }
+
+@font-face {
+  font-family: 'Google Sans Code';
+  src: url('../fonts/Google_Sans_Code/GoogleSansCode-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* Variable font range */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Google Sans Code';
+  src: url('../fonts/Google_Sans_Code/GoogleSansCode-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* Variable font range */
+  font-style: italic;
+}
+
 
 /* Custom scrollbar styles for webkit browsers */
 ::-webkit-scrollbar {
