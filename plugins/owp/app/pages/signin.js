@@ -77,7 +77,7 @@ class OwpSignin extends HTMLElement {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('owp_auth_token', data.token);
+        localStorage.setItem(window.cookieName, data.token);
         messageElement.textContent = 'Signed in successfully!';
         messageElement.className = 'mt-4 text-center text-sm font-semibold text-green-500';
         // Redirect or update UI as needed

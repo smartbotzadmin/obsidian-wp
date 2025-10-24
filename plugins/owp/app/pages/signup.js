@@ -17,6 +17,7 @@ class OwpSignup extends HTMLElement {
    * @returns {void}
    */
   connectedCallback() {
+    console.log(window.cookieName)
     this.className = `flex justify-center items-center h-screen`;
     this.innerHTML = /*html*/`
       <div class="w-[400px] bg-slate-950 p-8 rounded-3xl border border-slate-700">

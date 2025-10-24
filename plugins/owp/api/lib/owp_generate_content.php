@@ -1,13 +1,14 @@
 <?php
 
-function owp_generate_content( $body ) {
+function owp_generate_content( $body, $authorization_header ) {
   //receives an associative array with blank fields to let AI fill them up
   $response = wp_remote_post(
     'https://obsidian-content-generator-313065021854.us-east1.run.app',
     array(
       'timeout' => 60,
       'headers' => array(
-        'Content-Type' => 'application/json; chartset=utf-8'
+        'Content-Type' => 'application/json; chartset=utf-8',
+        'Authorization' => $authorization_header
       ),
       'body' => json_encode($body)
     )

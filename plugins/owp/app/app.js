@@ -256,5 +256,7 @@ class OwpSessionManager {
 
 
 window.owpSessionManager = new OwpSessionManager();
+window.cookieName = 'CqD1plTkmEVPayc0GvR4qQ';
 customElements.define('owp-app', OwpApp);
+
 
