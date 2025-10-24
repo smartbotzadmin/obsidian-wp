@@ -2,7 +2,9 @@
 applyTo: '**/*.{js,jsx,ts,tsx,py,c,cc,cpp,cs,h,hpp}'
 ---
 
-Be clear, brief and straightforward.
+Be brief, clear, direct and straightforward,
+do only what user request,
+keep it simple and,
 Don't introduce things out of context.
 
 # Principles
@@ -171,6 +173,8 @@ const variable = someFunction();
 const variable = someFunction();
 
 - the only comments allowed are the docstrings.
+
+- no comment over classes or contructors.
 
 - docstrings must be native of the script language.
 Javascript is used as example language, but these rules should be applied to all other languages

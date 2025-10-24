@@ -14,20 +14,20 @@ class MyCustomElement extends HTMLElement {
   constructor() {
     // Always call super first in constructor
     super();
-
-    // grabbing attributes here ...
-    const attr1 = this.getAttribute('attr1') // ready to use
-
-    // NO member registration
-    // this.newMessyMember = 'wrong'
-
-    // component definition
-    this.className = `...`
-    this.innerHtml = /*html*/`<>...</>`
   }
 
   connectedCallback() {
     console.log("Custom element added to page.");
+
+    // grabbing attributes here ...
+    this.attr1 = this.getAttribute('attr1') // ready to use
+
+    // component definition
+    this.className = `...`
+    this.innerHtml = /*html*/`<>
+    <!-- Add comments to important sections in the html -->
+      ...content of the component
+    </>`
 
     // dynamic rendering logic here ...
 
@@ -55,6 +55,30 @@ class MyCustomElement extends HTMLElement {
 
 customElements.define("my-custom-element", MyCustomElement);
 ```
+
+## Docs
+
+```js
+class PopupInfo extends HTMLElement {
+  constructor() {
+    super();
+  }
+  // Element functionality written in here
+}
+```
+
+In the class constructor, you can set up initial state and default values, register event listeners and perhaps create a shadow root. At this point, you should not inspect the element's attributes or children, or add new attributes or children.
+
+Custom element lifecycle callbacks
+Once your custom element is registered, the browser will call certain methods of your class when code in the page interacts with your custom element in certain ways. By providing an implementation of these methods, which the specification calls lifecycle callbacks, you can run code in response to these events.
+
+Custom element lifecycle callbacks include:
+
+- connectedCallback(): Called each time the element is added to the document. The specification recommends that, as far as possible, developers should implement custom element setup in this callback rather than the constructor.
+- disconnectedCallback(): Called each time the element is removed from the document.
+- connectedMoveCallback(): When defined, this is called instead of connectedCallback() and -disconnectedCallback() each time the element is moved to a different place in the DOM via Element.moveBefore(). Use this to avoid running initialization/cleanup code in the connectedCallback() and disconnectedCallback() callbacks when the element is not actually being added to or removed from the DOM. See Lifecycle callbacks and state-preserving moves for more details.
+- adoptedCallback(): Called each time the element is moved to a new document.
+- attributeChangedCallback(): Called when attributes are changed, added, removed, or replaced. See Responding to attribute changes for more details about this callback.
 
 ## Extends
 

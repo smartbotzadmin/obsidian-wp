@@ -10,6 +10,13 @@ class OwpApp extends HTMLElement {
    */
   constructor() {
     super();
+  }
+
+  /**
+   * @description Called when the element is added to the document's DOM.
+   * @returns {void}
+   */
+  connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: 'open' });
 
     shadowRoot.innerHTML = /*html*/`
@@ -28,23 +35,16 @@ class OwpApp extends HTMLElement {
       'contact': 'owp-contact',
       'pictures': 'owp-pictures',
       'design': 'owp-design',
+      'signup': 'owp-signup',
+      'signin': 'owp-signin',
     };
-  }
 
-  /**
-   * @description Called when the element is added to the document's DOM.
-   * @returns {void}
-   */
-  connectedCallback() {
     this.handleRouting();
     window.addEventListener('hashchange', this.handleRouting.bind(this));
     this.shadowRoot.addEventListener('click', this.handleNavigationClick.bind(this));
   }
 
-  /**
-   * @description Handles routing for the Single Page Application (SPA) within the WordPress admin.
-   * @returns {void}
-   */
+
   /**
    * @description Handles routing for the Single Page Application (SPA) within the WordPress admin.
    * If no hash is present or if the hash is not mapped in this.routes, redirects to '#let's-start'.
@@ -61,6 +61,7 @@ class OwpApp extends HTMLElement {
     }
     this.renderPage(currentHash);
   }
+
 
   /**
    * @description Renders the appropriate web component based on the current hash.
@@ -86,6 +87,7 @@ class OwpApp extends HTMLElement {
     }
   }
 
+
   /**
    * @description Handles navigation clicks within the SPA.
    * @param {Event} event The click event.
@@ -100,6 +102,7 @@ class OwpApp extends HTMLElement {
     }
   }
 }
+
 
 /**
  * @class OwpSessionManager
@@ -142,6 +145,7 @@ class OwpSessionManager {
     }
   };
 
+
   /**
    * @description Constructs the OwpSessionManager instance.
    * Initializes the payload from sessionStorage or sets a default.
@@ -150,6 +154,7 @@ class OwpSessionManager {
   constructor() {
     this.#initializePayload();
   }
+
 
   /**
    * @private
@@ -173,6 +178,7 @@ class OwpSessionManager {
     }
   }
 
+
   /**
    * @description Retrieves the current owp_payload from sessionStorage.
    * @returns {Object} The current owp_payload.
@@ -187,6 +193,7 @@ class OwpSessionManager {
     }
   }
 
+
   /**
    * @description Sets the entire owp_payload in sessionStorage.
    * @param {Object} payload - The new payload object to save.
@@ -199,6 +206,7 @@ class OwpSessionManager {
       console.error('Error saving owp_payload to sessionStorage:', error);
     }
   }
+
 
   /**
    * @description Updates a specific section of the owp_payload.
