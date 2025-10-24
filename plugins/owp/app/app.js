@@ -10,22 +10,28 @@ class OwpApp extends HTMLElement {
    */
   constructor() {
     super();
+    this._isAuthChecking = false;
+    this._loaderElement = null;
   }
 
   /**
    * @description Called when the element is added to the document's DOM.
    * @returns {void}
    */
-  connectedCallback() {
+  async connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: 'open' });
 
     shadowRoot.innerHTML = /*html*/`
       <link rel="stylesheet" href="/wp-content/plugins/owp/assets/css/output.css">
       <img class="absolute -z-2 object-cover h-full w-full" src="/wp-content/plugins/owp/assets/icons/obsidian-background.webp"/>
       <div class="absolute -z-1 w-full h-full bg-slate-900 opacity-50"></div>
+      <div id="loader" class="fixed inset-0 bg-black/70 flex justify-center items-center z-[1000] hidden">
+        <img src="/wp-content/plugins/owp/assets/icons/loader.svg" class="animate-spin h-24 w-24" alt="Loading"/>
+      </div>
       <owp-topbar></owp-topbar>
     `;
 
+    this._loaderElement = shadowRoot.querySelector('#loader');
     document.querySelector('#wpfooter').remove();
 
     this.routes = {
@@ -39,9 +45,82 @@ class OwpApp extends HTMLElement {
       'signin': 'owp-signin',
     };
 
-    this.handleRouting();
-    window.addEventListener('hashchange', this.handleRouting.bind(this));
+    await this._performAuthCheckAndRoute();
+    window.addEventListener('hashchange', this._performAuthCheckAndRoute.bind(this));
     this.shadowRoot.addEventListener('click', this.handleNavigationClick.bind(this));
+  }
+
+
+  /**
+   * @private
+   * @description Performs authentication check and routes accordingly.
+   * @returns {void}
+   */
+  async _performAuthCheckAndRoute() {
+    const currentHash = window.location.hash.substring(1);
+    const authRequiredPages = ['start', 'describe', 'pictures', 'design', 'contact'];
+    const isAuthRequiredPage = authRequiredPages.includes(currentHash);
+    const isAuthPage = currentHash === 'signin' || currentHash === 'signup';
+
+    if (isAuthRequiredPage) {
+      this._loaderElement.classList.remove('hidden');
+      const isValidToken = await this._checkAuthToken();
+      this._loaderElement.classList.add('hidden');
+
+      if (isValidToken) {
+        this.handleRouting();
+      } else {
+        window.location.hash = 'signin';
+      }
+    } else if (isAuthPage) {
+      // If on signin/signup page, and a token exists, redirect to start
+      const token = localStorage.getItem(window.cookieName);
+      if (token) {
+        this._loaderElement.classList.remove('hidden');
+        const isValidToken = await this._checkAuthToken();
+        this._loaderElement.classList.add('hidden');
+        if (isValidToken) {
+          window.location.hash = 'start';
+        } else {
+          this.handleRouting(); // Stay on signin/signup if token invalid
+        }
+      } else {
+        this.handleRouting(); // No token, stay on signin/signup
+      }
+    } else {
+      this.handleRouting(); // For other pages not requiring auth, just route
+    }
+  }
+
+
+  /**
+   * @private
+   * @description Checks if the authentication token is valid.
+   * @returns {Promise<boolean>} True if the token is valid, false otherwise.
+   */
+  async _checkAuthToken() {
+    this._isAuthChecking = true;
+    const token = localStorage.getItem(window.cookieName);
+    if (!token) {
+      this._isAuthChecking = false;
+      return false;
+    }
+
+    try {
+      const response = await fetch('https://obsidian-validate-313065021854.us-east1.run.app', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      this._isAuthChecking = false;
+      return response.ok; // Returns true for 200 status, false otherwise
+    } catch (error) {
+      console.error('Authentication check failed:', error);
+      this._isAuthChecking = false;
+      return false;
+    }
   }
 
 
@@ -51,6 +130,10 @@ class OwpApp extends HTMLElement {
    * @returns {void}
    */
   handleRouting() {
+    if (this._isAuthChecking) {
+      return;
+    }
+
     const currentHash = window.location.hash.substring(1);
     const defaultHash = 'start';
     const baseUrl = window.location.origin + window.location.pathname + window.location.search;

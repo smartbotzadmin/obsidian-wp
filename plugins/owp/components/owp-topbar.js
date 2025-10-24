@@ -20,7 +20,7 @@ class OwpTopbar extends HTMLElement {
 	 * @returns {Array<string>} The observed attributes.
 	 */
 	static get observedAttributes() {
-		return ['current-page'];
+	 return ['current-page', 'hide-steps'];
 	}
 
 
@@ -49,7 +49,7 @@ class OwpTopbar extends HTMLElement {
 		this.navElement = this.querySelector('#step-navigation');
 		this.boundHandleHashChange = this.#handleHashChange.bind(this);
 
-		// Set initial current-page based on hash, which will trigger updateStepsHighlighting via attributeChangedCallback
+		// Set initial current-page and hide-steps based on hash, which will trigger attributeChangedCallback
 		this.boundHandleHashChange();
 		window.addEventListener('hashchange', this.boundHandleHashChange);
 	}
@@ -74,6 +74,10 @@ class OwpTopbar extends HTMLElement {
 	attributeChangedCallback(name, oldVal, newVal) {
 		if (name === 'current-page' && oldVal !== newVal) {
 			this.#updateStepsHighlighting(newVal);
+		} else if (name === 'hide-steps') {
+			if (this.navElement) {
+				this.navElement.style.display = this.hasAttribute('hide-steps') ? 'none' : 'flex';
+			}
 		}
 	}
 
@@ -85,6 +89,14 @@ class OwpTopbar extends HTMLElement {
 	 */
 	#handleHashChange() {
 		const currentHash = window.location.hash.substring(1); // Remove '#'
+		const hideSteps = ['signin', 'signup'].includes(currentHash);
+
+		if (hideSteps) {
+			this.setAttribute('hide-steps', '');
+		} else {
+			this.removeAttribute('hide-steps');
+		}
+
 		const currentPage = this.steps.find(step => step.name.toLowerCase().replace(/\s/g, '-') === currentHash)?.page;
 		if (currentPage) {
 			this.setAttribute('current-page', currentPage);
