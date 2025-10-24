@@ -173,10 +173,14 @@ class OwpPicturesGrid extends HTMLElement {
     this.currentQuery = query; // Update current query
 
     let url = `https://unsplash-images-313065021854.us-east1.run.app?query=${query}&per_page=${this.perPage}&page=${page}`;
+    const token = localStorage.getItem(window.cookieName);
 
     try {
       const response = await fetch(url, {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
       const data = await response.json();
 
@@ -373,10 +377,14 @@ class OwpPicturesGrid extends HTMLElement {
     // 3. Fetch from API if neither of the above
     this.loadingSpinner.classList.remove('hidden'); // Show loader for default images
     let url = `https://unsplash-images-313065021854.us-east1.run.app?query=${defaultQuery}&per_page=${this.perPage}&page=1`;
+    const token = localStorage.getItem(window.cookieName);
 
     try {
       const response = await fetch(url, {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
       const data = await response.json();
 

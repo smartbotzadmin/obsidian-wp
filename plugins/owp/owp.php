@@ -181,7 +181,6 @@ add_action( 'enqueue_block_editor_assets', 'owp_enqueue_components' );
 
 /**
  * Register plugin API endpoints
-
 * @return void
 */
 function register_api_endpoints() {

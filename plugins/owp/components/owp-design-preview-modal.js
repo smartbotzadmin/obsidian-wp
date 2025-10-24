@@ -578,9 +578,13 @@ class OwpDesignPreviewModal extends HTMLElement {
 	this.creatingPageLoader.classList.remove('hidden');
 	this.creatingPageSuccess.classList.add('hidden');
 
+	const token = localStorage.getItem(window.cookieName);
 	fetch('/wp-json/owp/api/page', {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${token}`
+		},
 		body: JSON.stringify(window.owpSessionManager.getPayload())
 	})
 		.then((res) => res.json())

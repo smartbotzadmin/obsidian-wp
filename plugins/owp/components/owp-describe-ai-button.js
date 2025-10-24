@@ -52,10 +52,12 @@ class OwpDescribeAiButton extends HTMLElement {
             const payload = window.owpSessionManager.getPayload();
             const { name, business, language } = payload.start;
 
+            const token = localStorage.getItem(window.cookieName);
             const response = await fetch('https://obsidian-describe-generator-313065021854.us-east1.run.app', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ name, business, language: language.toUpperCase() }),
             });
