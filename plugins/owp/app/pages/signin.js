@@ -69,9 +69,29 @@ class OwpSignin extends HTMLElement {
           <div id="signinMessage" class="h-5"></div>
 
         </form>
+
+        <div class="relative py-4">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-slate-700"></div>
+          </div>
+          <div class="relative flex justify-center">
+            <span class="bg-slate-950 px-4 text-sm text-slate-400">
+              Or
+            </span>
+          </div>
+        </div>
+
+        <button id="googleSigninButton" class="w-full h-11 bg-transparent hover:bg-slate-900 border border-slate-700 text-white font-semibold text-md py-2 px-4 flex justify-center items-center gap-2 rounded-xl focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out cursor-pointer">
+          <img src="/wp-content/plugins/owp/assets/icons/google-icon.svg" class="w-5 h-5" />
+          Sign in with Google
+        </button>
       </div>
     `;
     this.querySelector("#signinForm").addEventListener("submit", this.#handleSignin.bind(this));
+    this.querySelector("#googleSigninButton").addEventListener(
+      "click",
+      this.#handleGoogleSignin.bind(this),
+    );
   }
 
   /**
@@ -80,6 +100,10 @@ class OwpSignin extends HTMLElement {
    */
   disconnectedCallback() {
     this.querySelector("#signinForm").removeEventListener("submit", this.#handleSignin.bind(this));
+    this.querySelector("#googleSigninButton").removeEventListener(
+      "click",
+      this.#handleGoogleSignin.bind(this),
+    );
   }
 
   /**
@@ -129,6 +153,25 @@ class OwpSignin extends HTMLElement {
       messageElement.className = "h-5 text-center text-sm font-medium text-red-500";
       signinButton.innerHTML = /*html*/ `Sign In`;
     }
+  }
+
+  /**
+   * @private
+   * @description Handles the Google sign-in process.
+   * @returns {void}
+   */
+  #handleGoogleSignin() {
+    const width = 600;
+    const height = 600;
+    const left = window.screenX + (window.innerWidth - width) / 2;
+    const top = window.screenY + (window.innerHeight - height) / 2;
+    const url = "https://obsidian-google-oauth-authorization-313065021854.us-east1.run.app";
+
+    window.open(
+      url,
+      "google-signin",
+      `popup,width=${width},height=${height},left=${left},top=${top}`,
+    );
   }
 }
 
