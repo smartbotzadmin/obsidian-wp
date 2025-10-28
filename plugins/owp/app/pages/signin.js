@@ -18,14 +18,14 @@ class OwpSignin extends HTMLElement {
    */
   connectedCallback() {
     this.className = `flex justify-center items-center h-screen`;
-    this.innerHTML = /*html*/`
+    this.innerHTML = /*html*/ `
       <div class="w-[500px] bg-slate-950 p-8 flex flex-col rounded-3xl border border-slate-700">
         <h2 class="text-3xl font-bold mb-10 text-slate-100 text-center">
           Sign In
         </h2>
-        
+
         <form id="signinForm" class="flex flex-col gap-2">
-          
+
           <label for="login" class="text-slate-300 text-sm font-semibold">
             Email or Username
           </label>
@@ -38,7 +38,7 @@ class OwpSignin extends HTMLElement {
             required
             autocomplete="username"
           >
-          
+
           <label for="password" class="text-slate-300 text-sm font-semibold">
             Password
           </label>
@@ -71,7 +71,7 @@ class OwpSignin extends HTMLElement {
         </form>
       </div>
     `;
-    this.querySelector('#signinForm').addEventListener('submit', this.#handleSignin.bind(this));
+    this.querySelector("#signinForm").addEventListener("submit", this.#handleSignin.bind(this));
   }
 
   /**
@@ -79,7 +79,7 @@ class OwpSignin extends HTMLElement {
    * @returns {void}
    */
   disconnectedCallback() {
-    this.querySelector('#signinForm').removeEventListener('submit', this.#handleSignin.bind(this));
+    this.querySelector("#signinForm").removeEventListener("submit", this.#handleSignin.bind(this));
   }
 
   /**
@@ -90,20 +90,20 @@ class OwpSignin extends HTMLElement {
    */
   async #handleSignin(event) {
     event.preventDefault();
-    const login = this.querySelector('#login').value;
-    const password = this.querySelector('#password').value;
-    const messageElement = this.querySelector('#signinMessage');
-    const signinButton = this.querySelector('#signinButton');
+    const login = this.querySelector("#login").value;
+    const password = this.querySelector("#password").value;
+    const messageElement = this.querySelector("#signinMessage");
+    const signinButton = this.querySelector("#signinButton");
 
-    signinButton.innerHTML = /*html*/`
+    signinButton.innerHTML = /*html*/ `
       <img src="/wp-content/plugins/owp/assets/icons/loader.svg" class="animate-spin" />
     `;
 
     try {
-      const response = await fetch('https://obsidian-signin-313065021854.us-east1.run.app', {
-        method: 'POST',
+      const response = await fetch("https://obsidian-signin-313065021854.us-east1.run.app", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ login, password }),
       });
@@ -112,24 +112,24 @@ class OwpSignin extends HTMLElement {
 
       if (response.ok) {
         localStorage.setItem(window.cookieName, data.token);
-        messageElement.textContent = 'Signed in successfully!';
-        messageElement.className = 'h-5 text-center text-sm font-medium text-green-500';
+        messageElement.textContent = "Signed in successfully!";
+        messageElement.className = "h-5 text-center text-sm font-medium text-green-500";
         setTimeout(() => {
-          window.location.hash = "start"
-          signinButton.innerHTML = /*html*/`Sign In`;
-        }, 1000)
+          window.location.hash = "start";
+          signinButton.innerHTML = /*html*/ `Sign In`;
+        }, 1000);
       } else {
         messageElement.textContent = data.error || data;
-        messageElement.className = 'h-5 text-center text-sm font-medium text-red-500';
-        signinButton.innerHTML = /*html*/`Sign In`;
+        messageElement.className = "h-5 text-center text-sm font-medium text-red-500";
+        signinButton.innerHTML = /*html*/ `Sign In`;
       }
     } catch (error) {
-      console.error('Signin Error:', error);
-      messageElement.textContent = 'An unexpected error occurred.';
-      messageElement.className = 'h-5 text-center text-sm font-medium text-red-500';
-      signinButton.innerHTML = /*html*/`Sign In`;
+      console.error("Signin Error:", error);
+      messageElement.textContent = "An unexpected error occurred.";
+      messageElement.className = "h-5 text-center text-sm font-medium text-red-500";
+      signinButton.innerHTML = /*html*/ `Sign In`;
     }
   }
 }
 
-customElements.define('owp-signin', OwpSignin);
+customElements.define("owp-signin", OwpSignin);
