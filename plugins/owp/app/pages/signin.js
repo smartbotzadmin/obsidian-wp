@@ -4,6 +4,8 @@
  * @description Web component for the signin page.
  */
 class OwpSignin extends HTMLElement {
+  #boundGoogleHandler = null;
+
   /**
    * @description Constructs the OwpSignin instance.
    * @returns {void}
@@ -81,16 +83,13 @@ class OwpSignin extends HTMLElement {
           </div>
         </div>
 
-        <button id="googleSigninButton" class="w-full h-11 bg-transparent hover:bg-slate-900 border border-slate-700 text-white font-semibold text-md py-2 px-4 flex justify-center items-center gap-2 rounded-xl focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out cursor-pointer">
-          <img src="/wp-content/plugins/owp/assets/icons/google-icon.svg" class="w-5 h-5" />
-          Sign in with Google
-        </button>
+        <owp-google-signin></owp-google-signin>
       </div>
     `;
     this.querySelector("#signinForm").addEventListener("submit", this.#handleSignin.bind(this));
-    this.querySelector("#googleSigninButton").addEventListener(
-      "click",
-      this.#handleGoogleSignin.bind(this),
+    this.querySelector("owp-google-signin").addEventListener(
+      "google-signin-result",
+      this.#handleGoogleSigninResult.bind(this),
     );
   }
 
@@ -100,9 +99,9 @@ class OwpSignin extends HTMLElement {
    */
   disconnectedCallback() {
     this.querySelector("#signinForm").removeEventListener("submit", this.#handleSignin.bind(this));
-    this.querySelector("#googleSigninButton").removeEventListener(
-      "click",
-      this.#handleGoogleSignin.bind(this),
+    this.querySelector("owp-google-signin").removeEventListener(
+      "google-signin-result",
+      this.#handleGoogleSigninResult.bind(this),
     );
   }
 
@@ -137,41 +136,44 @@ class OwpSignin extends HTMLElement {
       if (response.ok) {
         localStorage.setItem(window.cookieName, data.token);
         messageElement.textContent = "Signed in successfully!";
-        messageElement.className = "h-5 text-center text-sm font-medium text-green-500";
+        messageElement.className = "h-5 text-center text-sm font-semibold text-green-500";
         setTimeout(() => {
           window.location.hash = "start";
           signinButton.innerHTML = /*html*/ `Sign In`;
         }, 1000);
       } else {
         messageElement.textContent = data.error || data;
-        messageElement.className = "h-5 text-center text-sm font-medium text-red-500";
+        messageElement.className = "h-5 text-center text-sm font-semibold text-red-500";
         signinButton.innerHTML = /*html*/ `Sign In`;
       }
     } catch (error) {
       console.error("Signin Error:", error);
       messageElement.textContent = "An unexpected error occurred.";
-      messageElement.className = "h-5 text-center text-sm font-medium text-red-500";
+      messageElement.className = "h-5 text-center text-sm font-semibold text-red-500";
       signinButton.innerHTML = /*html*/ `Sign In`;
     }
   }
 
   /**
    * @private
-   * @description Handles the Google sign-in process.
+   * @description Handles the result from the Google Sign-in component.
+   * @param {CustomEvent} event - The event carrying the result status.
    * @returns {void}
    */
-  #handleGoogleSignin() {
-    const width = 600;
-    const height = 600;
-    const left = window.screenX + (window.innerWidth - width) / 2;
-    const top = window.screenY + (window.innerHeight - height) / 2;
-    const url = "https://obsidian-google-oauth-authorization-313065021854.us-east1.run.app";
+  #handleGoogleSigninResult(event) {
+    const messageElement = this.querySelector("#signinMessage");
 
-    window.open(
-      url,
-      "google-signin",
-      `popup,width=${width},height=${height},left=${left},top=${top}`,
-    );
+    if (event.detail.status === "success" && event.detail.token) {
+      localStorage.setItem(window.cookieName, event.detail.token);
+      messageElement.textContent = "Signed in successfully!";
+      messageElement.className = "h-5 text-center text-sm font-semibold text-green-500";
+      setTimeout(() => {
+        window.location.hash = "start";
+      }, 1000);
+    } else {
+      messageElement.textContent = "Google sign-in failed. Please try again.";
+      messageElement.className = "h-5 text-center text-sm font-semibold text-red-500";
+    }
   }
 }
 

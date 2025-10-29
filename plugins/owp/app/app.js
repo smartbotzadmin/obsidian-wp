@@ -19,9 +19,9 @@ class OwpApp extends HTMLElement {
    * @returns {void}
    */
   async connectedCallback() {
-    const shadowRoot = this.attachShadow({ mode: 'open' });
+    const shadowRoot = this.attachShadow({ mode: "open" });
 
-    shadowRoot.innerHTML = /*html*/`
+    shadowRoot.innerHTML = /*html*/ `
       <link rel="stylesheet" href="/wp-content/plugins/owp/assets/css/output.css">
       <img class="absolute -z-2 object-cover h-full w-full" src="/wp-content/plugins/owp/assets/icons/obsidian-background.webp"/>
       <div class="absolute -z-1 w-full h-full bg-slate-900 opacity-50"></div>
@@ -31,25 +31,25 @@ class OwpApp extends HTMLElement {
       <owp-topbar></owp-topbar>
     `;
 
-    this._loaderElement = shadowRoot.querySelector('#loader');
-    document.querySelector('#wpfooter').remove();
+    this._loaderElement = shadowRoot.querySelector("#loader");
+    document.querySelector("#wpfooter").remove();
 
     this.routes = {
-      '': 'owp-start',
-      'start': 'owp-start',
-      'describe': 'owp-describe',
-      'contact': 'owp-contact',
-      'pictures': 'owp-pictures',
-      'design': 'owp-design',
-      'signup': 'owp-signup',
-      'signin': 'owp-signin',
+      "": "owp-start",
+      start: "owp-start",
+      describe: "owp-describe",
+      contact: "owp-contact",
+      pictures: "owp-pictures",
+      design: "owp-design",
+      signup: "owp-signup",
+      signin: "owp-signin",
+      "google-signin-redirect": "owp-google-signin-redirect",
     };
 
     await this._performAuthCheckAndRoute();
-    window.addEventListener('hashchange', this._performAuthCheckAndRoute.bind(this));
-    this.shadowRoot.addEventListener('click', this.handleNavigationClick.bind(this));
+    window.addEventListener("hashchange", this._performAuthCheckAndRoute.bind(this));
+    this.shadowRoot.addEventListener("click", this.handleNavigationClick.bind(this));
   }
-
 
   /**
    * @private
@@ -57,30 +57,32 @@ class OwpApp extends HTMLElement {
    * @returns {void}
    */
   async _performAuthCheckAndRoute() {
-    const currentHash = window.location.hash.substring(1);
-    const authRequiredPages = ['start', 'describe', 'pictures', 'design', 'contact'];
+    const fullHash = window.location.hash.substring(1);
+    const [currentHash] = fullHash.split("?");
+    const authRequiredPages = ["start", "describe", "pictures", "design", "contact"];
     const isAuthRequiredPage = authRequiredPages.includes(currentHash);
-    const isAuthPage = currentHash === 'signin' || currentHash === 'signup';
+    const isAuthPage = currentHash === "signin" || currentHash === "signup";
 
     if (isAuthRequiredPage) {
-      this._loaderElement.classList.remove('hidden');
+      this._loaderElement.classList.remove("hidden");
       const isValidToken = await this._checkAuthToken();
-      this._loaderElement.classList.add('hidden');
+      this._loaderElement.classList.add("hidden");
 
       if (isValidToken) {
         this.handleRouting();
       } else {
-        window.location.hash = 'signin';
+        window.location.hash = "signin";
+        localStorage.removeItem(window.cookieName);
       }
     } else if (isAuthPage) {
       // If on signin/signup page, and a token exists, redirect to start
       const token = localStorage.getItem(window.cookieName);
       if (token) {
-        this._loaderElement.classList.remove('hidden');
+        this._loaderElement.classList.remove("hidden");
         const isValidToken = await this._checkAuthToken();
-        this._loaderElement.classList.add('hidden');
+        this._loaderElement.classList.add("hidden");
         if (isValidToken) {
-          window.location.hash = 'start';
+          window.location.hash = "start";
         } else {
           this.handleRouting(); // Stay on signin/signup if token invalid
         }
@@ -91,7 +93,6 @@ class OwpApp extends HTMLElement {
       this.handleRouting(); // For other pages not requiring auth, just route
     }
   }
-
 
   /**
    * @private
@@ -107,22 +108,21 @@ class OwpApp extends HTMLElement {
     }
 
     try {
-      const response = await fetch('https://obsidian-validate-313065021854.us-east1.run.app', {
-        method: 'GET',
+      const response = await fetch("https://obsidian-validate-313065021854.us-east1.run.app", {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
       this._isAuthChecking = false;
       return response.ok; // Returns true for 200 status, false otherwise
     } catch (error) {
-      console.error('Authentication check failed:', error);
+      console.error("Authentication check failed:", error);
       this._isAuthChecking = false;
       return false;
     }
   }
-
 
   /**
    * @description Handles routing for the Single Page Application (SPA) within the WordPress admin.
@@ -130,12 +130,15 @@ class OwpApp extends HTMLElement {
    * @returns {void}
    */
   handleRouting() {
+    new Promise((resolve) => setTimeout(resolve, 5000));
     if (this._isAuthChecking) {
       return;
     }
+    new Promise((resolve) => setTimeout(resolve, 5000));
 
-    const currentHash = window.location.hash.substring(1);
-    const defaultHash = 'start';
+    const fullHash = window.location.hash.substring(1);
+    const [currentHash] = fullHash.split("?");
+    const defaultHash = "start";
     const baseUrl = window.location.origin + window.location.pathname + window.location.search;
 
     if (!currentHash || !this.routes[currentHash]) {
@@ -145,31 +148,29 @@ class OwpApp extends HTMLElement {
     this.renderPage(currentHash);
   }
 
-
   /**
    * @description Renders the appropriate web component based on the current hash.
    * @param {string} path The path from the URL hash.
    * @returns {void}
    */
   renderPage(path) {
-    const tagName = this.routes[path] || this.routes[''];
-    const currentPage = this.shadowRoot.querySelector('#page');
+    const tagName = this.routes[path] || this.routes[""];
+    const currentPage = this.shadowRoot.querySelector("#page");
     if (currentPage) {
       currentPage.remove();
     }
 
     if (tagName) {
       const page = document.createElement(tagName);
-      page.id = 'page';
+      page.id = "page";
       this.shadowRoot.appendChild(page);
     } else {
-      const notFoundElement = document.createElement('p');
-      notFoundElement.id = 'page';
-      notFoundElement.textContent = 'Page not found.';
+      const notFoundElement = document.createElement("p");
+      notFoundElement.id = "page";
+      notFoundElement.textContent = "Page not found.";
       this.shadowRoot.appendChild(notFoundElement);
     }
   }
-
 
   /**
    * @description Handles navigation clicks within the SPA.
@@ -178,14 +179,13 @@ class OwpApp extends HTMLElement {
    */
   handleNavigationClick(event) {
     const target = event.target;
-    if (target.matches('[data-owp-navigate]')) {
+    if (target.matches("[data-owp-navigate]")) {
       event.preventDefault();
-      const page = target.getAttribute('data-owp-navigate');
+      const page = target.getAttribute("data-owp-navigate");
       window.location.hash = page;
     }
   }
 }
-
 
 /**
  * @class OwpSessionManager
@@ -197,7 +197,7 @@ class OwpSessionManager {
    * @type {string}
    * @description The key for the sessionStorage variable.
    */
-  #payloadKey = 'owp_payload';
+  #payloadKey = "owp_payload";
 
   /**
    * @private
@@ -208,26 +208,25 @@ class OwpSessionManager {
     start: {
       name: null,
       business: null,
-      language: null
+      language: null,
     },
     describe: null,
     contact: {
       email: null,
       address: null,
-      phone: null
+      phone: null,
     },
     pictures: {
       selected: [],
       default: [],
-      merge: []
+      merge: [],
     },
     design: {
       template: null,
       font: null,
-      palette: null
-    }
+      palette: null,
+    },
   };
-
 
   /**
    * @description Constructs the OwpSessionManager instance.
@@ -237,7 +236,6 @@ class OwpSessionManager {
   constructor() {
     this.#initializePayload();
   }
-
 
   /**
    * @private
@@ -256,11 +254,10 @@ class OwpSessionManager {
         this.setPayload(this.#defaultPayload);
       }
     } catch (error) {
-      console.error('Error parsing owp_payload from sessionStorage, resetting:', error);
+      console.error("Error parsing owp_payload from sessionStorage, resetting:", error);
       this.setPayload(this.#defaultPayload);
     }
   }
-
 
   /**
    * @description Retrieves the current owp_payload from sessionStorage.
@@ -271,11 +268,10 @@ class OwpSessionManager {
       const storedPayload = sessionStorage.getItem(this.#payloadKey);
       return storedPayload ? JSON.parse(storedPayload) : this.#defaultPayload;
     } catch (error) {
-      console.error('Error retrieving owp_payload from sessionStorage:', error);
+      console.error("Error retrieving owp_payload from sessionStorage:", error);
       return this.#defaultPayload;
     }
   }
-
 
   /**
    * @description Sets the entire owp_payload in sessionStorage.
@@ -286,10 +282,9 @@ class OwpSessionManager {
     try {
       sessionStorage.setItem(this.#payloadKey, JSON.stringify(payload));
     } catch (error) {
-      console.error('Error saving owp_payload to sessionStorage:', error);
+      console.error("Error saving owp_payload to sessionStorage:", error);
     }
   }
-
 
   /**
    * @description Updates a specific section of the owp_payload.
@@ -303,43 +298,42 @@ class OwpSessionManager {
     this.setPayload(currentPayload);
   }
 
-
   checkPayloadStatus() {
-    const currentPayload = window.owpSessionManager.getPayload()
-    const statusPayload = {}
+    const currentPayload = window.owpSessionManager.getPayload();
+    const statusPayload = {};
 
-    statusPayload.start = (
-      currentPayload.start.name === null
-      || currentPayload.start.business === null
-      || currentPayload.start.language === null
-    ) ? false : true;
+    statusPayload.start =
+      currentPayload.start.name === null ||
+      currentPayload.start.business === null ||
+      currentPayload.start.language === null
+        ? false
+        : true;
 
-    statusPayload.describe = (currentPayload.describe === null) ? false : true;
+    statusPayload.describe = currentPayload.describe === null ? false : true;
 
-    statusPayload.contact = (
-      currentPayload.contact.email === null
-      || currentPayload.contact.address === null
-      || currentPayload.contact.phone === null
-    ) ? false : true;
+    statusPayload.contact =
+      currentPayload.contact.email === null ||
+      currentPayload.contact.address === null ||
+      currentPayload.contact.phone === null
+        ? false
+        : true;
 
-    statusPayload.pictures = (
-      currentPayload.pictures.default.length === 0
-      || currentPayload.pictures.selected.length === 0
-    ) ? false : true;
+    statusPayload.pictures =
+      currentPayload.pictures.default.length === 0 || currentPayload.pictures.selected.length === 0
+        ? false
+        : true;
 
-    statusPayload.design = (
-      currentPayload.design.template === null
-      || currentPayload.design.font === null
-      || currentPayload.design.palette === null
-    ) ? false : true;
+    statusPayload.design =
+      currentPayload.design.template === null ||
+      currentPayload.design.font === null ||
+      currentPayload.design.palette === null
+        ? false
+        : true;
 
-    return statusPayload
+    return statusPayload;
   }
 }
 
-
 window.owpSessionManager = new OwpSessionManager();
-window.cookieName = 'CqD1plTkmEVPayc0GvR4qQ';
-customElements.define('owp-app', OwpApp);
-
-
+window.cookieName = "CqD1plTkmEVPayc0GvR4qQ";
+customElements.define("owp-app", OwpApp);
