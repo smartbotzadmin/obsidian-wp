@@ -12,6 +12,7 @@ class OwpApp extends HTMLElement {
     super();
     this._isAuthChecking = false;
     this._loaderElement = null;
+    this._planSelector = null;
   }
 
   /**
@@ -29,9 +30,11 @@ class OwpApp extends HTMLElement {
         <img src="/wp-content/plugins/owp/assets/icons/loader.svg" class="animate-spin h-24 w-24" alt="Loading"/>
       </div>
       <owp-topbar></owp-topbar>
+      <owp-plan-selector></owp-plan-selector>
     `;
 
     this._loaderElement = shadowRoot.querySelector("#loader");
+    this._planSelector = shadowRoot.querySelector("owp-plan-selector");
     document.querySelector("#wpfooter").remove();
 
     this.routes = {
@@ -115,6 +118,14 @@ class OwpApp extends HTMLElement {
           "Content-Type": "application/json",
         },
       });
+
+      if (response.status === 402) {
+        this._ensurePlanSelectorExists();
+        this._planSelector.show();
+        this._isAuthChecking = false;
+        return true;
+      }
+
       this._isAuthChecking = false;
       return response.ok; // Returns true for 200 status, false otherwise
     } catch (error) {
@@ -183,6 +194,20 @@ class OwpApp extends HTMLElement {
       event.preventDefault();
       const page = target.getAttribute("data-owp-navigate");
       window.location.hash = page;
+    }
+  }
+
+  /**
+   * @private
+   * @description Ensures the plan selector modal exists in the shadow DOM.
+   * If it has been removed, it will be re-created and appended.
+   * @returns {void}
+   */
+  _ensurePlanSelectorExists() {
+    if (!this.shadowRoot.querySelector("owp-plan-selector")) {
+      const planSelector = document.createElement("owp-plan-selector");
+      this.shadowRoot.appendChild(planSelector);
+      this._planSelector = planSelector;
     }
   }
 }
