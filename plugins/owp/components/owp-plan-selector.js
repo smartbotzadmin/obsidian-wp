@@ -142,14 +142,56 @@ class OwpPlanSelector extends HTMLElement {
    * @param {Event} event - The click event.
    * @returns {void}
    */
-  _handlePlanSelection(event) {
+  async _handlePlanSelection(event) {
     const button = event.target.closest("button[data-plan-id]");
     if (!button || button.disabled) return;
 
     const planId = button.dataset.planId;
     if (planId === "pro") {
-      // Placeholder for payment logic
-      console.log("Pro plan selected. Redirecting to payment...");
+      const originalButtonText = button.textContent;
+      button.disabled = true;
+      button.textContent = "Redirecting...";
+
+      const token = localStorage.getItem(window.cookieName);
+      if (!token) {
+        window.location.hash = "signin";
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          "https://obsidian-stripe-checkout-313065021854.us-east1.run.app",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              origin: window.location.href.split("#")[0],
+            }),
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to create checkout session");
+        }
+
+        const data = await response.json();
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else if (data.status === "active") {
+          this.hide();
+        } else {
+          button.disabled = false;
+          button.textContent = originalButtonText;
+        }
+      } catch (error) {
+        console.error("Error creating Stripe checkout session:", error);
+        button.disabled = false;
+        button.textContent = originalButtonText;
+      }
     } else if (planId === "business") {
       this.hide();
       window.location.hash = "contact";
