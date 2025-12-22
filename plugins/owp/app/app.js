@@ -35,7 +35,8 @@ class OwpApp extends HTMLElement {
 
     this._loaderElement = shadowRoot.querySelector("#loader");
     this._planSelector = shadowRoot.querySelector("owp-plan-selector");
-    document.querySelector("#wpfooter").remove();
+    document.querySelector("#wpfooter")?.remove();
+    document.querySelector(".notice.notice-warning.update-nag.inline")?.remove();
 
     this.routes = {
       "": "owp-start",
