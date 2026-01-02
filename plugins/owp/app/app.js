@@ -37,6 +37,7 @@ class OwpApp extends HTMLElement {
     this._planSelector = shadowRoot.querySelector("owp-plan-selector");
     document.querySelector("#wpfooter")?.remove();
     document.querySelector(".notice.notice-warning.update-nag.inline")?.remove();
+    document.querySelector("astra-sites-on-active")?.remove();
 
     this.routes = {
       "": "owp-start",
