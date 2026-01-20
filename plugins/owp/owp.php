@@ -64,7 +64,7 @@ add_action("admin_menu", "owp_add_admin_pages");
 function owp_handle_pages_menu_redirect()
 {
   if (is_admin() && isset($_GET["page"]) && "owp-start-redirect" === $_GET["page"]) {
-    wp_redirect(admin_url("admin.php?page=owp-app"));
+    wp_safe_redirect(admin_url("admin.php?page=owp-app"));
     exit();
   }
 }
