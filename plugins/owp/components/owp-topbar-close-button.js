@@ -4,25 +4,24 @@
  * @description Web component for the close button and dropdown menu in the top bar.
  */
 class OwpTopbarCloseButton extends HTMLElement {
-	crossButton = null;
-	dropdownContent = null;
-	cancelButton = null;
-	boundHandleOutsideClick = null;
+  crossButton = null;
+  dropdownContent = null;
+  cancelButton = null;
+  boundHandleOutsideClick = null;
 
+  /**
+   * @description Constructs the OwpTopBarCloseButton instance.
+   * @returns {void}
+   */
+  constructor() {
+    super();
+    this.classList = `relative w-40 flex justify-end items-center`;
+    this.innerHTML = /*html*/ `
 
-	/**
-	 * @description Constructs the OwpTopBarCloseButton instance.
-	 * @returns {void}
-	 */
-	constructor() {
-		super();
-		this.classList = `relative w-40 flex justify-end items-center`
-		this.innerHTML = /*html*/`
-			
 			<div id="crossButton" class="relative flex justify-center items-center size-10 bg-gray-800 hover:bg-gray-900 rounded-full transition-all cursor-pointer">
 				<div class="focus:outline-none cursor-pointer">
 					<img
-						src="/wp-content/plugins/owp/assets/icons/x.svg"
+						src="${owp_vars.plugin_url}assets/icons/x.svg"
 						alt="Close"
 					/>
 				</div>
@@ -38,88 +37,88 @@ class OwpTopbarCloseButton extends HTMLElement {
 				</div>
 			</div>
 		`;
-	}
+  }
 
+  /**
+   * @description Called when the element is added to the document's DOM.
+   * @returns {void}
+   */
+  connectedCallback() {
+    this.crossButton = this.querySelector("#crossButton");
+    this.dropdownContent = this.querySelector("#dropdownContent");
+    this.cancelButton = this.querySelector("#cancelButton");
 
-	/**
-	 * @description Called when the element is added to the document's DOM.
-	 * @returns {void}
-	 */
-	connectedCallback() {
-		this.crossButton = this.querySelector('#crossButton');
-		this.dropdownContent = this.querySelector('#dropdownContent');
-		this.cancelButton = this.querySelector('#cancelButton');
+    if (this.crossButton) {
+      this.crossButton.addEventListener("click", this.#toggleDropdown.bind(this));
+    }
+    if (this.cancelButton) {
+      this.cancelButton.addEventListener("click", this.#toggleDropdown.bind(this));
+    }
 
-		if (this.crossButton) {
-			this.crossButton.addEventListener('click', this.#toggleDropdown.bind(this));
-		}
-		if (this.cancelButton) {
-			this.cancelButton.addEventListener('click', this.#toggleDropdown.bind(this));
-		}
+    this.boundHandleOutsideClick = this.#handleOutsideClick.bind(this);
+    document.addEventListener("click", this.boundHandleOutsideClick);
+  }
 
-		this.boundHandleOutsideClick = this.#handleOutsideClick.bind(this);
-		document.addEventListener('click', this.boundHandleOutsideClick);
-	}
+  /**
+   * @description Called when the element is removed from the document's DOM.
+   * @returns {void}
+   */
+  disconnectedCallback() {
+    document.removeEventListener("click", this.boundHandleOutsideClick);
+    if (this.crossButton) {
+      this.crossButton.removeEventListener("click", this.#toggleDropdown.bind(this));
+    }
+    if (this.cancelButton) {
+      this.cancelButton.removeEventListener("click", this.#toggleDropdown.bind(this));
+    }
+  }
 
+  /**
+   * @private
+   * @description Handles clicks outside the dropdown to close it.
+   * @param {Event} event The click event.
+   * @returns {void}
+   */
+  #handleOutsideClick(event) {
+    if (
+      !this.contains(event.target) &&
+      this.dropdownContent &&
+      this.dropdownContent.classList.contains("opacity-100")
+    ) {
+      this.#toggleDropdown(event);
+    }
+  }
 
-	/**
-	 * @description Called when the element is removed from the document's DOM.
-	 * @returns {void}
-	 */
-	disconnectedCallback() {
-		document.removeEventListener('click', this.boundHandleOutsideClick);
-		if (this.crossButton) {
-			this.crossButton.removeEventListener('click', this.#toggleDropdown.bind(this));
-		}
-		if (this.cancelButton) {
-			this.cancelButton.removeEventListener('click', this.#toggleDropdown.bind(this));
-		}
-	}
-
-
-	/**
-	 * @private
-	 * @description Handles clicks outside the dropdown to close it.
-	 * @param {Event} event The click event.
-	 * @returns {void}
-	 */
-	#handleOutsideClick(event) {
-		if (!this.contains(event.target) && this.dropdownContent && this.dropdownContent.classList.contains('opacity-100')) {
-			this.#toggleDropdown(event);
-		}
-	}
-
-
-	/**
-	 * @private
-	 * @description Toggles the visibility of the dropdown menu.
-	 * @param {Event} event The click event.
-	 * @returns {void}
-	 */
-	#toggleDropdown(event) {
-		event.stopPropagation();
-		if (this.dropdownContent) {
-			if (this.dropdownContent.classList.contains('opacity-0')) {
-				this.dropdownContent.classList.remove('opacity-0');
-				this.dropdownContent.classList.add('opacity-100');
-			} else {
-				this.dropdownContent.classList.remove('opacity-100');
-				this.dropdownContent.classList.add('opacity-0');
-			}
-			if (this.dropdownContent.classList.contains('pointer-events-none')) {
-				this.dropdownContent.classList.remove('pointer-events-none');
-			} else {
-				this.dropdownContent.classList.add('pointer-events-none');
-			}
-			if (this.dropdownContent.classList.contains('scale-100')) {
-				this.dropdownContent.classList.remove('scale-100');
-				this.dropdownContent.classList.add('scale-90');
-			} else {
-				this.dropdownContent.classList.remove('scale-90');
-				this.dropdownContent.classList.add('scale-100');
-			}
-		}
-	}
+  /**
+   * @private
+   * @description Toggles the visibility of the dropdown menu.
+   * @param {Event} event The click event.
+   * @returns {void}
+   */
+  #toggleDropdown(event) {
+    event.stopPropagation();
+    if (this.dropdownContent) {
+      if (this.dropdownContent.classList.contains("opacity-0")) {
+        this.dropdownContent.classList.remove("opacity-0");
+        this.dropdownContent.classList.add("opacity-100");
+      } else {
+        this.dropdownContent.classList.remove("opacity-100");
+        this.dropdownContent.classList.add("opacity-0");
+      }
+      if (this.dropdownContent.classList.contains("pointer-events-none")) {
+        this.dropdownContent.classList.remove("pointer-events-none");
+      } else {
+        this.dropdownContent.classList.add("pointer-events-none");
+      }
+      if (this.dropdownContent.classList.contains("scale-100")) {
+        this.dropdownContent.classList.remove("scale-100");
+        this.dropdownContent.classList.add("scale-90");
+      } else {
+        this.dropdownContent.classList.remove("scale-90");
+        this.dropdownContent.classList.add("scale-100");
+      }
+    }
+  }
 }
 
-customElements.define('owp-topbar-close-button', OwpTopbarCloseButton);
+customElements.define("owp-topbar-close-button", OwpTopbarCloseButton);

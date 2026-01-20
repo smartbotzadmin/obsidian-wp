@@ -23,11 +23,11 @@ class OwpApp extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: "open" });
 
     shadowRoot.innerHTML = /*html*/ `
-      <link rel="stylesheet" href="/wp-content/plugins/owp/assets/css/output.css">
-      <img class="absolute -z-2 object-cover h-full w-full" src="/wp-content/plugins/owp/assets/icons/obsidian-background.webp"/>
+      <link rel="stylesheet" href="${owp_vars.plugin_url}assets/css/output.css">
+      <img class="absolute -z-2 object-cover h-full w-full" src="${owp_vars.plugin_url}assets/icons/obsidian-background.webp"/>
       <div class="absolute -z-1 w-full h-full bg-slate-900 opacity-50"></div>
       <div id="loader" class="fixed inset-0 bg-black/70 flex justify-center items-center z-[1000] hidden">
-        <img src="/wp-content/plugins/owp/assets/icons/loader.svg" class="animate-spin h-24 w-24" alt="Loading"/>
+        <img src="${owp_vars.plugin_url}assets/icons/loader.svg" class="animate-spin h-24 w-24" alt="Loading"/>
       </div>
       <owp-topbar></owp-topbar>
       <owp-plan-selector></owp-plan-selector>

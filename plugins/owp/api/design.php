@@ -1,4 +1,7 @@
 <?php
+if (!defined("ABSPATH")) {
+  exit();
+}
 /**
  * Obsidian API
  * Design Endpoints
@@ -9,7 +12,7 @@
 /**
  * GET designs
  */
-function get_designs()
+function owp_get_designs()
 {
   // TODO: Change by reading folders available inside 'designs' folder.
   $DESIGNS_DIR = WP_PLUGIN_DIR . "/owp/designs";

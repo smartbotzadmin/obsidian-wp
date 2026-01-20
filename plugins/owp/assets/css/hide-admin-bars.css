@@ -1,13 +1,13 @@
 /* Hide the admin bar */
 #wpadminbar {
-    display: none !important;
+  display: none !important;
 }
 
 /* Hide the admin sidebar */
 #adminmenuback,
 #adminmenuwrap,
 #adminmenu {
-    display: none !important;
+  display: none !important;
 }
 
 /* Adjust content area to take full width when admin bars are hidden */
@@ -15,7 +15,7 @@
 #wpfooter,
 #wpbody-content,
 .wp-toolbar {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
 }

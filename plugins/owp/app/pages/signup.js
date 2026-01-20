@@ -134,7 +134,7 @@ class OwpSignup extends HTMLElement {
     const signupButton = this.querySelector("#signupButton");
 
     signupButton.innerHTML = /*html*/ `
-      <img src="/wp-content/plugins/owp/assets/icons/loader.svg" class="animate-spin" />
+      <img src=\"${owp_vars.plugin_url}assets/icons/loader.svg\" class=\"animate-spin\" />
     `;
 
     try {

@@ -2,20 +2,18 @@
 @import "tailwindcss";
 
 @theme {
-	--font-sans: "Open Sans";
-	--font-gold: "Goldman";
-	--font-serif: "Noto Serif";
-	--font-mono: "Google Sans Code";
-	--text-xs: 10px;
-	--text-sm: 12px;
-	--text-md: 16px;
-	--text-lg: 20px;
-	--text-xl: 24px;
-	--text-2xl: 30px;
-	--text-3xl: 36px;
-	--tw-border-style: solid;
+  --font-sans: "Open Sans";
+  --font-gold: "Goldman";
+  --font-mono: "Google Sans Code";
+  --text-xs: 10px;
+  --text-sm: 12px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 30px;
+  --text-3xl: 36px;
+  --tw-border-style: solid;
 }
-
 
 /* Own */
 * {
@@ -25,63 +23,47 @@
 
 @import "./effects.css";
 
-
 @font-face {
-  font-family: 'Open Sans';
-  src: url('../fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans/OpenSansVariableFontwdthwght.ttf") format("truetype");
   font-weight: 300 800; /* Variable font range */
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  src: url('../fonts/Open_Sans/OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans/OpenSansItalicVariableFontwdthwght.ttf") format("truetype");
   font-weight: 300 800; /* Variable font range */
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Goldman';
-  src: url('../fonts/Goldman/Goldman-Regular.ttf') format('truetype');
+  font-family: "Goldman";
+  src: url("../fonts/Goldman/Goldman-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Goldman';
-  src: url('../fonts/Goldman/Goldman-Bold.ttf') format('truetype');
+  font-family: "Goldman";
+  src: url("../fonts/Goldman/Goldman-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Noto Serif';
-  src: url('../fonts/Noto_Serif/NotoSerif-VariableFont_wdth,wght.ttf') format('truetype');
+  font-family: "Google Sans Code";
+  src: url("../fonts/GoogleSansCode/GoogleSansCode-VariableFont_wght.ttf") format("truetype");
   font-weight: 100 900; /* Variable font range */
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Noto Serif';
-  src: url('../fonts/Noto_Serif/NotoSerif-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-family: "Google Sans Code";
+  src: url("../fonts/GoogleSansCode/GoogleSansCode-Italic-VariableFont_wght.ttf") format("truetype");
   font-weight: 100 900; /* Variable font range */
   font-style: italic;
 }
-
-@font-face {
-  font-family: 'Google Sans Code';
-  src: url('../fonts/Google_Sans_Code/GoogleSansCode-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900; /* Variable font range */
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Google Sans Code';
-  src: url('../fonts/Google_Sans_Code/GoogleSansCode-Italic-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900; /* Variable font range */
-  font-style: italic;
-}
-
 
 /* Custom scrollbar styles for webkit browsers */
 ::-webkit-scrollbar {
@@ -104,232 +86,232 @@
 }
 
 .astra-palette-oak {
-	--ast-global-color-0: #0067FF;
-	--e-global-color-astglobalcolor0: #0067FF;
-	--ast-global-color-1: #005EE9;
-	--e-global-color-astglobalcolor1: #005EE9;
-	--ast-global-color-2: #0F172A;
-	--e-global-color-astglobalcolor2: #0F172A;
-	--ast-global-color-3: #364151;
-	--e-global-color-astglobalcolor3: #364151;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #E7F6FF;
-	--e-global-color-astglobalcolor5: #E7F6FF;
-	--ast-global-color-6: #070614;
-	--e-global-color-astglobalcolor6: #070614;
-	--ast-global-color-7: #D1DAE5;
-	--e-global-color-astglobalcolor7: #D1DAE5;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #0067ff;
+  --e-global-color-astglobalcolor0: #0067ff;
+  --ast-global-color-1: #005ee9;
+  --e-global-color-astglobalcolor1: #005ee9;
+  --ast-global-color-2: #0f172a;
+  --e-global-color-astglobalcolor2: #0f172a;
+  --ast-global-color-3: #364151;
+  --e-global-color-astglobalcolor3: #364151;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #e7f6ff;
+  --e-global-color-astglobalcolor5: #e7f6ff;
+  --ast-global-color-6: #070614;
+  --e-global-color-astglobalcolor6: #070614;
+  --ast-global-color-7: #d1dae5;
+  --e-global-color-astglobalcolor7: #d1dae5;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-viola {
-	--ast-global-color-0: #6528F7;
-	--e-global-color-astglobalcolor0: #6528F7;
-	--ast-global-color-1: #5511F8;
-	--e-global-color-astglobalcolor1: #5511F8;
-	--ast-global-color-2: #0F172A;
-	--e-global-color-astglobalcolor2: #0F172A;
-	--ast-global-color-3: #454F5E;
-	--e-global-color-astglobalcolor3: #454F5E;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #F2F0FE;
-	--e-global-color-astglobalcolor5: #F2F0FE;
-	--ast-global-color-6: #0D0614;
-	--e-global-color-astglobalcolor6: #0D0614;
-	--ast-global-color-7: #D8D8F5;
-	--e-global-color-astglobalcolor7: #D8D8F5;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #6528f7;
+  --e-global-color-astglobalcolor0: #6528f7;
+  --ast-global-color-1: #5511f8;
+  --e-global-color-astglobalcolor1: #5511f8;
+  --ast-global-color-2: #0f172a;
+  --e-global-color-astglobalcolor2: #0f172a;
+  --ast-global-color-3: #454f5e;
+  --e-global-color-astglobalcolor3: #454f5e;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #f2f0fe;
+  --e-global-color-astglobalcolor5: #f2f0fe;
+  --ast-global-color-6: #0d0614;
+  --e-global-color-astglobalcolor6: #0d0614;
+  --ast-global-color-7: #d8d8f5;
+  --e-global-color-astglobalcolor7: #d8d8f5;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-cedar {
-	--ast-global-color-0: #DD183B;
-	--e-global-color-astglobalcolor0: #DD183B;
-	--ast-global-color-1: #CC1939;
-	--e-global-color-astglobalcolor1: #CC1939;
-	--ast-global-color-2: #0F172A;
-	--e-global-color-astglobalcolor2: #0F172A;
-	--ast-global-color-3: #3A3A3A;
-	--e-global-color-astglobalcolor3: #3A3A3A;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #FFEDE6;
-	--e-global-color-astglobalcolor5: #FFEDE6;
-	--ast-global-color-6: #140609;
-	--e-global-color-astglobalcolor6: #140609;
-	--ast-global-color-7: #FFD1BF;
-	--e-global-color-astglobalcolor7: #FFD1BF;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #dd183b;
+  --e-global-color-astglobalcolor0: #dd183b;
+  --ast-global-color-1: #cc1939;
+  --e-global-color-astglobalcolor1: #cc1939;
+  --ast-global-color-2: #0f172a;
+  --e-global-color-astglobalcolor2: #0f172a;
+  --ast-global-color-3: #3a3a3a;
+  --e-global-color-astglobalcolor3: #3a3a3a;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #ffede6;
+  --e-global-color-astglobalcolor5: #ffede6;
+  --ast-global-color-6: #140609;
+  --e-global-color-astglobalcolor6: #140609;
+  --ast-global-color-7: #ffd1bf;
+  --e-global-color-astglobalcolor7: #ffd1bf;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-widow {
-	--ast-global-color-0: #54B435;
-	--e-global-color-astglobalcolor0: #54B435;
-	--ast-global-color-1: #379237;
-	--e-global-color-astglobalcolor1: #379237;
-	--ast-global-color-2: #0F172A;
-	--e-global-color-astglobalcolor2: #0F172A;
-	--ast-global-color-3: #2F3B40;
-	--e-global-color-astglobalcolor3: #2F3B40;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #EDFBE2;
-	--e-global-color-astglobalcolor5: #EDFBE2;
-	--ast-global-color-6: #0C1406;
-	--e-global-color-astglobalcolor6: #0C1406;
-	--ast-global-color-7: #D5EAD8;
-	--e-global-color-astglobalcolor7: #D5EAD8;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #54b435;
+  --e-global-color-astglobalcolor0: #54b435;
+  --ast-global-color-1: #379237;
+  --e-global-color-astglobalcolor1: #379237;
+  --ast-global-color-2: #0f172a;
+  --e-global-color-astglobalcolor2: #0f172a;
+  --ast-global-color-3: #2f3b40;
+  --e-global-color-astglobalcolor3: #2f3b40;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #edfbe2;
+  --e-global-color-astglobalcolor5: #edfbe2;
+  --ast-global-color-6: #0c1406;
+  --e-global-color-astglobalcolor6: #0c1406;
+  --ast-global-color-7: #d5ead8;
+  --e-global-color-astglobalcolor7: #d5ead8;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-lily {
-	--ast-global-color-0: #DCA54A;
-	--e-global-color-astglobalcolor0: #DCA54A;
-	--ast-global-color-1: #D09A40;
-	--e-global-color-astglobalcolor1: #D09A40;
-	--ast-global-color-2: #0F172A;
-	--e-global-color-astglobalcolor2: #0F172A;
-	--ast-global-color-3: #4A4A4A;
-	--e-global-color-astglobalcolor3: #4A4A4A;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #FAF5E5;
-	--e-global-color-astglobalcolor5: #FAF5E5;
-	--ast-global-color-6: #141004;
-	--e-global-color-astglobalcolor6: #141004;
-	--ast-global-color-7: #F0E6C5;
-	--e-global-color-astglobalcolor7: #F0E6C5;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #dca54a;
+  --e-global-color-astglobalcolor0: #dca54a;
+  --ast-global-color-1: #d09a40;
+  --e-global-color-astglobalcolor1: #d09a40;
+  --ast-global-color-2: #0f172a;
+  --e-global-color-astglobalcolor2: #0f172a;
+  --ast-global-color-3: #4a4a4a;
+  --e-global-color-astglobalcolor3: #4a4a4a;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #faf5e5;
+  --e-global-color-astglobalcolor5: #faf5e5;
+  --ast-global-color-6: #141004;
+  --e-global-color-astglobalcolor6: #141004;
+  --ast-global-color-7: #f0e6c5;
+  --e-global-color-astglobalcolor7: #f0e6c5;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-rose {
-	--ast-global-color-0: #FB5FAB;
-	--e-global-color-astglobalcolor0: #FB5FAB;
-	--ast-global-color-1: #EA559D;
-	--e-global-color-astglobalcolor1: #EA559D;
-	--ast-global-color-2: #0F172A;
-	--e-global-color-astglobalcolor2: #0F172A;
-	--ast-global-color-3: #454F5E;
-	--e-global-color-astglobalcolor3: #454F5E;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #FCEEF5;
-	--e-global-color-astglobalcolor5: #FCEEF5;
-	--ast-global-color-6: #140610;
-	--e-global-color-astglobalcolor6: #140610;
-	--ast-global-color-7: #FAD8E9;
-	--e-global-color-astglobalcolor7: #FAD8E9;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #fb5fab;
+  --e-global-color-astglobalcolor0: #fb5fab;
+  --ast-global-color-1: #ea559d;
+  --e-global-color-astglobalcolor1: #ea559d;
+  --ast-global-color-2: #0f172a;
+  --e-global-color-astglobalcolor2: #0f172a;
+  --ast-global-color-3: #454f5e;
+  --e-global-color-astglobalcolor3: #454f5e;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #fceef5;
+  --e-global-color-astglobalcolor5: #fceef5;
+  --ast-global-color-6: #140610;
+  --e-global-color-astglobalcolor6: #140610;
+  --ast-global-color-7: #fad8e9;
+  --e-global-color-astglobalcolor7: #fad8e9;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-sage {
-	--ast-global-color-0: #1B9C85;
-	--e-global-color-astglobalcolor0: #1B9C85;
-	--ast-global-color-1: #178E79;
-	--e-global-color-astglobalcolor1: #178E79;
-	--ast-global-color-2: #0F172A;
-	--e-global-color-astglobalcolor2: #0F172A;
-	--ast-global-color-3: #454F5E;
-	--e-global-color-astglobalcolor3: #454F5E;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #EDF6EE;
-	--e-global-color-astglobalcolor5: #EDF6EE;
-	--ast-global-color-6: #06140C;
-	--e-global-color-astglobalcolor6: #06140C;
-	--ast-global-color-7: #D4F3D7;
-	--e-global-color-astglobalcolor7: #D4F3D7;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #1b9c85;
+  --e-global-color-astglobalcolor0: #1b9c85;
+  --ast-global-color-1: #178e79;
+  --e-global-color-astglobalcolor1: #178e79;
+  --ast-global-color-2: #0f172a;
+  --e-global-color-astglobalcolor2: #0f172a;
+  --ast-global-color-3: #454f5e;
+  --e-global-color-astglobalcolor3: #454f5e;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #edf6ee;
+  --e-global-color-astglobalcolor5: #edf6ee;
+  --ast-global-color-6: #06140c;
+  --e-global-color-astglobalcolor6: #06140c;
+  --ast-global-color-7: #d4f3d7;
+  --e-global-color-astglobalcolor7: #d4f3d7;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-flare {
-	--ast-global-color-0: #FD9800;
-	--e-global-color-astglobalcolor0: #FD9800;
-	--ast-global-color-1: #E98C00;
-	--e-global-color-astglobalcolor1: #E98C00;
-	--ast-global-color-2: #0F172A;
-	--e-global-color-astglobalcolor2: #0F172A;
-	--ast-global-color-3: #454F5E;
-	--e-global-color-astglobalcolor3: #454F5E;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #FEF9E1;
-	--e-global-color-astglobalcolor5: #FEF9E1;
-	--ast-global-color-6: #141006;
-	--e-global-color-astglobalcolor6: #141006;
-	--ast-global-color-7: #F9F0C8;
-	--e-global-color-astglobalcolor7: #F9F0C8;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #fd9800;
+  --e-global-color-astglobalcolor0: #fd9800;
+  --ast-global-color-1: #e98c00;
+  --e-global-color-astglobalcolor1: #e98c00;
+  --ast-global-color-2: #0f172a;
+  --e-global-color-astglobalcolor2: #0f172a;
+  --ast-global-color-3: #454f5e;
+  --e-global-color-astglobalcolor3: #454f5e;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #fef9e1;
+  --e-global-color-astglobalcolor5: #fef9e1;
+  --ast-global-color-6: #141006;
+  --e-global-color-astglobalcolor6: #141006;
+  --ast-global-color-7: #f9f0c8;
+  --e-global-color-astglobalcolor7: #f9f0c8;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-maple {
-	--ast-global-color-0: #FF6210;
-	--e-global-color-astglobalcolor0: #FF6210;
-	--ast-global-color-1: #F15808;
-	--e-global-color-astglobalcolor1: #F15808;
-	--ast-global-color-2: #1C0D0A;
-	--e-global-color-astglobalcolor2: #1C0D0A;
-	--ast-global-color-3: #353535;
-	--e-global-color-astglobalcolor3: #353535;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #FEF1E4;
-	--e-global-color-astglobalcolor5: #FEF1E4;
-	--ast-global-color-6: #140B06;
-	--e-global-color-astglobalcolor6: #140B06;
-	--ast-global-color-7: #E5D7D1;
-	--e-global-color-astglobalcolor7: #E5D7D1;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #ff6210;
+  --e-global-color-astglobalcolor0: #ff6210;
+  --ast-global-color-1: #f15808;
+  --e-global-color-astglobalcolor1: #f15808;
+  --ast-global-color-2: #1c0d0a;
+  --e-global-color-astglobalcolor2: #1c0d0a;
+  --ast-global-color-3: #353535;
+  --e-global-color-astglobalcolor3: #353535;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #fef1e4;
+  --e-global-color-astglobalcolor5: #fef1e4;
+  --ast-global-color-6: #140b06;
+  --e-global-color-astglobalcolor6: #140b06;
+  --ast-global-color-7: #e5d7d1;
+  --e-global-color-astglobalcolor7: #e5d7d1;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-brich {
-	--ast-global-color-0: #737880;
-	--e-global-color-astglobalcolor0: #737880;
-	--ast-global-color-1: #65696F;
-	--e-global-color-astglobalcolor1: #65696F;
-	--ast-global-color-2: #151616;
-	--e-global-color-astglobalcolor2: #151616;
-	--ast-global-color-3: #393C40;
-	--e-global-color-astglobalcolor3: #393C40;
-	--ast-global-color-4: #FFFFFF;
-	--e-global-color-astglobalcolor4: #FFFFFF;
-	--ast-global-color-5: #F6F6F6;
-	--e-global-color-astglobalcolor5: #F6F6F6;
-	--ast-global-color-6: #232529;
-	--e-global-color-astglobalcolor6: #232529;
-	--ast-global-color-7: #F1F0F0;
-	--e-global-color-astglobalcolor7: #F1F0F0;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #737880;
+  --e-global-color-astglobalcolor0: #737880;
+  --ast-global-color-1: #65696f;
+  --e-global-color-astglobalcolor1: #65696f;
+  --ast-global-color-2: #151616;
+  --e-global-color-astglobalcolor2: #151616;
+  --ast-global-color-3: #393c40;
+  --e-global-color-astglobalcolor3: #393c40;
+  --ast-global-color-4: #ffffff;
+  --e-global-color-astglobalcolor4: #ffffff;
+  --ast-global-color-5: #f6f6f6;
+  --e-global-color-astglobalcolor5: #f6f6f6;
+  --ast-global-color-6: #232529;
+  --e-global-color-astglobalcolor6: #232529;
+  --ast-global-color-7: #f1f0f0;
+  --e-global-color-astglobalcolor7: #f1f0f0;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
 
 .astra-palette-dark {
-	--ast-global-color-0: #0085FF;
-	--e-global-color-astglobalcolor0: #0085FF;
-	--ast-global-color-1: #0177E3;
-	--e-global-color-astglobalcolor1: #0177E3;
-	--ast-global-color-2: #FFFFFF;
-	--e-global-color-astglobalcolor2: #FFFFFF;
-	--ast-global-color-3: #E7F6FF;
-	--e-global-color-astglobalcolor3: #E7F6FF;
-	--ast-global-color-4: #212A37;
-	--e-global-color-astglobalcolor4: #212A37;
-	--ast-global-color-5: #0F172A;
-	--e-global-color-astglobalcolor5: #0F172A;
-	--ast-global-color-6: #4F5B62;
-	--e-global-color-astglobalcolor6: #4F5B62;
-	--ast-global-color-7: #070614;
-	--e-global-color-astglobalcolor7: #070614;
-	--ast-global-color-8: #222222;
-	--e-global-color-astglobalcolor8: #222222;
+  --ast-global-color-0: #0085ff;
+  --e-global-color-astglobalcolor0: #0085ff;
+  --ast-global-color-1: #0177e3;
+  --e-global-color-astglobalcolor1: #0177e3;
+  --ast-global-color-2: #ffffff;
+  --e-global-color-astglobalcolor2: #ffffff;
+  --ast-global-color-3: #e7f6ff;
+  --e-global-color-astglobalcolor3: #e7f6ff;
+  --ast-global-color-4: #212a37;
+  --e-global-color-astglobalcolor4: #212a37;
+  --ast-global-color-5: #0f172a;
+  --e-global-color-astglobalcolor5: #0f172a;
+  --ast-global-color-6: #4f5b62;
+  --e-global-color-astglobalcolor6: #4f5b62;
+  --ast-global-color-7: #070614;
+  --e-global-color-astglobalcolor7: #070614;
+  --ast-global-color-8: #222222;
+  --e-global-color-astglobalcolor8: #222222;
 }
