@@ -63,6 +63,7 @@ add_action("admin_menu", "owp_add_admin_pages");
  */
 function owp_handle_pages_menu_redirect()
 {
+  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
   if (is_admin() && isset($_GET["page"]) && "owp-start-redirect" === $_GET["page"]) {
     wp_safe_redirect(admin_url("admin.php?page=owp-app"));
     exit();
@@ -92,6 +93,7 @@ function owp_render_app_page()
 add_action("init", "owp_preview_hide_admin_bar");
 function owp_preview_hide_admin_bar()
 {
+  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
   if (
     (isset($_GET["owp-preview"]) && $_GET["owp-preview"] === "true") ||
     (isset($_GET["page"]) && $_GET["page"] === "owp-app")
@@ -112,6 +114,8 @@ function owp_preview_hide_admin_bar()
  */
 function owp_enqueue_components()
 {
+  global $pagenow;
+
   // Enqueue Google Fonts
   wp_enqueue_style(
     "owp-google-fonts",
@@ -121,14 +125,11 @@ function owp_enqueue_components()
   );
 
   // Enqueue global style conditionally
+  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
   if (
     (isset($_GET["page"]) && $_GET["page"] === "owp-app") ||
-    (isset($_GET["action"]) &&
-      $_GET["action"] === "edit" &&
-      basename($_SERVER["PHP_SELF"]) === "post.php") ||
-    (isset($_GET["post_type"]) &&
-      $_GET["post_type"] === "page" &&
-      basename($_SERVER["PHP_SELF"]) === "post-new.php") ||
+    (isset($_GET["action"]) && $_GET["action"] === "edit" && "post.php" === $pagenow) ||
+    (isset($_GET["post_type"]) && $_GET["post_type"] === "page" && "post-new.php" === $pagenow) ||
     (isset($_GET["owp-preview"]) && $_GET["owp-preview"] === "true")
   ) {
     wp_enqueue_style("owp-output-style", plugins_url("assets/css/output.css", __FILE__));
