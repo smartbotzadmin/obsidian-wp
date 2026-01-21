@@ -63,8 +63,11 @@ add_action("admin_menu", "owp_add_admin_pages");
  */
 function owp_handle_pages_menu_redirect()
 {
-  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-  if (is_admin() && isset($_GET["page"]) && "owp-start-redirect" === $_GET["page"]) {
+  // phpcs:disable WordPress.Security.NonceVerification.Recommended
+  $owp_page = isset($_GET["page"]) ? sanitize_text_field(wp_unslash($_GET["page"])) : "";
+  // phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+  if (is_admin() && "owp-start-redirect" === $owp_page) {
     wp_safe_redirect(admin_url("admin.php?page=owp-app"));
     exit();
   }
@@ -93,11 +96,14 @@ function owp_render_app_page()
 add_action("init", "owp_preview_hide_admin_bar");
 function owp_preview_hide_admin_bar()
 {
-  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-  if (
-    (isset($_GET["owp-preview"]) && $_GET["owp-preview"] === "true") ||
-    (isset($_GET["page"]) && $_GET["page"] === "owp-app")
-  ) {
+  // phpcs:disable WordPress.Security.NonceVerification.Recommended
+  $owp_preview = isset($_GET["owp-preview"])
+    ? sanitize_text_field(wp_unslash($_GET["owp-preview"]))
+    : "";
+  $owp_page = isset($_GET["page"]) ? sanitize_text_field(wp_unslash($_GET["page"])) : "";
+  // phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+  if ($owp_preview === "true" || $owp_page === "owp-app") {
     add_filter("show_admin_bar", "__return_false");
     wp_enqueue_style(
       "owp-hide-admin-bars",
@@ -125,12 +131,22 @@ function owp_enqueue_components()
   );
 
   // Enqueue global style conditionally
-  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+  // phpcs:disable WordPress.Security.NonceVerification.Recommended
+  $owp_page = isset($_GET["page"]) ? sanitize_text_field(wp_unslash($_GET["page"])) : "";
+  $owp_action = isset($_GET["action"]) ? sanitize_text_field(wp_unslash($_GET["action"])) : "";
+  $owp_post_type = isset($_GET["post_type"])
+    ? sanitize_text_field(wp_unslash($_GET["post_type"]))
+    : "";
+  $owp_preview = isset($_GET["owp-preview"])
+    ? sanitize_text_field(wp_unslash($_GET["owp-preview"]))
+    : "";
+  // phpcs:enable WordPress.Security.NonceVerification.Recommended
+
   if (
-    (isset($_GET["page"]) && $_GET["page"] === "owp-app") ||
-    (isset($_GET["action"]) && $_GET["action"] === "edit" && "post.php" === $pagenow) ||
-    (isset($_GET["post_type"]) && $_GET["post_type"] === "page" && "post-new.php" === $pagenow) ||
-    (isset($_GET["owp-preview"]) && $_GET["owp-preview"] === "true")
+    $owp_page === "owp-app" ||
+    ($owp_action === "edit" && "post.php" === $pagenow) ||
+    ($owp_post_type === "page" && "post-new.php" === $pagenow) ||
+    $owp_preview === "true"
   ) {
     wp_enqueue_style("owp-output-style", plugins_url("assets/css/output.css", __FILE__));
 
