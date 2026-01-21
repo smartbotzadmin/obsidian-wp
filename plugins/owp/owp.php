@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Obsidian WP - AI Page Builder
+ * Plugin Name: Obsidian AI Page Builder
  * Description: A plugin to empower WordPress to create pages rapidly from pre-made templates/themes and fill them with AI-generated text content.
  * Version: 1.0.0
  * Author: Connor, Phillip, Skyking, Mjesbar
@@ -21,7 +21,7 @@ function owp_add_admin_bar_button($admin_bar)
 {
   $admin_bar->add_node([
     "id" => "owp-create-with-ai",
-    "title" => "Create with AI ObsidianWP",
+    "title" => "Create with AI Obsidian",
     "href" => admin_url("admin.php?page=owp-app"),
     "meta" => [
       "target" => "_self",
@@ -32,15 +32,15 @@ function owp_add_admin_bar_button($admin_bar)
 add_action("admin_bar_menu", "owp_add_admin_bar_button", 999);
 
 /**
- * Adds custom admin pages for Obsidian WP.
+ * Adds custom admin pages for Obsidian.
  * @return void
  */
 function owp_add_admin_pages()
 {
   // Pages option
   add_pages_page(
-    __("New AI ObsidianWP", "obsidian-wp"),
-    __("New AI ObsidianWP", "obsidian-wp"),
+    __("New AI Obsidian", "obsidian-wp"),
+    __("New AI Obsidian", "obsidian-wp"),
     "manage_options",
     "owp-start-redirect", // Use a unique slug for the redirect page
     "owp_render_app_page", // Temporarily set to render, redirect will handle it
@@ -48,8 +48,8 @@ function owp_add_admin_pages()
   // Middle admin page to redirect to owp-app
   add_submenu_page(
     null,
-    __("Obsidian WP App", "obsidian-wp"),
-    __("Obsidian WP App", "obsidian-wp"),
+    __("Obsidian App", "obsidian-wp"),
+    __("Obsidian App", "obsidian-wp"),
     "manage_options",
     "owp-app",
     "owp_render_app_page",

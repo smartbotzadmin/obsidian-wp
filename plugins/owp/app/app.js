@@ -1,7 +1,7 @@
 /**
  * @class OwpApp
  * @augments HTMLElement
- * @description Main web component for the Obsidian WP Single Page Application.
+ * @description Main web component for the Obsidian AI Single Page Application.
  */
 class OwpApp extends HTMLElement {
   /**

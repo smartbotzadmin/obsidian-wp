@@ -1,7 +1,7 @@
 {
   "name": "owp",
   "version": "1.0.0",
-  "description": "Obsidian WP Plugin",
+  "description": "Obsidian AI Page Builder Plugin",
   "main": "owp.php",
   "scripts": {
     "tw": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/output.css --watch"
