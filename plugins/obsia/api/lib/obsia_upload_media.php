@@ -22,28 +22,27 @@ function obsia_upload_media($url)
 
   $file_data["name"] = basename($url);
 
-  global $wpdb;
-
   preg_match("/(photo-\d+-\w+)/", $url, $matches);
 
-  $photo_id = $matches[0];
+  if (!empty($matches)) {
+    $photo_id = $matches[0];
 
-  $results = $wpdb->get_results(
-    $wpdb->prepare(
-      "SELECT * FROM {$wpdb->postmeta} WHERE meta_value LIKE %s AND meta_key = %s LIMIT 50",
-      "%" . $wpdb->esc_like($photo_id) . "%",
-      "_wp_attached_file",
-    ),
-  );
+    $attachments = get_posts([
+      "post_type" => "attachment",
+      "post_status" => "inherit",
+      "posts_per_page" => 1,
+      "meta_query" => [
+        [
+          "key" => "_wp_attached_file",
+          "value" => $photo_id,
+          "compare" => "LIKE",
+        ],
+      ],
+    ]);
 
-  if (!empty($results)) {
-    $upload_dir = wp_upload_dir();
-
-    $base_url = $upload_dir["baseurl"];
-
-    $full_url = $base_url . "/" . $results[0]->meta_value;
-
-    return $full_url;
+    if (!empty($attachments)) {
+      return wp_get_attachment_url($attachments[0]->ID);
+    }
   }
 
   $temp_file = download_url($url);
