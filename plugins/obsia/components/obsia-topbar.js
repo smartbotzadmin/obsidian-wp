@@ -1,0 +1,158 @@
+/**
+ * @class ObsiaTopbar
+ * @augments HTMLElement
+ * @description Web component for the top navigation bar, including the logo, step indicator, and exit options.
+ */
+class ObsiaTopbar extends HTMLElement {
+  steps = [
+    { name: "Start", page: "obsia-start" },
+    { name: "Describe", page: "obsia-describe" },
+    { name: "Contact", page: "obsia-contact" },
+    { name: "Pictures", page: "obsia-pictures" },
+    { name: "Design", page: "obsia-design" },
+  ];
+  navElement = null;
+  boundHandleHashChange = null;
+
+  /**
+   * @description Observes changes to the 'current-page' attribute.
+   * @returns {Array<string>} The observed attributes.
+   */
+  static get observedAttributes() {
+    return ["current-page", "hide-steps"];
+  }
+
+  /**
+   * @description Constructs the ObsiaTopBar instance.
+   * @returns {void}
+   */
+  constructor() {
+    super();
+  }
+
+  /**
+   * @description Called when the element is added to the document's DOM.
+   * @returns {void}
+   */
+  connectedCallback() {
+    this.classList = `fixed top-0 right-0 left-0 flex items-center justify-between p-5`;
+    this.innerHTML = /*html*/ `
+ 			<obsia-topbar-logo></obsia-topbar-logo>
+ 			<div class="flex items-center justify-center">
+ 				<nav class="flex items-center text-gray-600 font-semibold" id="step-navigation"></nav>
+ 			</div>
+ 			<obsia-topbar-stripe-button></obsia-topbar-stripe-button>
+ 			<obsia-topbar-close-button></obsia-topbar-close-button>
+ 		`;
+    this.navElement = this.querySelector("#step-navigation");
+    this.boundHandleHashChange = this.#handleHashChange.bind(this);
+
+    // Set initial current-page and hide-steps based on hash, which will trigger attributeChangedCallback
+    this.boundHandleHashChange();
+    window.addEventListener("hashchange", this.boundHandleHashChange);
+  }
+
+  /**
+   * @description Called when the element is removed from the document's DOM.
+   * @returns {void}
+   */
+  disconnectedCallback() {
+    window.removeEventListener("hashchange", this.boundHandleHashChange);
+  }
+
+  /**
+   * @description Handles changes to observed attributes.
+   * @param {string} name - The name of the attribute.
+   * @param {string} oldVal - The old value of the attribute.
+   * @param {string} newVal - The new value of the attribute.
+   * @returns {void}
+   */
+  attributeChangedCallback(name, oldVal, newVal) {
+    if (name === "current-page" && oldVal !== newVal) {
+      this.#updateStepsHighlighting(newVal);
+    } else if (name === "hide-steps") {
+      if (this.navElement) {
+        this.navElement.style.display = this.hasAttribute("hide-steps") ? "none" : "flex";
+      }
+    }
+  }
+
+  /**
+   * @private
+   * @description Handles hash change event to update the current page.
+   * @returns {void}
+   */
+  #handleHashChange() {
+    const currentHash = window.location.hash.substring(1); // Remove '#'
+    const hideSteps = ["signin", "signup"].includes(currentHash);
+
+    if (hideSteps) {
+      this.setAttribute("hide-steps", "");
+    } else {
+      this.removeAttribute("hide-steps");
+    }
+
+    const currentPage = this.steps.find(
+      (step) => step.name.toLowerCase().replace(/\s/g, "-") === currentHash,
+    )?.page;
+    if (currentPage) {
+      this.setAttribute("current-page", currentPage);
+    }
+  }
+
+  /**
+   * @private
+   * @description Updates the highlighting of the steps based on the current URL.
+   * @param {string} currentPage - The current page slug.
+   * @returns {void}
+   */
+  #updateStepsHighlighting(currentPage) {
+    if (!this.navElement) {
+      return;
+    }
+
+    const currentPageIndex = this.steps.findIndex((step) => step.page === currentPage);
+
+    // Clear existing steps to prevent duplicates on re-render
+    this.navElement.innerHTML = "";
+
+    this.steps.forEach((step, index) => {
+      const isActive = index === currentPageIndex;
+      const isCompleted = index < currentPageIndex;
+
+      const stepElement = document.createElement("obsia-topbar-step");
+      stepElement.setAttribute("name", step.name);
+      stepElement.setAttribute("page", step.page);
+
+      if (isActive) {
+        stepElement.setAttribute("is-active", "");
+      } else {
+        stepElement.removeAttribute("is-active");
+      }
+
+      if (isCompleted) {
+        stepElement.setAttribute("is-completed", "");
+      } else {
+        stepElement.removeAttribute("is-completed");
+      }
+      this.navElement.appendChild(stepElement);
+
+      if (index < this.steps.length - 1) {
+        const separatorElement = document.createElement("obsia-topbar-step-separator");
+        if (isCompleted) {
+          separatorElement.setAttribute("is-completed", "");
+        } else {
+          separatorElement.removeAttribute("is-completed");
+        }
+        if (index + 1 === currentPageIndex) {
+          separatorElement.setAttribute("is-active", "");
+        } else {
+          separatorElement.removeAttribute("is-active");
+        }
+        this.navElement.appendChild(separatorElement);
+      }
+    });
+  }
+}
+
+customElements.define("obsia-topbar", ObsiaTopbar);

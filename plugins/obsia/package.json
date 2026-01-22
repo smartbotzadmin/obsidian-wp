@@ -1,0 +1,17 @@
+{
+  "name": "obsia",
+  "version": "1.0.0",
+  "description": "Obsidian AI Page Builder Plugin",
+  "main": "obsia.php",
+  "scripts": {
+    "tw": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "livereload": "^0.10.2",
+    "tailwindcss": "^4.1.11"
+  }
+}
