@@ -12,6 +12,10 @@ if (!defined("ABSPATH")) {
   exit();
 }
 
+define("OBSIA_PLUGIN_FILE", __FILE__);
+define("OBSIA_PLUGIN_DIR", plugin_dir_path(__FILE__));
+define("OBSIA_PLUGIN_URL", plugin_dir_url(__FILE__));
+
 /**
  * Adds a custom button to the WordPress admin bar.
  * @param WP_Admin_Bar $admin_bar The WP_Admin_Bar instance.
@@ -80,9 +84,15 @@ add_action("admin_init", "obsia_handle_pages_menu_redirect");
  */
 function obsia_render_app_page()
 {
-  wp_enqueue_script("obsia-app-script", plugins_url("app/app.js", __FILE__), [], null, true);
+  wp_enqueue_script(
+    "obsia-app-script",
+    plugins_url("app/app.js", OBSIA_PLUGIN_FILE),
+    [],
+    null,
+    true,
+  );
   wp_localize_script("obsia-app-script", "obsia_vars", [
-    "plugin_url" => plugins_url("/", __FILE__),
+    "plugin_url" => OBSIA_PLUGIN_URL,
     "rest_nonce" => wp_create_nonce("wp_rest"),
   ]);
   echo "<obsia-app></obsia-app>";
@@ -107,7 +117,7 @@ function obsia_preview_hide_admin_bar()
     add_filter("show_admin_bar", "__return_false");
     wp_enqueue_style(
       "obsia-hide-admin-bars",
-      plugins_url("assets/css/hide-admin-bars.css", __FILE__),
+      plugins_url("assets/css/hide-admin-bars.css", OBSIA_PLUGIN_FILE),
     );
   }
 }
@@ -148,34 +158,34 @@ function obsia_enqueue_components()
     ($obsia_post_type === "page" && "post-new.php" === $pagenow) ||
     $obsia_preview === "true"
   ) {
-    wp_enqueue_style("obsia-output-style", plugins_url("assets/css/output.css", __FILE__));
+    wp_enqueue_style("obsia-output-style", plugins_url("assets/css/output.css", OBSIA_PLUGIN_FILE));
 
     // Enqueue Gutenberg Sidebar scripts
     wp_enqueue_script(
       "obsia-gutenberg-sidebar",
-      plugins_url("gutenberg/sidebar.js", __FILE__),
+      plugins_url("gutenberg/sidebar.js", OBSIA_PLUGIN_FILE),
       [],
       null,
       true,
     );
 
     // Enqueue Page scripts
-    $page_dir = plugin_dir_path(__FILE__) . "app/pages/";
+    $page_dir = OBSIA_PLUGIN_DIR . "app/pages/";
     $page_files = glob($page_dir . "*.js");
 
     foreach ($page_files as $file) {
       $handle = "obsia-page-" . sanitize_title(basename($file, ".js"));
-      $src = plugins_url("app/pages/" . basename($file), __FILE__);
+      $src = plugins_url("app/pages/" . basename($file), OBSIA_PLUGIN_FILE);
       wp_enqueue_script($handle, $src, [], null, true);
     }
 
     // Enqueue Web Components scripts
-    $component_dir = plugin_dir_path(__FILE__) . "components/";
+    $component_dir = OBSIA_PLUGIN_DIR . "components/";
     $component_files = glob($component_dir . "*.js");
 
     foreach ($component_files as $file) {
       $handle = "obsia-component-" . sanitize_title(basename($file, ".js"));
-      $src = plugins_url("components/" . basename($file), __FILE__);
+      $src = plugins_url("components/" . basename($file), OBSIA_PLUGIN_FILE);
       wp_enqueue_script($handle, $src, [], null, true);
     }
   }
@@ -206,5 +216,5 @@ function obsia_register_api_endpoints()
 }
 add_action("rest_api_init", "obsia_register_api_endpoints");
 
-require_once plugin_dir_path(__FILE__) . "api/design.php";
-require_once plugin_dir_path(__FILE__) . "api/page.php";
+require_once OBSIA_PLUGIN_DIR . "api/design.php";
+require_once OBSIA_PLUGIN_DIR . "api/page.php";

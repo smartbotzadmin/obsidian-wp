@@ -34,16 +34,23 @@ function obsia_create_page(WP_REST_Request $req)
   $design = is_array($payload["design"]) ? $payload["design"] : [];
   $pictures = is_array($payload["pictures"]) ? $payload["pictures"] : [];
 
-  $design_dir = WP_PLUGIN_DIR . "/obsia/designs";
+  $design_dir = OBSIA_PLUGIN_DIR . "designs";
   // Sanitize design name for use in file paths
   $design_name = sanitize_title(str_replace("obsidian", "", strtolower($design["name"] ?? "")));
   $design_page_dir = "{$design_dir}/{$design_name}/templatekit";
 
   // 2. Prepare fyi, fields & images CSS IDs for AI content request
-  $fields_file = file_get_contents("{$design_page_dir}/fields.json");
+  global $wp_filesystem;
+
+  if (empty($wp_filesystem)) {
+    require_once ABSPATH . "wp-admin/includes/file.php";
+    WP_Filesystem();
+  }
+
+  $fields_file = $wp_filesystem->get_contents("{$design_page_dir}/fields.json");
   $fields_json = json_decode($fields_file, true); // array
 
-  $images_file = file_get_contents("{$design_page_dir}/images.json");
+  $images_file = $wp_filesystem->get_contents("{$design_page_dir}/images.json");
   $images_json = json_decode($images_file, true); // array
 
   unset($payload["pictures"]);
@@ -83,7 +90,7 @@ function obsia_create_page(WP_REST_Request $req)
   foreach ($pages as $page) {
     // Load template json
     $design_page_dir = "{$design_dir}/{$design_name}/templatekit/{$page}";
-    $template_json_file = file_get_contents("{$design_page_dir}/template.json");
+    $template_json_file = $wp_filesystem->get_contents("{$design_page_dir}/template.json");
     $template_json = json_decode($template_json_file, true); // elementor data
     $elementor_data = $template_json["content"];
 

@@ -15,7 +15,7 @@ if (!defined("ABSPATH")) {
 function obsia_get_designs()
 {
   // TODO: Change by reading folders available inside 'designs' folder.
-  $DESIGNS_DIR = WP_PLUGIN_DIR . "/obsia/designs";
+  $DESIGNS_DIR = OBSIA_PLUGIN_DIR . "designs";
 
   $posts = get_posts([
     "post_type" => "elementor_library",
@@ -41,7 +41,14 @@ function obsia_get_designs()
     $images_json = [];
 
     if (file_exists($images_json_path)) {
-      $images_json_content = file_get_contents($images_json_path);
+      global $wp_filesystem;
+
+      if (empty($wp_filesystem)) {
+        require_once ABSPATH . "wp-admin/includes/file.php";
+        WP_Filesystem();
+      }
+
+      $images_json_content = $wp_filesystem->get_contents($images_json_path);
       $images_json = json_decode($images_json_content, true);
     }
 
