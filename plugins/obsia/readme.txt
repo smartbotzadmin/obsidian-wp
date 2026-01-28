@@ -22,38 +22,37 @@ Obsidian is a powerful plugin designed to streamline the website creation proces
 
 This plugin relies on several external services to provide AI content generation, authentication, and layout resources.
 
-1. **Obsidian Cloud API (Google Cloud Run)**: This service handles user authentication (signup, sign-in, validation), content generation via AI, and checking subscription status.
-   - **What it is used for**: User authentication, content generation processing, and license/subscription verification.
-   - **Data sent**: User credentials (email/password or Google OAuth tokens) for authentication. Prompt data (business name, descriptions) for content generation.
-   - **When**: When a user signs up, logs in, validates their session, or generates content.
-   - **Endpoints**: `https://obsidian-*-313065021854.us-east1.run.app`
-   - **Service Provider**: Obsidian Website Builder. [Terms of Service](https://obsidianwebsitebuilder.com/terms), [Privacy Policy](https://obsidianwebsitebuilder.com/privacy).
+* Obsidian Authentication: This service handles user signup, sign-in, and session validation. It is required to manage your account and access the AI features.
+  - Data sent: User email and password (or Google OAuth tokens) are sent to authenticate the user.
+  - When: When a user creates an account, logs in, or when the plugin validates the current session.
+  - Endpoints: https://obsidian-signin-313065021854.us-east1.run.app, https://obsidian-signup-313065021854.us-east1.run.app, https://obsidian-validate-313065021854.us-east1.run.app
+  - Service provided by Obsidian Website Builder: https://obsidian.space/terms, https://obsidian.space/privacy
 
-2. **Google Gemini (via Obsidian Cloud API)**: Used for generating textual content for website pages.
-   - **What it is used for**: AI-driven text generation.
-   - **Data sent**: User-provided business descriptions and keywords.
-   - **When**: Triggered when the user clicks "Create with AI".
-   - **Service Provider**: Google LLC. [Privacy Policy](https://policies.google.com/privacy), [Terms of Service](https://policies.google.com/terms).
+* Obsidian Content & Description Generator: This service generates textual content and business descriptions for website pages using AI.
+  - Data sent: Business name, description, and keywords provided by the user.
+  - When: When the user clicks "Create with AI" or requests AI-generated descriptions.
+  - Endpoints: https://obsidian-content-generator-313065021854.us-east1.run.app, https://obsidian-describe-generator-313065021854.us-east1.run.app
+  - Service provided by Obsidian Website Builder: https://obsidian.space/terms, https://obsidian.space/privacy
+  - This service uses Google Gemini: https://policies.google.com/privacy, https://policies.google.com/terms
 
-3. **Google OAuth**: Allows users to sign in using their Google account.
-   - **What it is used for**: Third-party authentication.
-   - **Data sent**: User's Google profile information (email and name).
-   - **When**: When the user chooses to "Sign in with Google".
-   - **Endpoints**: `https://obsidian-google-oauth-authorization-313065021854.us-east1.run.app`
-   - **Service Provider**: Google LLC. [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy).
+* Obsidian Subscription & Billing: This service verifies the user's subscription status and handles checkout sessions via Stripe.
+  - Data sent: User identifier or email, and current URL origin for checkout redirection.
+  - When: When checking subscription status, selecting a plan, or clicking "Subscribe".
+  - Endpoints: https://obsidian-stripe-status-313065021854.us-east1.run.app, https://obsidian-stripe-checkout-313065021854.us-east1.run.app
+  - Service provided by Obsidian Website Builder: https://obsidian.space/terms, https://obsidian.space/privacy
+  - This service uses Stripe: https://stripe.com/privacy, https://stripe.com/legal/ssa
 
-4. **Stripe (via Obsidian Cloud API)**: Used for verifying the user's subscription or payment status.
-   - **What it is used for**: Subscription management and status verification.
-   - **Data sent**: User identifier or email to check status.
-   - **When**: When checking subscription status or interacting with billing features.
-   - **Endpoints**: `https://obsidian-stripe-status-313065021854.us-east1.run.app`
-   - **Service Provider**: Stripe, Inc. [Privacy Policy](https://stripe.com/privacy), [Terms of Service](https://stripe.com/legal/ssa).
+* Google OAuth Authorization: Allows users to sign in using their Google account.
+  - Data sent: User's Google profile information (email and name).
+  - When: When the user chooses to "Sign in with Google".
+  - Endpoint: https://obsidian-google-oauth-authorization-313065021854.us-east1.run.app
+  - Service provided by Google LLC: https://developers.google.com/terms/api-services-user-data-policy, https://policies.google.com/privacy
 
-5. **Unsplash API**: Used for searching and retrieving high-quality images for the generated pages.
-   - **What it is used for**: Image sourcing.
-   - **Data sent**: Search keywords based on the user's business description.
-   - **When**: During the page creation process to fetch relevant images.
-   - **Service Provider**: Unsplash Inc. [Privacy Policy](https://unsplash.com/privacy), [Terms](https://unsplash.com/terms).
+* Unsplash API: Used for searching and retrieving high-quality images for the generated pages.
+  - Data sent: Search keywords based on the user's business description.
+  - When: During the page creation process to fetch relevant images.
+  - Endpoint: https://unsplash-images-313065021854.us-east1.run.app
+  - Service provided by Unsplash Inc: https://unsplash.com/privacy, https://unsplash.com/terms
 
 == Installation ==
 
