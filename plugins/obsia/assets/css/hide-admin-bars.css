@@ -19,3 +19,10 @@
   padding: 0 !important;
   border: 0 !important;
 }
+
+/* Hides any Wordpress, Elementor & Astra popup notification */
+[id^="astra-"],
+[id^="elementor-"],
+[id^="wp-"] {
+  display: none !important;
+}
