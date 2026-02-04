@@ -3,9 +3,10 @@
  * Plugin Name: Obsidian AI Page Builder
  * Description: A plugin to empower WordPress to create pages rapidly from pre-made templates/themes and fill them with AI-generated text content.
  * Version: 1.0.0
- * Author: Connor, Skyking, Mjesbar
+ * Author: Connor, Skyking & Mjesbar
  * Text Domain: obsia
  * License: GPLv2
+ * Requires Plugins: elementor, astra-widgets
  */
 
 if (!defined("ABSPATH")) {
@@ -15,81 +16,6 @@ if (!defined("ABSPATH")) {
 define("OBSIA_PLUGIN_FILE", __FILE__);
 define("OBSIA_PLUGIN_DIR", plugin_dir_path(__FILE__));
 define("OBSIA_PLUGIN_URL", plugin_dir_url(__FILE__));
-
-/**
- * Installs required dependencies on plugin activation.
- * @return void
- */
-function obsia_install_dependencies()
-{
-  include_once ABSPATH . "wp-admin/includes/plugin-install.php";
-  include_once ABSPATH . "wp-admin/includes/plugin.php";
-  include_once ABSPATH . "wp-admin/includes/file.php";
-  include_once ABSPATH . "wp-admin/includes/class-wp-upgrader.php";
-  include_once ABSPATH . "wp-admin/includes/theme-install.php";
-  include_once ABSPATH . "wp-admin/includes/theme.php";
-
-  if (!class_exists("Automatic_Upgrader_Skin")) {
-    include_once ABSPATH . "wp-admin/includes/class-wp-upgrader-skins.php";
-  }
-
-  if (!function_exists("WP_Filesystem")) {
-    require_once ABSPATH . "wp-admin/includes/file.php";
-  }
-
-  WP_Filesystem();
-
-  $plugins = [
-    "elementor" => "elementor/elementor.php",
-    "astra-widgets" => "astra-widgets/astra-widgets.php",
-  ];
-
-  foreach ($plugins as $slug => $file) {
-    if (!file_exists(WP_PLUGIN_DIR . "/" . $file)) {
-      $api = plugins_api("plugin_information", [
-        "slug" => $slug,
-        "fields" => ["sections" => false],
-      ]);
-
-      if (!is_wp_error($api)) {
-        $upgrader = new Plugin_Upgrader(new Automatic_Upgrader_Skin());
-
-        $upgrader->install($api->download_link);
-      }
-    }
-
-    if (file_exists(WP_PLUGIN_DIR . "/" . $file) && !is_plugin_active($file)) {
-      activate_plugin($file);
-      if ($slug === "elementor") {
-        delete_transient("elementor_activation_redirect");
-        update_option("elementor_setup_status", "completed");
-      }
-    }
-  }
-
-  if (wp_get_theme()->get_template() !== "astra") {
-    $theme = wp_get_theme("astra");
-
-    if (!$theme->exists()) {
-      $api = themes_api("theme_information", [
-        "slug" => "astra",
-        "fields" => ["sections" => false],
-      ]);
-
-      if (!is_wp_error($api)) {
-        $upgrader = new Theme_Upgrader(new Automatic_Upgrader_Skin());
-
-        $upgrader->install($api->download_link);
-      }
-    }
-
-    if (wp_get_theme("astra")->exists()) {
-      switch_theme("astra");
-    }
-  }
-}
-
-register_activation_hook(OBSIA_PLUGIN_FILE, "obsia_install_dependencies");
 
 /**
  * Adds a custom button to the WordPress admin bar.
