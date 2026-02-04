@@ -114,3 +114,5 @@ wp-config-sample.php
 /upgrade/
 /backup/
 index.php
+/plugins/elementor
+/plugins/astra-widgets
