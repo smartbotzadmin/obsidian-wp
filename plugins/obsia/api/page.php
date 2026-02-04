@@ -160,6 +160,27 @@ function obsia_create_page(WP_REST_Request $req)
   // palette
   $astra_color_palettes = get_option("astra-color-palettes", []);
 
+  // If the option is empty/null, use Astra API to generate the default presets
+  if (empty($astra_color_palettes) || !isset($astra_color_palettes["presets"])) {
+    if (!function_exists("astra_get_palette_presets")) {
+      require_once get_template_directory() . "/inc/customizer/class-astra-customizer-helpers.php";
+    }
+    $astra_color_palettes = [
+      "palettes" => ["palette_1" => []],
+      "presets" => astra_get_palette_presets(),
+    ];
+  }
+
+  // Clear Astra Theme CSS Cache
+  if (is_callable(["Astra_Minify", "refresh_assets"])) {
+    Astra_Minify::refresh_assets();
+  }
+
+  // Dude astra team confused Birch with Brich.
+  if ($design["palette"] == "Brich") {
+    $design["palette"] = "Birch";
+  }
+
   $palette_selected = $astra_color_palettes["presets"][$design["palette"]];
   $astra_settings["global-color-palette"]["palette"] = $palette_selected;
   $astra_color_palettes["palettes"]["palette_1"] = $palette_selected;
