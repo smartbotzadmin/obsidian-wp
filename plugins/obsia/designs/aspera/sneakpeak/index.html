@@ -5274,5 +5274,18 @@
         }));
       //# sourceURL=/wp-includes/js/wp-emoji-loader.min.js
     </script>
+
+    <script>
+      // Hide Admin Bar
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("obsia-preview") === "true") {
+        document.documentElement.classList.add("hide-admin-bar");
+        // Add internal style to hide WP admin bar if it somehow loads
+        const style = document.createElement("style");
+        style.innerHTML =
+          "#wpadminbar { display: none !important; } html { margin-top: 0 !important; }";
+        document.head.appendChild(style);
+      }
+    </script>
   </body>
 </html>
