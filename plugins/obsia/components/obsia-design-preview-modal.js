@@ -385,6 +385,28 @@ class ObsiaDesignPreviewModal extends HTMLElement {
 
     const previewHead = this.preview.head;
 
+    const fontLink = document.createElement("link");
+    fontLink.rel = "stylesheet";
+    fontLink.href =
+      "https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600&family=DM+Serif+Display&family=Karla:wght@400;600&family=Lato:wght@400;600&family=Lora:wght@400;600&family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;600&family=Roboto:wght@400;600&family=Rubik:wght@400;600&family=Source+Sans+Pro:wght@400;600&family=Work+Sans:wght@400;600&display=swap";
+    previewHead.appendChild(fontLink);
+
+    const paletteStyle = document.createElement("style");
+    paletteStyle.textContent = `
+      .astra-palette-oak { --ast-global-color-0: #0067ff; --e-global-color-astglobalcolor0: #0067ff; --ast-global-color-1: #005ee9; --e-global-color-astglobalcolor1: #005ee9; --ast-global-color-2: #0f172a; --e-global-color-astglobalcolor2: #0f172a; --ast-global-color-3: #364151; --e-global-color-astglobalcolor3: #364151; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #e7f6ff; --e-global-color-astglobalcolor5: #e7f6ff; --ast-global-color-6: #070614; --e-global-color-astglobalcolor6: #070614; --ast-global-color-7: #d1dae5; --e-global-color-astglobalcolor7: #d1dae5; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-viola { --ast-global-color-0: #6528f7; --e-global-color-astglobalcolor0: #6528f7; --ast-global-color-1: #5511f8; --e-global-color-astglobalcolor1: #5511f8; --ast-global-color-2: #0f172a; --e-global-color-astglobalcolor2: #0f172a; --ast-global-color-3: #454f5e; --e-global-color-astglobalcolor3: #454f5e; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #f2f0fe; --e-global-color-astglobalcolor5: #f2f0fe; --ast-global-color-6: #0d0614; --e-global-color-astglobalcolor6: #0d0614; --ast-global-color-7: #d8d8f5; --e-global-color-astglobalcolor7: #d8d8f5; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-cedar { --ast-global-color-0: #dd183b; --e-global-color-astglobalcolor0: #dd183b; --ast-global-color-1: #cc1939; --e-global-color-astglobalcolor1: #cc1939; --ast-global-color-2: #0f172a; --e-global-color-astglobalcolor2: #0f172a; --ast-global-color-3: #3a3a3a; --e-global-color-astglobalcolor3: #3a3a3a; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #ffede6; --e-global-color-astglobalcolor5: #ffede6; --ast-global-color-6: #140609; --e-global-color-astglobalcolor6: #140609; --ast-global-color-7: #ffd1bf; --e-global-color-astglobalcolor7: #ffd1bf; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-widow { --ast-global-color-0: #54b435; --e-global-color-astglobalcolor0: #54b435; --ast-global-color-1: #379237; --e-global-color-astglobalcolor1: #379237; --ast-global-color-2: #0f172a; --e-global-color-astglobalcolor2: #0f172a; --ast-global-color-3: #2f3b40; --e-global-color-astglobalcolor3: #2f3b40; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #edfbe2; --e-global-color-astglobalcolor5: #edfbe2; --ast-global-color-6: #0c1406; --e-global-color-astglobalcolor6: #0c1406; --ast-global-color-7: #d5ead8; --e-global-color-astglobalcolor7: #d5ead8; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-lily { --ast-global-color-0: #dca54a; --e-global-color-astglobalcolor0: #dca54a; --ast-global-color-1: #d09a40; --e-global-color-astglobalcolor1: #d09a40; --ast-global-color-2: #0f172a; --e-global-color-astglobalcolor2: #0f172a; --ast-global-color-3: #4a4a4a; --e-global-color-astglobalcolor3: #4a4a4a; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #faf5e5; --e-global-color-astglobalcolor5: #faf5e5; --ast-global-color-6: #141004; --e-global-color-astglobalcolor6: #141004; --ast-global-color-7: #f0e6c5; --e-global-color-astglobalcolor7: #f0e6c5; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-rose { --ast-global-color-0: #fb5fab; --e-global-color-astglobalcolor0: #fb5fab; --ast-global-color-1: #ea559d; --e-global-color-astglobalcolor1: #ea559d; --ast-global-color-2: #0f172a; --e-global-color-astglobalcolor2: #0f172a; --ast-global-color-3: #454f5e; --e-global-color-astglobalcolor3: #454f5e; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #fceef5; --e-global-color-astglobalcolor5: #fceef5; --ast-global-color-6: #140610; --e-global-color-astglobalcolor6: #140610; --ast-global-color-7: #fad8e9; --e-global-color-astglobalcolor7: #fad8e9; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-sage { --ast-global-color-0: #1b9c85; --e-global-color-astglobalcolor0: #1b9c85; --ast-global-color-1: #178e79; --e-global-color-astglobalcolor1: #178e79; --ast-global-color-2: #0f172a; --e-global-color-astglobalcolor2: #0f172a; --ast-global-color-3: #454f5e; --e-global-color-astglobalcolor3: #454f5e; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #edf6ee; --e-global-color-astglobalcolor5: #edf6ee; --ast-global-color-6: #06140c; --e-global-color-astglobalcolor6: #06140c; --ast-global-color-7: #d4f3d7; --e-global-color-astglobalcolor7: #d4f3d7; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-flare { --ast-global-color-0: #fd9800; --e-global-color-astglobalcolor0: #fd9800; --ast-global-color-1: #e98c00; --e-global-color-astglobalcolor1: #e98c00; --ast-global-color-2: #0f172a; --e-global-color-astglobalcolor2: #0f172a; --ast-global-color-3: #454f5e; --e-global-color-astglobalcolor3: #454f5e; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #fef9e1; --e-global-color-astglobalcolor5: #fef9e1; --ast-global-color-6: #141006; --e-global-color-astglobalcolor6: #141006; --ast-global-color-7: #f9f0c8; --e-global-color-astglobalcolor7: #f9f0c8; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-maple { --ast-global-color-0: #ff6210; --e-global-color-astglobalcolor0: #ff6210; --ast-global-color-1: #f15808; --e-global-color-astglobalcolor1: #f15808; --ast-global-color-2: #1c0d0a; --e-global-color-astglobalcolor2: #1c0d0a; --ast-global-color-3: #353535; --e-global-color-astglobalcolor3: #353535; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #fef1e4; --e-global-color-astglobalcolor5: #fef1e4; --ast-global-color-6: #140b06; --e-global-color-astglobalcolor6: #140b06; --ast-global-color-7: #e5d7d1; --e-global-color-astglobalcolor7: #e5d7d1; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-brich { --ast-global-color-0: #737880; --e-global-color-astglobalcolor0: #737880; --ast-global-color-1: #65696f; --e-global-color-astglobalcolor1: #65696f; --ast-global-color-2: #151616; --e-global-color-astglobalcolor2: #151616; --ast-global-color-3: #393c40; --e-global-color-astglobalcolor3: #393c40; --ast-global-color-4: #ffffff; --e-global-color-astglobalcolor4: #ffffff; --ast-global-color-5: #f6f6f6; --e-global-color-astglobalcolor5: #f6f6f6; --ast-global-color-6: #232529; --e-global-color-astglobalcolor6: #232529; --ast-global-color-7: #f1f0f0; --e-global-color-astglobalcolor7: #f1f0f0; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+      .astra-palette-dark { --ast-global-color-0: #0085ff; --e-global-color-astglobalcolor0: #0085ff; --ast-global-color-1: #0177e3; --e-global-color-astglobalcolor1: #0177e3; --ast-global-color-2: #ffffff; --e-global-color-astglobalcolor2: #ffffff; --ast-global-color-3: #e7f6ff; --e-global-color-astglobalcolor3: #e7f6ff; --ast-global-color-4: #212a37; --e-global-color-astglobalcolor4: #212a37; --ast-global-color-5: #0f172a; --e-global-color-astglobalcolor5: #0f172a; --ast-global-color-6: #4f5b62; --e-global-color-astglobalcolor6: #4f5b62; --ast-global-color-7: #070614; --e-global-color-astglobalcolor7: #070614; --ast-global-color-8: #222222; --e-global-color-astglobalcolor8: #222222; }
+    `;
+    previewHead.appendChild(paletteStyle);
+
     // Hydrate images using img-css-ids
     const homeCssIds = JSON.parse(atob(this.imgCssIds)).home;
     const mergePictures = JSON.parse(sessionStorage.getItem("obsia_payload")).pictures.merge;
@@ -458,8 +480,7 @@ class ObsiaDesignPreviewModal extends HTMLElement {
       let previewAstraFontFamily = iframeHead.querySelector("#previewAstraFontFamily");
       const fontHeading = fontPair.heading.replace(/'/g, "").split(",")[0];
       const fontBody = fontPair.body.replace(/'/g, "").split(",")[0];
-      const styleTemplate = `
-				<style id="previewAstraFontFamily" rel="stylesheet">
+      const styleContent = `
 					/* headings */
 					h1, h2, h3, h4, h5, h6, .entry-content :where(h1, h2, h3, h4, h5, h6), .site-title, .site-title a {
 						font-family: ${fontHeading};
@@ -517,13 +538,15 @@ class ObsiaDesignPreviewModal extends HTMLElement {
 							font-size: 1rem;
 							line-height: var(--ast-body-line-height, 1.65);
 					}
-				</style>
 			`;
 
       if (!previewAstraFontFamily) {
-        iframeHead.insertAdjacentHTML("beforeend", styleTemplate);
+        const style = document.createElement("style");
+        style.id = "previewAstraFontFamily";
+        style.textContent = styleContent;
+        iframeHead.appendChild(style);
       } else {
-        previewAstraFontFamily.innerHTML = styleTemplate;
+        previewAstraFontFamily.textContent = styleContent;
       }
     }
   }

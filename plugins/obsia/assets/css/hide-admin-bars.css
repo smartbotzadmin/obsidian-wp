@@ -1,5 +1,16 @@
 /* Hide the admin bar */
-#wpadminbar {
+html body #wpadminbar {
+  display: none !important;
+  visibility: hidden !important;
+}
+/* This is crucial: WordPress adds margin to the top of the HTML tag via inline CSS */
+/* You must force it back to 0 */
+html {
+  margin-top: 0 !important;
+}
+/* Hide the placeholder space some themes create */
+#wpadminbar,
+#wpadminbar * {
   display: none !important;
 }
 
