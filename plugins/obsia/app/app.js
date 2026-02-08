@@ -31,12 +31,33 @@ class ObsiaApp extends HTMLElement {
       </div>
       <obsia-topbar></obsia-topbar>
       <obsia-plan-selector></obsia-plan-selector>
+      <div id="req-modal" class="fixed inset-0 bg-black/80 flex justify-center items-center z-[99999] hidden">
+        <div class="bg-slate-800 p-8 rounded-lg w-[500px] text-white border border-slate-700 shadow-2xl flex flex-col items-center">
+          <img src="${obsia_vars.plugin_url}assets/icons/warning.svg" class="h-16 w-16 mb-4" alt="Warning"/>
+          <h2 class="text-2xl font-bold mb-4 text-white text-center">Requirements Needed</h2>
+          <p class="mb-4 text-slate-300 text-sm text-center">To use Obsidian AI, please ensure the following are active:</p>
+          <ul id="req-list" class="list-none mb-6 space-y-2 text-white font-bold text-sm w-full text-center"></ul>
+          <div class="flex justify-center w-full">
+            <button id="reload-btn" class="bg-cyan-500 hover:bg-cyan-400 active:scale-95 text-white px-6 py-2.5 rounded-md transition-all duration-200 text-sm font-semibold cursor-pointer">
+              I've fixed it, reload
+            </button>
+          </div>
+        </div>
+      </div>
     `;
 
     this._loaderElement = shadowRoot.querySelector("#loader");
+
     this._planSelector = shadowRoot.querySelector("obsia-plan-selector");
+
+    shadowRoot
+      .querySelector("#reload-btn")
+      .addEventListener("click", () => window.location.reload());
+
     document.querySelector("#wpfooter")?.remove();
+
     document.querySelector(".notice.notice-warning.update-nag.inline")?.remove();
+
     document.querySelector("astra-sites-on-active")?.remove();
 
     this.routes = {
@@ -51,9 +72,85 @@ class ObsiaApp extends HTMLElement {
       "google-signin-redirect": "obsia-google-signin-redirect",
     };
 
+    await this._checkRequirements();
+
     await this._performAuthCheckAndRoute();
+
     window.addEventListener("hashchange", this._performAuthCheckAndRoute.bind(this));
+
     this.shadowRoot.addEventListener("click", this.handleNavigationClick.bind(this));
+  }
+
+  /**
+   * @private
+   * @description Checks for Astra Theme and Elementor Plugin.
+   * @returns {Promise<void>}
+   */
+  async _checkRequirements() {
+    try {
+      const [astraRes, elementorRes] = await Promise.all([
+        fetch(`${obsia_vars.rest_url}obsia/api/check-astra`, {
+          headers: { "X-WP-Nonce": obsia_vars.rest_nonce },
+        }),
+
+        fetch(`${obsia_vars.rest_url}obsia/api/check-elementor`, {
+          headers: { "X-WP-Nonce": obsia_vars.rest_nonce },
+        }),
+      ]);
+
+      const astra = await astraRes.json();
+
+      const elementor = await elementorRes.json();
+
+      if (!astra.activated || !elementor.activated) {
+        this._showRequirementsModal(astra, elementor);
+      }
+    } catch (error) {
+      console.error("Requirements check failed:", error);
+    }
+  }
+
+  /**
+   * @private
+   * @description Displays the requirements modal.
+   * @param {Object} astra Astra check results.
+   * @param {Object} elementor Elementor check results.
+   * @returns {void}
+   */
+  _showRequirementsModal(astra, elementor) {
+    const modal = this.shadowRoot.querySelector("#req-modal");
+
+    const list = modal.querySelector("#req-list");
+
+    list.innerHTML = "";
+
+    if (!astra.activated) {
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.className = "underline hover:text-cyan-400";
+      link.href = astra.installed ? "themes.php" : "theme-install.php?search=astra";
+      link.target = "_blank";
+      link.textContent = astra.installed
+        ? "Activate Astra Theme"
+        : "Install & Activate Astra Theme";
+      li.appendChild(link);
+      list.appendChild(li);
+    }
+
+    if (!elementor.activated) {
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.className = "underline hover:text-cyan-400";
+      link.href = elementor.installed ? "plugins.php" : "plugin-install.php?tab=search&s=elementor";
+      link.target = "_blank";
+      link.textContent = elementor.installed
+        ? "Activate Elementor Plugin"
+        : "Install & Activate Elementor Plugin";
+      li.appendChild(link);
+      list.appendChild(li);
+    }
+
+    modal.classList.remove("hidden");
   }
 
   /**

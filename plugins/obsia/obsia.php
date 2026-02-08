@@ -94,6 +94,7 @@ function obsia_render_app_page()
   );
   wp_localize_script("obsia-app-script", "obsia_vars", [
     "plugin_url" => OBSIA_PLUGIN_URL,
+    "rest_url" => esc_url_raw(rest_url()),
     "rest_nonce" => wp_create_nonce("wp_rest"),
   ]);
   echo "<obsia-app></obsia-app>";
@@ -214,8 +215,23 @@ function obsia_register_api_endpoints()
     "callback" => "obsia_create_page",
     "permission_callback" => "__return_true",
   ]);
+
+  // check_astra
+  register_rest_route("obsia/api", "/check-astra", [
+    "methods" => "GET",
+    "callback" => "obsia_check_astra",
+    "permission_callback" => "__return_true",
+  ]);
+
+  // check_elementor
+  register_rest_route("obsia/api", "/check-elementor", [
+    "methods" => "GET",
+    "callback" => "obsia_check_elementor",
+    "permission_callback" => "__return_true",
+  ]);
 }
 add_action("rest_api_init", "obsia_register_api_endpoints");
 
 require_once OBSIA_PLUGIN_DIR . "api/design.php";
 require_once OBSIA_PLUGIN_DIR . "api/page.php";
+require_once OBSIA_PLUGIN_DIR . "api/check.php";
