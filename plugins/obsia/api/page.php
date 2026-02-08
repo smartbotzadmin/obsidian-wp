@@ -154,8 +154,8 @@ function obsia_create_page(WP_REST_Request $req)
   // fonts
   $astra_settings = get_option("astra-settings", null);
 
-  $astra_settings["body-font-family"] = "'{$design["font"]["body"]}, sans-serif";
-  $astra_settings["headings-font-family"] = "'{$design["font"]["heading"]}, serif";
+  $astra_settings["body-font-family"] = "'{$design["font"]["body"]}', sans-serif";
+  $astra_settings["headings-font-family"] = "'{$design["font"]["heading"]}', serif";
 
   // palette
   $astra_color_palettes = get_option("astra-color-palettes", []);
