@@ -6,7 +6,7 @@
  * Author: Connor, Skyking & Mjesbar
  * Text Domain: obsia
  * License: GPLv2
- * Requires Plugins: elementor, astra-widgets
+ * Requires Plugins: elementor
  */
 
 if (!defined("ABSPATH")) {

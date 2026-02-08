@@ -127,7 +127,13 @@ function obsia_create_page(WP_REST_Request $req)
     ]);
     $post_id = is_wp_error($new_page) ? 0 : $new_page;
 
-    // elementor settings
+    // Elementor settings
+
+    // Disable default Elementor colors, use Astra colors instead.
+    update_option("elementor_disable_color_schemes", "yes");
+    // Disable default Elementor fonts,, use Astra theme fonts instead.
+    update_option("elementor_disable_typography_schemes", "yes");
+
     if ($post_id > 0) {
       // Create Elementor page settings (_elementor_page_settings)
       $page_settings = [
@@ -154,8 +160,8 @@ function obsia_create_page(WP_REST_Request $req)
   // fonts
   $astra_settings = get_option("astra-settings", null);
 
-  $astra_settings["body-font-family"] = "'{$design["font"]["body"]}', sans-serif";
-  $astra_settings["headings-font-family"] = "'{$design["font"]["heading"]}', serif";
+  $astra_settings["body-font-family"] = $design["font"]["body"];
+  $astra_settings["headings-font-family"] = $design["font"]["heading"];
 
   // palette
   $astra_color_palettes = get_option("astra-color-palettes", []);
@@ -166,8 +172,16 @@ function obsia_create_page(WP_REST_Request $req)
       require_once get_template_directory() . "/inc/customizer/class-astra-customizer-helpers.php";
     }
     $astra_color_palettes = [
+      "currentPalette" => "palette_1",
       "palettes" => ["palette_1" => []],
       "presets" => astra_get_palette_presets(),
+      "presetNames" => [
+        "palette_1" => null,
+        "palette_2" => "Oak",
+        "palette_3" => "Viola",
+        "palette_4" => "Dark",
+      ],
+      "flag" => 1,
     ];
   }
 

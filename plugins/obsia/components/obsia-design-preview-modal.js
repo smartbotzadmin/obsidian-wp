@@ -7,12 +7,12 @@ class ObsiaDesignPreviewModal extends HTMLElement {
   static observedAttributes = ["template-id", "url", "name"];
 
   fontPairs = [
-    { heading: "Playfair Display", body: "Open Sans" },
-    { heading: "Lato", body: "Lora" },
-    { heading: "Barlow Semi Condensed", body: "Roboto" },
-    { heading: "Monsterrat", body: "Source Sans Pro" },
-    { heading: "Rubik", body: "Karla" },
-    { heading: "DM Serif Display", body: "Work Sans" },
+    { heading: "'Playfair Display', serif", body: "'Open Sans', sans-serif" },
+    { heading: "'Lato', sans-serif", body: "'Lora', serif" },
+    { heading: "'Barlow Semi Condensed', sans-serif", body: "'Roboto', sans-serif" },
+    { heading: "'Montserrat', sans-serif", body: "'Source Sans Pro', sans-serif" },
+    { heading: "'Rubik', sans-serif", body: "'Karla', sans-serif" },
+    { heading: "'DM Serif Display', serif", body: "'Work Sans', sans-serif" },
   ];
 
   palettes = [
@@ -222,7 +222,9 @@ class ObsiaDesignPreviewModal extends HTMLElement {
 
     // After the element is in the DOM, set textContent for dynamic spans
     if (this.selectedFontPairPreview) {
-      this.selectedFontPairPreview.textContent = `${this.fontPairs[0].heading} & ${this.fontPairs[0].body}`;
+      const fontHeading = this.fontPairs[0].heading.replace(/'/g, "").split(",")[0];
+      const fontBody = this.fontPairs[0].body.replace(/'/g, "").split(",")[0];
+      this.selectedFontPairPreview.textContent = `${fontHeading} & ${fontBody}`;
     }
     if (this.selectedPalettePreview) {
       const paletteName =
@@ -439,7 +441,9 @@ class ObsiaDesignPreviewModal extends HTMLElement {
    */
   #changeIFrameFontFamily(fontPair) {
     if (this.selectedFontPairPreview) {
-      this.selectedFontPairPreview.textContent = `${fontPair.heading} & ${fontPair.body}`;
+      const fontHeading = fontPair.heading.replace(/'/g, "").split(",")[0];
+      const fontBody = fontPair.body.replace(/'/g, "").split(",")[0];
+      this.selectedFontPairPreview.textContent = `${fontHeading} & ${fontBody}`;
     }
 
     const currentPayload = window.obsiaSessionManager.getPayload();
@@ -451,11 +455,13 @@ class ObsiaDesignPreviewModal extends HTMLElement {
     if (this.iframe && this.iframe.contentDocument) {
       const iframeHead = this.iframe.contentDocument.head;
       let previewAstraFontFamily = iframeHead.querySelector("#previewAstraFontFamily");
+      const fontHeading = fontPair.heading.replace(/'/g, "").split(",")[0];
+      const fontBody = fontPair.body.replace(/'/g, "").split(",")[0];
       const styleTemplate = `
 				<style id="previewAstraFontFamily" rel="stylesheet">
 					/* headings */
 					h1, h2, h3, h4, h5, h6, .entry-content :where(h1, h2, h3, h4, h5, h6), .site-title, .site-title a {
-						font-family: '${fontPair.heading}', serif;
+						font-family: ${fontHeading};
 						font-weight: 600;
 					}
 
@@ -463,21 +469,21 @@ class ObsiaDesignPreviewModal extends HTMLElement {
 						font-size:54px;
 						font-size:3.375rem;
 						font-weight:600;
-						font-family:'${fontPair.heading}',serif;
+						font-family: ${fontHeading};
 						line-height:1.4em;
 					}
 					h2, .entry-content :where(h2) {
 						font-size:42px;
 						font-size:2.625rem;
 						font-weight:600;
-						font-family:'${fontPair.heading}',serif;
+						font-family: ${fontHeading};
 						line-height:1.3em;
 					}
 					h3, .entry-content :where(h3) {
 						font-size:36px;
 						font-size:2.25rem;
 						font-weight:600;
-						font-family:'${fontPair.heading}',serif;
+						font-family: ${fontHeading};
 						line-height:1.3em;
 					}
 					h4, .entry-content :where(h4) {
@@ -485,26 +491,26 @@ class ObsiaDesignPreviewModal extends HTMLElement {
 						font-size:1.5625rem;
 						line-height:1.2em;
 						font-weight:600;
-						font-family:'${fontPair.heading}',serif;
+						font-family: ${fontHeading};
 					}
 					h5, .entry-content :where(h5) {
 						font-size:20px;
 						font-size:1.25rem;
 						line-height:1.2em;
 						font-weight:600;
-						font-family:'${fontPair.heading}',serif;
+						font-family: ${fontHeading};
 					}
 					h6, .entry-content :where(h6) {
 						font-size:15px;
 						font-size:0.9375rem;
 						line-height:1.25em;
 						font-weight:600;
-						font-family:'${fontPair.heading}',serif;
+						font-family: ${fontHeading};
 					}
 
 					/* body */
 					body, button, input, select, textarea, .ast-button, .ast-custom-button {
-							font-family: '${fontPair.body}', sans-serif;
+							font-family: ${fontPair.body};
 							font-weight: 400;
 							font-size: 16px;
 							font-size: 1rem;
