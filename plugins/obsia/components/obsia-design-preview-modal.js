@@ -361,7 +361,8 @@ class ObsiaDesignPreviewModal extends HTMLElement {
       case "url":
         this.url = newVal;
         if (this.iframe) {
-          this.iframe.src = this.url;
+          // this.iframe.src = this.url;
+          this.iframe.src = "/wp-content/plugins/obsia/designs/aspera/sneakpeak/index.html";
         }
         break;
       case "name":

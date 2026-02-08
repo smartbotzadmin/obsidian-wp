@@ -4,7 +4,15 @@
  * @description Web component for a single design option in the design grid.
  */
 class ObsiaDesignOption extends HTMLElement {
-  static observedAttributes = ["template-id", "url", "name", "title", "option", "img-css-ids"];
+  static observedAttributes = [
+    "template-id",
+    "url",
+    "thumbnail",
+    "name",
+    "title",
+    "option",
+    "img-css-ids",
+  ];
 
   /**
    * @description Constructs the ObsiaDesignOption instance.
@@ -14,29 +22,33 @@ class ObsiaDesignOption extends HTMLElement {
     super();
     this.id = null;
     this.url = null;
+    this.thumbnail = null;
     this.name = null;
     this.option = null;
-    this.iframe = null;
+    this.imgContainer = null;
+    this.thumbnailImg = null;
     this.hoverScroller = null;
     this.scrollInterval = null;
     this.currentScrollPostion = 0;
-    this.scrollSpeed = 10;
+    this.scrollSpeed = 5;
 
     this.className = `flex flex-col max-w-1/3 h-[450px] bg-slate-950 rounded-lg border border-slate-700 cursor-pointer hover:border-slate-700 overflow-hidden`;
     this.innerHTML = /*html*/ `
-            <div class="relative grow flex items-center justify-center bg-slate-900 text-slate-100 overflow-hidden">
+            <div class="relative grow flex items-start justify-center bg-slate-900 text-slate-100 overflow-hidden">
                 <img
                     id="loadingOption"
                     src="${obsia_vars.plugin_url}assets/icons/image.svg"
                     alt="Image Icon"
                     class="absolute z-3 w-full h-full opacity-10 animate-pulse"
                 />
-                <div id="hoverScroller" class="absolute w-full h-full z-2 bg-slate-900" ></div>
-                <iframe
-                    class="h-full w-screen"
-                    src=""
-                    frameborder="0"
-                ></iframe>
+                <div id="hoverScroller" class="absolute w-full h-full z-2" ></div>
+                <div id="imgContainer" class="w-full transition-transform duration-200 ease-linear">
+                  <img
+                      id="thumbnailImg"
+                      class="w-full h-auto block"
+                      src=""
+                  />
+                </div>
             </div>
             <div class="flex flex-col grow-0 shrink-0 p-4 cursor-default">
                 <div class="flex justify-between items-center">
@@ -62,30 +74,31 @@ class ObsiaDesignOption extends HTMLElement {
    */
   connectedCallback() {
     this.id = this.getAttribute("template-id");
-    this.url = this.getAttribute("url") + "&obsia-preview=true";
+    this.url = this.getAttribute("url");
+    this.thumbnail = this.getAttribute("thumbnail");
     this.name = this.getAttribute("name");
     this.option = this.getAttribute("option");
     this.imgCssIds = this.getAttribute("img-css-ids");
 
-    this.iframe = this.querySelector("iframe");
+    this.imgContainer = this.querySelector("#imgContainer");
+    this.thumbnailImg = this.querySelector("#thumbnailImg");
     this.hoverScroller = this.querySelector("#hoverScroller");
     const optionNameElement = this.querySelector("#optionName");
     const loadingOptionImg = this.querySelector("#loadingOption");
 
-    if (this.iframe) {
-      this.iframe.src = this.url;
+    if (this.thumbnailImg) {
+      this.thumbnailImg.src = this.thumbnail;
+      this.thumbnailImg.onload = () => {
+        if (loadingOptionImg) {
+          loadingOptionImg.classList.add("hidden");
+        }
+      };
     }
+
     if (optionNameElement) {
       optionNameElement.textContent = `Option ${this.option} - ${this.name}`;
     }
-    if (loadingOptionImg) {
-      loadingOptionImg.id = `loadingOption${this.option}`;
-    }
-    if (this.hoverScroller) {
-      this.hoverScroller.id = `hoverScroller${this.option}`;
-    }
 
-    this.#setIFrameStyles();
     this.#scrollDownDesignOption();
     this.#scrollUpDesignOption();
 
@@ -101,6 +114,7 @@ class ObsiaDesignOption extends HTMLElement {
       clearInterval(this.scrollInterval);
       this.scrollInterval = null;
     }
+
     if (this.hoverScroller) {
       this.hoverScroller.removeEventListener("click", this.#handleHoverScrollerClick.bind(this));
       this.hoverScroller.onmouseenter = null;
@@ -119,14 +133,18 @@ class ObsiaDesignOption extends HTMLElement {
     if (oldVal === newVal) {
       return;
     }
+
     switch (name) {
       case "template-id":
         this.id = newVal;
         break;
       case "url":
-        this.url = newVal + "&obsia-preview=true";
-        if (this.iframe) {
-          this.iframe.src = this.url;
+        this.url = newVal;
+        break;
+      case "thumbnail":
+        this.thumbnail = newVal;
+        if (this.thumbnailImg) {
+          this.thumbnailImg.src = this.thumbnail;
         }
         break;
       case "name":
@@ -137,70 +155,15 @@ class ObsiaDesignOption extends HTMLElement {
         break;
       case "img-css-ids":
         this.imgCssIds = newVal;
+        break;
       case "option":
         this.option = newVal;
         const optionNameElement = this.querySelector("#optionName");
         if (optionNameElement) {
           optionNameElement.textContent = `Option ${this.option}`;
         }
-        const loadingOptionImg = this.querySelector(`#loadingOption${oldVal}`);
-        if (loadingOptionImg) {
-          loadingOptionImg.id = `loadingOption${newVal}`;
-        }
-        const hoverScroller = this.querySelector(`#hoverScroller${oldVal}`);
-        if (hoverScroller) {
-          hoverScroller.id = `hoverScroller${newVal}`;
-        }
         break;
     }
-  }
-
-  /**
-   * @private
-   * @description Sets styles for the iframe once it loads.
-   * @returns {void}
-   */
-  #setIFrameStyles() {
-    this.iframe.onload = () => {
-      const iframeDoc = this.iframe.contentDocument || this.iframe.contentWindow.document;
-      const iframeBody = iframeDoc.body;
-      const style = document.createElement("style");
-      style.innerHTML = /*css*/ `
-                ::-webkit-scrollbar {
-                    width: 0px;
-                }
-            `;
-      iframeDoc.head.appendChild(style);
-      iframeBody.style.zoom = 0.6;
-
-      // Hydrate images using img-css-ids
-      const homeCssIds = JSON.parse(atob(this.imgCssIds)).home;
-      const mergePictures = JSON.parse(sessionStorage.getItem("obsia_payload")).pictures.merge;
-
-      Object.keys(homeCssIds).forEach((key, index) => {
-        const urlToHydrate = mergePictures[index].urls.raw;
-        const containerDiv = iframeBody.querySelector(`#${key}`);
-        if (!containerDiv) return;
-        let targetImg = containerDiv.querySelector("img");
-        if (!targetImg) {
-          // Set ::before css style
-          containerDiv.style.backgroundImage = `url(${urlToHydrate})`;
-        } else if (targetImg) {
-          targetImg.src = urlToHydrate;
-        }
-      });
-
-      const loadingOptionImg = this.querySelector(`#loadingOption${this.option}`);
-      if (loadingOptionImg) {
-        loadingOptionImg.classList.remove("animate-pulse");
-        loadingOptionImg.classList.add("hidden");
-      }
-
-      const hoverScrollerBg = this.querySelector(`#hoverScroller${this.option}`);
-      if (hoverScrollerBg) {
-        hoverScrollerBg.classList.remove("bg-slate-900");
-      }
-    };
   }
 
   /**
@@ -210,6 +173,7 @@ class ObsiaDesignOption extends HTMLElement {
    */
   #handleHoverScrollerClick() {
     const obsiaApp = document.querySelector("obsia-app");
+
     if (obsiaApp) {
       const previewModal = new ObsiaDesignPreviewModal();
       previewModal.setAttribute("url", this.url);
@@ -223,22 +187,25 @@ class ObsiaDesignOption extends HTMLElement {
 
   /**
    * @private
-   * @description Scrolls the design option iframe down on mouse enter.
+   * @description Scrolls the design thumbnail down on mouse enter.
    * @returns {void}
    */
   #scrollDownDesignOption() {
     this.hoverScroller.onmouseenter = () => {
       if (this.scrollInterval) {
         clearInterval(this.scrollInterval);
-        this.scrollInterval = null;
       }
 
-      const iframeDoc = this.iframe.contentDocument || this.iframe.contentWindow.document;
-      const iframeBody = iframeDoc.body;
+      const containerHeight = this.hoverScroller.clientHeight;
+      const imgHeight = this.thumbnailImg.clientHeight;
+      const maxScroll = imgHeight - containerHeight;
+
+      if (maxScroll <= 0) return;
+
       this.scrollInterval = setInterval(() => {
-        if (this.currentScrollPostion < iframeBody.scrollHeight - 1080) {
+        if (this.currentScrollPostion < maxScroll) {
           this.currentScrollPostion += this.scrollSpeed;
-          iframeBody.style.transform = `translateY(-${this.currentScrollPostion}px)`;
+          this.imgContainer.style.transform = `translateY(-${this.currentScrollPostion}px)`;
         }
       }, 20);
     };
@@ -246,22 +213,22 @@ class ObsiaDesignOption extends HTMLElement {
 
   /**
    * @private
-   * @description Scrolls the design option iframe up on mouse leave.
+   * @description Scrolls the design thumbnail up on mouse leave.
    * @returns {void}
    */
   #scrollUpDesignOption() {
     this.hoverScroller.onmouseleave = () => {
       if (this.scrollInterval) {
         clearInterval(this.scrollInterval);
-        this.scrollInterval = null;
       }
 
-      const iframeDoc = this.iframe.contentDocument || this.iframe.contentWindow.document;
-      const iframeBody = iframeDoc.body;
       this.scrollInterval = setInterval(() => {
         if (this.currentScrollPostion > 0) {
-          this.currentScrollPostion -= this.scrollSpeed;
-          iframeBody.style.transform = `translateY(-${this.currentScrollPostion}px)`;
+          this.currentScrollPostion -= this.scrollSpeed * 2;
+          if (this.currentScrollPostion < 0) this.currentScrollPostion = 0;
+          this.imgContainer.style.transform = `translateY(-${this.currentScrollPostion}px)`;
+        } else {
+          clearInterval(this.scrollInterval);
         }
       }, 20);
     };

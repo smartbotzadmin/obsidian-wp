@@ -25,6 +25,7 @@ class ObsiaDesignGrid extends HTMLElement {
                             template-id=${design.ID}
                             option=${index + 1}
                             url=${design.url}
+                            thumbnail=${design.thumbnail}
                             name=${design.name}
                             title=${design.title}
                             img-css-ids=${btoa(JSON.stringify(design.images_json))}
