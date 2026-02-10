@@ -54,12 +54,6 @@ class ObsiaApp extends HTMLElement {
       .querySelector("#reload-btn")
       .addEventListener("click", () => window.location.reload());
 
-    document.querySelector("#wpfooter")?.remove();
-
-    document.querySelector(".notice.notice-warning.update-nag.inline")?.remove();
-
-    document.querySelector("astra-sites-on-active")?.remove();
-
     this.routes = {
       "": "obsia-start",
       start: "obsia-start",

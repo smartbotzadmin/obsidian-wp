@@ -17,7 +17,13 @@ html {
 /* Hide the admin sidebar */
 #adminmenuback,
 #adminmenuwrap,
-#adminmenu {
+#adminmenu,
+#wpfooter,
+.astra-sites-on-active,
+.notice,
+.notice-warning,
+.update-nag,
+.inline {
   display: none !important;
 }
 
