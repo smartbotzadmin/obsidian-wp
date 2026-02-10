@@ -261,7 +261,7 @@ class ObsiaDesignPreviewModal extends HTMLElement {
     this.homePageLink = this.querySelector("#homePageLink");
 
     if (this.iframe) {
-      this.iframe.src = this.url + "?obsia-preview=true";
+      this.iframe.src = this.url; //+ "?obsia-preview=true";
       this.iframe.onload = this.#handleIframeLoad.bind(this);
     }
 
@@ -361,7 +361,7 @@ class ObsiaDesignPreviewModal extends HTMLElement {
       case "url":
         this.url = newVal;
         if (this.iframe) {
-          this.iframe.src = this.url + "?obsia-preview=true";
+          this.iframe.src = this.url; // + "?obsia-preview=true";
         }
         break;
       case "name":

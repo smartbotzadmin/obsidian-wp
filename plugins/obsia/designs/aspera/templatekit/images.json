@@ -1,29 +1,24 @@
 {
-	"about": {
-		"ob-feats-img": "",
-		"ob-cta-bg": ""
-	},
-	"contact": {
-		"ob-cta-bg": ""
-	},
-	"home": {
-		"ob-hero-bg": "",
-		"ob-content-img": "",
-		"ob-stepbystep-step1-img": "",
-		"ob-stepbystep-step2-img": "",
-		"ob-stepbystep-step3-img": "",
-		"ob-testimonial-review1-author-img": "",
-		"ob-testimonial-review2-author-img": "",
-		"ob-cta-bg": ""
-	},
-	"services": {
-		"ob-serviceslist-service1-img": "",
-		"ob-serviceslist-service2-img": "",
-		"ob-serviceslist-service3-img": "",
-		"ob-serviceslist-service4-img": "",
-		"ob-serviceslist-service5-img": "",
-		"ob-serviceslist-service6-img": "",
-		"ob-servicesdetail-img": "",
-		"ob-cta-bg": ""
-	}
+  "about": {
+    "ob-feats-img": "",
+    "ob-cta-bg": ""
+  },
+  "contact": {
+    "ob-cta-bg": ""
+  },
+  "home": {
+    "ob-hero-bg": "",
+    "ob-content-img": "",
+    "ob-cta-bg": ""
+  },
+  "services": {
+    "ob-serviceslist-service1-img": "",
+    "ob-serviceslist-service2-img": "",
+    "ob-serviceslist-service3-img": "",
+    "ob-serviceslist-service4-img": "",
+    "ob-serviceslist-service5-img": "",
+    "ob-serviceslist-service6-img": "",
+    "ob-servicesdetail-img": "",
+    "ob-cta-bg": ""
+  }
 }
