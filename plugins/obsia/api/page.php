@@ -79,13 +79,18 @@ function obsia_create_page(WP_REST_Request $req)
   $ai_content = json_decode($ai_content, true);
 
   // 4. Process for every page of the template kit
-  $pages = ["home"]; //, "services", "contact", "about"];
-  $created = [
-    "home" => "",
-    // "services" => "",
-    // "contact" => "",
-    // "about" => "",
-  ];
+  $pages = [];
+  $created = [];
+  $template_items = $wp_filesystem->dirlist($design_page_dir);
+
+  if (is_array($template_items)) {
+    foreach ($template_items as $item) {
+      if (isset($item["type"]) && $item["type"] === "d") {
+        $pages[] = $item["name"];
+        $created[$item["name"]] = "";
+      }
+    }
+  }
 
   foreach ($pages as $page) {
     // Load template json
