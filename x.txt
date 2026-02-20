@@ -1,6 +1,6 @@
 /wp-content/plugins/obsia/designs/aspera/images/
 /wp-content/plugins/obsia/designs/placeholders/
-
+/wp-content/plugins/obsia/designs/placeholders/person3.webp
 
 Headline
 Lorem Ipsum Dolor Sit Amet

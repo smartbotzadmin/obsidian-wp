@@ -420,6 +420,8 @@ class ObsiaDesignPreviewModal extends HTMLElement {
         containerDiv.style.backgroundImage = `url(${urlToHydrate})`;
         console.debug(key, `url(${urlToHydrate})`);
       } else if (targetImg) {
+        targetImg.removeAttribute("srcset");
+        targetImg.removeAttribute("sizes");
         targetImg.src = urlToHydrate;
         console.debug(key, urlToHydrate);
       }

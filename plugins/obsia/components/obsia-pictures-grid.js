@@ -7,7 +7,7 @@ class ObsiaPicturesGrid extends HTMLElement {
   currentQuery = "";
   currentPage = 1;
   isLoading = false;
-  perPage = 12;
+  perPage = 20;
   currentOrientation = "";
   allImages = [];
   displayedImages = [];
@@ -396,7 +396,7 @@ class ObsiaPicturesGrid extends HTMLElement {
         window.obsiaSessionManager.updatePayloadSection("pictures", {
           ...currentPictures,
           default: data.results,
-          merge: [...currentPictures.selected, ...data.results].slice(0, 10),
+          merge: [new Set([...currentPictures.selected, ...data.results])],
         });
         this.allImages = data.results; // Assign directly, not append, as this is the initial load
       }
@@ -461,7 +461,7 @@ class ObsiaPicturesGrid extends HTMLElement {
     window.obsiaSessionManager.updatePayloadSection("pictures", {
       ...currentPictures,
       selected: this.selectedImages,
-      merge: [...currentPictures.selected, ...currentPictures.default].slice(0, 10),
+      merge: [...new Set([...currentPictures.selected, ...currentPictures.default])],
     });
     this.#updateImageDisplay(imgDiv, imageData);
   }

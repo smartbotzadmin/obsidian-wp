@@ -79,12 +79,12 @@ function obsia_create_page(WP_REST_Request $req)
   $ai_content = json_decode($ai_content, true);
 
   // 4. Process for every page of the template kit
-  $pages = ["home", "services", "contact", "about"];
+  $pages = ["home"]; //, "services", "contact", "about"];
   $created = [
     "home" => "",
-    "services" => "",
-    "contact" => "",
-    "about" => "",
+    // "services" => "",
+    // "contact" => "",
+    // "about" => "",
   ];
 
   foreach ($pages as $page) {
@@ -143,7 +143,7 @@ function obsia_create_page(WP_REST_Request $req)
       update_post_meta($post_id, "_elementor_page_settings", $page_settings);
 
       // Create Elementor pages from 'template.json' (_elementor_data)
-      update_post_meta($post_id, "_elementor_data", json_encode($elementor_data));
+      update_post_meta($post_id, "_elementor_data", wp_slash(json_encode($elementor_data)));
       update_post_meta($post_id, "_elementor_edit_mode", "builder");
       update_post_meta($post_id, "_wp_page_template", "elementor_canvas");
       update_post_meta($post_id, "_elementor_version", ELEMENTOR_VERSION);
@@ -208,6 +208,9 @@ function obsia_create_page(WP_REST_Request $req)
   return new WP_REST_Response(
     [
       "created" => $created,
+      "error" => $error,
+      "post_id" => $post_id,
+      "elementor_data" => $elementor_data,
     ],
     200,
   );

@@ -1,3 +1,16 @@
 {
-  "home": { "ob-hero-bg": "", "ob-content-img": "", "ob-cta-bg": "" }
+  "home": {
+    "ob-hero-bg-img": "",
+    "ob-hero-testimonial-img": "",
+    "ob-aboutus-mission-img": "",
+    "ob-whyus-img": "",
+    "ob-ourservices-img1": "",
+    "ob-ourservices-img2": "",
+    "ob-ourservices-img3": "",
+    "ob-ourservices-img4": "",
+    "ob-project-img1": "",
+    "ob-project-img2": "",
+    "ob-project-img3": "",
+    "ob-testimonial-img": ""
+  }
 }
