@@ -64,7 +64,7 @@ function obsia_hydrate_content(&$elementor_data, $fields, $images)
           $element["settings"]["background_image"]["url"] = $uploaded_image_url;
         }
         // case img
-        elseif (isset($element["settings"]["image"])) {
+        if (isset($element["settings"]["image"])) {
           $element["settings"]["image"]["url"] = $uploaded_image_url;
         }
       }
