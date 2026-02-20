@@ -1,0 +1,1048 @@
+{
+    "manifest_version": "1.0.23",
+    "title": "Sunexia",
+    "page_builder": "elementor",
+    "kit_version": "1.0.0",
+    "templates": [
+        {
+            "name": "Global Kit Styles",
+            "screenshot": "screenshots\/global-kit-styles.jpg",
+            "source": "templates\/global.json",
+            "preview_url": "https:\/\/kitpro.site",
+            "type": "section",
+            "category": "page",
+            "metadata": {
+                "template_type": "global-styles",
+                "include_in_zip": "1",
+                "elementor_pro_required": null,
+                "additional_template_information": [
+                    "These are the global theme styles configured through the Elementor Theme Styles area."
+                ]
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Home",
+            "screenshot": "screenshots\/home.jpg",
+            "source": "templates\/home.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/home\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "About",
+            "screenshot": "screenshots\/about.jpg",
+            "source": "templates\/about.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/about\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Services",
+            "screenshot": "screenshots\/services.jpg",
+            "source": "templates\/services.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/services\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Project",
+            "screenshot": "screenshots\/project.jpg",
+            "source": "templates\/project.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/project\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Project Details",
+            "screenshot": "screenshots\/project-details.jpg",
+            "source": "templates\/project-details.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/project-details\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Team Work",
+            "screenshot": "screenshots\/team-work.jpg",
+            "source": "templates\/team-work.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/team-work\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Pricing Plan",
+            "screenshot": "screenshots\/pricing-plan.jpg",
+            "source": "templates\/pricing-plan.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/pricing-plan\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "404",
+            "screenshot": "screenshots\/404.jpg",
+            "source": "templates\/404.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/404\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Testimonial",
+            "screenshot": "screenshots\/testimonial.jpg",
+            "source": "templates\/testimonial.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/testimonial\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Blog",
+            "screenshot": "screenshots\/blog.jpg",
+            "source": "templates\/blog.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/blog\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Contact",
+            "screenshot": "screenshots\/contact.jpg",
+            "source": "templates\/contact.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/contact\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Header",
+            "screenshot": "screenshots\/header.png",
+            "source": "templates\/header.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/header\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-header",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Footer",
+            "screenshot": "screenshots\/footer.png",
+            "source": "templates\/footer.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/footer\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-footer",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Form Contact",
+            "screenshot": "screenshots\/form-contact.png",
+            "source": "templates\/form-contact.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/form-contact\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-other",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Form Email",
+            "screenshot": "screenshots\/form-email.png",
+            "source": "templates\/form-email.json",
+            "preview_url": "https:\/\/kitpro.site\/sunexia\/template-kit\/form-email\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-other",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        }
+    ],
+    "required_plugins": [
+        {
+            "name": "Elementor",
+            "version": "3.25.9",
+            "file": "elementor\/elementor.php",
+            "author": "Elementor.com"
+        },
+        {
+            "name": "ElementsKit Lite",
+            "version": "3.4.0",
+            "file": "elementskit-lite\/elementskit-lite.php",
+            "author": "Wpmet"
+        },
+        {
+            "name": "Ultimate Addons for Elementor Lite",
+            "version": "2.1.0",
+            "file": "header-footer-elementor\/header-footer-elementor.php",
+            "author": "Brainstorm Force"
+        },
+        {
+            "name": "Jeg Elementor Kit",
+            "version": "2.6.9",
+            "file": "jeg-elementor-kit\/jeg-elementor-kit.php",
+            "author": "Jegtheme"
+        },
+        {
+            "name": "MetForm",
+            "version": "3.5.0",
+            "file": "metform\/metform.php",
+            "author": "Wpmet"
+        },
+        {
+            "name": "Qi Addons For Elementor",
+            "version": "1.5.4",
+            "file": "qi-addons-for-elementor\/class-qiaddonsforelementor.php",
+            "author": "Qode Interactive"
+        }
+    ],
+    "images": [
+        {
+            "filename": "01_hero_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/01_hero_sunexia-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                }
+            ],
+            "filesize": 177810,
+            "dimensions": [
+                2160,
+                1440
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "02_story_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/02_story_sunexia-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                }
+            ],
+            "filesize": 85009,
+            "dimensions": [
+                1080,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "logoipsum-402.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/logoipsum-402.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 5308,
+            "dimensions": [
+                400,
+                56
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-400.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/logoipsum-400.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 4958,
+            "dimensions": [
+                400,
+                52
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-398.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/logoipsum-398.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 7699,
+            "dimensions": [
+                400,
+                74
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-391.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/logoipsum-391.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 7859,
+            "dimensions": [
+                400,
+                72
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "11gradient-white-800x400-1.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/11gradient-white-800x400-1.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 2272,
+            "dimensions": [
+                800,
+                400
+            ],
+            "image_source": "self_created",
+            "image_urls": ""
+        },
+        {
+            "filename": "09_3_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_3_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                },
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                }
+            ],
+            "filesize": 31524,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "09_2_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_2_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                },
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                }
+            ],
+            "filesize": 30904,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "09_1_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_1_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                },
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                }
+            ],
+            "filesize": 25247,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "03_about_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/03_about_sunexia-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/project.json",
+                    "name": "Project"
+                },
+                {
+                    "source": "templates\/project-details.json",
+                    "name": "Project Details"
+                }
+            ],
+            "filesize": 77186,
+            "dimensions": [
+                1080,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "logo-no-padding.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/logo-no-padding.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/footer.json",
+                    "name": "Footer"
+                }
+            ],
+            "filesize": 5958,
+            "dimensions": [
+                392,
+                96
+            ],
+            "image_source": "self_created",
+            "image_urls": ""
+        },
+        {
+            "filename": "04_why-choose-us_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/04_why-choose-us_sunexia-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/project.json",
+                    "name": "Project"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                }
+            ],
+            "filesize": 79069,
+            "dimensions": [
+                1080,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "06_1_services_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/06_1_services_sunexia-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 94603,
+            "dimensions": [
+                1079,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "06_2_services_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/06_2_services_sunexia-800x529.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 76787,
+            "dimensions": [
+                1088,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "06_3_services_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/06_3_services_sunexia-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/project.json",
+                    "name": "Project"
+                }
+            ],
+            "filesize": 52417,
+            "dimensions": [
+                1080,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "06_4_services_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/06_4_services_sunexia-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 74595,
+            "dimensions": [
+                1079,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "05_1_our-team_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/05_1_our-team_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                }
+            ],
+            "filesize": 46767,
+            "dimensions": [
+                500,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "05_4_our-team_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/05_4_our-team_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                }
+            ],
+            "filesize": 42614,
+            "dimensions": [
+                500,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "05_3_our-team_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/05_3_our-team_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                }
+            ],
+            "filesize": 54770,
+            "dimensions": [
+                500,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "05_2_our-team_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/05_2_our-team_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                }
+            ],
+            "filesize": 42570,
+            "dimensions": [
+                500,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "07_hero_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/07_hero_sunexia-800x450.jpg",
+            "templates": [
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/project.json",
+                    "name": "Project"
+                },
+                {
+                    "source": "templates\/project-details.json",
+                    "name": "Project Details"
+                },
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                },
+                {
+                    "source": "templates\/pricing-plan.json",
+                    "name": "Pricing Plan"
+                },
+                {
+                    "source": "templates\/404.json",
+                    "name": "404"
+                },
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                },
+                {
+                    "source": "templates\/contact.json",
+                    "name": "Contact"
+                }
+            ],
+            "filesize": 180721,
+            "dimensions": [
+                2000,
+                1125
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "11_line-dot_v4.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/11_line-dot_v4.png",
+            "templates": [
+                {
+                    "source": "templates\/about.json",
+                    "name": "About"
+                }
+            ],
+            "filesize": 1852,
+            "dimensions": [
+                15,
+                986
+            ],
+            "image_source": "self_created",
+            "image_urls": ""
+        },
+        {
+            "filename": "05_5_our-team_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/05_5_our-team_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                }
+            ],
+            "filesize": 43731,
+            "dimensions": [
+                500,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "05_6_our-team_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/05_6_our-team_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                }
+            ],
+            "filesize": 27700,
+            "dimensions": [
+                500,
+                720
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "10_family-solar-panel-compressed.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/10_family-solar-panel-compressed.png",
+            "templates": [
+                {
+                    "source": "templates\/team-work.json",
+                    "name": "Team Work"
+                }
+            ],
+            "filesize": 160852,
+            "dimensions": [
+                720,
+                577
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "09_4_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_4_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                }
+            ],
+            "filesize": 28299,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "09_5_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_5_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                }
+            ],
+            "filesize": 47801,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "09_6_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_6_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                }
+            ],
+            "filesize": 25004,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "09_7_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_7_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                }
+            ],
+            "filesize": 25852,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "09_8_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_8_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                }
+            ],
+            "filesize": 24369,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "09_9_client_sunexia.jpg",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/09_9_client_sunexia.jpg",
+            "templates": [
+                {
+                    "source": "templates\/testimonial.json",
+                    "name": "Testimonial"
+                }
+            ],
+            "filesize": 36788,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KLAZPYTVCU"
+        },
+        {
+            "filename": "logo_sunexia.png",
+            "thumbnail_url": "https:\/\/kitpro.site\/sunexia\/wp-content\/uploads\/sites\/490\/2025\/12\/logo_sunexia.png",
+            "templates": [
+                {
+                    "source": "templates\/header.json",
+                    "name": "Header"
+                }
+            ],
+            "filesize": 6721,
+            "dimensions": [
+                466,
+                183
+            ],
+            "image_source": "self_created",
+            "image_urls": ""
+        }
+    ]
+}
