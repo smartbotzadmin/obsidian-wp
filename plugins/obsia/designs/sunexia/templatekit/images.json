@@ -12,5 +12,25 @@
     "ob-project-img2": "",
     "ob-project-img3": "",
     "ob-testimonial-img": ""
+  },
+  "services": {
+    "ob-hero-bg-img": "",
+    "ob-service1-img": "",
+    "ob-service2-img": "",
+    "ob-service3-img": "",
+    "ob-service4-img": "",
+    "ob-service5-img": "",
+    "ob-service6-img": "",
+    "ob-service-owner-img": ""
+  },
+  "contact": {
+    "ob-hero-contact-img": ""
+  },
+  "about": {
+    "ob-hero-about-img": "",
+    "ob-aboutus-img": "",
+    "ob-ourprocess1-img": "",
+    "ob-ourprocess2-img": "",
+    "ob-ourprocess3-img": ""
   }
 }

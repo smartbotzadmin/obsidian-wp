@@ -1,4 +1,24 @@
 {
+  "services": {
+    "ob-services-title": "",
+    "ob-services-description": "",
+    "ob-service1-title": "",
+    "ob-service1-description": "",
+    "ob-service2-title": "",
+    "ob-service2-description": "",
+    "ob-service3-title": "",
+    "ob-service3-description": "",
+    "ob-service4-title": "",
+    "ob-service4-description": "",
+    "ob-service5-title": "",
+    "ob-service5-description": "",
+    "ob-service6-title": "",
+    "ob-service6-description": "",
+    "ob-ourpricing-title": "",
+    "ob-testimonial-title": "",
+    "ob-testimonial-review": "",
+    "ob-business-owner-name": ""
+  },
   "home": {
     "ob-hero-title": "",
     "ob-hero-shortdescription": "",
@@ -68,5 +88,45 @@
     "ob-testimonial-business-title": "",
     "ob-blog-title": "",
     "ob-blog-description": ""
+  },
+  "contact": {
+    "ob-email-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-location-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-phone-iconbox": {
+      "title": "",
+      "description": ""
+    }
+  },
+  "about": {
+    "ob-aboutus-title": "",
+    "ob-aboutus-description": "",
+    "ob-aboutus-mission": "",
+    "ob-aboutus-vision": "",
+    "ob-partnering": "",
+    "ob-why-chooseus-title": "",
+    "ob-why-chooseus-description": "",
+    "ob-why-chooseus1-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-chooseus2-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-chooseus3-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourprocess-title": "",
+    "ob-ourprocess1-text": "",
+    "ob-ourprocess2-text": "",
+    "ob-ourprocess3-text": "",
+    "ob-ourteam-title": ""
   }
 }

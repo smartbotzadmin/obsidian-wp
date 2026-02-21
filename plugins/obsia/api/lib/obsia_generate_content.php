@@ -7,7 +7,7 @@ function obsia_generate_content($body, $authorization_header)
 {
   //receives an associative array with blank fields to let AI fill them up
   $response = wp_remote_post("https://obsidian-content-generator-313065021854.us-east1.run.app", [
-    "timeout" => 60,
+    "timeout" => 300,
     "headers" => [
       "Content-Type" => "application/json; chartset=utf-8",
       "Authorization" => $authorization_header,

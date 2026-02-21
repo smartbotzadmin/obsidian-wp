@@ -215,7 +215,8 @@ function obsia_create_page(WP_REST_Request $req)
       "created" => $created,
       "error" => $error,
       "post_id" => $post_id,
-      "elementor_data" => $elementor_data,
+      "ai_content" => $ai_content,
+      "body" => $body,
     ],
     200,
   );
