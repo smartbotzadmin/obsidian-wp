@@ -18,6 +18,12 @@ Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequa
 Call to Action
 Excepteur Sint Occaecat
 
+
+Things to setup a design:
+1. save its thumbnail (fullscreen screenshot).
+2. save its raw html (home page) from elementor template preview.
+3. insert this to hide th admin bar into the raw html.
+```js
     <script>
       // Hide admin bar
       const style = document.createElement("style");
@@ -25,3 +31,7 @@ Excepteur Sint Occaecat
         "#wpadminbar { display: none !important; } html { margin-top: 0 !important; }";
       document.head.appendChild(style);
     </script>
+```
+4. remove the domain specific urls tag srcs domains ie (http://{you_domain}/{path} by /{path}).
+5. rename the assets with .*(\d+)\..* form, since wordpress doesn't admit () as special chars.
+6. remove the `jquery.min.js`, `backbone.min.js` & `underscore.min.js` scripts from raw html assets.
