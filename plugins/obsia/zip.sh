@@ -4,4 +4,5 @@ zip -9 -r \
   -x "./node_modules/*" \
   -x "./zip.sh" \
   -x "./bun.lock" \
-  -x "./package.json"
+  -x "./package.json" \
+  -x "./designs/*/original/*"

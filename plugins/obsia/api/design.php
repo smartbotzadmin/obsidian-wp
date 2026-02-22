@@ -51,7 +51,7 @@ function obsia_get_designs()
       "name" => $folder,
       "title" => ucfirst($folder),
       "url" => $plugin_url . $folder . "/sneakpeak/index.html",
-      "thumbnail" => $plugin_url . $folder . "/sneakpeak/thumbnail.png",
+      "thumbnail" => $plugin_url . $folder . "/sneakpeak/thumbnail.webp",
       "images_json" => $images_json,
     ];
   }
