@@ -162,14 +162,14 @@ function obsia_enqueue_components()
   ) {
     wp_enqueue_style("obsia-output-style", plugins_url("assets/css/output.css", OBSIA_PLUGIN_FILE));
 
-    // Enqueue Gutenberg Sidebar scripts
-    wp_enqueue_script(
-      "obsia-gutenberg-sidebar",
-      plugins_url("gutenberg/sidebar.js", OBSIA_PLUGIN_FILE),
-      [],
-      null,
-      true,
-    );
+    // // Enqueue Gutenberg Sidebar scripts
+    // wp_enqueue_script(
+    //   "obsia-gutenberg-sidebar",
+    //   plugins_url("gutenberg/sidebar.js", OBSIA_PLUGIN_FILE),
+    //   [],
+    //   null,
+    //   true,
+    // );
 
     // Enqueue Page scripts
     $page_dir = OBSIA_PLUGIN_DIR . "app/pages/";
