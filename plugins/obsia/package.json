@@ -1,7 +1,7 @@
 {
   "name": "obsia",
   "version": "1.0.0",
-  "description": "Obsidian AI Page Builder Plugin",
+  "description": "Obsidian Space AI Page Builder Plugin",
   "main": "obsia.php",
   "scripts": {
     "tw": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/output.css --watch"

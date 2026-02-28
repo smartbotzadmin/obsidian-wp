@@ -1,4 +1,4 @@
-=== Obsidian AI Page Builder ===
+=== Obsidian Space AI Page Builder ===
 Contributors: obsidianwebsitebuilder
 Tags: ai, website builder, page builder, elementor, gemini
 Requires at least: 5.0

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Obsidian AI Page Builder
+ * Plugin Name: Obsidian Space AI Page Builder
  * Description: A plugin to empower WordPress to create pages rapidly from pre-made templates/themes and fill them with AI-generated text content.
  * Version: 1.0.0
  * Author: Connor, Skyking & Mjesbar
