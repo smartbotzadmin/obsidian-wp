@@ -1,0 +1,38 @@
+{
+  "about": {
+    "ob-hero-img": "",
+    "ob-who-we-are-img": "",
+    "ob-assessment-bg": "",
+    "ob-consultation-bg": ""
+  },
+  "contact": {
+    "ob-hero-img": ""
+  },
+  "services": {
+    "ob-hero-img": "",
+    "ob-ourservices-img": "",
+    "ob-what-we-offer-img1": "",
+    "ob-what-we-offer-img2": "",
+    "ob-what-we-offer-img3": "",
+    "ob-what-we-offer-img4": "",
+    "ob-what-we-offer-img5": "",
+    "ob-what-we-offer-img6": "",
+    "ob-why-choose-us-img": "",
+    "ob-consultation-bg": ""
+  },
+  "home": {
+    "ob-hero-img": "",
+    "ob-who-we-are-img": "",
+    "ob-assessment-bg": "",
+    "ob-ourservices-img": "",
+    "ob-what-we-offer-img1": "",
+    "ob-what-we-offer-img2": "",
+    "ob-what-we-offer-img3": "",
+    "ob-what-we-offer-img4": "",
+    "ob-what-we-offer-img5": "",
+    "ob-what-we-offer-img6": "",
+    "ob-why-choose-us-img": "",
+    "ob-consultation-bg": "",
+    "ob-faq-img": ""
+  }
+}
