@@ -79,6 +79,126 @@ This plugin relies on several external services to provide AI content generation
     *   **Vimeo Terms & Privacy:** [https://vimeo.com/terms](https://vimeo.com/terms), [https://vimeo.com/privacy](https://vimeo.com/privacy)
     *   **YouTube Terms & Privacy:** [https://www.youtube.com/t/terms](https://www.youtube.com/t/terms), [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
+== Source Code Disclosure ==
+
+This plugin includes minified JavaScript and CSS files as part of its pre-designed template libraries. Below is a comprehensive disclosure of all source code and third-party libraries included in the plugin, in compliance with WordPress.org Plugin Directory guidelines.
+
+=== WordPress Core Libraries (wp-includes) ===
+
+The following JavaScript files are sourced from or derived from WordPress core (wp-includes) and are included for template functionality:
+
+*   **admin-bar.min.js** — WordPress admin bar functionality
+    *   Source: wp-includes/js/admin-bar.min.js
+    *   Repository: https://github.com/WordPress/wordpress-develop/tree/trunk/src/js
+*   **api-request.min.js** — WordPress REST API request handler
+    *   Source: wp-includes/js/api-request.min.js
+    *   Repository: https://github.com/WordPress/wordpress-develop/tree/trunk/src/js
+*   **common.min.js** — WordPress common utilities
+    *   Source: wp-includes/js/common.min.js
+    *   Repository: https://github.com/WordPress/wordpress-develop/tree/trunk/src/js
+*   **i18n.min.js** — WordPress internationalization library
+    *   Source: wp-includes/js/i18n.min.js
+    *   Repository: https://github.com/WordPress/wordpress-develop/tree/trunk/src/js
+
+=== Elementor Libraries ===
+
+The following files are included from or related to Elementor Page Builder, a required dependency:
+
+*   **admin-bar.min.js, elementor-admin-bar.min.js** — Elementor admin bar integration
+    *   Source: Elementor Plugin
+    *   Repository: https://github.com/elementor/elementor
+*   **common-modules.min.js, frontend-modules.min.js, frontend-1.min.js, frontend.min.js** — Elementor frontend modules
+    *   Source: Elementor Plugin
+    *   Repository: https://github.com/elementor/elementor
+*   **webpack.runtime.min.js** — Webpack runtime for Elementor module bundling
+    *   Source: Elementor Plugin build system
+    *   Repository: https://github.com/elementor/elementor
+
+=== Third-Party External Libraries ===
+
+The following external JavaScript libraries are bundled with the plugin templates:
+
+*   **jquery.min.js** (v1.12.4)
+    *   Source: jQuery Foundation
+    *   Repository: https://github.com/jquery/jquery
+    *   License: MIT
+    *   Official CDN: https://code.jquery.com/jquery-1.12.4.min.js
+
+*   **jquery-migrate.min.js**
+    *   Source: jQuery Foundation
+    *   Repository: https://github.com/jquery/jquery-migrate
+    *   License: MIT
+    *   Official CDN: https://code.jquery.com/jquery-migrate-1.4.1.min.js
+
+*   **jquery-numerator.min.js**
+    *   Source: jQuery numerator plugin
+    *   Repository: https://github.com/balupton/jquery-numerator
+    *   License: MIT
+    *   Official Source: https://raw.githubusercontent.com/balupton/jquery-numerator/master/lib/jquery.numerator.min.js
+
+*   **underscore.min.js**
+    *   Source: Underscore.js
+    *   Repository: https://github.com/jashkenas/underscore
+    *   License: MIT
+    *   Official CDN: https://underscorejs.org/underscore-min.js
+
+*   **backbone.min.js**
+    *   Source: Backbone.js
+    *   Repository: https://github.com/jashkenas/backbone
+    *   License: MIT
+    *   Official CDN: https://backbonejs.org/backbone-min.js
+
+*   **backbone.radio.min.js**
+    *   Source: Backbone.Radio (Marionette.js dependency)
+    *   Repository: https://github.com/marionettejs/backbone.radio
+    *   License: MIT
+    *   Official Source: https://raw.githubusercontent.com/marionettejs/backbone.radio/master/lib/backbone.radio.min.js
+
+*   **backbone.marionette.min.js**
+    *   Source: Marionette.js
+    *   Repository: https://github.com/marionettejs/backbone.marionette
+    *   License: MIT
+    *   Official CDN: https://marionettejs.com/
+
+*   **swiper.min.js** (Swiper Slider)
+    *   Source: Swiper by nolimits4web
+    *   Repository: https://github.com/nolimits4web/swiper
+    *   License: MIT
+    *   Official CDN: https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js
+
+*   **hoverintent-js.min.js**
+    *   Source: HoverIntent jQuery plugin
+    *   Repository: https://github.com/briancherne/jquery-hoverintent
+    *   License: MIT
+    *   Official Source: https://raw.githubusercontent.com/briancherne/jquery-hoverintent/master/jquery.hoverintent.min.js
+
+*   **flexibility.min.js**
+    *   Source: Flexibility CSS polyfill
+    *   Repository: https://github.com/jonathantneal/flexibility
+    *   License: CC0 1.0 Universal
+    *   Official CDN: https://unpkg.com/flexibility@2.0.0/flexibility.min.js
+
+*   **core.min.js** (jQuery UI)
+    *   Source: jQuery UI
+    *   Repository: https://github.com/jquery/jquery-ui
+    *   License: MIT
+    *   Official CDN: https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
+
+*   **dialog.min.js, draggable.min.js, mouse.min.js** (jQuery UI components)
+    *   Source: jQuery UI
+    *   Repository: https://github.com/jquery/jquery-ui
+    *   License: MIT
+    *   Official CDN: https://code.jquery.com/ui/1.12.1/ (component-specific builds)
+
+*   **dev-tools.min.js, hooks.min.js, web-cli.min.js, app-loader.min.js** (Internal utility libraries)
+    *   Source: Obsidian Space Website Builder
+    *   Repository: Not publicly available at this time
+    *   License: GPLv2 or later
+
+=== Build Process ===
+
+This plugin doesn not need any build tool.
+
 == Installation ==
 
 1.  Upload the `obsia` folder to the `/wp-content/plugins/` directory.
