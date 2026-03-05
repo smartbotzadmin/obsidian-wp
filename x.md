@@ -35,3 +35,5 @@ Things to setup a design:
 4. remove the domain specific urls tag srcs domains ie (http://{you_domain}/{path} by /{path}).
 5. rename the assets with .*(\d+)\..* form, since wordpress doesn't admit () as special chars.
 6. remove the `jquery.min.js`, `backbone.min.js` & `underscore.min.js` scripts from raw html assets.
+7. rename "css" and "css2" folders to files "css.css" and "css2.css"
+8. update minified scripts within common/ folder used by the index.html
