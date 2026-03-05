@@ -36,3 +36,4 @@ Things to setup a design:
 5. rename the assets with .*(\d+)\..* form, since wordpress doesn't admit () as special chars.
 6. remove the `jquery.min.js`, `backbone.min.js` & `underscore.min.js` scripts from raw html assets.
 7. rename "css" and "css2" folders to files "css.css" and "css2.css"
+8. comment the meta link tag `<link rel="https://api.w.org/" href="/wp-json/" />`

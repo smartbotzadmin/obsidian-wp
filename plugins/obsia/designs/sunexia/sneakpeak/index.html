@@ -3442,7 +3442,7 @@
     <!--<script src="./index_files/jquery.min.js" id="jquery-core-js"></script>-->
     <script src="/wp-includes/js/jquery/jquery.min.js" id="jquery-core-js"></script>
     <script src="./index_files/jquery-migrate.min.js" id="jquery-migrate-js"></script>
-    <link rel="https://api.w.org/" href="/wp-json/" />
+    <!--<link rel="https://api.w.org/" href="/wp-json/" />-->
     <link
       rel="alternate"
       title="JSON"
@@ -7399,8 +7399,8 @@
       var elementorWebCliConfig = {
         isDebug: false,
         urls: {
-          rest: "http:\/\/obsia.local\/wp-json\/",
-          assets: "http:\/\/obsia.local\/wp-content\/plugins\/elementor\/assets\/",
+          rest: "\/wp-json\/",
+          assets: "\/wp-content\/plugins\/elementor\/assets\/",
         },
         nonce: "03c59b0efe",
         version: "3.35.5",
@@ -7408,8 +7408,8 @@
       var elementorWebCliConfig = {
         isDebug: false,
         urls: {
-          rest: "http:\/\/obsia.local\/wp-json\/",
-          assets: "http:\/\/obsia.local\/wp-content\/plugins\/elementor\/assets\/",
+          rest: "\/wp-json\/",
+          assets: "\/wp-content\/plugins\/elementor\/assets\/",
         },
         nonce: "03c59b0efe",
         version: "3.35.5",
@@ -7430,7 +7430,7 @@
     <script id="elementor-dev-tools-js-before">
       var elementorDevToolsConfig = {
         isDebug: false,
-        urls: { assets: "http:\/\/obsia.local\/wp-content\/plugins\/elementor\/assets\/" },
+        urls: { assets: "\/wp-content\/plugins\/elementor\/assets\/" },
         deprecation: {
           soft_notices: [],
           soft_version_count: 4,
@@ -7440,7 +7440,7 @@
       };
       var elementorDevToolsConfig = {
         isDebug: false,
-        urls: { assets: "http:\/\/obsia.local\/wp-content\/plugins\/elementor\/assets\/" },
+        urls: { assets: "\/wp-content\/plugins\/elementor\/assets\/" },
         deprecation: {
           soft_notices: [],
           soft_version_count: 4,
@@ -7450,7 +7450,7 @@
       };
       var elementorDevToolsConfig = {
         isDebug: false,
-        urls: { assets: "http:\/\/obsia.local\/wp-content\/plugins\/elementor\/assets\/" },
+        urls: { assets: "\/wp-content\/plugins\/elementor\/assets\/" },
         deprecation: {
           soft_notices: [],
           soft_version_count: 4,
@@ -7514,8 +7514,8 @@
           editor_events: false,
         },
         urls: {
-          assets: "http:\/\/obsia.local\/wp-content\/plugins\/elementor\/assets\/",
-          rest: "http:\/\/obsia.local\/wp-json\/",
+          assets: "\/wp-content\/plugins\/elementor\/assets\/",
+          rest: "\/wp-json\/",
         },
         filesUpload: { unfilteredFiles: true },
         editor_events: {
@@ -7578,7 +7578,7 @@
           plan_type: "free",
           user_email: null,
         },
-        ajax: { url: "http:\/\/obsia.local\/wp-admin\/admin-ajax.php", nonce: "79831c6b7f" },
+        ajax: { url: "\/wp-admin\/admin-ajax.php", nonce: "79831c6b7f" },
         finder: {
           data: {
             edit: { title: "Edit", dynamic: true, name: "edit" },
@@ -7589,30 +7589,30 @@
                 "saved-templates": {
                   title: "Saved Templates",
                   icon: "library-save",
-                  url: "http:\/\/obsia.local\/wp-admin\/edit.php?post_type=elementor_library&tabs_group=library",
+                  url: "\/wp-admin\/edit.php?post_type=elementor_library&tabs_group=library",
                   keywords: ["template", "section", "page", "library"],
                 },
                 "system-info": {
                   title: "System Info",
                   icon: "info-circle-o",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-system-info",
+                  url: "\/wp-admin\/admin.php?page=elementor-system-info",
                   keywords: ["system", "info", "environment", "elementor"],
                 },
                 "role-manager": {
                   title: "Role Manager",
                   icon: "person",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-role-manager",
+                  url: "\/wp-admin\/admin.php?page=elementor-role-manager",
                   keywords: ["role", "manager", "user", "elementor"],
                 },
                 "knowledge-base": {
                   title: "Knowledge Base",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=go_knowledge_base_site",
+                  url: "\/wp-admin\/admin.php?page=go_knowledge_base_site",
                   keywords: ["help", "knowledge", "docs", "elementor"],
                 },
                 "theme-builder": {
                   title: "Theme Builder",
                   icon: "library-save",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5#site-editor\/promotion",
+                  url: "\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5#site-editor\/promotion",
                   keywords: [
                     "template",
                     "header",
@@ -7627,7 +7627,7 @@
                 "kit-library": {
                   title: "Website Templates",
                   icon: "kit-parts",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5&source=finder#\/kit-library",
+                  url: "\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5&source=finder#\/kit-library",
                   keywords: [
                     "Website Templates",
                     "kit library",
@@ -7649,37 +7649,37 @@
                 "wp-post": {
                   title: "Add New Post",
                   icon: "plus-circle-o",
-                  url: "http:\/\/obsia.local\/wp-admin\/edit.php?action=elementor_new_post&post_type=post&template_type=wp-post&_wpnonce=ffc845db53",
+                  url: "\/wp-admin\/edit.php?action=elementor_new_post&post_type=post&template_type=wp-post&_wpnonce=ffc845db53",
                   keywords: ["Add New Post", "post", "page", "template", "new", "create"],
                 },
                 "wp-page": {
                   title: "Add New Page",
                   icon: "plus-circle-o",
-                  url: "http:\/\/obsia.local\/wp-admin\/edit.php?action=elementor_new_post&post_type=page&template_type=wp-page&_wpnonce=ffc845db53",
+                  url: "\/wp-admin\/edit.php?action=elementor_new_post&post_type=page&template_type=wp-page&_wpnonce=ffc845db53",
                   keywords: ["Add New Page", "post", "page", "template", "new", "create"],
                 },
                 page: {
                   title: "Add New Page Template",
                   icon: "plus-circle-o",
-                  url: "http:\/\/obsia.local\/wp-admin\/edit.php?action=elementor_new_post&post_type=elementor_library&template_type=page&_wpnonce=ffc845db53",
+                  url: "\/wp-admin\/edit.php?action=elementor_new_post&post_type=elementor_library&template_type=page&_wpnonce=ffc845db53",
                   keywords: ["Add New Page Template", "post", "page", "template", "new", "create"],
                 },
                 section: {
                   title: "Add New Section",
                   icon: "plus-circle-o",
-                  url: "http:\/\/obsia.local\/wp-admin\/edit.php?action=elementor_new_post&post_type=elementor_library&template_type=section&_wpnonce=ffc845db53",
+                  url: "\/wp-admin\/edit.php?action=elementor_new_post&post_type=elementor_library&template_type=section&_wpnonce=ffc845db53",
                   keywords: ["Add New Section", "post", "page", "template", "new", "create"],
                 },
                 container: {
                   title: "Add New Container",
                   icon: "plus-circle-o",
-                  url: "http:\/\/obsia.local\/wp-admin\/edit.php?action=elementor_new_post&post_type=elementor_library&template_type=container&_wpnonce=ffc845db53",
+                  url: "\/wp-admin\/edit.php?action=elementor_new_post&post_type=elementor_library&template_type=container&_wpnonce=ffc845db53",
                   keywords: ["Add New Container", "post", "page", "template", "new", "create"],
                 },
                 "floating-buttons": {
                   title: "Add New Floating Element",
                   icon: "plus-circle-o",
-                  url: "http:\/\/obsia.local\/wp-admin\/edit.php?action=elementor_new_post&post_type=e-floating-buttons&template_type=floating-buttons&_wpnonce=ffc845db53#library",
+                  url: "\/wp-admin\/edit.php?action=elementor_new_post&post_type=e-floating-buttons&template_type=floating-buttons&_wpnonce=ffc845db53#library",
                   keywords: [
                     "Add New Floating Element",
                     "post",
@@ -7692,7 +7692,7 @@
                 elementor_component: {
                   title: "Add New Component",
                   icon: "plus-circle-o",
-                  url: "http:\/\/obsia.local\/wp-admin\/edit.php?action=elementor_new_post&post_type=elementor_component&template_type=elementor_component&_wpnonce=ffc845db53",
+                  url: "\/wp-admin\/edit.php?action=elementor_new_post&post_type=elementor_component&template_type=elementor_component&_wpnonce=ffc845db53",
                   keywords: ["Add New Component", "post", "page", "template", "new", "create"],
                 },
               },
@@ -7704,49 +7704,49 @@
               items: {
                 homepage: {
                   title: "Homepage",
-                  url: "http:\/\/obsia.local",
+                  url: "",
                   icon: "home-heart",
                   keywords: ["home", "page"],
                 },
                 "wordpress-dashboard": {
                   title: "Dashboard",
                   icon: "dashboard",
-                  url: "http:\/\/obsia.local\/wp-admin\/",
+                  url: "\/wp-admin\/",
                   keywords: ["dashboard", "wordpress"],
                 },
                 "wordpress-menus": {
                   title: "Menus",
                   icon: "wordpress",
-                  url: "http:\/\/obsia.local\/wp-admin\/nav-menus.php",
+                  url: "\/wp-admin\/nav-menus.php",
                   keywords: ["menu", "wordpress"],
                 },
                 "wordpress-themes": {
                   title: "Themes",
                   icon: "wordpress",
-                  url: "http:\/\/obsia.local\/wp-admin\/themes.php",
+                  url: "\/wp-admin\/themes.php",
                   keywords: ["themes", "wordpress"],
                 },
                 "wordpress-customizer": {
                   title: "Customizer",
                   icon: "wordpress",
-                  url: "http:\/\/obsia.local\/wp-admin\/customize.php",
+                  url: "\/wp-admin\/customize.php",
                   keywords: ["customizer", "wordpress"],
                 },
                 "wordpress-plugins": {
                   title: "Plugins",
                   icon: "wordpress",
-                  url: "http:\/\/obsia.local\/wp-admin\/plugins.php",
+                  url: "\/wp-admin\/plugins.php",
                   keywords: ["plugins", "wordpress"],
                 },
                 "wordpress-users": {
                   title: "Users",
                   icon: "wordpress",
-                  url: "http:\/\/obsia.local\/wp-admin\/users.php",
+                  url: "\/wp-admin\/users.php",
                   keywords: ["users", "profile", "wordpress"],
                 },
                 apps: {
                   title: "Add-ons",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-apps",
+                  url: "\/wp-admin\/admin.php?page=elementor-apps",
                   icon: "apps",
                   keywords: ["apps", "addon", "plugin", "extension", "integration"],
                 },
@@ -7759,37 +7759,37 @@
               items: {
                 "general-settings": {
                   title: "General Settings",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-settings#tab-general",
+                  url: "\/wp-admin\/admin.php?page=elementor-settings#tab-general",
                   keywords: ["general", "settings", "elementor"],
                 },
                 integrations: {
                   title: "Integrations",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-settings#tab-integrations",
+                  url: "\/wp-admin\/admin.php?page=elementor-settings#tab-integrations",
                   keywords: ["integrations", "settings", "elementor"],
                 },
                 advanced: {
                   title: "Advanced",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-settings#tab-advanced",
+                  url: "\/wp-admin\/admin.php?page=elementor-settings#tab-advanced",
                   keywords: ["advanced", "settings", "elementor"],
                 },
                 performance: {
                   title: "Performance",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-settings#tab-performance",
+                  url: "\/wp-admin\/admin.php?page=elementor-settings#tab-performance",
                   keywords: ["performance", "settings", "elementor"],
                 },
                 experiments: {
                   title: "Experiments",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-settings#tab-experiments",
+                  url: "\/wp-admin\/admin.php?page=elementor-settings#tab-experiments",
                   keywords: ["settings", "elementor", "experiments"],
                 },
                 features: {
                   title: "Features",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-settings#tab-experiments",
+                  url: "\/wp-admin\/admin.php?page=elementor-settings#tab-experiments",
                   keywords: ["settings", "elementor", "features"],
                 },
                 "element-manager": {
                   title: "Element Manager",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-element-manager",
+                  url: "\/wp-admin\/admin.php?page=elementor-element-manager",
                   keywords: ["settings", "elements", "widgets", "manager"],
                 },
               },
@@ -7802,7 +7802,7 @@
                 tools: {
                   title: "Tools",
                   icon: "tools",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-tools",
+                  url: "\/wp-admin\/admin.php?page=elementor-tools",
                   keywords: [
                     "tools",
                     "regenerate css",
@@ -7815,25 +7815,25 @@
                 "replace-url": {
                   title: "Replace URL",
                   icon: "tools",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-tools#tab-replace_url",
+                  url: "\/wp-admin\/admin.php?page=elementor-tools#tab-replace_url",
                   keywords: ["tools", "replace url", "domain", "elementor"],
                 },
                 "maintenance-mode": {
                   title: "Maintenance Mode",
                   icon: "tools",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-tools#tab-maintenance_mode",
+                  url: "\/wp-admin\/admin.php?page=elementor-tools#tab-maintenance_mode",
                   keywords: ["tools", "maintenance", "coming soon", "elementor"],
                 },
                 "import-export": {
                   title: "Import Export",
                   icon: "import-export",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-tools#tab-import-export-kit",
+                  url: "\/wp-admin\/admin.php?page=elementor-tools#tab-import-export-kit",
                   keywords: ["tools", "import export", "import", "export", "kit"],
                 },
                 "version-control": {
                   title: "Version Control",
                   icon: "time-line",
-                  url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-tools#tab-versions",
+                  url: "\/wp-admin\/admin.php?page=elementor-tools#tab-versions",
                   keywords: ["tools", "version", "control", "rollback", "beta", "elementor"],
                 },
               },
@@ -7849,16 +7849,15 @@
     <script src="./index_files/common.min.js" id="elementor-common-js"></script>
     <script id="elementor-app-loader-js-before">
       var elementorAppConfig = {
-        menu_url:
-          "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5#site-editor\/promotion",
-        assets_url: "http:\/\/obsia.local\/wp-content\/plugins\/elementor\/assets\/",
-        pages_url: "http:\/\/obsia.local\/wp-admin\/edit.php?post_type=page",
-        return_url: "http:\/\/obsia.local\/wp-admin\/post.php?post=749&action=elementor",
+        menu_url: "\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5#site-editor\/promotion",
+        assets_url: "\/wp-content\/plugins\/elementor\/assets\/",
+        pages_url: "\/wp-admin\/edit.php?post_type=page",
+        return_url: "\/wp-admin\/post.php?post=749&action=elementor",
         hasPro: false,
-        admin_url: "http:\/\/obsia.local\/wp-admin\/",
-        login_url: "http:\/\/obsia.local\/wp-login.php",
-        base_url: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5",
-        home_url: "http:\/\/obsia.local",
+        admin_url: "\/wp-admin\/",
+        login_url: "\/wp-login.php",
+        base_url: "\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5",
+        home_url: "",
         promotion: { upgrade_url: "https:\/\/go.elementor.com\/go-pro-theme-builder\/" },
         "site-editor": [],
         "import-export": [],
@@ -7961,9 +7960,9 @@
           "import-export-customization": true,
         },
         urls: {
-          assets: "http:\/\/obsia.local\/wp-content\/plugins\/elementor\/assets\/",
-          ajaxurl: "http:\/\/obsia.local\/wp-admin\/admin-ajax.php",
-          uploadUrl: "http:\/\/obsia.local\/wp-content\/uploads",
+          assets: "\/wp-content\/plugins\/elementor\/assets\/",
+          ajaxurl: "\/wp-admin\/admin-ajax.php",
+          uploadUrl: "\/wp-content\/uploads",
         },
         nonces: { floatingButtonsClickTracking: "ea2500b403" },
         swiperClass: "swiper",
@@ -7997,13 +7996,13 @@
         elementor_edit_page: {
           id: "elementor_edit_page",
           title: "Edit with Elementor",
-          href: "http:\/\/obsia.local\/wp-admin\/post.php?post=749&action=elementor",
+          href: "\/wp-admin\/post.php?post=749&action=elementor",
           children: {
             750: {
               id: "elementor_site_settings",
               title: "Site Settings",
               sub_title: "Site",
-              href: "http:\/\/obsia.local\/wp-admin\/post.php?post=749&action=elementor&active-document=5",
+              href: "\/wp-admin\/post.php?post=749&action=elementor&active-document=5",
               class: "elementor-site-settings",
               parent_class: "elementor-second-section",
             },
@@ -8011,7 +8010,7 @@
               id: "elementor_app_site_editor",
               title: "Theme Builder",
               sub_title: "Site",
-              href: "http:\/\/obsia.local\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5#site-editor\/promotion",
+              href: "\/wp-admin\/admin.php?page=elementor-app&ver=3.35.5#site-editor\/promotion",
               class: "elementor-app-link",
               parent_class: "elementor-second-section",
             },
@@ -8019,7 +8018,7 @@
               id: "elementor_site_clear_cache",
               title: "Clear Files &amp; Data",
               sub_title: "Site",
-              href: "http:\/\/obsia.local\/wp-admin\/admin-post.php?action=elementor_site_clear_cache&_wpnonce=b99f246fb6",
+              href: "\/wp-admin\/admin-post.php?action=elementor_site_clear_cache&_wpnonce=b99f246fb6",
             },
           },
         },
