@@ -22,7 +22,7 @@ Excepteur Sint Occaecat
 Things to setup a design:
 1. save its thumbnail (fullscreen screenshot).
 2. save its raw html (home page) from elementor template preview.
-3. insert this to hide th admin bar into the raw html.
+3. try to find the #wpadminbar manually and delete the entire element. otherwise, insert this to hide th admin bar into the raw html.
 ```js
     <script>
       // Hide admin bar
