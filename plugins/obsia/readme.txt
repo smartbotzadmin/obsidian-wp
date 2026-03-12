@@ -195,9 +195,13 @@ The following external JavaScript libraries are bundled with the plugin template
     *   Repository: Not publicly available at this time
     *   License: GPLv2 or later
 
+=== Astra Theme Presets ===
+
+The color palettes defined in `components/obsia-design-preview-modal.js` (lines 394-407) are human-readable CSS custom properties used to apply color schemes to the Astra theme during the design preview. These values are intentionally defined as a string within the JavaScript file to be injected into the preview iframe for real-time design adjustments. They are the original source code and are not generated or minified by any build tool.
+
 === Build Process ===
 
-This plugin doesn not need any build tool.
+This plugin does not need any build tool.
 
 == Installation ==
 

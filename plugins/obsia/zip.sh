@@ -1,3 +1,5 @@
+rm -r $HOME/Downloads/obsia.zip || echo "No obsia.zip, skipping deletion ..."
+
 zip -9 -r \
   ~/Downloads/obsia.zip \
   ./* \
