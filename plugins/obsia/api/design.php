@@ -43,7 +43,7 @@ function obsia_get_designs()
       }
 
       $images_json_content = $wp_filesystem->get_contents($images_json_path);
-      $images_json = json_decode($images_json_content, true);
+      $images_json = json_decode($images_json_content, true) ?: [];
     }
 
     $response[] = [
