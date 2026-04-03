@@ -32,54 +32,64 @@ This plugin relies on several external services to provide AI content generation
         *   https://obsidian-describe-generator-313065021854.us-east1.run.app
         *   https://obsidian-stripe-status-313065021854.us-east1.run.app
         *   https://obsidian-stripe-checkout-313065021854.us-east1.run.app
+        *   https://obsidian-google-oauth-authorization-313065021854.us-east1.run.app
     *   **Data sent:** User credentials (email/password), session tokens, business name, business description, and keywords.
     *   **When:** During account creation, login, session validation, AI content generation requests, and billing status checks.
-    *   **Terms of Service:** [https://obsidian.space/terms](https://obsidian.space/terms)
-    *   **Privacy Policy:** [https://obsidian.space/privacy](https://obsidian.space/privacy)
+    *   **Terms of Service:** https://obsidian.space/terms
+    *   **Privacy Policy:** https://obsidian.space/privacy
 
 *   **Mixpanel**
     *   **What it is:** An analytics service used to track plugin usage, feature engagement, and error reporting to help us improve the product.
     *   **Data sent:** Anonymized usage events, browser type, device information, and interaction data.
     *   **When:** When the user interacts with the plugin dashboard and builder components.
-    *   **Terms of Service:** [https://mixpanel.com/legal/terms-of-use/](https://mixpanel.com/legal/terms-of-use/)
-    *   **Privacy Policy:** [https://mixpanel.com/legal/privacy-policy/](https://mixpanel.com/legal/privacy-policy/)
+    *   **Terms of Service:** https://mixpanel.com/legal/terms-of-use/
+    *   **Privacy Policy:** https://mixpanel.com/legal/privacy-policy/
 
 *   **Google Gemini (via Obsidian API)**
     *   **What it is:** The AI model used for generating high-quality textual content for your website.
     *   **Data sent:** Business descriptions and keywords provided by the user.
     *   **When:** Triggered when the user requests AI-generated content.
-    *   **Terms of Service:** [https://policies.google.com/terms](https://policies.google.com/terms)
-    *   **Privacy Policy:** [https://policies.google.com/privacy](https://policies.google.com/privacy)
+    *   **Terms of Service:** https://policies.google.com/terms
+    *   **Privacy Policy:** https://policies.google.com/privacy
 
 *   **Google OAuth**
     *   **What it is:** Provides a secure "Sign in with Google" option for users.
+    *   **Endpoints:**
+        *   https://obsidian-google-oauth-authorization-313065021854.us-east1.run.app
     *   **Data sent:** Google profile information (email and name).
     *   **When:** When the user chooses to authenticate using their Google account.
-    *   **Terms of Service:** [https://developers.google.com/terms/api-services-user-data-policy](https://developers.google.com/terms/api-services-user-data-policy)
-    *   **Privacy Policy:** [https://policies.google.com/privacy](https://policies.google.com/privacy)
+    *   **Terms of Service:** https://developers.google.com/terms/api-services-user-data-policy
+    *   **Privacy Policy:** https://policies.google.com/privacy
 
 *   **Stripe**
     *   **What it is:** Our payment processing partner for handling subscription billing.
+    *   **Endpoints:**
+        *   https://obsidian-stripe-status-313065021854.us-east1.run.app
+        *   https://obsidian-stripe-checkout-313065021854.us-east1.run.app
     *   **Data sent:** User identifier/email and origin URL for redirection.
     *   **When:** During the checkout process or when managing subscription settings.
-    *   **Terms of Service:** [https://stripe.com/legal/ssa](https://stripe.com/legal/ssa)
-    *   **Privacy Policy:** [https://stripe.com/privacy](https://stripe.com/privacy)
+    *   **Terms of Service:** https://stripe.com/legal/ssa
+    *   **Privacy Policy:** https://stripe.com/privacy
 
 *   **Unsplash**
     *   **What it is:** Used to provide high-quality stock photography for the generated website designs.
+    *   **Endpoints:**
+        *   https://unsplash-images-313065021854.us-east1.run.app
     *   **Data sent:** Search keywords.
     *   **When:** During the initial page generation to find relevant visual assets.
-    *   **Terms of Service:** [https://unsplash.com/terms](https://unsplash.com/terms)
-    *   **Privacy Policy:** [https://unsplash.com/privacy](https://unsplash.com/privacy)
+    *   **Terms of Service:** https://unsplash.com/terms
+    *   **Privacy Policy:** https://unsplash.com/privacy
 
 *   **Vimeo / YouTube**
     *   **What it is:** Video hosting services used to display embedded video content within website templates.
     *   **Data sent:** IP address and browser interaction data (standard embed behavior).
     *   **When:** When a user previews a template or page containing an embedded video.
-    *   **Vimeo Terms & Privacy:** [https://vimeo.com/terms](https://vimeo.com/terms), [https://vimeo.com/privacy](https://vimeo.com/privacy)
-    *   **YouTube Terms & Privacy:** [https://www.youtube.com/t/terms](https://www.youtube.com/t/terms), [https://policies.google.com/privacy](https://policies.google.com/privacy)
+    *   **Vimeo Terms & Privacy:** https://vimeo.com/terms, https://vimeo.com/privacy
+    *   **YouTube Terms & Privacy:** https://www.youtube.com/t/terms, https://policies.google.com/privacy
 
 == Source Code Disclosure ==
+
+The full source code for this plugin, including all unminified assets and build scripts, is available at: https://github.com/obsidianwebsitebuilder/obsidian-wp
 
 This plugin includes minified JavaScript and CSS files as part of its pre-designed template libraries. Below is a comprehensive disclosure of all source code and third-party libraries included in the plugin, in compliance with WordPress.org Plugin Directory guidelines.
 
@@ -201,7 +211,14 @@ The color palettes defined in `components/obsia-design-preview-modal.js` (lines 
 
 === Build Process ===
 
-This plugin does not need any build tool.
+This plugin uses Tailwind CSS (v4) for styling. All original source files and build instructions are included in the plugin package and the public repository.
+
+*   **Source CSS:** `assets/css/input.css`
+*   **Generated CSS:** `assets/css/output.css`
+*   **Build Tool:** Tailwind CSS CLI
+*   **Build Command:** `npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/output.css`
+
+All JavaScript files within the `app/` and `components/` directories are provided in their original, human-readable source form and are not minified, obfuscated, or compiled by any build tool.
 
 == Installation ==
 
