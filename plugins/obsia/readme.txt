@@ -23,7 +23,7 @@ Obsidian is a powerful plugin designed to streamline the website creation proces
 This plugin connects to external APIs to provide AI-powered content generation, user authentication, analytics, and design resources.
 
 **Obsidian AI & Account Services**
-This service is provided by "Obsidian Website Builder": [repository not public](https://github.com/obsidianwebsitebuilder/obsidian-wp). It is used for authentication, content generation, and subscription management.
+This service is provided by "Obsidian Website Builder": [public repository](https://github.com/smartbotzadmin/obsidian-wp). It is used for authentication, content generation, and subscription management.
 *   **Endpoints:** Various subdomains under `*.us-east1.run.app` (e.g., `obsidian-signin`, `obsidian-signup`, `obsidian-content-generator`).
 *   **Data sent:** User credentials (email/password), session tokens, business name, business description, and keywords.
 *   **When:** During account creation, login, session validation, AI content generation requests, and billing status checks.
