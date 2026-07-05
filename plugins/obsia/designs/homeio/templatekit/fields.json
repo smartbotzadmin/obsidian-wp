@@ -1,0 +1,221 @@
+{
+  "about": {
+    "ob-hero-title": "",
+    "ob-hero-description": "",
+    "ob-who-we-are-title": "",
+    "ob-who-we-are-description": "",
+    "ob-who-we-are-trait1": "",
+    "ob-who-we-are-trait2": "",
+    "ob-who-we-are-trait3": "",
+    "ob-who-we-are-trait4": "",
+    "ob-who-we-are-trait5": "",
+    "ob-who-we-are-trait6": "",
+    "ob-who-we-are-trait7": "",
+    "ob-who-we-are-trait8": "",
+    "ob-who-we-are-cta-button": "",
+    "ob-trustedby-title": "",
+    "ob-assessment-title": "",
+    "ob-assessment-description": "",
+    "ob-assessment-cta-button": "",
+    "ob-our-team-title": "",
+    "ob-our-team-description": "",
+    "ob-our-team-cta-button": "",
+    "ob-consultation-title": "",
+    "ob-consultation-description": "",
+    "ob-consultation-cta-button": ""
+  },
+  "contact": {
+    "ob-hero-title": "",
+    "ob-hero-description": "",
+    "ob-address-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-email-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-phone-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-schedule-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-map-contact-title": "",
+    "ob-map-contact-description": ""
+  },
+  "services": {
+    "ob-hero-title": "",
+    "ob-hero-description": "",
+    "ob-ourservices-title": "",
+    "ob-ourservices-description": "",
+    "ob-ourservices-cta-button": "",
+    "ob-ourservices-trait1": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourservices-trait2": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourservices-trait3": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourservices-trait4": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourservices-trait5": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-title": "",
+    "ob-what-we-offer-iconbox1": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox2": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox3": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox4": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox5": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox6": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-choose-us-title": "",
+    "ob-why-choose-us-description": "",
+    "ob-why-choose-us-iconbox1": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-choose-us-iconbox2": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-choose-us-iconbox3": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-choose-us-iconbox4": {
+      "title": "",
+      "description": ""
+    },
+    "ob-consultation-title": "",
+    "ob-consultation-description": "",
+    "ob-consultation-cta-button": ""
+  },
+  "home": {
+    "ob-hero-title": "",
+    "ob-hero-shortdescription": "",
+    "ob-hero-button": "",
+    "ob-who-we-are-title": "",
+    "ob-who-we-are-description": "",
+    "ob-who-we-are-trait1": "",
+    "ob-who-we-are-trait2": "",
+    "ob-who-we-are-trait3": "",
+    "ob-who-we-are-trait4": "",
+    "ob-who-we-are-trait5": "",
+    "ob-who-we-are-trait6": "",
+    "ob-who-we-are-trait7": "",
+    "ob-who-we-are-trait8": "",
+    "ob-who-we-are-cta-button": "",
+    "ob-trustedby-title": "",
+    "ob-assessment-title": "",
+    "ob-assessment-description": "",
+    "ob-assessment-cta-button": "",
+    "ob-ourservices-title": "",
+    "ob-ourservices-description": "",
+    "ob-ourservices-cta-button": "",
+    "ob-ourservices-trait1": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourservices-trait2": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourservices-trait3": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourservices-trait4": {
+      "title": "",
+      "description": ""
+    },
+    "ob-ourservices-trait5": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-title": "",
+    "ob-what-we-offer-iconbox1": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox2": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox3": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox4": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox5": {
+      "title": "",
+      "description": ""
+    },
+    "ob-what-we-offer-iconbox6": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-choose-us-title": "",
+    "ob-why-choose-us-description": "",
+    "ob-why-choose-us-iconbox1": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-choose-us-iconbox2": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-choose-us-iconbox3": {
+      "title": "",
+      "description": ""
+    },
+    "ob-why-choose-us-iconbox4": {
+      "title": "",
+      "description": ""
+    },
+    "ob-consultation-title": "",
+    "ob-consultation-description": "",
+    "ob-consultation-cta-button": "",
+    "ob-faq-title": "",
+    "ob-faq-description": "",
+    "ob-faq-support-iconbox": {
+      "title": "",
+      "description": ""
+    },
+    "ob-faq-email-iconbox": {
+      "title": "",
+      "description": ""
+    }
+  }
+}
